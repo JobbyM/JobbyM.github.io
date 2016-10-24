@@ -1,5 +1,6 @@
 ---
 title: GitHub Pages + Hexo 搭建博客
+comment: true
 date: 2016-10-21 16:58:16
 tags: [技术,静态独立博客,Hexo,GitHub Pages, Git]
 ---
