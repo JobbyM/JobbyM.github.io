@@ -1,7 +1,7 @@
 ---
 title: GitHub Pages + Hexo 搭建博客
 date: 2016-10-21 16:58:16
-tags:
+tags: [技术,静态独立博客,Hexo,GitHub Pages, Git]
 ---
 ## 一、简介
 这是一篇使用GitHub Pages 和Hexo 搭建免费独立博客的总结
