@@ -1,13 +1,12 @@
 ---
-title: continuous deployment to github with travis
+title: 使用Travis CI 自动部署Hexo
 date: 2016-10-25 17:12:17
 tags:
 ---
 
-# 使用Travis CI 自动部署Hexo
-
 ## 操作步骤
 ### Deploy Key（部署Key）
+
 1. 使用ssh-keygen 制作SSH Key，供GitHub 当作Deploy key 使用
 ```cmd
 $ ssh-keygen -t rsa -C "songzhipengmune@gmail.com"
@@ -34,8 +33,7 @@ The key's randomart image is:
 |**o.             |
 +----[SHA256]-----+
 ```
-  在制作SSH key 时，请把passphase 留空。
-  当SSH key 制作完成后，复制Public key 到GitHub 上的Deploy key 位置
+  在制作SSH key 时，请把passphase 留空。当SSH key 制作完成后，复制Public key 到GitHub 上的Deploy key 位置
 
 2. 注意：Window 7 下使用命令行复制内容到剪贴板
 ```cmd
@@ -44,6 +42,7 @@ $ clip < log.txt
   将log.txt 文件中的内容复制到剪贴板
 
 ### 加密 Private Key （私钥）
+
 1. Windows 环境下需要安装Ubuntu 虚拟机，以下操作都是在Ubuntu 虚拟机环境下进行操作
 2. 首先是安装ruby ,安装成功过后查看ruby 和gem 版本
 ```cmd
@@ -69,12 +68,6 @@ jobbym@ubuntu:~$ rvm list known
 6. 使用rvm 进行安装，发现速度很慢
 ```cmd
 jobbym@ubuntu:~$ rvm install 2.2-head
-
-Warning! Requested ruby installation which requires another ruby available - installing ruby-2 first.
-
-Checking requirements for ubuntu.
-Requirements installation successful.
-Installing Ruby from source to: /home/jobbym/.rvm/rubies/ruby-2.3.0,  
 ```
 7. 参考 https://ruby-china.org/wiki/rvm-guide 修改rvm 的ruby 安装源
 ```cmd
@@ -89,11 +82,8 @@ jobbym@ubuntu:~$ rvm install 2.3
 jobbym@ubuntu:~$ rvm alias create default ruby-2.3.0
 Creating alias default for ruby-2.3.0...
 jobbym@ubuntu:~$ rvm list
-
 rvm rubies
-
 =* ruby-2.3.0 [ x86_64 ]
-
 # => - current
 # =* - current && default
 #  * - default
