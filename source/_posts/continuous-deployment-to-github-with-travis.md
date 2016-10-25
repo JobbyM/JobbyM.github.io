@@ -5,8 +5,8 @@ tags:
 ---
 
 ## 操作步骤
-### Deploy Key（部署Key）
 
+### 一、Deploy Key（部署Key）
 1. 使用ssh-keygen 制作SSH Key，供GitHub 当作Deploy key 使用
 ```cmd
 $ ssh-keygen -t rsa -C "songzhipengmune@gmail.com"
@@ -34,15 +34,13 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
   在制作SSH key 时，请把passphase 留空。当SSH key 制作完成后，复制Public key 到GitHub 上的Deploy key 位置
-
 2. 注意：Window 7 下使用命令行复制内容到剪贴板
 ```cmd
 $ clip < log.txt
 ```
   将log.txt 文件中的内容复制到剪贴板
 
-### 加密 Private Key （私钥）
-
+### 二、加密 Private Key （私钥）
 1. Windows 环境下需要安装Ubuntu 虚拟机，以下操作都是在Ubuntu 虚拟机环境下进行操作
 2. 首先是安装ruby ,安装成功过后查看ruby 和gem 版本
 ```cmd
