@@ -35,6 +35,8 @@ install:
 script:
   - hexo clean
   - hexo generate
+
+after_success:
   - hexo deploy
 
 # E: Build LifeCycle
