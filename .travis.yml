@@ -1,10 +1,10 @@
 language: node_js
 node_js:
   - "6"
-  
+
 branches:
   only:
-    - master
+    - hexo
 
 # Travis-CI Caching
 cache:
