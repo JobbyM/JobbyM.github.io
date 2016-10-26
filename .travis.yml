@@ -35,6 +35,7 @@ install:
 script:
   - hexo clean
   - hexo generate
+  - hexo generate
 
 after_success:
   - hexo deploy
