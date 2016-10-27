@@ -1,7 +1,14 @@
 ---
+layout: post
 title: 使用Travis CI 自动部署Hexo
+comments: true
 date: 2016-10-25 17:12:17
 tags:
+  - Travis-CI
+  - Hexo
+  - CI
+  - 技术
+categories: 技术
 ---
 
 ## 操作步骤
