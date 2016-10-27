@@ -246,10 +246,13 @@ mathjax:
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 0d65459e5802dba7e9a8409f873c59a4
 
 # Duoshuo ShortName
 duoshuo_shortname: jobbym
+
+# Duoshuo hot artical
+duoshuo_hotartical: true
 
 # Disqus
 #disqus_shortname:
@@ -267,7 +270,7 @@ duoshuo_shortname: jobbym
 #add_this_id:
 
 # Share
-#duoshuo_share: true
+duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
@@ -339,7 +342,7 @@ busuanzi_count:
 # tencent_analytics:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
