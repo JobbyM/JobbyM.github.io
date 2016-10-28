@@ -16,6 +16,7 @@ permalink: Travis-CI-基础入门
 # 简介
 为了了解Travis-CI，而到Travis-CI 官网上按照一个demo 进行练习了解
 
+<!--more-->
 ## 使用Travis-CI 测试
 1. 使用GitHub 帐号登录 https://travis-ci.org/
 2. 进入 https://docs.travis-ci.com/user/for-beginners 页面
