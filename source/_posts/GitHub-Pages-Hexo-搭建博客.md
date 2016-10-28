@@ -13,7 +13,7 @@ categories: 技术
 ---
 ## 一、简介
 这是一篇使用GitHub Pages 和Hexo 搭建免费独立博客的总结
-
+<!--more-->
 ## 二、Hexo
 1. 安装Hexo
 ```cmd

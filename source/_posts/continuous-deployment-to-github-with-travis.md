@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用Travis CI 自动部署Hexo
+title: 使用Travis-CI 自动部署Hexo
 comments: true
 date: 2016-10-25 17:12:17
 tags:
@@ -11,6 +11,9 @@ tags:
 categories: 技术
 ---
 
+## 简介
+利用Travis-CI 自动部署Hexo 到GitHub Pages 上
+<!--more-->
 ## 操作步骤
 
 ### 一、Deploy Key（部署Key）
