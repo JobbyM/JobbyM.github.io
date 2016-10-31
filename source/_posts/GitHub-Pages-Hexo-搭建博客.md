@@ -12,7 +12,11 @@ tags:
 categories: 技术
 ---
 ## 一、简介
-这是一篇使用GitHub Pages 和Hexo 搭建免费独立博客的总结
+这是一篇使用GitHub Pages 和Hexo 搭建免费独立博客的总结。
+1. Hexo
+  Hexo 是一个快速、简单且功能强大的Node.js 博客框架。
+2. GitHub Pages
+  GitHub Pages 可以被认为是用户编写的、托管在GitHub 上的静态网页。
 <!--more-->
 ## 二、Hexo
 1. 安装Hexo
