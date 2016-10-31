@@ -1,9 +1,9 @@
 ---
-title: Travis-CI 基础入门
+title: Travis CI 基础入门
 date: 2016-10-26 16:13:28
 tags:
   - 技术
-  - Travis-CI
+  - Travis CI
   - Hexo
   - GitHub Pages
   - Git
@@ -14,10 +14,12 @@ permalink: Travis-CI-基础入门
 ---
 
 # 简介
-为了了解Travis-CI，而到Travis-CI 官网上按照一个demo 进行练习了解
-
+为了了解Travis CI，而到Travis CI 官网上按照一个demo 进行练习了解
+1. Travis CI
+  {% cq %} Build apps with confidence. Focus on writing code. Let Travis CI toake care of running your tests and deploying your apps. {% endcq %}
+  
 <!--more-->
-## 使用Travis-CI 测试
+## 使用Travis CI 测试
 1. 使用GitHub 帐号登录 https://travis-ci.org/
 2. 进入 https://docs.travis-ci.com/user/for-beginners 页面
 3. fork https://github.com/plaindocs/travis-broken-example 这个测试项目
@@ -54,5 +56,5 @@ $ git push
 
 ## 参考文档
 
-1. [Travis-CI官网](https://travis-ci.org/)
-2. [Travis-CI官网入门](https://docs.travis-ci.com/user/for-beginners) assset
+1. [Travis CI官网](https://travis-ci.org/)
+2. [Travis CI官网入门](https://docs.travis-ci.com/user/for-beginners) assset
