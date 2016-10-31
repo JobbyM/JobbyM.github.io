@@ -11,6 +11,8 @@ categories: 技术
 
 # 简介
 React Native 入门知识点
+1. React Native
+{% cq %} LEARN ONCE, WRITE ANYWHERE:BUILD MOBILE APPS WITH REACT {% endcq %}
 
 <!--more-->
 
