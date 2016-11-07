@@ -11,7 +11,7 @@ categories: 技术
 
 ## Technical Overview（技术概要）
 1. Native Client
-  {% asset_img web-app=with-nacl.png  A web application with and without Native Client %}
+  {% asset_img web-app-with-nacl.png  A web application with and without Native Client %}
   Native Client  分为传统的Nacl （NaCl）和移动的NaCl（PNaCl）,传统的必须通过Chrome Web Store 进行下载，而PNaCl 只需要打开浏览器就能够进行加载运行了
 <!--more-->
 2. How Native Client works （Native Client 是如何进行工作的）
@@ -51,7 +51,6 @@ categories: 技术
     4. 渲染3D 图像
 
 ## 配置环境
-
 1. Python 2.7
   首先需要在本地安装Python，需要安装2.7.x, 现在还不支持3.x ，同时需要将Python 目录添加到path 环境目录中
   1.1.  https://www.python.org/download/  下载最新的2.x Python ,资源目录1
@@ -64,25 +63,24 @@ categories: 技术
 4. Versions
   只要是最新的Chrome 就可以了，同时需要注意Chrome 的版本要大于下载的pepper_<version>
   查看Chrome 版本，在浏览器地址栏中输入
-  {{{
+  ```cmd
   about:chrome
-  }}}
+  ```
   或者
-  {{{
+  ```cmd
   about:version
-  }}}
+  ```
 5. Installing the SDK（The Native Client Software Development Kit）
   5.1. nacl_sdk.zip 下载安装，资源目录2
   5.2. 将下载下来的nacl_sdk.zip 进行解压，获取如下文件目录
 ```cmd
  nacl_sdk
-  -- naclsdk（naclsdk.bat 是为Windows 系统适配的）--更新工具，用来进行下载和更新bundles
-  -- sdk_cache -- 这个文件夹中包好一个manifest 文件，其列出了你已经下载的bundles
-  -- sdk_tools --  由naclsdk 命令代码运行
+  naclsdk（naclsdk.bat 是为Windows 系统适配的）: 更新工具，用来进行下载和更新bundles
+  sdk_cache: 这个文件夹中包好一个manifest 文件，其列出了你已经下载的bundles
+  sdk_tools: 由naclsdk 命令代码运行
 ```
   5.3. 安装稳定的bundle
-    5.3.1. 首先是进入nacl_sdk 这个目录并运行naclsdk list 这个命令
-        本地
+    5.3.1. 首先是进入nacl_sdk 这个目录并运行naclsdk list 这个命令本地
 ```cmd
 D:\workspace\samsung-Project\Tizen\NACL\nacl_sdk>naclsdk list
 ERROR:Unable to read remote manifest from URL "https://storage.googleapis.com/na
@@ -179,18 +177,18 @@ D:\workspace\samsung-Project\Tizen\NACL\nacl_sdk\pepper_43\examples\api\core>mak
 ```
   2.7. 第七步：在Native Client module 中实现一个消息处理handler
     需要修改Native Client module (hello_tutorail.cc) 去相应来自JavaScript 代码的消息。
-      1.  在module instance 中实现HandleMessage() 方法
-      2. 调用PostMessage() 成员方法给JavaScript 发消息
+    2.7.1.  在module instance 中实现HandleMessage() 方法
+    2.7.2. 调用PostMessage() 成员方法给JavaScript 发消息
   2.8. 第八步：编译Native Client module 并再次运行应用
-      1. 编译Native Client module，
+    2.8.1. 编译Native Client module，
 ```cmd
           make
 ```
-      2. 启动SDK web 服务
+    2.8.2. 启动SDK web 服务
 ```cmd
           make serve
 ```          
-      3. 在Chrome 浏览器中重新加载
+    2.8.3. 在Chrome 浏览器中重新加载
 ```cmd
           http://localhost:5130/part1
 ```
