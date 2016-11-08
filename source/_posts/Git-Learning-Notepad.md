@@ -26,5 +26,5 @@ comments: true
   Git 的版本库里存了很多东西，其中最重要的就是称为stage（或者index）的暂存区，还有Git 为我们自动创建的一个分支master，以及指向master 的一个指针HEAD。
   {% asset_img git.jpg  git %}
   我们把文件往Git 版本库里添加的时候，是分两步执行的：
-  1. 第一步是用git add 把文件添加进去，实际上就是把文件修改添加到暂存区；
-  2. 第二步是用git commit 提交更改，实际上就是把暂存区的所有内容提交到当前分支。
+  1. 第一步是用<code>git add</code> 把文件添加进去，实际上就是把文件修改添加到暂存区；
+  2. 第二步是用<code>git commit</code> 提交更改，实际上就是把暂存区的所有内容提交到当前分支。
