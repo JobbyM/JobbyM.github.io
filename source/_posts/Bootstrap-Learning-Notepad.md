@@ -10,10 +10,8 @@ comments: true
 ---
 
 ## 介绍
-
-	1. Bootstrap 是最受欢迎的HTML、CSS 和JS 框架，用于开发响应式布局、异步设备优先的WEB 项目。
-	2. 为所有开发者、所有应用场景而设计。Bootstrap 让前端开发更快速、简单。所有开发者都能快速上手、所有设备都可以适配、所有项目都适用。
-
+1. Bootstrap 是最受欢迎的HTML、CSS 和JS 框架，用于开发响应式布局、异步设备优先的WEB 项目。
+2. 为所有开发者、所有应用场景而设计。Bootstrap 让前端开发更快速、简单。所有开发者都能快速上手、所有设备都可以适配、所有项目都适用。
 
 ## 起步
 ### 下载
@@ -111,16 +109,8 @@ comments: true
 
 #### 栅格参数
 1. 通过下表可以详细查看Bootstrap 的栅格系统是如何在多种屏幕设备上工作的。
-| | 超小屏幕 手机（<768px）|小屏幕 平板（>=768px）|中等屏幕 桌面显示器（>=992px）|大屏幕 大桌面显示器 （>=1200px）|
-|栅格系统行为|总是水平排列|开始是堆叠在一起的，当大于这些阈值时将变为书评排列|
-|.container 最大宽度|None（自动）|750px |970px |1170px|
-|类前缀|.col-xs- |.col-sm- |.col-md- |.col-lg-|
-|列（column）数|12 |
-|最大列（column）宽|自动 |~62px |~81px |~97px
-|槽（gutter）宽|30px（每列左右均由15px）
-|可嵌套|是 |
-|偏移（offsets）|是 |
-|列排列|是 |
+<table border="1" cellpadding="1" cellspacing="0"><tbody>
+<tr><td></td><td>超小屏幕 手机（<768px）</td><td>小屏幕 平板（>=768px）</td><td>中等屏幕 桌面显示器（>=992px）</td><td>大屏幕 大桌面显示器 （>=1200px）</td></tr><tr><td>栅格系统行为</td><td>总是水平排列</td><td colspan="3">开始是堆叠在一起的，当大于这些阈值时将变为书评排列</td></tr><tr><td>.container 最大宽度</td><td>None（自动）</td><td>750px</td><td>970px</td><td>1170px</td></tr><tr><td>类前缀</td><td>.col-xs- </td><td>.col-sm- </td><td>.col-md- </td><td>.col-lg- </td></tr><tr><td>列（column）数</td><td colspan="4">12</td></tr><tr><td>最大列（column）宽</td><td>自动 </td><td>~62px </td><td>~81px</td><td>~97px</td></tr><tr><td>槽（gutter）宽</td><td colspan="3">30px（每列左右均由15px）</td></tr><tr><td>可嵌套</td><td colspan="4">是</td></tr><tr><td>偏移（offsets）</td><td colspan="4">是</td></tr><tr><td>列排列</td><td colspan="4">是</td></tr></tbody></table>
 
 ## 参考文档
 1. [Bootstrap 中文网](http://v3.bootcss.com/)
