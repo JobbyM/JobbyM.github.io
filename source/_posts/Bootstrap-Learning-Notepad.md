@@ -66,14 +66,14 @@ comments: true
 
 ### 概述
 #### 布局容器
-1. Bootstrap 需要为页面内容和栅格系统包裹一个<code>.container</code> 容器。我们提供了两个作此用处的类。注意，由于<code>padding</code> 等属性原因，这两种容器不能互相嵌套。
-2. <code>.container</code> 类用于固定宽度并支持响应式布局的容器。
+1. Bootstrap 需要为页面内容和栅格系统包裹一个`.container` 容器。我们提供了两个作此用处的类。注意，由于`padding` 等属性原因，这两种容器不能互相嵌套。
+2. `.container` 类用于固定宽度并支持响应式布局的容器。
 ``` html
 <div class="container">
   ...
 </div>
 ```
-3. <code>.container-fluid</code> 类用于100% 宽度，占据全部视口（viewport）的容器
+3. `.container-fluid` 类用于100% 宽度，占据全部视口（viewport）的容器
 ```html
 <div class="container-fluid">
   ...
@@ -113,6 +113,99 @@ comments: true
 1. 通过下表可以详细查看Bootstrap 的栅格系统是如何在多种屏幕设备上工作的。
 <table border="1" cellpadding="1" cellspacing="0"><tbody>
 <tr><td></td><td>超小屏幕 手机（<768px）</td><td>小屏幕 平板（>=768px）</td><td>中等屏幕 桌面显示器（>=992px）</td><td>大屏幕 大桌面显示器 （>=1200px）</td></tr><tr><td>栅格系统行为</td><td>总是水平排列</td><td colspan="3">开始是堆叠在一起的，当大于这些阈值时将变为书评排列</td></tr><tr><td>.container 最大宽度</td><td>None（自动）</td><td>750px</td><td>970px</td><td>1170px</td></tr><tr><td>类前缀</td><td>.col-xs- </td><td>.col-sm- </td><td>.col-md- </td><td>.col-lg- </td></tr><tr><td>列（column）数</td><td colspan="4">12</td></tr><tr><td>最大列（column）宽</td><td>自动 </td><td>~62px </td><td>~81px</td><td>~97px</td></tr><tr><td>槽（gutter）宽</td><td colspan="3">30px（每列左右均由15px）</td></tr><tr><td>可嵌套</td><td colspan="4">是</td></tr><tr><td>偏移（offsets）</td><td colspan="4">是</td></tr><tr><td>列排列</td><td colspan="4">是</td></tr></tbody></table>
+
+### 排版
+#### 标题
+1. HTML 中的所有标题标签，`<h1>` 到`</h6>` 均可使用。另外，还提供了 `.h1` 到`.h6` 类，为的是给内联（inline）属性的文本赋予标题的样式。
+
+#### 页面主体
+1. Bootstrap 将全局`font-size` 设置为**14px**，`line-height`设置为**1.428**。这些属性直接赋予`<body>`元素和所有段落元素。另外，`<p>`（段落）还被设置等于1/2 行高（即10px）的底部外边距（margin）
+```html
+<p>...</p>
+```
+#### 内联文本元素
+1. 标志文本`<mark>`
+2. 被删除的文本`<del>`
+3. 无用文本`<s>`
+4. 插入文本`<ins>`
+5. 带下划线的文本`<u>`
+6. 小号文本`<small>`
+  对于不需要强调的inline 或block 类型的文本，使用`<small>` 标签包裹，其内的文本将被设置为父容器字体大小的85%。标题元素中嵌套的`<small>` 元素被设置不同的`font-size`.
+7. 着重`<strong>`
+8. 斜体`<em>`
+
+#### 对齐
+1. 通过文本对齐`.text-left`等等类，可以简单方便的将文字重新对齐。
+
+#### 改变大小写
+1. 通过`.text-lowercase`，`.text-uppercase`，`.text-capitalize` 这几个类可以改变文本的大小写。
+
+#### 缩略语
+1. 当鼠标悬停在缩写和缩写词上时就会显示完整内容，Bootstrap 实现了对HTML 的`<abbr>` 元素的增强样式。缩略语元素带有`title`属性，外观表现为嗲有较浅的虚线框，鼠标移植上面时会变成带有“问号”的指针。如果想看完整的内容可以把鼠标悬停在缩略语上，但需要包含title 属性。
+
+#### 地址
+1. 让联系信息以最近日常使用的格式呈现。在每行结尾添加`<br>`可以保留需要的样式。
+```html
+    <address>
+      <strong>Twitter, Inc.</strong><br>
+      795 Folsom Ave, Suite 600<br>
+      San Francisco, CA 94107<br>
+      <abbr title="Phone">P:</abbr> (123) 456-7890
+    </address>
+
+    <address>
+      <strong>Full Name</strong><br>
+      <a href="mailto:#">first.last@example.com</a>
+    </address>
+```
+
+#### 引用
+1. 在你的文档中引用其他来源的内容
+```html
+    <blockquote class="blockquote-reverse">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+    </blockquote>
+```
+
+#### 列表
+1. 无序列表
+2. 有序列表
+3. 无样式列表
+4. 内联列表
+5. 描述
+  `.dl-horizontal` 可以让`<dl>`内的短语及其描述排列在一行。开始是像`<dl>`的默认样式堆叠在一起，随着导航条逐渐展开而排列在一行。
+```html
+    <dl class="dl-horizontal">
+      <dt>Description lists</dt>
+      <dd>A description list is perfect for defining terms.</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Euismod</dt>
+      <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+Donec id elit non mi porta gravida at eget metus.</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>Malesuada porta</dt>
+      <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+    </dl>
+```
+
+### 代码
+#### 内联代码
+1. 通过`<code>`标签包裹内联样式的代码片段。
+
+#### 用户输入
+1. 通过`<kbd>`标签标记用户通过键盘输入的内容
+
+#### 代码块
+1. 多行代码可以使用`<pre>` 标签。需要将尖括号做转义处理。
+
+#### 变量
+1. 通过`<var>` 标签标记变量
+
+#### 程序输出
+1. 通过`<samp>`标签来标记程序输出的内容
 
 ## 参考文档
 1. [Bootstrap 中文网](http://v3.bootcss.com/)
