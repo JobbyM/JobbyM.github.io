@@ -207,5 +207,174 @@ Donec id elit non mi porta gravida at eget metus.</dd>
 #### 程序输出
 1. 通过`<samp>`标签来标记程序输出的内容
 
+### 表格
+#### 基本实例
+1. 为任意`<table>` 标签添加`.table` 类可以为其赋予基本的样式--少量的内补（padding）和水平方向的分割线。
+```html
+<table class="table">
+  ...
+</table>
+```
+#### 条纹状表格
+1. 通过 `.table-striped` 类可以给`<tbody>` 之内的每一行增加斑马条纹样式。
+```html
+<table class="table table-striped">
+  ...
+</table>
+```
+#### 带边框的表格
+1. 添加`.table-bordered` 类为表格和其中的每个单元格增加边框
+```html
+<table class="table table-bordered">
+  ...
+</table>
+```
+#### 鼠标悬停
+1. 通过添加`.table-hover`类可以让`<tbody>` 中的每一行对鼠标悬停状态做出响应。
+```html
+<table class="table table-hover">
+  ...
+</table>
+```
+#### 紧缩表格
+1. 通过添加`.table-condensed` 类可以让表格更加紧凑，单元格中的内补（padding）均会减半。
+```html
+<table class="table table-condensed">
+  ...
+</table>
+```
+#### 状态类
+1. 通过这些状态类可以我i行或单元格设置颜色。
+
+**Class**|**描述**
+---|---
+`.active`| 鼠标悬停在行或单元格上时所设置的颜色
+`.success`| 标识成功或积极的动作
+`.info`| 标识普通的提示信息或动作            
+`.warning`| 标识警告或需要用户注意              
+`.danger`| 标识危险或潜在的带来负面影响的动作
+
+```html
+<!-- On rows -->
+<tr class="active">...</tr>
+<tr class="success">...</tr>
+<tr class="warning">...</tr>
+<tr class="danger">...</tr>
+<tr class="info">...</tr>
+
+<!-- On cells (`td` or `th`) -->
+<tr>
+  <td class="active">...</td>
+  <td class="success">...</td>
+  <td class="warning">...</td>
+  <td class="danger">...</td>
+  <td class="info">...</td>
+</tr>
+````
+#### 响应式表格
+1. 将任何`.table` 元素包裹在`.table-responsive` 元素内，即可创建响应式表格，岂会在小屏幕设备上（小于768px）水平滚动。当屏幕大于768px 宽度时，水平滚动条消失。
+```html
+<div class="table-responsive">
+  <table class="table">
+    ...
+  </table>
+</div>
+```
+
+### 表单
+#### 基本实例
+1. 单独的表单控件会被自动赋予一些全局样式。所有设置了`.form-control` 类的`<input>`、`<textarea>` 和`<select>`元素都将被默认设置为宽度属性为`width: 100%;`。将`label` 元素和前面提到的控件包裹在`.form-group` 中可以获得最好的排列。
+```html
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Example block-level help text here.</p>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Check me out
+        </label>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+```
+#### 内联表单
+1. 为`<form>` 元素添加`.form-inline` 类可使其内容左对齐并且表现为`inline-block` 级别的空间。**只适用于视口（viewport）至少在768px 宽度时（视口宽度再小的话就会是表单折叠）。**
+```html
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon">@</div>
+      <input class="form-control" type="email" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword2">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form>
+```
+#### 水平排列的表单
+1. 通过为表单添加`.form-horizontal` 类，并联合使用Bootstrap 预置的栅格类，可以将`label` 标签和控件组水平并排布局。这样做将改变`.form-group` 的行为，使其表现为栅格系统中的行（row），因此就无需再额外添加`.row`了。
+```html
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+  </div>
+</form>
+```
+#### 被支持的控件
+1. 表单布局实例中展示了其所支持的标准表单控件。
+
+##### 输入框
+1. 包括大部分表单控件、文本输入域控件，还支持所有HTML5 类型的输入控件：`text`、`password`、`datetime`、`datetime-local`、`date`、`month`、`time`、`week`、`number`、`email`、`url`、`search`、`tel` 和`text`。
+
+##### 文本域
+1. 支持多行文本的表单控件。可根据需要改变`rows` 属性。
+
+
+
 ## 参考文档
 1. [Bootstrap 中文网](http://v3.bootcss.com/)
