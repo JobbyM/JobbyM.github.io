@@ -374,7 +374,91 @@ Donec id elit non mi porta gravida at eget metus.</dd>
 ##### 文本域
 1. 支持多行文本的表单控件。可根据需要改变`rows` 属性。
 
+##### 多选和单选框
+1. 多选框（checkbox）用于选择列表中的一个或多个选项，而单选框（radio）用于从多个选项中选择一个。
+2. 设置了`disable` 属性的单选或多选框都能被赋予合适的样式。对于和多选或单选框联合使用的`<label>` 标签，如果也希望将悬停于上方的鼠标设置为**禁止点击**的样式，请将`.disabled` 类赋予'.radio'、'.radio-inline'、'.checkbox'、'.checkbox-inline' 或'<fieldset>'。
 
+##### 下拉列表（select）
+1. 使用默认选项或添加`multiple` 属性可以同时显示多个选项
+
+##### 静态控件
+1. 如果需要在表单中将一行纯文本和`label` 元素放置于同一行，为`<p>` 元素添加`.form-control-static` 类即可。
+
+##### 焦点状态
+1. 我们将某些表单控件的默认`outline ` 样式移除，然后对`:focus` 状态赋予`box-shadow` 属性。
+
+##### 禁用状态
+1. 为输入框设置`disabled` 属性可以防止用户输入，并能对外观做一些修改，使其更直观。
+
+##### 只读状态
+1. 为输入框设置`readonly` 属性可以禁止用户输入，并且输入框的样式也是禁用状态。
+
+##### 校验状态
+1. Bootstrap 对表单控件的校验状态，如error、warning 和success 状态，都定义了样式。使用时，添加`.has-warning`、`.has-error` 或`.has-success` 类到这些控件的父元素即可。任何包含在此元素之内的`.control-label`、`.form-control` 和`.help-block` 元素都将接受这些校验状态的样式。
+
+##### 控件尺寸
+1. 通过`.input-lg` 类似的类可以为控件设置高度，通过`.col-lg-*` 类似的类可以为控件设置宽度
+
+##### 辅助文本
+1. 针对表单控件的“块（block）”级辅助文本。
+```html
+<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+```
+
+### 按钮
+#### 预定义样式
+1. 使用下面列出的类`.btn-default`，`.btn-default`， `.btn-primary`， `.btn-success`， `.btn-info`， `.btn-warning`，`.btn-danger`，`.btn-link`   可以快速创建一个带有预定义样式的按钮
+```html
+    <button class="btn btn-warningi">Warning</button>
+```
+
+#### 尺寸
+1. 使用`.btn-lg`，`.btn-sm` 或`.btn-xs`可以获得不同尺寸的按钮。
+```btn
+     <button class="btn btn-default btn-lg">Large button</button>
+```
+2. 通过给按钮添加`.btn-block` 类可以将其拉伸至父元素100% 的宽度，而且按钮也变成了块级（block）元素
+
+#### 激活状态
+1. 当按钮处于激活状态时，其表现为被按压下去（颜色更深、边框颜色更深、内向投射阴影）。对于`<button>` 元素，是通过`:active` 状态实现的。对于`<a>` 元素，是通过`.active` 类实现的。然而，你还可以将`.active` 应用到`<button>` 上，并通过编程的方式使其处于激活状态。
+```html
+<button class="btn btn-warning btn-lg active">Large button</button>
+```
+
+#### 禁用状态
+通过为按钮的背景设置`opacity` 属性就可以呈现出无法点击的效果。
+1. button 元素：为`<button>`元素添加`disabled` 属性，使其表现出禁用状态。
+2. 链接（`<a>`）元素：为基于`<a>` 元素创建的按钮添加`disabled` 类。
+
+#### 按钮类
+1. 为`<a>`、`<button>` 或`<input>` 元素应用按钮类。
+```html
+      <a href="" class="btn btn-default" role="button">Link</a>
+      <button class="btn btn-default">Button</button>
+      <input type="button" class="btn btn-default" value="Input">
+      <input type="submit" class="btn btn-default" value="Submit">
+```
+
+### 图片
+#### 响应式图片
+1. 在Bootstrap 版本3 中，通过为图片添加 `.img-responsive` 类可以让图片支持响应式布局。其实质是为图片设置了`max-width: 100%;` 和 `height: auto` 属性，从而让图片在其父元素中更好的缩放。
+```html
+<img src="..." class="img-responsive" alt="Responsive image">
+```
+
+#### 图片形状
+1. 通过为`<img>` 元素添加相应的类，可以让图片呈现不同的形状。
+```
+<img src="..." alt="..." class="img-rounded">
+<img src="..." alt="..." class="img-circle">
+<img src="..." alt="..." class="img-thumbnail">
+```
+
+### 辅助类
+
+### 响应式工具
+1. 为了加快对移动设备友好的页面开发工作，利用媒体查询功能并使用这些工具类可以方便的针对不同设备展示或隐藏页面内容。另外还包含了针对打印机显示或隐藏内容的工具类
+2. 有针对性的使用这些工具类，从而避免为同一网站创建完全不同的版本。相反，通过使用这些工具类可以在不同设备上提供不同的展示形式。
 
 ## 参考文档
 1. [Bootstrap 中文网](http://v3.bootcss.com/)
