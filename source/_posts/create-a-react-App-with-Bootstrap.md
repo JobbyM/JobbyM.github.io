@@ -259,5 +259,16 @@ export default ShowAddButton;
           <button className="btn btn-default" onClick={()=>this.voteUp()}>
 ```
 
+### 对项目结构进行整理
+1. 拆分成如下结构
+	1. components
+	2. containers
+	3. styles
+	4. images
+	5. index.js
+2. 如下图所示
+{% asset_img QA_App_Structor.jpg %}
+
+
 ## 参考文档
 1. [模仿知乎界面的简答React Demo](https://github.com/tsrot/react-zhihu/tree/product)
