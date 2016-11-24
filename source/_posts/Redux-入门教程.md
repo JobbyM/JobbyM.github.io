@@ -218,6 +218,135 @@ const createStore = (reducer) => {
 }
 ```
 
+## Reducer 的拆分
+
+Reducer 函数负责生成State。由于整个应用只有一个State 对象，包含所有数据，对于大型应用来说，这个State 必然十分庞大，导致Reducer 函数也十分庞大。
+```jsx
+const chatReducer = ( state = defaultState, action = {}) => {
+  const { type, payload } = action
+  switch (type) {
+    case ADD_CHAT:
+      return Object.assign({},state, {
+        chatLog: state.chatLog.concat(payload)
+      });
+    case CHANGE_STATUS:
+      return Object.assign({},state, {
+        statusMessage: payload
+      });
+    case CHANGE_USERNAME:
+      return Object.assign({},state, {
+        userName: payload
+      })
+    default:
+
+  }
+}
+```
+  上面代码中，三种Action 分别改变State 的三个属性。
+```jsx
+
+	1. ADD_CHAT: chatLog 属性
+	2. CHANGE_STATUS： statusMessage 属性
+	3. CHANGE_USERNAME: userName 属性
+
+```
+  上面代码中，Reducer 函数被拆分成了三个小函数，每一个负责生成对应的属性。
+
+  这样一拆，Reducer 就易读写多了。而且，这种拆分与React 应用的结构相吻合：一个React 根组件由很多子组件构成。这就是说，子组件与子Reducer 完全可以对应。
+
+  Redux 提供了一个combineReducers 方法，用于Reducer 的拆分。你只要定义刚刚子Reducer 函数，然后用这个方法，将它们合成一个大的Reducer。
+```jsx
+import { combineReducer } from 'redux';
+
+const chatReducer = combineReducer({
+  chatLog,
+  statusMessage,
+  userName
+})
+
+export default todoApp;
+```
+  上面的代码通过combineReducers 方法将三个子Reducer 合并成一个大的函数。
+
+  这种写法有一个前提，就是State 的属性名必须与子Reducer 同名。如果不同名，就要采用下面的写法。
+```jsx
+const reuder = combineReducer({
+  a: doSomenthingWithA,
+  b: processB,
+  c: c
+})
+
+// 等同于
+function reducer(state = {}, action){
+  return {
+    a: doSomenthingWithA(state.a, action),
+    b: processB(state.b, action),
+    c: c(state.c, action)
+  }
+}
+```
+  总之，combineReducers() 做的就是产生一个整体的Reducer 函数。该函数根据state 的key 去执行响应的子Reducer，并将返回结果合并成一个大的State 对象。
+
+  下面是 combineReducers 的简单实现
+```jsx
+const combineReducers = reducers => {
+  return (state={}, action)=>{
+    return Object.keys(reducers).reduce(
+      (nextState, key)=>{
+        nextState[key] = reducers[key](state[key], action);
+        return nextState;
+      },
+      {}
+    );
+  };
+};
+```
+  你可以把所有子Reducer 放在一个文件里面，然后统一引入。
+```jsx
+import { combineReducers } from 'redux'
+import * as reducers from './reducers'
+
+const reducer = combineReducers(reducers)
+```
+
+## 工作流程
+
+{% asset_img reduxflow.jpg %}
+
+  首先，用户发出Action
+```jsx
+store.dispatch(action);
+
+let nextState = todoApp(previousState, action);
+
+// 设置监听函数
+store.subscribe(listener);
+
+function listener(){
+  let newState = store.getState();
+  component.setState(newState);
+}
+```
+
+  然后，Store 自动调用Reducer，并且传两个参数：当前State 和收到的Action。Reducer 会返回新的State。
+```jsx
+store.dispatch(action);
+```
+
+  State 一旦有变化，Store 就会调用监听函数。
+```jsx
+// 设置监听函数
+store.subscribe(listener);
+```
+
+  listener 可以通过store.getState() 得到当前状态。如果使用的是React，这是可以触发重新渲染View。
+```jsx
+function listener(){
+  let newState = store.getState();
+  component.setState(newState);
+}
+```
+
 ## 参考文档
 
 1. [Redux 入门教程（一）：基本用法](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
