@@ -54,6 +54,7 @@ function callbackfn(previousValue, currentValue, currentIndex, array1)
 ```
 
 回调参数 | 定义
+---|---|---
 previousValue | 通过上一次调用回到函数获得的值。如果向`reduce` 方法提供`initialValue` ，则在首次调用函数时，`previousValue` 为`initalValue`
 currentValue | 当期数组元素的值
 currentIndex | 当前数组元素的数字索引
