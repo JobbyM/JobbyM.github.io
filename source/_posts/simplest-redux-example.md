@@ -12,7 +12,15 @@ categories: 技术
 
 ## 简介
 
-1. 这是按照[redux 中文文档](http://cn.redux.js.org/index.html redux) 进行实现的最简redux 实例
+这是按照[redux 中文文档](http://cn.redux.js.org/index.html redux) 进行实现的最简redux 实例
+1. Redux
+  {% cq %} Redux is a predictabel state container for JavaScript apps. {% endcq %}
+2. webpack
+  {% cq %} webpack is a module bundler. {% endcq %}
+3. babel
+  {% cq %} Babel is a compiler for writing next generation JavaScript. {% endcq %}
+
+<!--more-->
 
 ## 操作步骤
 
@@ -140,3 +148,4 @@ $ npm start
 ## 参考文档
 
 1. [redux 中文文档](http://cn.redux.js.org/index.html redux)
+2. [babel-loader](https://github.com/babel/babel-loader)
