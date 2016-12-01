@@ -12,7 +12,7 @@ categories: 技术
 
 ## 简介
 
-这是按照[redux 中文文档](http://cn.redux.js.org/index.html redux) 进行实现的最简redux 实例
+这是按照[redux 中文文档](http://cn.redux.js.org/index.html) 进行实现的最简redux 实例
 1. Redux
   {% cq %} Redux is a predictabel state container for JavaScript apps. {% endcq %}
 2. webpack
@@ -147,5 +147,5 @@ $ npm start
 
 ## 参考文档
 
-1. [redux 中文文档](http://cn.redux.js.org/index.html redux)
+1. [redux 中文文档](http://cn.redux.js.org/index.html)
 2. [babel-loader](https://github.com/babel/babel-loader)
