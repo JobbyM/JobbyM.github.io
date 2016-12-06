@@ -58,7 +58,7 @@ function ActionLink(){
 
 在使用React 时通常你不需要在一个DOM element创建之后，调用`addEventListener`去添加一个侦听器。相反，只需要在element 被初次渲染时添加一个侦听器就可以了。
 
-当你使用[ES6 class}(https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 定义一个组件（component）时，通常的做法是在类（class）中添加一个方法作为事件句柄（event handler）。例如，这个`Toggle` 组件就是渲染一个按钮（button）让用户在“ON”和“OFF”状态之间切换。
+当你使用[ES6 class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 定义一个组件（component）时，通常的做法是在类（class）中添加一个方法作为事件句柄（event handler）。例如，这个`Toggle` 组件就是渲染一个按钮（button）让用户在“ON”和“OFF”状态之间切换。
 ```jsx
 class Toggle extends Component {
   constructor(props){
