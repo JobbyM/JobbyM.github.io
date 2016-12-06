@@ -37,7 +37,7 @@ React elements 处理事件和DOM elements 事件处理非常类似。只有几�
 
 另一个不同就是在React 中你不能通过返回`false` 来阻止默认事件发生。你必须明确的调用`preventDefault`。例如，在纯HTML 中，阻止一个链接跳转打开一个新页面，你可以这样写：
 ```html
-<a href="#" onclick="console.log('The link is clicked.'); return false">
+<a href="#" onclick="console.log('The link is clicked.'); return false">Click me</a>
 ```
 在React 中，可以通过以下方式来代替：
 ```jsx
