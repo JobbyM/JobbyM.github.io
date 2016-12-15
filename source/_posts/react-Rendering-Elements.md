@@ -76,7 +76,6 @@ setInterval(tick, 1000)
 
 >**Note:**
 实际上，多说React 应用只调用`ReactDOM.render()` 方法一次。下一章节我们将学习如何将有代码封装到[stateful components](https://facebook.github.io/react/docs/state-and-lifecycle.html)。
-
 我们建议你不要跳过主题因为它们建立在彼此之上。
 
 ### React Only Updates What's Necessary
