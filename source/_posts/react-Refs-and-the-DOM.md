@@ -11,7 +11,7 @@ comments: true
 
 ## Getting Start
 
-此文章是翻译[Refs and the DOM](https://facebook.github.io/react/docs/refs-and-the-dom.html)这篇React（版本v15.14）官方文档。
+此文章是翻译[Refs and the DOM](https://facebook.github.io/react/docs/refs-and-the-dom.html)这篇React（版本v15.4.0）官方文档。
 
 <!--more-->
 

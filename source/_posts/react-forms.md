@@ -11,7 +11,7 @@ comments: true
 
 ## Getting Start
 
-此文章是翻译[forms](https://facebook.github.io/react/docs/forms.html)这篇React（版本v15.14）官方文档。
+此文章是翻译[forms](https://facebook.github.io/react/docs/forms.html)这篇React（版本v15.4.0）官方文档。
 
 <!--more-->
 
