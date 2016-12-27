@@ -11,7 +11,7 @@ comments: true
 
 ## Getting Start
 
-此文章是翻译[JSX In Depth](https://facebook.github.io/react/docs/jsx-in-depth.html)这篇React（版本v15.14）官方文档。
+此文章是翻译[JSX In Depth](https://facebook.github.io/react/docs/jsx-in-depth.html)这篇React（版本v15.4.0）官方文档。
 
 <!--more-->
 
