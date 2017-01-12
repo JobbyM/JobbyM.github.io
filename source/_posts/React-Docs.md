@@ -17,7 +17,7 @@ comments: true
 
 ## QUICK START
 
-[Installation](https://facebook.github.io/react/docs/installation.html) \-\-\-\-\-\- [中文翻译文档]() 翻译中...
+[Installation](https://facebook.github.io/react/docs/installation.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/01/12/react-Installation/)
 [Hello World](https://facebook.github.io/react/docs/hello-world.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/13/react-Hello-World/)
 [Introducing JSX](https://facebook.github.io/react/docs/introducing-jsx.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/14/react-Introducing-JSX/)
 [Rendering Elements](https://facebook.github.io/react/docs/rendering-elements.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/15/react-Rendering-Elements/)
