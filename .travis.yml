@@ -31,10 +31,12 @@ install:
   - npm install hexo-cli -g
   - npm install
   - npm install hexo-deployer-git --save
+  - npm install hexo-aloglia --save
 
 script:
   - hexo clean
   - hexo g
   - hexo d
+  - hexo aloglia
 
 # E: Build LifeCycle

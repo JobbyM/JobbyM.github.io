@@ -71,3 +71,20 @@ deploy:
   type: git
   repo: git@github.com:JobbyM/JobbyM.github.io.git
   branch: master
+
+# Algolia
+algolia:
+  applicationID: 'SV57WJ53OS'
+  apiKey: 'c7d219504e44d09ab55f5f7a195fce98'
+  adminApiKey: '2115e5a54dbae30b4a84816973aaacac'
+  indexName: 'dev_jobbymsblog'
+  chunkSize: 5000
+  fields:
+    - title
+    - tags
+    - slug
+    - path
+    - excerpt
+    - excerpt:strip
+    - photos
+    - gallery
