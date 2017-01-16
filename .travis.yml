@@ -32,6 +32,7 @@ install:
   - npm install
   - npm install hexo-deployer-git --save
   - npm install hexo-algolia@0.2.0 --save
+  - npm install hexo-generator-sitemap --save
 
 script:
   - hexo clean
