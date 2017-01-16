@@ -307,11 +307,11 @@ duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-#google_site_verification:
+google_site_verification: 0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg
 
 
 # Google Analytics
-#google_analytics:
+google_analytics: UA-90413023-1
 
 # CNZZ count
 #cnzz_siteid:
