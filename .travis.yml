@@ -31,7 +31,7 @@ install:
   - npm install hexo-cli -g
   - npm install
   - npm install hexo-deployer-git --save
-  - npm install hexo-algolia --save
+  - npm install hexo-algolia@0.2.0 --save
 
 script:
   - hexo clean
