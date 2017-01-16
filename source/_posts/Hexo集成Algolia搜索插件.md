@@ -1,7 +1,14 @@
 ---
 title: Hexo集成Algolia搜索插件
 date: 2017-01-16 13:13:57
+comments: true
 tags:
+  - 技术
+  - 静态独立博客
+  - Hexo
+  - Algolia
+  - Swiftype
+categories: 技术
 ---
 
 
