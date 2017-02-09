@@ -62,7 +62,7 @@ comments: true
 * [Immutability Helpers](https://facebook.github.io/react/docs/update.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/01/22/react-Immutability-Helpers/)
 * [PureRenderMixin](https://facebook.github.io/react/docs/pure-render-mixin.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/07/react-PureRenderMixin/)
 * [Shallow Compare](https://facebook.github.io/react/docs/shallow-compare.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/08/react-Shallow-Compare/)
-* [Two-way Binding Helpers](https://facebook.github.io/react/docs/two-way-binding-helpers.html) \-\-\-\-\-\- [中文翻译文档]() 翻译中...
+* [Two-way Binding Helpers](https://facebook.github.io/react/docs/two-way-binding-helpers.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/09/react-Two-way-Binding-Helpers/)
 
 ## CONTRIBUTING
 
