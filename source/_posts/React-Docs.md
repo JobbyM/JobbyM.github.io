@@ -69,4 +69,4 @@ comments: true
 [How to Contribute](https://facebook.github.io/react/contributing/how-to-contribute.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/10/react-How-to-Contribute/)
 [Codebase Overview](https://facebook.github.io/react/contributing/codebase-overview.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/13/react-Codebase-Overview/)
 [Implementation Notes](https://facebook.github.io/react/contributing/implementation-notes.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/14/react-Implementation-Notes/)
-[Design Principles](https://facebook.github.io/react/contributing/design-principles.html) \-\-\-\-\-\- [中文翻译文档]() 翻译中...
+[Design Principles](https://facebook.github.io/react/contributing/design-principles.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/15/react-Design-Principles/)
