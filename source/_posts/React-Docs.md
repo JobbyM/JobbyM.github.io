@@ -43,7 +43,7 @@ comments: true
 [Reconciliation](https://facebook.github.io/react/docs/reconciliation.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/01/03/react-Reconciliation/)
 [Context](https://facebook.github.io/react/docs/context.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/01/04/react-Context/)
 [Web Components](https://facebook.github.io/react/docs/web-components.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/01/05/react-Web-Components/)
-[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html) \-\-\-\-\-\- [中文翻译文档]() 翻译中...
+[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2017/02/16/react-Higher-Order-Components/) v15.4.2
 
 ## REFERENCE
 
