@@ -92,7 +92,6 @@ categories: 技术
 ```css
   #container .column {
     height: 200px;
-    position: relative;
     float: left;
   }
   #center {
@@ -172,9 +171,12 @@ categories: 技术
 看上去这样
 {% asset_img holygrail-5.jpg %}
 
-然而此时左右俩栏（`left`、`center`）也锁了进来，于是需要采取相对定位方法，各自相对于自己把自己挪出去
+然而此时左右俩栏（`left`、`center`）也锁了进来，于是需要采取相对定位方法(`position: relative;`)，各自相对于自己把自己挪出去
 
 ```css
+  #container .column {
+    position: relative;
+  }
   #left {
     background-color: red;
     width: 200px;
