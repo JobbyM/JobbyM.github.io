@@ -12,7 +12,7 @@ categories: 技术
 
 ## 什么是双飞翼布局
 
-双飞翼布局是上一篇文章[CSS布局之圣杯布局](https://jobbym.github.io/2017/03/03/CSS布局之圣杯布局/)的改进，圣杯布局中用到了浮动（float）、负边距（margin）和相对定位（position：relative），不添加额外的标签。而双飞布局需要用到（float）、负边距（margin）、添加额外的标签，没有用到相对定位（position：relative）。
+双飞翼布局是上一篇文章[CSS布局之圣杯布局](https://jobbym.github.io/2017/03/03/CSS布局之圣杯布局/)的改进，圣杯布局中用到了浮动（`float`）、负边距（`margin`）和相对定位（`position：relative`），不添加额外的标签。而双飞布局需要用到（`float`）、负边距（`margin`）、添加额外的标签，没有用到相对定位（`position：relative`）。
 
 <!--more-->
 
