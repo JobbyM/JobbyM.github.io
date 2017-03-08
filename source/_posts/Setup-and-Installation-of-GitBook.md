@@ -55,7 +55,7 @@ $ gitbook init
 预览并且启动服务使用：
 
 ```cmd
-$ gitbook server
+$ gitbook serve
 ```
 
 或者构建静态网站：
