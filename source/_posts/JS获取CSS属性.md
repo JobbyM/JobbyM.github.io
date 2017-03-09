@@ -1,7 +1,12 @@
 ---
 title: JS获取CSS属性
 date: 2017-03-07 16:09:30
+comments: true
 tags:
+  - 技术
+  - CSS
+  - getComputedStyle
+categories: 技术
 ---
 
 主要是介绍一些使用js 来获取元素的CSS 样式的方法
