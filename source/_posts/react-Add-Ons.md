@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Add-Ons](https://facebook.github.io/react/docs/addons.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Add-Ons](https://facebook.github.io/react/docs/addons.html)这篇React（版本v15.4.0）官方文档。
 
 ## Add-Ons
 
@@ -22,12 +18,12 @@ React add-ons 是用于构建React 应用的有用的使用模块集合。**这�
 * [TransitionGroup 和CSSTransitionGroup](https://facebook.github.io/react/docs/animation.html)，用于处理不容易实现的动画和转换，例如在component 移除之前。
 * [createFragment](https://facebook.github.io/react/docs/create-fragment.html) 创建一套额外帧的子节点。
 
-
 下面这些add-ons 尽在React 开发版本中（没有缩小）：
 
 * [Perl](https://facebook.github.io/react/docs/perf.html) 寻找优化机会的新能分析器。
 * [ReactTestUtils](https://facebook.github.io/react/docs/test-utils.html)编写测试用例的简单助手。
 
+<!--more-->
 
 ### Legacy Add-ons
 

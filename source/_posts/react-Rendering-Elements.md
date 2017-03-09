@@ -9,11 +9,8 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
+> 此文章是翻译[Rendering Elements](https://facebook.github.io/react/docs/rendering-elements.html)这篇React（版本v15.4.0）官方文档。
 
-此文章是翻译[Rendering Elements](https://facebook.github.io/react/docs/rendering-elements.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
 
 ## Rendering Elements
 
@@ -24,6 +21,8 @@ Elements 是构建React app 的最小块。
 const element = <h1>Hello, world</h1>
 ```
 不像浏览器DOM elements，React elements 是纯对象，非常容易创建。React DOM 关心更新DOM 来匹配React elements。
+
+<!--more-->
 
 >**Note：**
 Elements 可能和另一个广为人知的概念components 产生混淆。我们将要在[下一章节](https://facebook.github.io/react/docs/components-and-props.html)介绍components。Components 是有elements 组成，我们建议你先阅读这部分再跳到下一章。

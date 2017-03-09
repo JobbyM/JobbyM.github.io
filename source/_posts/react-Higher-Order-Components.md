@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Higher-Order Components](https://facebook.github.io/react/docs/higher-order-components.html)这篇React（版本v15.4.0）官方文档。
 
 ## Higer-Order Components
 
@@ -30,6 +26,8 @@ const EnhancedComponent = higerOrderComponent(WrappedComponent);
 HOC 在React 第三方库中是常见的，就像Redux 的[connect]() 和Relay 的[createContainer]()。
 
 在文档中，我们将讨论高阶component 为什么有用，以及你自己如何去写。
+
+<!--more-->
 
 ## Use HOCs For Cross-Cutting Concerns
 

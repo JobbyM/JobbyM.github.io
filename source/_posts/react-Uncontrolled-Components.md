@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Uncontrolled Components](https://facebook.github.io/react/docs/uncontrolled-components.html))这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Uncontrolled Components](https://facebook.github.io/react/docs/uncontrolled-components.html))这篇React（版本v15.4.0）官方文档。
 
 ## Uncontrolled Components
 
 在大多数情况下，我们建议使用[controlled component](https://facebook.github.io/react/docs/forms.html) 去实现forms。在一个controlled component 中，form 数据被React component 控制。这个uncontrolled components 替代方案中，form 数据被DOM 自身控制。
 
 写一个uncontrolled component 而不是为每一个state 更新写一个事件句柄（event handler），你可以[使用ref](https://facebook.github.io/react/docs/refs-and-the-dom.html) 从DOM 中获取值。
+
+<!--more-->
 
 例如，下面代码是在一个uncontrolled component 中接受一个名字：
 ```jsx

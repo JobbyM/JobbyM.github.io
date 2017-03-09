@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[React.Component](https://facebook.github.io/react/docs/react-component.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[React.Component](https://facebook.github.io/react/docs/react-component.html)这篇React（版本v15.4.0）官方文档。
 
 ## React.Component
 
 [Components](https://facebook.github.io/react/docs/components-and-props.html)让你将UI 分成独立的、可复用的块，并且独立的思考每一块。`React.Component` 是由[React](https://facebook.github.io/react/docs/react-api.html)提供。
+
+<!--more-->
 
 ## Overview
 

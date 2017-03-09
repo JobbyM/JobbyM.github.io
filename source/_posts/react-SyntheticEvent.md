@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[SyntheticEvent](https://facebook.github.io/react/docs/events.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[SyntheticEvent](https://facebook.github.io/react/docs/events.html)这篇React（版本v15.4.0）官方文档。
 
 ## SyntheticEvent
 
@@ -23,6 +19,7 @@ SynthecticEvent 入门参考文档包括React 时间系统中的表单部分。�
 
 你的事件句柄将会传入一个`SyntheticEvent` 实例，一个跨浏览器的包装器包装着浏览器原生事件。它有着和浏览器原生事件相同的接口，包括`stopPropagation()` 和`preventDefault()` ,除了事件同一工作跨所有浏览器。
 
+<!--more-->
 
 如果你发现由于某些原因你需要底层浏览器事件，可以简单地使用`nativeEvent` 特性去处理它。每一个`SyntheticEvent` 对象有下面这些特性：
 ```jsx

@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Hello World](https://facebook.github.io/react/docs/hello-world.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Hello World](https://facebook.github.io/react/docs/hello-world.html)这篇React（版本v15.4.0）官方文档。
 
 ## Hello World
 
@@ -27,6 +23,8 @@ ReactDOM.render(
 )
 ```
 它渲染了一个打印"Hello World" 在浏览器页面上。
+
+<!--more-->
 
 接下来的部分将向你逐渐介绍使用React。我们将会检测构建React  应用的块：elements 和components。一旦你掌握它们，你就可以从小的复用块构建复杂的应用。
 

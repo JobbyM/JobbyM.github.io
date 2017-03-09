@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Design Principles](https://facebook.github.io/react/contributing/design-principles.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Design Principles](https://facebook.github.io/react/contributing/design-principles.html)这篇React（版本v15.4.0）官方文档。
 
 ## Design Principles
 
@@ -22,6 +18,8 @@ comments: true
 >**Note：**
 这篇文档假设对React 深入的了解。它描述了React 自身的设计规则，而不是React component 或应用。
 作为一个对React 的介绍，查看[Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)替代。
+
+<!--more-->
 
 ### Composition
 

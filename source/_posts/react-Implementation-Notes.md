@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Implementation Notes](https://facebook.github.io/react/contributing/implementation-notes.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Implementation Notes](https://facebook.github.io/react/contributing/implementation-notes.html)这篇React（版本v15.4.0）官方文档。
 
 ## Implementation Notes
 
@@ -22,6 +18,8 @@ comments: true
 这是非常技术性的，并且呈现对React 公共API 的强烈理解，以及如何划分为核心（core），渲染器（renderer）以及reconciler。如果你对React 代码库不是非常了解，首先阅读[the codebase overview](https://facebook.github.io/react/contributing/codebase-overview.html)。
 
 目前stack reconciler 是所有React 生产代码中最有效的。它位于[src/renderers/shared/stack/reconciler](https://github.com/facebook/react/tree/master/src/renderers/shared/stack) 并且被React DOM 和React Native 使用。
+
+<!--more-->
 
 ### Video: Buiding React from Scratch
 

@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[lifting-state-up](https://facebook.github.io/react/docs/lifting-state-up.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[lifting-state-up](https://facebook.github.io/react/docs/lifting-state-up.html)这篇React（版本v15.4.0）官方文档。
 
 ## Lifting State Up
 
@@ -33,6 +29,8 @@ function BoilingVerdict(props){
 ```
 
 然后，我们会创建一个`Calculator` 组件。它渲染一个`<input>` 接受你的键入的温度（ temperature），并将此值保存在`this.state.value` 中。
+
+<!--more-->
 
 另外，它会当前输入值渲染`BoilingVerdict`。
 ```jsx

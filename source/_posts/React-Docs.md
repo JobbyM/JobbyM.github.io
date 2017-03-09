@@ -9,11 +9,8 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
+> 本文是React 官网Docs 相关文章的翻译目录，版本为v15.4.0。
 
-本文是React 官网Docs 相关文章的翻译目录，版本为v15.4.0。
-
-<!--more-->
 
 ## QUICK START
 
@@ -30,6 +27,8 @@ comments: true
 [Lifting State Up](https://facebook.github.io/react/docs/lifting-state-up.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/08/react-lifting-state-up/)
 [Composition vs Inheritance](https://facebook.github.io/react/docs/composition-vs-inheritance.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/09/react-composition-vs-inheritance/)
 [Thinking In React](https://facebook.github.io/react/docs/thinking-in-react.html) \-\-\-\-\-\- [中文翻译文档](https://jobbym.github.io/2016/12/12/react-thinking-in-react/)
+
+<!--more-->
 
 ## ADVANCED GUIDES
 

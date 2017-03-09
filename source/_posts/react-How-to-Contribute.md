@@ -9,16 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[How to Contribute](https://facebook.github.io/react/contributing/how-to-contribute.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[How to Contribute](https://facebook.github.io/react/contributing/how-to-contribute.html)这篇React（版本v15.4.0）官方文档。
 
 ## How to Contribute
 
 React 是Facebook 的第一个开源项目，它正在积极发展并且在迁移代码到[facebook.com](https://www.facebook.com/) 任何位置。我们仍然正在解决节点（kinkes）去是贡献这个项目尽可能的容易和透明，但是我们还没有达到。希望这篇文档能够使贡献清晰并且能够回答你可能遇到的一些问题。
 
+<!--more-->
 
 ### [Code of Conduct](https://code.facebook.com/codeofconduct)
 

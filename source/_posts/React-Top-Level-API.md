@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[React Top-Level API](https://facebook.github.io/react/docs/react-api.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[React Top-Level API](https://facebook.github.io/react/docs/react-api.html)这篇React（版本v15.4.0）官方文档。
 
 ## React Top-Level API
 
 `React` 是React 库的入口。如果你用script 标签来使用React，这些顶级API 都在`React` 这个全局变量上。如果你在npm  下使用ES6，你可以这样写`import React from 'react'`。如果你在npm 下使用ES5，你可以这样写`var React = require('react')`。
+
+<!--more-->
 
 ## Overview
 

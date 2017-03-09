@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[lists-and-keys](https://facebook.github.io/react/docs/lists-and-keys.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[lists-and-keys](https://facebook.github.io/react/docs/lists-and-keys.html)这篇React（版本v15.4.0）官方文档。
 
 ## Lists and Keys
 
@@ -28,6 +24,8 @@ console.log(doubled)
 代码输出值为`[2, 4, 6, 8, 10]`。
 
 在React 中，改变[elements](https://facebook.github.io/react/docs/rendering-elements.html) 数组的值几乎是一样的。
+
+<!--more-->
 
 ### Rendering Multiple Components
 

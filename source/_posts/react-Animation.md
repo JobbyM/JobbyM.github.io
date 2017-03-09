@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Animation](https://facebook.github.io/react/docs/animation.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Animation](https://facebook.github.io/react/docs/animation.html)这篇React（版本v15.4.0）官方文档。
 
 ## Animation Add-Ons
 
 [ReactTransitionGroup](https://facebook.github.io/react/docs/animation.html#reacttransitiongroup) add-on component 是低级的动画API，[ReactCSSTransitionGroup](https://facebook.github.io/react/docs/animation.html#reactcsstransitiongroup) 是一个简单显示基本CSS 动画和变形的add-on component。
+
+<!--more-->
 
 ## High-level API: ReactCSSTransitionGroup
 

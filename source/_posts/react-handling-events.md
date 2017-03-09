@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[handling-events](https://facebook.github.io/react/docs/handling-events.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+>此文章是翻译[handling-events](https://facebook.github.io/react/docs/handling-events.html)这篇React（版本v15.4.0）官方文档。
 
 ## Handling Event
 
@@ -34,6 +30,8 @@ React elements 处理事件和DOM elements 事件处理非常类似。只有几�
   Activate Lasers
 </button>
 ```
+
+<!--more-->
 
 另一个不同就是在React 中你不能通过返回`false` 来阻止默认事件发生。你必须明确的调用`preventDefault`。例如，在纯HTML 中，阻止一个链接跳转打开一个新页面，你可以这样写：
 ```html

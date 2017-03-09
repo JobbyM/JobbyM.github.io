@@ -9,18 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[composition vs inheritance](https://facebook.github.io/react/docs/composition-vs-inheritance.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
-
+> 此文章是翻译[composition vs inheritance](https://facebook.github.io/react/docs/composition-vs-inheritance.html)这篇React（版本v15.4.0）官方文档。
 
 ## Composition vs Inheritance
 
 React 有一个非常强大的组合模式（composition model），在组件之间，我们建议使用组合（composition）而不是继承（inheritance）。
 
 在这个部分，我们将会考虑几个对React 开发新手来说经常遇到的几个继承问题，展示我们如何使用组合方式来解决它们。
+
+<!--more-->
 
 ### Containment
 

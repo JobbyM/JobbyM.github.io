@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Keyed Fragments](https://facebook.github.io/react/docs/create-fragment.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Keyed Fragments](https://facebook.github.io/react/docs/create-fragment.html)这篇React（版本v15.4.0）官方文档。
 
 ## Keyed Fragments
 
@@ -44,6 +40,8 @@ function Swapper(props) {
 当你改变`swapped` 属性时，孩子节点将会被卸载然后再重新加载，因为因为这里没有任何key 标志在这两套孩子节点上。
 
 为了解决这个问题，你可以使用`createFragment` add-ons 去给每一套孩子节点设置key。
+
+<!--more-->
 
 **Array<ReactNode> createFragment(object children) #**
 

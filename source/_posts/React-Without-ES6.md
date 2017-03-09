@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[React Without ES6](https://facebook.github.io/react/docs/react-without-es6.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[React Without ES6](https://facebook.github.io/react/docs/react-without-es6.html)这篇React（版本v15.4.0）官方文档。
 
 ## React Without ES6
 
@@ -34,6 +30,8 @@ var Greeting = React.createClass({
 })
 ```
 ES6 class API 的使用除了几个例外和`React.createClass` 非常相似。
+
+<!--more-->
 
 ### Declaring Prop Types and Default Props
 

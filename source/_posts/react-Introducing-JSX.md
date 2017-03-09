@@ -9,11 +9,8 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
+> 此文章是翻译[Introducing JSX](https://facebook.github.io/react/docs/introducing-jsx.html)这篇React（版本v15.4.0）官方文档。
 
-此文章是翻译[Introducing JSX](https://facebook.github.io/react/docs/introducing-jsx.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
 
 ## Introducing JSX
 
@@ -26,6 +23,8 @@ const element = <h1>Hello , world!</h1>
 它就是JSX，它是JavaScript 的一个语法扩展。我们建议在React 中使用它去描述UI 的展示。JSX 可能会使你记起模版语言（a template language），但是它使用JavaScript 的所有功能。
 
 JSX 产生React 的elements。我们将在[下一章](https://facebook.github.io/react/docs/rendering-elements.html) 研究如何将它们渲染为DOM。接下来，你会了解对你使用React 所需要的基本的JSX 知识
+
+<!--more-->
 
 ### Embedding Expressiongs in JSX
 

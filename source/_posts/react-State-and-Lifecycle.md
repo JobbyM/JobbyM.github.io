@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[State and Lifecycle](https://facebook.github.io/react/docs/state-and-lifecycle.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[State and Lifecycle](https://facebook.github.io/react/docs/state-and-lifecycle.html)这篇React（版本v15.4.0）官方文档。
 
 ## State and Lifecycle
 
@@ -39,6 +35,8 @@ function tick(){
 setInterval(tick, 1000)
 ```
 在这一章节中，我们将学习如何使时钟component 真正可复用和封装。它将设置自己的定时器来每一秒更新它自己。
+
+<!--more-->
 
 我们开始封装始时钟外观：
 ```jsx

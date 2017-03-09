@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Two-way Binding Helpers](https://facebook.github.io/react/docs/two-way-binding-helpers.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Two-way Binding Helpers](https://facebook.github.io/react/docs/two-way-binding-helpers.html)这篇React（版本v15.4.0）官方文档。
 
 ## Two-way Binding Helpers
 
@@ -34,6 +30,8 @@ var LinkedStateMixin = React.addons.LinkedStateMixin; // ES5 with react-with-add
 在React 中，数据流是单向的：从拥有者到孩子。这是因为在[the Von Neumann model of computing]() 中数据只能向一个方向流动。你可以认为它是“单向绑定的”。
 
 然而，需要引诱需要你去读取数据并将其返回到你的程序中。例如，当开发表单时，当你收到用户的输入，你需要更新React 的`state`。或者可能你想要在JavaScript 中执行布局去对DOM element 大小的改变做出响应。
+
+<!--more-->
 
 在React 中，你将可以通过监听“change”事件，读取从你的数据源（通常是DOM），在你的component 中的一个上调用`setState()` 去实现它。“关闭数据流循环 （closing the data flow loop）”明确地导致更容易理解和更容易维护程序。查看[our form documentation](https://facebook.github.io/react/docs/forms.html)获取更多信息。
 

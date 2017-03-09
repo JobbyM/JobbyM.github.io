@@ -9,12 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[JSX In Depth](https://facebook.github.io/react/docs/jsx-in-depth.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
-
+> 此文章是翻译[JSX In Depth](https://facebook.github.io/react/docs/jsx-in-depth.html)这篇React（版本v15.4.0）官方文档。
 
 ## JSX In Depth
 
@@ -45,6 +40,8 @@ React.createElement(
 )
 ```
 如果你想要对一些特殊的JSX 转换成JavaScript进行彻底验证，你可以在[the online Babel compiler](https://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015%2Creact%2Cstage-0) 进行试验。
+
+<!--more-->
 
 ### Specifying The React Element Type
 

@@ -9,11 +9,8 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
+> 此文章是翻译[Installation](https://facebook.github.io/react/docs/installation.html)这篇React（版本v15.4.0）官方文档。
 
-此文章是翻译[Installation](https://facebook.github.io/react/docs/installation.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
 
 ## Installation
 
@@ -24,6 +21,8 @@ React 是灵活的并且可以在各种各样的项目中使用。你也可以�
 如果你只是感兴趣尝试一下React，你可以使用CodePen。从[this Hello World example code](http://codepen.io/gaearon/pen/rrpgNB?editors=0010) 开始。你不用按照安装任何东西；你可以只修改代码就可以查看如果它工作。
 
 如果你更喜欢使用你自己的文本编辑器，你也可以[download this HTML file](https://facebook.github.io/react/downloads/single-file-example.html)，编辑它，并且在你的浏览器中从本地文件系统打开它。它做一个慢的运行时代码转换，所以不在生产环境使用它。
+
+<!--more-->
 
 ## Creating a Single Page Application
 

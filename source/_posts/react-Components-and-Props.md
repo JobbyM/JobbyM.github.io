@@ -9,11 +9,8 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
+> 此文章是翻译[Components and Props](https://facebook.github.io/react/docs/components-and-props.html)这篇React（版本v15.4.0）官方文档。
 
-此文章是翻译[Components and Props](https://facebook.github.io/react/docs/components-and-props.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
 
 ## Components and Props
 
@@ -30,6 +27,8 @@ function Welcome(props){
 }
 ```
 这个函数是一个有效的React component因为它接受一个“props”对象参数接受数据并且返回一个React element。我们称这样的component 为“funcitional”因为它们是字面量JavaScript 函数。
+
+<!--more-->
 
 你也可以使用[ES6 class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 去定义一个component：
 ```jsx

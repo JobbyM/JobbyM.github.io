@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Typechecking With PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Typechecking With PropTypes](https://facebook.github.io/react/docs/typechecking-with-proptypes.html)这篇React（版本v15.4.0）官方文档。
 
 ## Typechecking With PropTypes
 
@@ -32,6 +28,8 @@ Greeting.propTypes = {
 }
 ```
 `React.PropTypes` 导出一系列的验证器（validator）可以用来确认你收到有效的数据。在这个例子中，我们使用`React.PropTypes.string`。当一个无效的值被提供给prop，一个警告就会在JavaScript console 中显示。为了性能原因，`propTypes` 只在开发模式进行验证。
+
+<!--more-->
 
 ### React.PropTypes
 

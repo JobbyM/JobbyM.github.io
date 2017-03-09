@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Immutability Helpers](https://facebook.github.io/react/docs/update.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Immutability Helpers](https://facebook.github.io/react/docs/update.html)这篇React（版本v15.4.0）官方文档。
 
 ## Immutability Helpers
 
@@ -30,6 +26,8 @@ var update = React.addons.update; // ES5 with react-with-addons.js
 ## Overview
 
 React 让你使用你想要的任何数据管理类型，包括变化。然而，如果你在你应用的性能关键的地方使用不可变的数据，它很容易实现一个快速的[shouldComponentUpdate()](https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate)方法去显著地加速你的应用。
+
+<!--more-->
 
 在JavaScript 中处理不可变的数据比本身语言就为不可变数据设计的更困难，例如[Clojure](http://clojure.org/)。然而，我们提供一个简单的不可变的助手，`update()`，它可以更容易地处理这种类型的数据，而没有根本上改变你的数据是如何展示的。你也可以查看Facebook 的[Immutable-js](https://facebook.github.io/immutable-js/docs/) 其中的[Advanced Performance](https://facebook.github.io/react/docs/advanced-performance.html) 章节部分获取更多关于Immutable-js 的细节。
 

@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[PureRenderMixin](https://facebook.github.io/react/docs/pure-render-mixin.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[PureRenderMixin](https://facebook.github.io/react/docs/pure-render-mixin.html)这篇React（版本v15.4.0）官方文档。
 
 ## PureRenderMixin
 
@@ -33,6 +29,9 @@ React.createClass({
   }
 })
 ```
+
+<!--more-->
+
 使用ES6 class 语法的例子：
 ```jsx
 import PureRenderMixin from 'react-addons-pure-render-=mixin';

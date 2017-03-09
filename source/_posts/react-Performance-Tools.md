@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Performance Tools](https://facebook.github.io/react/docs/perf.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Performance Tools](https://facebook.github.io/react/docs/perf.html)这篇React（版本v15.4.0）官方文档。
 
 ## Performance Tools
 
@@ -35,6 +31,7 @@ React 在沙盒中是非常快的。然而，在你需要压缩你的应用的�
 * [“Performance Engineering with React”](http://benchling.engineering/performance-engineering-with-react/)
 * [“A Deep Dive into React Perf Debugging”](http://benchling.engineering/deep-dive-react-perf-debugging/)
 
+<!--more-->
 
 ## Development vs. Production Builds
 

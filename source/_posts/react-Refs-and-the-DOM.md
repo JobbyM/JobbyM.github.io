@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Refs and the DOM](https://facebook.github.io/react/docs/refs-and-the-dom.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Refs and the DOM](https://facebook.github.io/react/docs/refs-and-the-dom.html)这篇React（版本v15.4.0）官方文档。
 
 ## Refs and the DOM
 
 在典型的React 数据流（dataflow）中， [props](https://facebook.github.io/react/docs/components-and-props.html) 是父component 同子节点进行交流的唯一方式。为了修改一个子节点，你需要用新的props 进行重新渲染。然而，还有集中需要你在典型的数据流之外进行命令式修改一个子节点。这个被修改的子节点可能是一个React comoponent 实例，也有可能是一个DOM element。对于上述两种情况，React 提供了一种应急方案（an escape hatch）.
+
+<!--more-->
 
 ### The ref Callback Attribute
 

@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[ReactDOM](https://facebook.github.io/react/docs/react-dom.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[ReactDOM](https://facebook.github.io/react/docs/react-dom.html)这篇React（版本v15.4.0）官方文档。
 
 ## ReactDOM
 
 如果你用script 标签来使用React，这些顶级APIs 将会在全局`ReactDOM` 上有用。如果你在npm 中使用ES6，你可以写`import ReactDOM from 'react-dom'`。如果你在npm 中使用ES5，你可以写`var ReactDOM = require('react-dom')`。
+
+<!--more-->
 
 ## Overview
 

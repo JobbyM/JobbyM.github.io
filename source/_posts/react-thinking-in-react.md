@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[thingking in react](https://facebook.github.io/react/docs/thingking-in-react.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[thingking in react](https://facebook.github.io/react/docs/thingking-in-react.html)这篇React（版本v15.4.0）官方文档。
 
 ## Thinking in React
 
 在我们看来，React 是使用JavaScript 构建大型开始Web 应用的首选。它已经在Facebook 和Instagram 中被广泛应用了。
 
 React 最大的方面是使你考虑如果构建你的应用。在这篇文档中，我们将带你浏览通过使用React 构建一个searchable product data的思维过程。
+
+<!--more-->
 
 ### Start With A Mock
 
@@ -49,21 +47,21 @@ React 最大的方面是使你考虑如果构建你的应用。在这篇文档�
 
 你会发现在我们这个简单的app 中有5 个组件。我们使用斜体数据来表示每一个组件
 
-	1. `FiterableProductTable`（orange）：包含整个例子
-	2. `SearchBar`（blue）：接受所有的用户输入
-	3. `ProdutTable`（green）：根据用户输入来展示过滤的数据集合
-	4. `ProductCategoryRow`（turquoise）：展示每一个分类的标头
-	5. `ProductRow`（red）：每一个产品展示一行
+1. `FiterableProductTable`（orange）：包含整个例子
+2. `SearchBar`（blue）：接受所有的用户输入
+3. `ProdutTable`（green）：根据用户输入来展示过滤的数据集合
+4. `ProductCategoryRow`（turquoise）：展示每一个分类的标头
+5. `ProductRow`（red）：每一个产品展示一行
 
 如果你看`ProductTable`，你会发现表格头（包含"Name" 和"Price" 标签）并不是单独一个组件。这是一个重要的表现，并且这里可以使用两种方式作为参数传入。例如，我们将它作为`ProductTable` 的一部分，因为因为它是`ProductTable` 的负责的渲染数据的一部分。无论怎样，如果它的头变复杂了（例如，如果我们添加了一个排序），最好的方式的作为一个单独的`ProductTableHeader`组件。
 
 现在我们已经确认了在模拟中的组件，让我们来安排它们称为一个层次。这是非常容易的。在模拟中，组件可以作为另一个组件的孩子进行展示：
 
-	* `FilterableProductTable`
-		* `SearchBar`
-		* `ProductTable`
-			* `ProductCategoryRow`
-			* `ProductRow`
+* `FilterableProductTable`
+	* `SearchBar`
+	* `ProductTable`
+		* `ProductCategoryRow`
+		* `ProductRow`
 
 ### Step 2: Build A Static Version in React
 
@@ -179,26 +177,25 @@ ReactDOM.render(
 
 考虑我们在实例应用程序中所有的数据块。我们有：
 
-	* 最初的产品列表（`The original list of products`）
-	* 用户键入的搜索文本（`The search text the user has entered`）
-	* checkbox 的值（`The value of the checkbox`）
-	* 产品过滤列表（`The filtered list of products`）
+* 最初的产品列表（`The original list of products`）
+* 用户键入的搜索文本（`The search text the user has entered`）
+* checkbox 的值（`The value of the checkbox`）
+* 产品过滤列表（`The filtered list of products`）
 
 
 让我们通过每一个数组块来找到state。简单地问每一个数据块的三个问题：
 
-	1. 它是父组件通过props 传递的吗？如果是，它很可能不是state。
-	2. 它随着时间不改变吗？如果是，它很可能不是state。
-	3. 在组件中，你能够基于其他的state 或props 来计算出它吗？如果是，它不是state。
+1. 它是父组件通过props 传递的吗？如果是，它很可能不是state。
+2. 它随着时间不改变吗？如果是，它很可能不是state。
+3. 在组件中，你能够基于其他的state 或props 来计算出它吗？如果是，它不是state。
 
 
 `The original list of products`是通过props 进行传递的，所以它不是state 。` The search text and the checkbox ` 似乎是state 因为它们随着时间而改变，并且不能通过其它数据来计算获取。最后，`The filtered list of products` 不是state，因为它可以通过结合`the original list of products` 和 `the searche text and value of the checkbox` 计算出来。
 
 所以最终，我们的state 是：
 
-	* 用户键入的搜索文本（`The search text the user has entered`）
-	* checkbox 的值（`The value of the checkbox`）
-
+* 用户键入的搜索文本（`The search text the user has entered`）
+* checkbox 的值（`The value of the checkbox`）
 
 ### Step 4: Identify Where Your State Should Live
 
@@ -315,17 +312,17 @@ OK，现在我们已经确认了app state 的最小集合。Next，我们需要�
 
 对于你应用中的每一个state ：
 
-	* 确认每一个组件基于那个state 来进行渲染
-	* 找到一个共同的所有者组件（一个单独的组件在所有的需要state的层级中）
-	* 要么是这个共同的拥有者，要么是在这个公共拥有者之上的组件拥有这个state
-	* 如果你不能找到拥有这个state 的组件，可以简单的创建一个组件来拥有这个state 并将其添加到需要这个state 的所有组件的层级之上
+* 确认每一个组件基于那个state 来进行渲染
+* 找到一个共同的所有者组件（一个单独的组件在所有的需要state的层级中）
+* 要么是这个共同的拥有者，要么是在这个公共拥有者之上的组件拥有这个state
+* 如果你不能找到拥有这个state 的组件，可以简单的创建一个组件来拥有这个state 并将其添加到需要这个state 的所有组件的层级之上
 
 
 让我们在我们的应用中应用这个策略：
 
-	* `ProductTable` 需要这个state 去过滤产品列表（product list），并且`SearchBar` 需要去展示搜索文字（search text）和选中状态（checked）state
-	* 这个通用的拥有组件是`FilterableProductTable`
-	* 在概念上来说是有道理的，这个filter text 和checked value 位于`FilterableProductTable` 组件中
+* `ProductTable` 需要这个state 去过滤产品列表（product list），并且`SearchBar` 需要去展示搜索文字（search text）和选中状态（checked）state
+* 这个通用的拥有组件是`FilterableProductTable`
+* 在概念上来说是有道理的，这个filter text 和checked value 位于`FilterableProductTable` 组件中
 
 
 Cool，所以我们决定我们的state 位于`FilterableProductTable `。首先在`FilterableProductTable ` 的`construct` 中添加实例属性`this.state = {filterText: '',inStockOnly: false}` 中去初始化应用的state。然后，将`filterText`和`inStockOnly`作为prop 传递给`SearchBar`和`ProductTable`。最后，使用这些props 过滤`ProductTable` 中的row 以及在`SearchBar` 中设置form fields 的值。

@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Reconciliation](https://facebook.github.io/react/docs/reconciliation.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Reconciliation](https://facebook.github.io/react/docs/reconciliation.html)这篇React（版本v15.4.0）官方文档。
 
 ## Reconciliation
 
 React 提供声明式（declarative）API 所以你不必担心每次更新的变化。这使得写应用更加容易，但它可能并不明显是如何在React 中实现的。本文解释了我们在React 的比较算法（“diffing”algorithm ）如何使component 的更新变得可预见，以及足够快到高性能应用。
+
+<!--more-->
 
 ### Motivation
 

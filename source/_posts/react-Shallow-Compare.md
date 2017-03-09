@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Shallow Compare](https://facebook.github.io/react/docs/shallow-compare.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Shallow Compare](https://facebook.github.io/react/docs/shallow-compare.html)这篇React（版本v15.4.0）官方文档。
 
 ## Shallow Compare
 
@@ -32,6 +28,8 @@ var shallowCompare = React.addons.shallowCompare; // ES5 with react-with-addon.j
 在[React.PureComponent](https://facebook.github.io/react/docs/react-api.html#react.purecomponent)被提出之前，`ShallowCompare`通常被用来实现同[PureRenderMixin](https://facebook.github.io/react/docs/pure-render-mixin.html)相关的功能，在React 中使用ES6 class 时。
 
 如果你的React component 的渲染函数是“纯的（pure）”（换句话说，给定同样的props 和state 返回相同的结果），在某些情况下，你可以使用这个帮助函数提升性能。
+
+<!--more-->
 
 例子：
 ```jsx

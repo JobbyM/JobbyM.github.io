@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Test Utilities](https://facebook.github.io/react/docs/test-utils.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Test Utilities](https://facebook.github.io/react/docs/test-utils.html)这篇React（版本v15.4.0）官方文档。
 
 ## Test Utilities
 
@@ -29,6 +25,7 @@ var ReactTestUtils = React.addons.TestUtils // ES5 with react-with-addons.js
 
 `ReactTestUtils` 便于在你选择的测试框架中测试React components。在Facebook，我们使用[Jest](https://facebook.github.io/jest/) 进行轻松的JavaScript测试。同Jest 网站的[React 使用说明](http://facebook.github.io/jest/docs/tutorial-react.html#content) 进行Jest 入门学习。
 
+<!--more-->
 
 >**Note：**
 Airbnb 已经发布了一个Enzyme 的测试工具，它可以容易地断言（assert）、操作（manipulate）、穿过（traverse）你的React component 的输出。如果你决定在单元测试工具和Jest 一起使用，或者其它的测试运行，非常值得查看：http://airbnb.io/enzyme/

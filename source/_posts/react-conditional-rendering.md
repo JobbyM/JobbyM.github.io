@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[conditional rendering](https://facebook.github.io/react/docs/conditional-rendering.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[conditional rendering](https://facebook.github.io/react/docs/conditional-rendering.html)这篇React（版本v15.4.0）官方文档。
 
 ## Conditional Rendering
 
@@ -31,6 +27,9 @@ function GuestGreeting(props){
   return <h1>Please sign up.</h1>
 }
 ```
+
+<!--more-->
+
 我们新建一个`Greeting` 组件来基于一个用户是否已经登录这个两个状态来展示:
 ```jsx
 function Greating(props){

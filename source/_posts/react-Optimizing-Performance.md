@@ -9,15 +9,13 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Optimizing Performance](https://facebook.github.io/react/docs/optimizing-performance.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Optimizing Performance](https://facebook.github.io/react/docs/optimizing-performance.html)这篇React（版本v15.4.0）官方文档。
 
 ## Optimizing Performance
 
 在内部，React 使用一些聪明的技术去减少更新UI 操作所需要花费的昂贵的DOM 操作数量。对于许多应用，使用React 产生一个开始的用户操作而不需要做大量的专门优化性能的操作。不过，这里仍有集中方式去加速你的应用。
+
+<!--more-->
 
 ### Use The Production Build
 

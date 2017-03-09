@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[DOM Elements](https://facebook.github.io/react/docs/dom-elements.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[DOM Elements](https://facebook.github.io/react/docs/dom-elements.html)这篇React（版本v15.4.0）官方文档。
 
 ## DOM Elements
 
 React 为了性能和跨浏览器兼容实现了一个独立的DOM 系统。我们有机会去除一些粗糙的浏览器实现。
 
 在React 中，所有的DOM 属性（properties）和特性（attributes）（包括事件句柄）都应该是camelCased。例如，HTML 特性`tabindex` 对于React 特性`tabIndex`。特例是`aria-*` 和`data-*` 特性应该是lowercased。
+
+<!--more-->
 
 ## Differences In Attributes
 

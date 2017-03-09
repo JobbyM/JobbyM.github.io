@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Web Components](https://facebook.github.io/react/docs/web-components.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Web Components](https://facebook.github.io/react/docs/web-components.html)这篇React（版本v15.4.0）官方文档。
 
 ## Web Components
 
 React 和[Web Component]()分别用来构建解决不同的问题。Web Component 提供了强大的可复用component 的封装，React 提供了一个声明式库来保持DOM 和你的数据的同步。这两个目标是互补的。作为一个开发者，你可以自由的在你的Web Components 中使用React，或者在React 中使用Web Components，后者两者同时使用。
 
 大多数使用React 的人不使用Web Component，但是如果你想要，尤其是使用Web Components 写的第三方UI components。
+
+<!--more-->
 
 ###  Using Web Components in React
 ```jsx

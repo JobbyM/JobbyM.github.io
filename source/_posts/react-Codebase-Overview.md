@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Codebase Overview](https://facebook.github.io/react/contributing/codebase-overview.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Codebase Overview](https://facebook.github.io/react/contributing/codebase-overview.html)这篇React（版本v15.4.0）官方文档。
 
 ## Codebase Overview
 
@@ -22,6 +18,8 @@ comments: true
 如果你想要[contribute to React](https://facebook.github.io/react/contributing/how-to-contribute.html)， 我们希望这个指南能够帮你更舒服地改变。
 
 我们不一定推荐React 应用中的任何约定。它们中的多数是由于历史原因存在，可能会随着事件而改变。
+
+<!--more-->
 
 ### Custom Module System
 

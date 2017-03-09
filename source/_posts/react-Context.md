@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[Context](https://facebook.github.io/react/docs/context.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[Context](https://facebook.github.io/react/docs/context.html)这篇React（版本v15.4.0）官方文档。
 
 ## Context
 
 在React 中，很容易追踪数据通过你的React components 的流动。但你察看一个comopnent 时，你可以看到那一个props 被传入，这使得你的应用很容易推理。
 
 在一些情况下，你希望通过传递数据给component 树，而不需要在每一级手动通过props 进行传递。你可以在React 中直接使用强大的“context”API。
+
+<!--more-->
 
 ### Why Not To Use Context
 

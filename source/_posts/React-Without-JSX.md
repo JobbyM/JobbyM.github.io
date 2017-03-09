@@ -9,17 +9,15 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[React Without JSX](https://facebook.github.io/react/docs/react-without-jsx.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[React Without JSX](https://facebook.github.io/react/docs/react-without-jsx.html)这篇React（版本v15.4.0）官方文档。
 
 ## React Without JSX
 
 JSX 对使用React 不是必须的。当你不想在你的构建环境中设置编译，使用不带JSX 的React 是非常方便的。
 
 每一个JSX element 只是调用`React.createElement(component, props, ...children)` 的语法糖（syntactic sugar）。所以，任何你使用JSX 可以做的事情都可以使用纯JavaScript 来实现。
+
+<!--more-->
 
 例如，下面代码使用JSX ：
 ```jsx

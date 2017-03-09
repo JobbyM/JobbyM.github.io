@@ -9,11 +9,7 @@ categories: 技术
 comments: true
 ---
 
-## Getting Start
-
-此文章是翻译[forms](https://facebook.github.io/react/docs/forms.html)这篇React（版本v15.4.0）官方文档。
-
-<!--more-->
+> 此文章是翻译[forms](https://facebook.github.io/react/docs/forms.html)这篇React（版本v15.4.0）官方文档。
 
 ## Form
 
@@ -28,6 +24,8 @@ comments: true
 </form>
 ```
 当用户提交一个表单时，form 会有一个默认打开一个新页面的行为。在React 中如果你想要这个行为，它也工作。但是在大多数情况下，通过JavaScript function 去控制表单提交并获取用户在form 中的行为是很方便的。使用“controlled components” 这种技术来实现这种标准行为。
+
+<!--more-->
 
 ### Controlled Components
 
