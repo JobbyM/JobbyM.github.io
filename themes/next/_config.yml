@@ -272,13 +272,13 @@ mathjax:
 baidu_analytics: 0d65459e5802dba7e9a8409f873c59a4
 
 # Duoshuo ShortName
-duoshuo_shortname: jobbym
+# duoshuo_shortname: jobbym
 
 # Duoshuo hot artical
-duoshuo_hotartical: true
+# duoshuo_hotartical: true
 
 # Disqus
-#disqus_shortname:
+disqus_shortname: jobbym
 
 # Hypercomments
 #hypercomments_id:
@@ -303,7 +303,7 @@ duoshuo_hotartical: true
 #add_this_id:
 
 # Share
-duoshuo_share: true
+# duoshuo_share: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
@@ -323,11 +323,11 @@ google_analytics: UA-90413023-1
 # Make duoshuo show UA
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
-duoshuo_info:
-  ua_enable: true
-  admin_enable: true
-  user_id: 10433283
-  admin_nickname: JobbyM
+# duoshuo_info:
+#   ua_enable: true
+#   admin_enable: true
+#   user_id: 10433283
+#   admin_nickname: JobbyM
 
 
 # Facebook SDK Support.
