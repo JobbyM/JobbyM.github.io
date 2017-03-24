@@ -9,19 +9,32 @@ categories: 技术
 
 ---
 
-## What
+## 简介
 
-这是A-Frame 精灵序列图（Spritesheet） 组件，一个支持A-Frame 的动画精灵序列图组件。
+A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是是WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。
 
-## Demo
+此雪碧图组件[源码](https://github.com/EkoLabs/aframe-spritesheet-component)就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到`<a-frame>` 元素，从而在A-Frame 中来进行动画控制。
 
-支持两种方式，一种是[行列形式](https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/)，另一种是[JSON 数据格式](https://ekolabs.github.io/aframe-spritesheet-component/examples/json/)
+
+首先我们先了解一下雪碧图组件在A-Frame 中的安装以及使用，最后就是根据源码来对此流程图进行分析
+
+{% asset_img create-a-component.jpg %}
 
 <!--more-->
 
-## How to Use
+## DEMO
 
-使用方式也分为两种，一种是直接在浏览器中通过`<script>` 标签引入
+使用雪碧图组件的两种方式，一种是[行列形式](https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/)，效果如图
+{% asset_img A-Frame-demo-1.gif %}
+
+另一种是[JSON 数据格式](https://ekolabs.github.io/aframe-spritesheet-component/examples/json/),效果如图
+{% asset_img A-Frame-demo-2.gif %}
+
+顺便推荐一个录屏存为gif的工具[ScreenToGif](http://screentogif.codeplex.com/)
+
+## 使用方法
+
+使用方法也分为两种，一种是直接在浏览器中通过`<script>` 标签引入
 ```html
 <head>
   <title>My A-Frame Scene</title>
@@ -48,13 +61,9 @@ require('aframe');
 require('aframe-spritesheet-component');
 ```
 
-## Code Analysis
+## 源码分析
 
-在这里主要根据代码进行介绍一下A-Frame
-
-> A web framework for building virtual reality expriences
-
-，以及实现一个组件。
+在这里主要根据代码进行介绍一下A-Frame，以及实现一个组件。
 
 更多详细信息，请参考这里，[A-FRAME 介绍](https://aframe.io/docs/0.5.0/introduction/)，和[实现一个组件介绍](https://aframe.io/docs/0.5.0/guides/writing-a-component.html)
 
@@ -77,7 +86,7 @@ let SpriteSheet = AFRAME.registerComponent('sprite-sheet', {
         dataUrl: { type: 'string', default: null }
     },
 ```
-这里定义了`progress` 、`cols`、`rows` 等等相关属性，并分别赋予了响应的默认值。
+这里定义了`progress` 、`cols`、`rows` 等等相关属性，并分别赋予了默认值。
 
 `sprite-sheet ` 在页面中直接作为HTML 特性进行声明，同时可以将相关属性值以行内CSS 样式的形式进行传入（name/value 键值对以冒号（：）分割，键值对之间以分号（；）分割），[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/examples/rowscols/index.html#L10-L12)
 ```html
@@ -159,15 +168,10 @@ if(this.data.dataUrl){
 ```
 这里主要是清理相关属性，将其赋值为null。
 
-上述代码相关就是如何写一个A-Frame 组件。下面主要就是获取精灵序列图数据的获取`getSpriteSheetData()` 、调整纹理`adjustTexture()` ，根据数据形式的不同调用不同的调整方法`adjustFrameByRowsCols()`、`adjustFrameBySpriteSheet()` 。
+上述代码相关就是如何写一个A-Frame 组件。下面主要就是雪碧图数据的获取`getSpriteSheetData()` 、调整纹理`adjustTexture()` ，根据数据形式的不同调用不同的调整方法`adjustFrameByRowsCols()`、`adjustFrameBySpriteSheet()` 。
 
-## Summary
+## 总结
 
 1. 主要是对A-Frame 这个虚拟现实体验 web 框架进行了初步的熟悉了解
 2. A-Frame 组件创建同Vue.js 构建组件在形式上类似，都会封装数据、方法，同时提供一系列的生命周期方法来对组件进行管理。在使用上有所区别一个是作为HTML 特性，一个是作为HTML Tag 来使用。
-3. 本文主要是基于自己的理解进行分析，如有疏漏之处请多多指教。
-
-
-## 源文文档
-
-1. [源码](https://github.com/EkoLabs/aframe-spritesheet-component)
+3. 本文中的名词翻译、名词解释、组件创建流程等都是基于自己的理解，如有问题请多多交流。
