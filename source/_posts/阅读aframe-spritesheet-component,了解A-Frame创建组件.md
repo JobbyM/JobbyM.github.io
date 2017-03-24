@@ -11,12 +11,12 @@ categories: 技术
 
 ## 简介
 
-A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是是WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。
+A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是使WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。
 
-此雪碧图组件[源码](https://github.com/EkoLabs/aframe-spritesheet-component)就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到`<a-frame>` 元素，从而在A-Frame 中来进行动画控制。
+此雪碧图组件（[源码](https://github.com/EkoLabs/aframe-spritesheet-component)）就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到`<a-frame>` 元素，从而在A-Frame 中来进行动画控制。
 
 
-首先我们先了解一下雪碧图组件在A-Frame 中的安装以及使用，最后就是根据源码来对此流程图进行分析
+首先我们了解一下雪碧图组件在A-Frame 中的安装以及使用，最后就再根据源码来对此流程图进行分析
 
 {% asset_img create-a-component.jpg %}
 
@@ -67,14 +67,18 @@ require('aframe-spritesheet-component');
 
 更多详细信息，请参考这里，[A-FRAME 介绍](https://aframe.io/docs/0.5.0/introduction/)，和[实现一个组件介绍](https://aframe.io/docs/0.5.0/guides/writing-a-component.html)
 
-1、使用AFRAME.registerComponent 注册一个`sprite-sheet` 组件，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L6)
+### 第一步：注册组件
+
+使用AFRAME.registerComponent 注册一个`sprite-sheet` 组件，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L6)
 ```js
 let SpriteSheet = AFRAME.registerComponent('sprite-sheet', {
   ...
 }
 ```
 
-2、使用`schema` 定义组件的属性，`type` 定义属性类型，`default` 定义属性的默认值，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L7-L15)
+### 第二步：定义属性
+
+使用`schema` 定义组件的属性，`type` 定义属性类型，`default` 定义属性的默认值，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L7-L15)
 ```js
     schema: {
         progress: { type: 'number', default: 0 },
@@ -95,9 +99,12 @@ let SpriteSheet = AFRAME.registerComponent('sprite-sheet', {
                position="0 1.5 -4"></a-image>
 ```
 
-3、在生命周期处理函数方法（lifecycle handler method）中对组件进行初始化、更新属性以及销毁。
 
-4、`.init()` 初始化方法，仅在组件第一次被插入实体时调用，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L18-L67)
+### 第三步：初始化
+
+> 在生命周期处理函数方法（lifecycle handler method）中对组件进行初始化、更新属性以及销毁。
+
+`.init()` 初始化方法，仅在组件第一次被插入实体时调用，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L18-L67)
 ```js
 init: function() {
 
@@ -140,7 +147,9 @@ if(this.data.dataUrl){
             this.el.addEventListener('materialtextureloaded', () => {
 ```
 
-5、`.update()` 更新处理函数去处理属性的更新，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L69-L81)
+### 第四步：更新
+
+`.update()` 更新处理函数去处理属性的更新，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L69-L81)
 ```js
     update: function() {
         // no actual animation
@@ -154,7 +163,9 @@ if(this.data.dataUrl){
     },
 ```
 
-6、`.remove()` 销毁处理函数在组件被移除时调用，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L83-L94)
+### 第五步：销毁
+
+`.remove()` 销毁处理函数在组件被移除时调用，[线上代码](https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L83-L94)
 ```js
     remove: function() {
         // Cleanup
@@ -168,7 +179,7 @@ if(this.data.dataUrl){
 ```
 这里主要是清理相关属性，将其赋值为null。
 
-上述代码相关就是如何写一个A-Frame 组件。下面主要就是雪碧图数据的获取`getSpriteSheetData()` 、调整纹理`adjustTexture()` ，根据数据形式的不同调用不同的调整方法`adjustFrameByRowsCols()`、`adjustFrameBySpriteSheet()` 。
+上述相关代码就是如何实现一个A-Frame 组件流程。
 
 ## 总结
 
