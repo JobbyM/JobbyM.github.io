@@ -24,8 +24,11 @@ A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起
 
 ## DEMO
 
+使用雪碧图组件的两种方式
 
-使用雪碧图组件的两种方式，一种是[行列形式](https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/)，效果如图
+### 行列式DEMO
+
+这是使用[行列形式](https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/)，实现的一个散步的小猪，效果如图
 {% asset_img A-Frame-demo-1.gif %}
 
 所谓的行列式就是需要提供一个雪碧图，这个雪碧图是由大小相等图片组成，像这样
@@ -41,14 +44,17 @@ A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起
 其中的`src` 为雪碧图地址；
 `sprite-sheet` 就是雪碧图组件，其中的`cols:8; rows: 3; progress: 0;` 就是雪碧图组件的所需要的参数，为3行8列；
 `position` 为在3D空间中的位置，使用右手坐标系，三个值分别代表x 轴、y 轴、z 轴。
+{% asset_img righthand.jpg %}
 
-另一种是[JSON 数据格式](https://ekolabs.github.io/aframe-spritesheet-component/examples/json/),效果如图
+### JOSN 格式DEMO
+
+另一种是[JSON 数据格式](https://ekolabs.github.io/aframe-spritesheet-component/examples/json/), 实现的一个冒气的烤面包机，效果如图
 {% asset_img A-Frame-demo-2.gif %}
 
-所谓的JSON 格式就是由于雪碧图并不是由多个大小相等的图片组层，像这样
+所谓的JSON 格式就是由于雪碧图并不是由多个大小相等的图片组成，像这样
 {% asset_img toaster.png %}
 
-所以我们需要以json 的格式进行描述，
+所以我们需要以json 的格式对图片进行描述，
 ```json
 {
   "frames": {
