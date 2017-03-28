@@ -24,11 +24,65 @@ A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起
 
 ## DEMO
 
+
 使用雪碧图组件的两种方式，一种是[行列形式](https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/)，效果如图
 {% asset_img A-Frame-demo-1.gif %}
 
+所谓的行列式就是需要提供一个雪碧图，这个雪碧图是由大小相等图片组成，像这样
+{% asset_img npc_piggy_explorer__x1_walk_png_1354837301.png %}
+
+这样我们在使用的时候，直接声明为几行几列就可以了
+```js
+<a-image src="npc_piggy_explorer__x1_walk_png_1354837301.png"
+         sprite-sheet="cols:8; rows: 3; progress: 0;"
+         position="0 1.5 -4"></a-image>
+```
+
+其中的`src` 为雪碧图地址；
+`sprite-sheet` 就是雪碧图组件，其中的`cols:8; rows: 3; progress: 0;` 就是雪碧图组件的所需要的参数，为3行8列；
+`position` 为在3D空间中的位置，使用右手坐标系，三个值分别代表x 轴、y 轴、z 轴。
+
 另一种是[JSON 数据格式](https://ekolabs.github.io/aframe-spritesheet-component/examples/json/),效果如图
 {% asset_img A-Frame-demo-2.gif %}
+
+所谓的JSON 格式就是由于雪碧图并不是由多个大小相等的图片组层，像这样
+{% asset_img toaster.png %}
+
+所以我们需要以json 的格式进行描述，
+```json
+{
+  "frames": {
+    "0.png":
+    {
+    	"frame": {"x":191,"y":105,"w":75,"h":73},
+    	"rotated": false,
+    	"trimmed": true,
+    	"spriteSourceSize": {"x":22,"y":0,"w":75,"h":73},
+    	"sourceSize": {"w":115,"h":73},
+    	"pivot": {"x":0.5,"y":0.5}
+    },
+    "1.png":
+    {
+    	"frame": {"x":191,"y":105,"w":75,"h":73},
+    	"rotated": false,
+    	"trimmed": true,
+    	"spriteSourceSize": {"x":22,"y":0,"w":75,"h":73},
+    	"sourceSize": {"w":115,"h":73},
+    	"pivot": {"x":0.5,"y":0.5}
+    }
+  }
+}
+```
+
+在使用的时候，需要通过`dataUrl: toaster.json` 来指明数据位置
+```
+<a-image src="toaster.png"
+         sprite-sheet="dataUrl: toaster.json; progress: 0;"
+         width="1"
+         height="1"
+         position="0 0 -4"></a-image>
+```
+
 
 顺便推荐一个录屏存为gif的工具[ScreenToGif](http://screentogif.codeplex.com/)
 
