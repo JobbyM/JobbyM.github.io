@@ -123,7 +123,7 @@ require('aframe-spritesheet-component');
 
 ## 源码分析
 
-在这里主要根据代码进行介绍一下A-Frame，以及实现一个组件。
+在这里主要根据代码进行介绍一下A-Frame 中实现一个组件。
 
 更多详细信息，请参考这里，[A-FRAME 介绍](https://aframe.io/docs/0.5.0/introduction/)，和[实现一个组件介绍](https://aframe.io/docs/0.5.0/guides/writing-a-component.html)
 
