@@ -201,4 +201,240 @@ Visual Studio Code 支持实时编辑和调试，使用Create React App 开箱�
 ```
 运行`npm start` 启动你的应用，按`F5` 或点击绿色debug 图标在VS Code 中调试。现在你可以写代码、设置断点、修改代码以及调试你最新修改的代码--所有都在你的编辑器中实现。
 
- 
+## Change the Page **<title>**
+
+你可以在生成项目的`public` 文件夹下知道源HTML 文件。你可以编辑`<title>` 标签，把“React App” 标题改为其他任何东西。
+
+请注意，通常你不会经常在`public` 目录下编辑文件。例如，可以在不更改HTML 情况下，[添加CSS 文件](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)。
+
+如果你需要根据内容来动态更新页面的标题，你可以使用浏览器的[document.title]() API。对于要从React 组件更改标题的更复杂的场景，可以使用[React Helmet](https://github.com/nfl/react-helmet) 这个第三方库。
+
+在生产环境中，你为自己的应用使用自定义服务器，要将标题在发送到浏览器之前修改，你可以遵循[本章](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server) 建议。或者，你可以预构建每一个页面为静态HTML 文件，然后加载JavaScript 包，将在[这里](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files)介绍。
+
+
+## Installing a Dependency
+
+生成的项目中包括React 和ReactDOM 依赖。它也包括Create React App 使用的一组脚本作为开发依赖。你也可以使用`npm`安装其它的依赖（例如，React Router）：
+```bash
+npm install --save <library-name>
+```
+
+## Importing a Component
+
+此项目设置支持ES5 模块，多亏了Babel。
+虽然你仍然可以使用`require()` 和`module.exports`，我们建议你改用[`import` and `export`](http://exploringjs.com/es6/ch_modules.html)。
+
+例如：
+
+**Button.js**
+```js
+import React, { Component } from 'react';
+
+class Button extends Component {
+  render(){
+    //...
+  }
+}
+
+export default Button; // Don't forget to use export default!
+```
+**DangerButton.js**
+```js
+import React, { Component } from 'react';
+import Button from './Button'; // Import a component from another file
+
+class DangerButton extends Component {
+  render(){
+    return <Button color="red" />;
+  }
+}
+
+export default class DangerButton;
+```
+
+注意[默认导出和命名导出的区别](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)。这是常见的错误来源。
+
+我们建议你在模块仅导出单个（例如，一个组件）时，坚持使用默认导入和导出。当你使用`export default Button` 和`import Button from './Button'` 时，就会得到你想要的。
+
+命名导出对导出多个功能的实用模块很有用。一个模块最多可能有一个默认的导出和任意数量的命名导出。
+
+了解有关ES 模块的更多内容：
+
+* [When to use the curly braces?](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281)
+* [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
+* [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
+
+## Adding a Stylesheet
+
+此项目设置使用Webpack 管理所有资源。Webpack 提供了一种定制方式，将导入概念扩展“extending”到JavaScript 之外。为了表示一个JavaScript 文件依赖一个CSS 文件，你需要将CSS 导入JavaScript 文件。
+
+**Button.css**
+```css
+.Button {
+  padding: 20px;
+}
+```
+
+**Button.js**
+```js
+import React, { Component } from 'react';
+import './Button.css'; // Tell Webpack that Button.js uses these styles
+
+class Button extends Component {
+  render(){
+    // You can use them as regular CSS styles
+    return <div className="Button" />
+  }
+}
+```
+
+**对于React 这并不是必需的**，但是许多人发现这个特性很方便。你可以在[这里]阅读这种方法的好处。但是，您应该意识到，这使得你的代码更适合Webpack而不是他构建工具和环境。
+
+在开发中，使用这种方式表达依赖，可以在编辑样式使立即重新加载样式。在生产中，所有的CSS 文件将被连接到构建输出中的一个最小化的.css 文件中。
+
+如果你关系使用Webpack-specific 语法，你可以将你所有的CSS 放到`src/index.css`。它将从`src/index.js` 导入，但是如你之后迁移到一个不同的构建工具，你可以移除这个导入。
+
+## Post-Processing CSS
+
+此项目设置可以减少你的CSS ，并通过[Autoprefixer]() 自动添加厂商前缀，因此你不需要担心。
+
+例如，它：
+```css
+.App {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+```
+变成这样：
+```css
+.App {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+```
+
+如果你因为某些原因需要禁用自动添加前缀功能，[参考这里](https://github.com/postcss/autoprefixer#disabling)。
+
+## Adding a CSS Preprocessor (Sass, Less etc.)
+
+通常，我们建议你不要在不同的组件直接重复使用相同的CSS 类。例如，我们建议你创建一个具有自己的`.Button` 样式的`<Button>` 组件，而不是在`<AcceptButton>` 和`<RejectButton>`中使用`.Button` CSS 类，这样`<AcceptButton>` 和`<RejectButton>` 都能渲染（而[不是继承]()）。
+
+遵循这条规则往往使CSS 预处理器不太有用，因为像混合和嵌套之类的功能被组件组合所替代。但是，如果你发现它有价值，你可以集成CSS 预处理器。在这个指导中，我们将使用Sass，但是你也可以使用Less 或其他方式。
+
+首先，安装Sass 命令行接口：
+```bash
+npm install node-sass --save-dev
+```
+
+然后在`package.json` 中添加如下内容到`scripts`：
+```js
+  "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
+    ...
+  }
+```
+
+> 注意：使用不同的预处理器，需要根据预处理器的文档替换`build-css` 和`watch-css` 命令。
+
+现在，你可以将`src/App.css` 重命名为`src/App.scss`，然后运行`npm run watch-css`。watcher 将会查找`src` 子目录下的所有Sass 文件，并且在它旁边创建相应的CSS 文件，我们这里例子会重写`src/App.css`。由于`src/App.js` 仍然导入`src/App.css`，这个样式成为你的应用的一部分。现在你可以编写`src/App.scss`，`src/App.css` 将会被重新生成。
+
+在Sass 文件中共享变量，你可以使用Sass 导入功能。例如，`src/App.scss` 和其他组件样式文件可以包括`@import "./shared.scss"`中的变量定义。
+
+此时你可能想移除源文件控制中所有的CSS 文件，添加`src/**/*.css` 到你的`.gitignore` 文件中。 保留构建产品在源代码控制之外是一个很好的做法。
+
+最后，你可能发现在运行`npm start` 时自动运行`watch-css`，并将`build-css` 作为`npm run build` 的一部分是非常方便的。你可以使用`&&` 操作符去顺序地执行这两个脚本。但是，没有跨平台地并行运行两个脚本，所以我们需要为此安装一个包：
+```bash
+npm install --save-dev npm-run-all
+```
+
+然后我们在`start` 和`build` 两个脚本包含CSS 预处理命令：
+```js
+ "scripts": {
+   "start-js": "react-script start",
+   "start": "npm-run-all -p watch-css start.js",
+   "build": "npm run build-css && react-scripts build"
+ }
+```
+
+现在运行`npm start` 和`npm run build` 也会构建Sass 文件。注意`node-sass` 似乎有一个[issue recognizing newely created files on some systems](https://github.com/sass/node-sass/issues/1891)，所以你可能需要重启watcher，当你新建一个文件，直到这个问题被解决。
+
+## Adding Images, Fonts, and Files
+
+使用Webpack，使用静态资源像图像和字体的方式同CSS 类似
+
+你可以**在JavaScript 文件中直接`import`文件**。这告诉Webpack 在包中包括该文件。不像CSS 导入，导入一个文件给你一个字符串值。这个值是你在代码中可以引用的最终路径，例如：作为一个图片的`src` 属性或一个链接到PDF 的`href`。
+
+为了减少请求服务器的次数，导入的图像如果小于10,000 byte 会返回一个[data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) 而不是一个路径。这适用于以下文件扩展名：bmp、gif、jpg、jpeg 和png。由于[#1153](https://github.com/facebookincubator/create-react-app/issues/1153) SVG 文件除外。
+
+
+这有一个例子：
+```js
+import React from 'react';
+import logo from './logo.png'; // Tell Webpack this JS file uses this image
+
+console.log(logo); // logo.84288709.png
+
+function Header(){
+  // Import result is the URL of your image
+  return <img src={logo} alt="logo" />;
+}
+
+export default Header;
+```
+
+这确保当项目构建后，Webpack 将正确的移动图像到build 文件夹，并且提供会一个正确的路径。
+
+在CSS 中也是一样的：
+```css
+.Logo {
+  background-image: url(./logo.png)
+}
+```
+
+Webpack 在CSS 中查找所有相对的模块引用（它们以`./` 开始）然后使用已编译包中的最终路径来替换它们。如果你输入错误或意外删除一个重要文件，则会出现编译错误，就像当你引入一个不存在的JavaScript 模块那样。编译包中最终文件名由Webpack 根据内容哈希生成。如果将来文件内容发生变化，Webpack 将在生产中给出不同的名称，因此你不必担心资源的长期缓存。
+
+请注意，这也是Webpack 自定义功能。
+
+React 并不需要它，但是很多人喜欢它（React Native 使用类似的图片机制）。
+下一节将会介绍处理静态资源的另一种方法。
+
+## Using the **public** Folder
+
+> 注意：这个特性需要`react=script@0.5.0` 版本以上。
+
+### Changing the HTML
+
+`public` 文件夹包括HTML 文件，所以你可以调整它，例如，[设置页面标题](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#changing-the-page-title)。在构建过程中，编译好的代码的`<script>` 标签会被自动添加。
+
+### Adding Assets Outside of Module System
+
+你可以在`public` 文件夹中添加其他资源。
+
+注意我们通常鼓励你在JavaScript 中`import` 资源。例如，产看[添加样式](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet) 和[添加图片和字体](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts) 章节内容。这个机制有许多好处：
+
+* 脚本和样式表被压缩并打包在一起，以避免额外的网络请求。
+* 缺少文件导致编译错误，而不是用户的404 错误
+* 结果文件名包括内容哈希，因此你不必担心浏览器会缓存旧版本。
+
+但是，你可以使用一个在模块系统之外添加资源的**逃生门**。
+
+如果你将文件放到`public` 文件夹，它将不会被Webpack 处理。并且它将不被修改的复制到构建文件夹。为了引用`public` 文件夹中的资源，你需要使用`PUBLIC_URL` 这个变量。
+
+在`index.html` 中，你可以这样使用：
+```js
+<link ref="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+```
+
+只有位于`public` 文件夹中的文件可以通过`%PUBLIC_URL%` 前缀访问。如果你需要使用来自`src` 或`node_modules` 中的文件，你必须将其复制到明确指定此文件作为构建的一部分的意图。
+
+当你运行`npm run build` ，Create React App 将使用正确的绝对路径来替换`%PUBLIC_URL%`，这样即使你使用客户端路径或将其托管到非艮URL，你的项目也可以正常工作。
