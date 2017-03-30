@@ -145,7 +145,7 @@ my-app/
 
 > Atom 用户使用 `linter-eslint` 笔记
 > 如果你正在使用Atom `linter-eslint` 插件，确保 **Use global ESLint installation** 选项已经选中：
-> {% asset_img %}
+> {% asset_img Use-global-ESLint-installation.png %}
 > Visual Studio Code 用户
 > VS Code ESLint 插件会自动侦测Create React App 的配置文件。所以你不需要在根目录下创建`eslintrc.json` 文件，除非你想要添加你自己的规则。在这种情况下，你应该包含CRA 的配置，通过添加下面这行：
 >
@@ -410,7 +410,7 @@ React 并不需要它，但是很多人喜欢它（React Native 使用类似的�
 
 ## Using the **public** Folder
 
-> 注意：这个特性需要`react=script@0.5.0` 版本以上。
+> 注意：这个特性需要`react-scripts@0.5.0` 版本以上。
 
 ### Changing the HTML
 
@@ -420,7 +420,7 @@ React 并不需要它，但是很多人喜欢它（React Native 使用类似的�
 
 你可以在`public` 文件夹中添加其他资源。
 
-注意我们通常鼓励你在JavaScript 中`import` 资源。例如，产看[添加样式](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet) 和[添加图片和字体](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts) 章节内容。这个机制有许多好处：
+注意我们通常鼓励你在JavaScript 中`import` 资源。例如，查看[添加样式](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet) 和[添加图片和字体](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts) 章节内容。这个机制有许多好处：
 
 * 脚本和样式表被压缩并打包在一起，以避免额外的网络请求。
 * 缺少文件导致编译错误，而不是用户的404 错误
@@ -438,3 +438,146 @@ React 并不需要它，但是很多人喜欢它（React Native 使用类似的�
 只有位于`public` 文件夹中的文件可以通过`%PUBLIC_URL%` 前缀访问。如果你需要使用来自`src` 或`node_modules` 中的文件，你必须将其复制到明确指定此文件作为构建的一部分的意图。
 
 当你运行`npm run build` ，Create React App 将使用正确的绝对路径来替换`%PUBLIC_URL%`，这样即使你使用客户端路径或将其托管到非艮URL，你的项目也可以正常工作。
+
+在JavScript 代码中，你可以使用`process.env.PUBLIC_URL` 进行类似的操作：
+```js
+render() {
+  // Note: this is an escape hatch and should be used sparingly!
+  // Normally we recommend using `import` for getting asset URLs
+  // as described in “Adding Images and Fonts” above this section.
+  return <img src={process.env.PUBLIC_URL + '/img/logo.png'} />;
+}
+```
+
+记住这种方式的缺点：
+
+* `public` 文件夹中中的文件都不能进行后处理或压缩。
+* 在编译时，缺少的文件不会被调用，会对用户产生404 错误。
+* 结果文件名中不会包含内容哈希，因此在每次改动时，你需要添加查询参数或重命名它们。
+
+### When to Use the **public** Folder
+
+通常我们建议从JavaScript导入[样式表](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet)、[图像和字体](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-images-and-fonts)。 `public` 文件夹作为一些不太常见的情况的解决方法是有用的：
+
+* 你需要在构建输出中具有特定名称的文件，如[`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest)。
+* 你有成千上万的图像，需要动态引用他们的路径。
+* 你希望在打包代码之外加入一个像[`pace.js`](http://github.hubspot.com/pace/docs/welcome/)一样的脚本。
+* 某些库可能与Webpack不兼容，你没有其他选项，除了将其作为`<script>`标签。
+
+请注意，如果添加声明全局变量的`<script>`，则还需要阅读下一节使用它们。
+
+## Using Global Variables
+
+当你在HTML文件中的脚本中包含一个全局声明的变量，并尝试在代码中使用这些变量时，linter会抱怨，因为它看不到这些变量的定义。
+
+你可以明确地从`window` 对象中读取全局变量来避免这个问题，例如：
+```js
+const $ = window.$;
+```  
+
+你正在有意使用一个全局变量，而不是因为书写错误。
+或者，你可以通过添加`// eslint-disable-line` 强制linter 忽略任意一行。
+
+## Adding Bootstrap
+
+你不必与React一起使用[React Bootstrap]()，但它是将Bootstrap与React应用程序集成的流行库。 如果需要，可以通过以下步骤将其与Create React App集成：
+
+从npm安装React Bootstrap和Bootstrap。 React Bootstrap不包括Bootstrap CSS，因此还需要安装它们：
+```bash
+npm install react-bootstrap --save
+npm install bootstrap@3 --save
+```
+
+在`src/index.js` 开头导入Bootstrap CSS 和可选的Bootstrap theme CSS：
+```js
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
+```
+
+在`src/App.js` 中导入需要的React Bootstrap 组件或者你自定义的组件：
+```js
+import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+```
+
+现在你可以在这些导入了React Bootstrap 组件的组件的渲染方法中使用。这有一个使用React Bootstrap 的[例子App.js](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js)。
+
+### Using a Custom Theme
+
+有时你可能需要调整Bootstrap（或其他类似包）的视觉样式。
+我们建议按照下面方法：
+
+* 创建一个依赖于你要自定义的包的新包，例如 Bootstrap。
+* 添加必要的构建步骤来调整主题，并在npm发布你的包。
+* 安装你自己的主题npm软件包作为你的应用程序的依赖。
+
+这是按照这些步骤添加一个[自定义的Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165)的示例。
+
+## Adding Flow
+
+Flow是一种静态类型的检查器，可以帮助你编写更少错误的代码。 如果你是这个概念的新手，请参阅[JavaScript中使用静态类型的介绍](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb)。
+
+[Flow](http://flowtype.org/)的最新版本在Create React App项目中是开箱即用。
+
+要将Flow添加到Create React App项目，请按照下列步骤操作：
+
+1. 运行`npm install --save-dev flow-bin`（或`yarn add --dev flow-bin`）。
+2. 将`"flow": "flow"`添加到你的的`package.json`的`scripts`部分。
+3. 运行`npm run flow-init`（或`yarn flow -- init`）在根目录中创建一个[`.flowconfig`文件](https://flowtype.org/docs/advanced-configuration.html)。
+4. 将`// @flow`添加到你想要进行类型检查的文件中（例如，到`src/App.js`）。
+
+现在，你可以运行`npm run flow`（或`yarn flow`）来检查文件的类型错误。 你可以选择使用像[Nuclide](https://nuclide.io/docs/languages/flow/)这样的IDE来获得更好的集成体验。 未来我们计划将更加紧密地将其整合到Create React App中。
+
+要了解有关Flow的更多信息，请查看[其文档](https://flowtype.org/)。
+
+## Adding Custom Environment Variables
+
+> 注意：这个特性需要`react-scripts@0.2.3` 版本以上。
+
+你的项目可以在你的环境中使用声明的变量，就像它们在JS文件中本地声明一样。 默认情况下，您将为你定义的`NODE_ENV`，和以`REACT_APP_`开头的任何其他环境变量。
+
+**环境变量在构建时嵌入**。 由于Create React App生成了一个静态的HTML/CSS/JS包，所以在运行时无法读取它们。 要在运行时读取它们，你需要将HTML加载到服务器的内存中，并在运行时替换占位符，就像[这里所述]()。 或者，你可以在任何时候更改，在服务器端时重新构建应用程序。
+
+> 注意：你必须创建以`REACT_APP_`开头的自定义环境变量。除了`NODE_ENV`之外的任何其他变量将被忽略，以避免意外[暴露可能具有相同名称的机器上的私钥](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527)。 如果运行时，更改任何环境变量将需要重新启动开发服务器。
+
+这些环境变量将会被定义在`process.env` 上。你可以通过`process.env.NODE_ENV` 读取。当你运行`npm start`，它总是等于`'development'`，当你运行`npm test`时，它总是等于`'test'`，当你运行`npm run build` 是去生成一个生产包，它总是等于`'production'`。**你不能手动覆盖`NODE_ENV`**。这样可以防止开发人员将缓慢的开发构建部署到生产环境中。
+
+这些环境变量对于有条件地显示信息有用，基于项目的部署位置或者消耗存在与版本控制之外的敏感数据。
+
+首先，你需要定义环境变量。 例如，假设你想要使用`<form>`中的环境中定义的敏感数据：
+```js
+render() {
+  return (
+    <div>
+      <small>You are running this application in <b>{process.env.NODE_ENV}</b> mode.</small>
+      <form>
+        <input type="hidden" defaultValue={process.env.REACT_APP_SECRET_CODE} />
+      </form>
+    </div>
+  );
+}
+```
+
+在构建中，`process.env.REACT_APP_SECRET_CODE` 将会被当前`REACT_APP_SECRET_CODE` 环境变量中的值替换。记住`NODE_ENV` 变量将会为你自动设置。
+
+当你在浏览器中加载这个应用去查看`<input>`，你可以看到它的值设置为`abcdef`，加粗的字体将会显示运行`npm start` 时的环境。
+```js
+<div>
+  <small>You are running this application in <b>development</b> mode.</small>
+  <form>
+    <input type="hidden" value="abcdef" />
+  </form>
+</div>
+```
+
+上面的表单正在从环境中寻找一个名为`REACT_APP_SECRET_CODE`的变量。 为了消耗这个值，我们需要在环境中定义它。 这可以通过两种方式完成：在shell或`.env`文件中。 这两种方法将在接下来的几节中进行描述。
+
+访问`NODE_ENV`对于有条件地执行操作是有用的：
+```js
+if (process.env.NODE_ENV !== 'production') {
+  analytics.disable();
+}
+```
+
+当你使用`npm run build` 编译这个应用时，压缩操作在这个条件之外，所以这个最终的包会更小。
