@@ -581,3 +581,66 @@ if (process.env.NODE_ENV !== 'production') {
 ```
 
 当你使用`npm run build` 编译这个应用时，压缩操作在这个条件之外，所以这个最终的包会更小。
+
+### Referencing Environment Variables in the HTML
+
+> 注意：这个特性需要`react-scripts@0.9.0` 版本以上。
+
+你也可以在`public/index.html` 中访问以`REACT_APP_` 开头的环境变量。例如：
+```js
+<title>%REACT_APP_WEBSITE_NAME%</title>
+```
+
+请注意，上述部分的注意事项适用：
+
+* 除了几个内容的变量（`NODE_ENV` 和`PUBLIC_URL`），变量名字必须以`REACT_APP_` 才工作。
+* 环境变量在构建时被注入。如果你需要在运行时注入它们，[需要按照这里的步骤](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)。
+
+### Adding Temporary Environment Variables In Your Shell
+
+定义环境变量可能会因操作系统而异。知道这种方式对于shell会话的生命周期是暂时的也很重要。
+
+**Windows(cmd.exe)**
+```bash
+set REACT_APP_SECRET_CODE=abcdef&&npm start
+```
+（注意：空格的缺失是有意的）
+
+**Linux, macOS(Bash)**
+```bash
+REACT_APP_SECRET_CODE=abcdef npm start
+```
+
+### Adding Developement Environment Variables In `.env`
+
+> 注意：这个特性需要`react-scripts@0.5.0` 版本以上。
+
+在你的项目的根目录中创建一个`.env` 文件，去定义永久性的环境变量
+
+```js
+REACT_APP_SECRET_CODE=abcdef
+```
+
+如果机器没有明确设置它们，这些变量将作为默认值。
+有关详细信息，请参阅[dotenv文档](https://github.com/motdotla/dotenv)。
+
+> 注意：如果要定义用于开发的环境变量，则您的CI和/或托管平台也有可能需要这些定义。请参考他们的文档如何做到这一点。例如，请参阅[Travis CI](https://docs.travis-ci.com/user/environment-variables/)或[Heroku](https://devcenter.heroku.com/articles/config-vars)的文档。
+
+## Can I Use Decorators?
+
+许多受欢迎的库在其文档中使用装饰器。
+目前，Create React App不支持装饰器语法，因为：
+
+* 这是一个实验性提案，可能会改变。
+* 目前的规范版本没有被Babel正式支持。
+* 如果规范发生变化，我们将无法编写一个codemod，因为我们不在Facebook内部使用它们。
+
+但是，在许多情况下，您可以重新编写基于装饰器的代码，而不需要装饰器就可以了。
+请参考这两个线程以供参考：
+
+* [#214](https://github.com/facebookincubator/create-react-app/issues/214)
+* [@411](https://github.com/facebookincubator/create-react-app/issues/411)
+
+当规范进展到稳定的阶段时，Create React App将添加装饰器支持。
+
+## Integrating with an API Backend
