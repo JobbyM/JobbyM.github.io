@@ -644,3 +644,86 @@ REACT_APP_SECRET_CODE=abcdef
 当规范进展到稳定的阶段时，Create React App将添加装饰器支持。
 
 ## Integrating with an API Backend
+
+这些教程将帮助您将应用程序与在另一个端口上运行的API后端集成，使用`fetch()`来访问它。
+
+### Node
+
+看看[这个教程](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/)。 您可以在这里找到配套的[GitHub存储库](https://github.com/fullstackreact/food-lookup-demo)。
+
+### Ruby on Rails
+
+看看[这个教程](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/)。 您可以在这里找到配套的[GitHub存储库](https://github.com/fullstackreact/food-lookup-demo-rails)。
+
+
+## Proxying API Requests in Development
+
+> 注意：这个特性需要`react-scripts@0.2.3` 版本以上。
+
+人们通过提供与前端React 应用相同的主机和端口作为后端实现。
+例如，应用部署后，生产设置可能看上去像这样：
+
+```js
+/             - static server returns index.html with React app
+/todos        - static server returns index.html with React app
+/api/todos    - server handles any `/api/*` requests using the backend implementation
+```
+
+像这样的设置不是必须的。但是，如果你已经有了一个这样的设置，很方便写`fetch('api/todos')` 这样的请求而不必担心在开发过程中将它们重定向到另一个主机或端口。
+
+在开发中，让开发服务器代理任何未知API 服务请求，添加一个`proxy` 域到你的`package.json`，例如：
+```js
+ "proxy": "http://localhost:4000"
+```
+
+这样，当您在开发中`fetch('/api/todos')`时，开发服务器将会认识到它不是一个静态资产，并会将您的请求代理到`http://localhost:4000/api/todos`作为后备。 开发服务器将仅尝试发送没有`text/html` accept header 的请求到代理。
+
+方便的，这样可以避免在开发过程中发生[CORS问题]()和像下面的错误消息：
+```html
+Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+
+请记住，`proxy`仅在开发中有效（使用`npm start`），由你确保像`/api/todos` 这样的URL指向正确的生产环境。 你不必使用`/api` 前缀。 任何无法识别没有`text/html` accept header 的请求，将被重定向到指定的`proxy`。
+
+`proxy` 选项支持HTTP，HTTPS和WebSocket连接。
+如果`proxy` 选项对你不够灵活，或者你可以：
+
+* 在您的服务器上启用CORS（[这是在Express 中的操作方法](http://enable-cors.org/server_expressjs.html)）。
+* 使用[环境变量](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)将正确的服务器主机和端口注入到应用程序中。
+
+## Using HTTPS in Development
+
+> 注意：这个特性需要`react-scripts@0.4.0` 版本以上。
+
+您可能需要开发服务器通过HTTPS提供页面。 一个特别的情况可能是有用的，当API服务器本身服务本身用于HTTPS时，使用[the "proxy" feature](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)来代理对API服务器的请求。
+
+为此，请将`HTTPS` 环境变量设置为`true`，然后像以往那样以`npm start`启动开发服务器：
+
+**Windows(cmd.exe)**
+```bash
+set HTTPS=true&&npm start
+```
+（注意：空格的缺失是有意的）
+
+**Linux, macOS(Bash)**
+```bash
+HTTPS=true npm start
+```
+
+请注意，服务器将使用自签名证书，因此你的Web浏览器几乎肯定会在访问页面时显示警告。
+
+## Generating Dynamic `<meta>` Tags on the Server
+
+由于Create React App 不支持服务器渲染，你可能想知道如何使`<meta>`标签动态化并反映当前URL。 为了解决这个问题，我们建议在HTML中添加占位符，如下所示：
+
+```
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta property="og:title" content="__OG_TITLE__">
+    <meta property="og:description" content="__OG_DESCRIPTION__">`
+```
+
+然后，在服务器上，不管你使用的后端，你都可以将`index.html`读入内存，并根据当前URL替换`__OG_TITLE__`、`__OG_DESCRIPTION__`以及任何其他具有值的占位符。 只需确保清理和转义内插的值，以便它们可以安全地嵌入到HTML中！
+
+如果使用Node服务器，你甚至可以在客户端和服务器之间共享路由匹配逻辑。 但是在简单的情况下，复制它也可以正常工作。
