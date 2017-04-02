@@ -28,6 +28,8 @@ Creat React App 分成两个包：
 
 我们致力于保持最小的重大变化，从而可以无痛的升级`react-scripts`。
 
+<!--more-->
+
 ## Sending Feedback
 
 我们总是关注[您的反馈](https://github.com/facebookincubator/create-react-app/issues)。
