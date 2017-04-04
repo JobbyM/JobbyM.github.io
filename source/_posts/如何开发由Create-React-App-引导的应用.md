@@ -1377,12 +1377,12 @@ netlify deploy
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
-BROWSER | :white_check_mark: | :x: | 默认情况下，Create React App 将打开默认系统浏览器，在Mac OS上支持Chrome。 指定[浏览器](https://github.com/sindresorhus/opn#app)来覆盖此行为，或将其设置为`none`以完全禁用它。
-HOST | :white_check_mark: | :x: | 默认情况下，开发Web服务器绑定到`localhost`。 你可以使用此变量来指定不同的主机。
-PORT | :white_check_mark: | :x: | 默认情况下，开发Web服务器将尝试在端口3000上侦听或提示你尝试下一个可用端口。 你可以使用此变量来指定不同的端口。
-HTTPS | :white_check_mark: | :x: | 当设置为 `true` 时, Create React App 将以`https` 模式运行开发Web服务器。
-PUBLIC_URL | :x: | :white_check_mark: | Create React App 假定你的应用程序托管在Web服务器的根目录或在[`package.json`（`homepage`）](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#building-for-relative-paths)中指定的子路径。 通常，Create React App 忽略hostname。 你可以使用此变量强制将资源逐字引用到你提供的URL（包含hostname）。 当使用CDN托管你的应用程序时，这可能特别有用。
-CI | :large_orange_diamond: | :white_check_mark: | 当设置为`true` 时, Create React App 将警告视为构建中的失败。 它也使test runner 处于非观察者模式. 大多数CI 默认设置此标志。
+BROWSER | {% asset_img white_check_mark.png %} | {% asset_img x.png %} | 默认情况下，Create React App 将打开默认系统浏览器，在Mac OS上支持Chrome。 指定[浏览器](https://github.com/sindresorhus/opn#app)来覆盖此行为，或将其设置为`none`以完全禁用它。
+HOST | {% asset_img white_check_mark.png %} | {% asset_img x.png %} | 默认情况下，开发Web服务器绑定到`localhost`。 你可以使用此变量来指定不同的主机。
+PORT | {% asset_img white_check_mark.png %} | {% asset_img x.png %} | 默认情况下，开发Web服务器将尝试在端口3000上侦听或提示你尝试下一个可用端口。 你可以使用此变量来指定不同的端口。
+HTTPS | {% asset_img white_check_mark.png %} | {% asset_img x.png %} | 当设置为 `true` 时, Create React App 将以`https` 模式运行开发Web服务器。
+PUBLIC_URL | {% asset_img x.png %} | {% asset_img white_check_mark.png %} | Create React App 假定你的应用程序托管在Web服务器的根目录或在[`package.json`（`homepage`）](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#building-for-relative-paths)中指定的子路径。 通常，Create React App 忽略hostname。 你可以使用此变量强制将资源逐字引用到你提供的URL（包含hostname）。 当使用CDN托管你的应用程序时，这可能特别有用。
+CI | {% asset_img large_orange_diamond.png %} | {% asset_img white_check_mark.png %} | 当设置为`true` 时, Create React App 将警告视为构建中的失败。 它也使test runner 处于非观察者模式. 大多数CI 默认设置此标志。
 
 ## Troubleshooting
 
