@@ -86,7 +86,7 @@ my-app/
 **npm test**
 
 在交互观察者模式下，启动test runner。
-更多信息请参考running tests 章节。
+更多信息请参考[running tests](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests) 章节。
 
 **npm run build**
 
@@ -96,7 +96,7 @@ my-app/
 构建是minified 并且文件名包含哈希值。
 你的应用已经准备好部署了！
 
-更多信息请参考deployment 章节。
+更多信息请参考[deployment](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment) 章节。
 
 **npm run eject**
 
@@ -203,7 +203,7 @@ Visual Studio Code 支持实时编辑和调试，使用Create React App 开箱�
 ```
 运行`npm start` 启动你的应用，按`F5` 或点击绿色debug 图标在VS Code 中调试。现在你可以写代码、设置断点、修改代码以及调试你最新修改的代码--所有都在你的编辑器中实现。
 
-## Change the Page **<title>**
+## Changing the Page **title**
 
 你可以在生成项目的`public` 文件夹下知道源HTML 文件。你可以编辑`<title>` 标签，把“React App” 标题改为其他任何东西。
 
