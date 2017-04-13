@@ -122,6 +122,54 @@ post_asset_folder: true
 [Hexo 中文文档](https://hexo.io/zh-cn/docs/index.html/)
 ```
 
+### 草稿
+
+你可以执行如下命令来新建一个草稿。
+
+```bash
+$ hexo new draft <title>
+```
+
+使用实例
+
+```bash
+$ hexo new draft "hexo 常用命令"
+```
+
+命令执行成功之后，草稿会被保存在`source/_drafts` 文件夹。
+
+编辑草稿内容之后，启动服务器
+
+```bash
+$ hexo server
+```
+
+在浏览器中打开`http://localhost:4000` 看不到草稿内容，此时可以通过`publish` 命令将草稿移动到`source/_posts` 文件夹。
+
+```bash
+$ hexo publish [layout] <filename>
+```
+
+使用实例
+
+```bash
+$ hexo publish draft "hexo 常用命令"
+```
+
+或者是在启动服务器时，增加`--drafts` 命令来进行预览
+
+```bash
+$ hexo server --drafts
+```
+
+这时再浏览器中打开`http://localhost:4000` 就能够看到草稿内容了。
+
+
+
+
+
+
+
 ## 参考文章
 
 1. [Hexo 中文文档](https://hexo.io/zh-cn/docs/index.html/)
