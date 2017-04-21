@@ -1,7 +1,11 @@
-layout: draf
+---
 title: Lodash 学习-入门
 date: 2017-04-21 15:26:59
+comments: true
 tags:
+  - 技术
+  - Lodash
+categories: 技术
 ---
 
 
