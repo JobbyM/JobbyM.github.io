@@ -16,6 +16,8 @@ categories: 技术
 {% asset_img Robomongo_1.png %}
 2. 执行下载的.exe 文件，进行安装
 
+<!--more-->
+
 ## 启动
 1. 在启动Robomongo 之前，需要现将 {% post_link MongoDB-安装 MongoDB-启动 %}
 2. 点击`Create` 进行创建新连接，
