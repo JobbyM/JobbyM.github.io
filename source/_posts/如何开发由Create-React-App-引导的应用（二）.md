@@ -89,7 +89,7 @@ class Button extends Component {
 }
 ```
 
-**对于React 这并不是必需的**，但是许多人发现这个特性很方便。你可以在[这里]阅读这种方法的好处。但是，您应该意识到，这使得你的代码更适合Webpack而不是他构建工具和环境。
+**对于React 这并不是必需的**，但是许多人发现这个特性很方便。你可以在[这里](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b)阅读这种方法的好处。但是，您应该意识到，这使得你的代码更适合Webpack而不是他构建工具和环境。
 
 在开发中，使用这种方式表达依赖，可以在编辑样式使立即重新加载样式。在生产中，所有的CSS 文件将被连接到构建输出中的一个最小化的.css 文件中。
 
