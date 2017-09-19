@@ -73,7 +73,7 @@ my-app/
 你需要*将任何JS 和CSS 放到`src` 中*，否则Webpack 将不会处理。
 
 `public/index.html` 只能使用`public` 中的文件。
-阅读使用JavaScript 和HTMl 资源的说明。
+阅读使用JavaScript 和HTML 资源的说明。
 
 但是，你可以创建更多的顶级目录。
 它们不会被包含在生产版本中，因此你可以将它们用于文档说明等。
