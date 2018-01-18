@@ -4,9 +4,9 @@ date: 2018-01-18 08:51:22
 comments: true
 tags:
   - 技术
-  - 静态独立博客
-  - GitHub Pages
-  - Hexo
+  - 阿里云
+  - 云虚拟主机
+  - Z-BlogPHP
 categories: 技术
 ---
 
