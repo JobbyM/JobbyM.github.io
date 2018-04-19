@@ -27,6 +27,7 @@ categories: 技术
 > 子曰：如何查询原型
 
 通过new 表达式创建的对象，通常继承一个`constructor` 属性，这属性指代创建这个对象的构造函数。`constructor.prototype` 才是对象直接量的真正原型，但对于通过`Object.create()` 创建的对象则往往不是这样。
+{% asset_img prototype_5.png %}
 > 子曰：还是如何表示原型，但是提供一个`constructor` 属性
 
 想要检测一个对象是否是另一个对象的原型（或处于原型链中），请使用`isPrototypeOf()` 方法。例如，可以通过`p.isPrototypeOf(o)` 来检测p 是否是o 的原型：
