@@ -2,6 +2,10 @@
 title: 一日一练-JS Object.defineProperty 方法的使用
 date: 2018-04-23 08:44:25
 tags:
+  - 技术
+  - 一日一练
+  - JS
+categories: 技术
 ---
 
 > 子曰：学好Object.defineProperty，你也可以写一个Vuejs
@@ -27,6 +31,8 @@ Object.defineProperty(object, propertyname, descriptor)
 
 ## 返回值
 已修改对象
+
+<!--more-->
 
 ## 备注
 可使用`Object.defineProperty` 函数来执行以下操作：
@@ -170,4 +176,29 @@ for (var prop in descriptor) {
 // 输出：
 // get: function () { return this.newaccpropvalue }
 // set: function (x) { document.write('in property get accessor' + newLine) return this.newaccpropvalue}
+// configurable: true
+// enumerable: true
+```
+
+## 修改DOM 元素上的属性
+下面的示例演示如何通过使用`Object.getOwnPropertyDescriptor` 函数来获取和修改属性的属性描述符，从而自定义内置DOM 属性。对于此示例中，必须通过使用ID 为"div" 的DIV 元素。
+```js
+// 获取querySelector 属性的descriptor
+var descriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'querySelector')
+
+// 将属性设置为只读
+descriptor.value = 'query'
+descriptor.writable = false
+// 将其应用到Element prototype
+Object.defineProperty(Element.prototype, 'querySelector', descriptor)
+
+// 从HTML body 中获得DOM 元素
+var elem = document.getElementById('div')
+
+// 尝试改变值。这会导致修改的值属性被调用。
+elem.querySelector = 'anotherQuery'
+document.write(elem.querySelector)
+
+// 输出：
+// query
 ```
