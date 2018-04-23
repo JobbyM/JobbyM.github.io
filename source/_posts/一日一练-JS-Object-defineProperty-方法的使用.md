@@ -1,6 +1,7 @@
 ---
 title: 一日一练-JS Object.defineProperty 方法的使用
 date: 2018-04-23 08:44:25
+comments: true
 tags:
   - 技术
   - 一日一练
