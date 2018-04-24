@@ -25,7 +25,7 @@ ES5 规范的每种内置对象都定义了`[[Class]]` 内部属性值。宿主�
 `[[PrimitiveValue]]` 属于只在某些对象中定义的内部属性，其值的类型范围为原始类型，作用是说明与此对象的内部状态信息关联。对于标准内置对象只能用 **Boolean、Date、Number、String 对象实现** `[[PrimitiveValue]]`。
 > 摘自[ES5 类型](https://www.w3.org/html/ig/zh/wiki/ES5/%E7%B1%BB%E5%9E%8B#Object.E7.9A.84.E5.86.85.E9.83.A8.E5.B1.9E.E6.80.A7.E5.8F.8A.E6.96.B9.E6.B3.95)
 
-3. ToObject
+3. `ToObject`
 `ToObject` 抽象操作根据下表将其参数转换为对象类型的值：
 
 | 输入类型 | 结果 |
