@@ -133,3 +133,18 @@ Number(['1234']) // => 1234
 这种特殊方式是指：通过`valueOf()` 或者`toString()` 返回的原始值将被直接使用，而不会被强制转换为数字或字符串。
 `+`、`==`、`!=` 和关系运算符也会做对象到原始值的转换，但要除去日期对象的特殊情形：任何对象都会首先尝试调用valueOf()，然后调用toString()。不管得到的原始值是否直接使用，它都不会进一步被转换为数字或字符串。
 > 参考自《JavaScript 权威指南（第6版）（中文版）》第3 章 类型、值和变量 中的3.8 类型转换
+
+## Tips
+了解一下语法提案的批准流程
+任何人都可以向标准委员会（又称TC39 委员会）提案，要求修改语言标准。
+一种新的语法从提案到变成正式标准，需要经历五个阶段。每个阶段的变动都需要由TC39 委员会批准。
+{% asset_img draft.png %}
+
+1. Stage 0 - Strawman（展示阶段）
+2. Stage 1 - Proposal（征求意见阶段）
+3. Stage 2 - Draft（草案阶段）
+4. Stage 3 - Candidate（候选人阶段）
+5. Stage 4 - Finished（定案阶段）
+
+一个提案只要能进入Stage 2，就差不多肯定会包含在以后的正式标准里面。ECMAScrpit 当前的所有提案，可以在TC39 的官方网站[Github.com/tc39/ecma262](https://github.com/tc39/ecma262) 查看。
+> 参考自[阮一峰es6](http://es6.ruanyifeng.com/#docs/intro#%E8%AF%AD%E6%B3%95%E6%8F%90%E6%A1%88%E7%9A%84%E6%89%B9%E5%87%86%E6%B5%81%E7%A8%8B)
