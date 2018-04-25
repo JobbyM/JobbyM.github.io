@@ -35,7 +35,7 @@ var math = require('math')
 在CommonJS 规范中，存在`require()` 方法，这个方法接受模块标识，以此引入一个模块的API 到当前上下文中。
 
 2. 模块定义
-上下文提供了`export` 对象用于导出当前模块的方法或者变量，并且它是唯一导出的出口。在模块中，还存在一个`module` 对象，它代表模块自身，而`exports` 是`module` 的属性。
+上下文提供了`exports` 对象用于导出当前模块的方法或者变量，并且它是唯一导出的出口。在模块中，还存在一个`module` 对象，它代表模块自身，而`exports` 是`module` 的属性。
 在Node 中，一个文件就是一个模块，将方法挂载在`exports` 对象上作为属性即可定义导出的方式：
 ```js
 exports.add = function () {
