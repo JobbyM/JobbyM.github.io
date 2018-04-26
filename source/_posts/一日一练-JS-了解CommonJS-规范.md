@@ -83,3 +83,5 @@ AMD（Asynchronous Module Definition 异步模块定义）规范在前端应用�
 
 ## 参考文档
 1. [JavaScript 标准参考教程（alpha） 阮一峰 CommonJS规范](http://javascript.ruanyifeng.com/nodejs/module.html)
+2. [commonjs.org/](http://www.commonjs.org/)
+3. [commonjs.org/specs/modules/1.0/](http://wiki.commonjs.org/wiki/Modules/1.0)
