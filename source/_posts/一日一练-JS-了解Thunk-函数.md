@@ -1,10 +1,17 @@
 ---
 title: 一日一练-JS 了解Thunk 函数
 date: 2018-04-28 10:14:59
+comments: true
 tags:
+  - 技术
+  - 一日一练
+  - JS
+categories: 技术
 ---
 
-> 子曰：到底什么是thunk？thunk、thunkify、thunkory 还有redux-thunk
+> 子曰：到底什么是thunk？
+
+`thunk`、`thunkify`、甚至React 还有一个叫`redux-thunk`，为什么都有一个`thunk` 呢？在通读《You Dont Know JS》 时，看到了作者[Kyle Simposn](https://github.com/getify)对`thunk` 的解释，对`thunk` 有了一定的了解，同时参考了阮一峰的 [Thunk 函数的含义和用法](http://www.ruanyifeng.com/blog/2015/05/thunk.html)，通过对比将其摘录下来。
 
 ## Thunk 的历史
 20 世纪60 年代在编程语言刚起步时，计算机科学家研究编译器怎么写比较好（注意，是编译器而不是JavaScript）。**一个争议点是“求值策略”，即函数的参数到底应该合适求值。**
@@ -34,6 +41,7 @@ foo(x + 5)
 // 传名调用时，等同于
 (x + 5) * 2
 ```
+<!--more-->
 
 编译器的“传名调用” 实现，往往是将参数放到一个临时函数中，在将这个临时函数传入函数体。这个临时函数就叫做Thunk 函数。
 ```js
