@@ -25,6 +25,8 @@ import { stat, exists, readFile } from 'fs'
 
 需要注意`this` 的限制。ES6 模块之后，顶层的`this` 指向`undefined`，即不应该在顶层代码使用`this`。
 
+<!--more-->
+
 ## export 命令
 模块功能主要由两个命令构成：`export` 和`import`。`export` 命令用于规定模块的对外接口，`import` 命令用于输入其他模块提供的功能。
 
