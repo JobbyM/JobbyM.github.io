@@ -20,6 +20,8 @@ UMD 模式通常会尝试提供适配当前最流行的脚本加载器（例如R
 > UMD的实现很简单，先判断是否支持NodeJS模块格式（exports是否存在），存在则使用NodeJS模块格式。
 > 再判断是否支持AMD（define是否存在），存在则使用AMD方式加载模块。前两个都不存在，则将模块公开的全局（window或global）。
 
+<!--more-->
+
 ## Variations （变体）
 **常规模块**
 1. [amdWeb.js](https://github.com/umdjs/umd/blob/master/templates/amdWeb.js) - 定义一个适用于AMD 和浏览器全局的模块。如果你还希望在AMD处于运行状态时导出全局（如果你正在加载其他仍然期望全局的脚本，则可以使用），请使用[amdWebGlobal.js](https://github.com/umdjs/umd/blob/master/templates/amdWebGlobal.js)。
