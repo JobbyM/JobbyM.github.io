@@ -34,7 +34,8 @@ console.log(reg)  //=> /all/
   代表它本来含义的字符。比如正则表达式`/abc/`、`/123/`，它们分别匹配的是`abc`、`123`
 * 元字符
   在正则表达式中，有特殊含义的非数字字符。如：`\b` `\d` `\w` `.` `+` `()` 等。部分元字符的含义并不唯一，在不同的书写方式，含义可能不同。
-元字符表
+
+元字符表，下图来自[网址](http://tool.oschina.net/uploads/apidocs/jquery/regexp.html)
 {% asset_img reg.jpg %}
 
 ## 3.工具推荐
@@ -139,7 +140,7 @@ console.log(reg)  //=> /all/
 'This is all I have.'.replace(/\Bis/g, 'IS') // => ThIS is all I have.
 ```
 
-## 9.分组
+## 8.分组
 ### 作用
 * 与`|` 使用
 * 与量词使用
@@ -187,7 +188,7 @@ console.log(reg)  //=> /all/
 使用https://regexper.com 图解 `/http(?:|s):\/\//`
 {% asset_img graph_4.png %}
 
-## 10.前瞻后顾
+## 9.前瞻后顾
 * 正则表达式从头部（左）向尾部（右）开始匹配的，文本的尾部方向称为“前”，文本的头部方向称为“后”
 * 前瞻：正则表达式在匹配到规则的时候，向前检查是否符合断言
 * 后顾：正则表达式在匹配到规则的时候，向后检查是否符合断言
@@ -207,7 +208,7 @@ console.log(reg)  //=> /all/
 'ab2cde2fg'.replace(/(?<!\d)[a-z]/g,'X')   // =>XX2cXX2fX
 ```
 
-## 11.修饰符
+## 10.修饰符
 * `global`：是否全文搜索，默认是`false`
 * `ignoreCase`：是否大小写敏感，默认是`false`
 * `multiline`：是否多行搜索，默认是`false`
@@ -238,7 +239,7 @@ const reg = /\d/gim
 console.log(reg.source) // => \d
 ```
 
-## 12.RegExp 对象中的test() 和exec()
+## 11.RegExp 对象中的test() 和exec()
 ### test()
 用于测试参数字符串中是否存在匹配正则表达式模式的字符串；如果存在则返回true，否则返回false
 
