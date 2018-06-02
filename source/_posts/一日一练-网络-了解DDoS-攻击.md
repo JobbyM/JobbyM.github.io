@@ -5,7 +5,7 @@ comments: true
 tags:
   - 技术
   - 一日一练
-  - JS
+  - 网络
 categories: 技术
 ---
 
