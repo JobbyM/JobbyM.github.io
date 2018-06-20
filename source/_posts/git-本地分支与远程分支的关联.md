@@ -22,9 +22,9 @@ git branch --all
 ```
 默认只有当前master分支。
 
-3.创建本地新的分支songzhipeng 分支
+3.创建本地新的分支developer 分支
 ```bash
-git branch songzhipeng
+git branch developer
 ```
 此时查看分支
 ```bash
@@ -32,14 +32,14 @@ $ git branch --all
 *master
  songzhipeng
 ```
-这是会看到master和songzhipeng，而且master上会有一个星号。
-这个时候songzhipeng是一个本地分支，远程仓库不知道它的存在。
-本地分支可以不同步到远程仓库，我们可以在songzhipeng开发，然后merge到master，使用master同步代码。
+这是会看到master和developer，而且master上会有一个星号。
+这个时候developer是一个本地分支，远程仓库不知道它的存在。
+本地分支可以不同步到远程仓库，我们可以在developer开发，然后merge到master，使用master同步代码。
 
-4.发布songzhipeng 分支
-发布songzhipeng 分支是指同步songzhipeng 分支的代码到远程服务器。
+4.发布developer 分支
+发布developer 分支是指同步developer 分支的代码到远程服务器。
 ```bash
-git push origin songzhipeng:songzhipeng
+git push origin developer:developer
 ```
 
 ## 参考文档
