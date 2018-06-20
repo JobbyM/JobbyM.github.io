@@ -22,24 +22,52 @@ git branch --all
 ```
 默认只有当前master分支。
 
-3.创建本地新的分支developer 分支
+3.创建本地新的分支test 分支
 ```bash
-git branch developer
+git branch test
 ```
 此时查看分支
 ```bash
 $ git branch --all
 *master
- songzhipeng
+ test
 ```
-这是会看到master和developer，而且master上会有一个星号。
-这个时候developer是一个本地分支，远程仓库不知道它的存在。
-本地分支可以不同步到远程仓库，我们可以在developer开发，然后merge到master，使用master同步代码。
+这是会看到master和test，而且master上会有一个星号。
+这个时候test是一个本地分支，远程仓库不知道它的存在。
+本地分支可以不同步到远程仓库，我们可以在test开发，然后merge到master，使用master同步代码。
 
-4.发布developer 分支
-发布developer 分支是指同步developer 分支的代码到远程服务器。
+4.发布test 分支
+发布test 分支是指同步test 分支的代码到远程服务器。
 ```bash
-git push origin developer:developer
+git push origin test:test
+```
+
+5.查看远程分支
+```bash
+git branch -r
+```
+
+6.拉取远程分支并创建本地分支
+```bash
+git checkout -b develop origin/develop
+```
+使用该方式会在本地新建分支develop，并自动切换到该本地分支develop。
+同时会建立本地分支会和远程分支建立映射关系。
+
+7.删除远程分支test
+```bash
+git push origin -d test
+```
+
+8.删除本地分支test
+```bash
+git branch -d test
+```
+
+9.从本地develop 建立新分支test，并同步远程test 分支。
+```bash
+git checkout -b test
+git push origin test:test
 ```
 
 ## 参考文档
