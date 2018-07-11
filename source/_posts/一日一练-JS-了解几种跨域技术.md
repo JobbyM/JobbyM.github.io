@@ -2,9 +2,91 @@
 title: 一日一练-JS 了解几种跨域技术
 date: 2018-07-03 18:45:42
 tags:
+  - 技术
+  - 一日一练
+  - JS
+  - CORS
+  - 跨域
+categories: 技术
 ---
 
 > 子曰：了解几种跨域机制
+
+# 简单介绍
+首先简单了解一下同源策略相关知识点：
+1.**同源策略** 限制了从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的重要机制。
+2.源的定义：如果两个页面的协议、端口和域名都相同，则两个页面具有相同的 **源**
+3.同源策略规定，是XHR 实现Ajax 通信的一个主要限制。默认情况下，XHR 对象只能访问与包含它的页面位于同一个域中的资源。这种安全策略可以预防某些恶意行为。但是，实现合理的跨域请求对开发某些浏览器应用程序也是至关重要的。
+
+<!--more-->
+
+下面是几种跨域技术。
+
+## CORS
+0x00：定义
+CORS（Cross-Origin Resource Sharing，跨域资源共享）是W3C 的一个工作草案，定义了在必须访问跨域资源时，浏览器与服务器应该如何沟通。CORS 背后的基本思想，就是使用自定义的HTTP 头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功，还是应该失败。
+比如一个简单的使用GET 或POST 发送的请求，它没有自定义的头部，而主体内容是`text/plain`。在发送该请求时，需要给它附加应该额外的`Origin` 头部，其中包含请求页面的源信息（协议、域名和端口），以便服务器根据这个头部信息来决定是否给与响应。下面是`Origin` 头部的应该示例：
+```js
+Origin: http://www.example.com
+```
+如果服务器任务这个请求可以接受，就在`Access-Control-Allow-Origin` 头部中回发相同的源信息（如果是公共资源，可以回发`*`）。例如：
+```js
+Access-Control-Allow-Origin: http://www.example.com
+```
+如果没有这个头部，或者有这个头部但源信息不匹配，浏览器就会驳回请求。正常情况下，浏览器会处理请求。注意，请求和响应都不包含cookie 信息。
+
+0x01：现代浏览器对CORS 的实现
+Webkit 内核的现代浏览器都通过`XMLHttpRequest` 对象实现了对CORS 的原生支持。在尝试打开不同来源的资源时，无需额外编写代码就可以触发这个行为。
+```js
+var xhr = new XMLHttpRequest()
+xhr.onreadystatechange = function () {
+  if (xhr.readyState == 4) {
+    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
+      alert(xhr.responseText)
+    } else {
+      alert('Request was unsuccessful: ' + xhr.status)
+    }
+  }
+}
+xhr.open('get', 'http://www.example.com/page/', true)
+xhr.send(null)
+```
+跨域XHR 对象有一些安全限制
+1.不能使用`setRequestHeader()` 设置自定义头部。
+2.不能发送和接收cookie
+3.调用`getAllResponseHeader()` 方法总会返回空字符串。
+
+0x02：Preflighted Requests（预检请求）
+CORS 通过一种叫做Preflighted Requests 的透明服务器机制支持开发人员使用自定义的头部、GET 或POST 之外的方法，以及不同类型的主体内容。在使用下列高级选项发送请求时，就会向服务器发送一个Preflight 请求。这种请求使用OPTIONS 方法，发送下列头部。
+1.Origin：与简单的请求相同。
+2.Access-Control-Request-Method：请求自身使用的方法。
+3.Access-Control-Request-Headers：（可选）自定义的头部信息，多个头部以逗号分割。
+下面是一个带有自定义头部NCZ 的使用POST 发送的请求
+```js
+Origin: http://www.example.com
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: NCZ
+```
+发送这个请求后，服务器可以决定是否允许这种类型的请求。服务器通过在响应中发送如下头部与浏览器进行沟通。
+1.Access-Control-Allow-Origin：与简单的请求相同。
+2.Access-Control-Allow-Methods：允许的方法，多个方法以逗号分隔。
+3.Access-Control-Allow-Headers：允许的头部，多个头部以逗号分隔。
+4.Access-Control-Max-Age：应该将这个Preflight 请求缓存多长时间（以秒表示）。
+例如：
+```js
+Access-Control-Allow-Origin: http://www.example.com
+Access-Control-Allow-Methods: POST, GET
+Access-Control-Allow-Headers: NCZ
+Access-Control-Mag-Age：1728000
+```
+Preflight 请求结束后，结果将按照响应中指定的时间缓存起来。而为此付出的代价只是第一次发送这种请求时会多一次HTTP 请求。
+
+0x03：带凭据的请求
+默认情况下，跨源请求不提供凭据（cookie，HTTP 认证及客户端SSL 证明等）。通过将`withCredentials` 属性设置为`true`，可以指定某个请求应该发送凭据。如果服务器接受带凭据的请求，会用下面的HTTP 头部来响应。
+```js
+Access-Contol-Allow-Credentials: true
+```
+如果发送的是带凭据的请求，但服务器的响应中没有包含这个头部，那么浏览器就不会把响应交给JavaScript（于是，responseText 中将是空字符串，status 的值为0，而且会调用onerror() 事件处理程序）。另外，服务器还可以在Preflight 响应中发送这个HTTP 头部，表示允许源发送带凭据的请求。
 
 ## 图像Ping
 0x00：定义
