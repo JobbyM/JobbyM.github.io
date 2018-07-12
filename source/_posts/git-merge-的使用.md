@@ -39,6 +39,8 @@ git status
 git push origin develop
 ```
 
+<!--more-->
+
 ## merge 时的参数
 1.快速合并   只快速合并（如果有冲突就失败）
 ```js
