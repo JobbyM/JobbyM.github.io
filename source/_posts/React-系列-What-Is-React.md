@@ -12,7 +12,7 @@ categories: 技术
 > 子曰：[React 系列] What Is React
 
 关于本文：
-原文：https://learnreact.design/2017/08/16/components-props-and-state
+原文：https://learnreact.design/2017/06/08/what-is-react
 作者：@[Linton Ye](https://twitter.com/lintonye)
 
 博客系列：用简单的英语和涂鸦解释的React 术语
