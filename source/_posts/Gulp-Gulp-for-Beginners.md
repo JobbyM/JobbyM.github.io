@@ -709,7 +709,7 @@ gulp.task('default', function (callback) {
 
 * 使用[Autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer) 编写无前缀（vendor-free）的CSS 代码
 * 添加[Sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps) 以便于调试
-* 用[sprity](https://www.npmjs.com/package/gulp-sourcemaps) 创造精灵图
+* 用[sprity](https://www.npmjs.com/package/sprity) 创造精灵图
 * 使用[gulp-changed](https://www.npmjs.com/package/gulp-changed) 仅编译已更改的文件
 * 用[Babel](https://www.npmjs.com/package/gulp-babel) 或[Traceur](https://www.npmjs.com/package/gulp-traceur) 编写ES6
 * 使用[Browserify](http://browserify.org/)，[webpack](https://github.com/webpack/webpack) 或[jspm](https://github.com/jspm) 模块化Javascript 文件
