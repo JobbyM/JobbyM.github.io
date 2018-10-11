@@ -49,3 +49,4 @@ DOM XSS 与存储型XSS 和反射型XSS 的差别在于，DOM XSS 的XSS 代码�
 
 ## 参考文档
 1.《Web 前端黑客技术解密》 第3 章 前端黑客之XSS
+2.[【基本功】 前端安全系列之一：如何防止XSS攻击？ 美团技术团队](https://mp.weixin.qq.com/s/kWxnYcCTLAQp5CGFrw30mQ)
