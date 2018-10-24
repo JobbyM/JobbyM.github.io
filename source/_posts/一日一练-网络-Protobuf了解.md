@@ -12,4 +12,5 @@ categories: 技术
 
 
 ## 参考文档
-1.[Cocos2d-JS/Ajax用Protobuf与NodeJS/Java通信](https://www.cnblogs.com/roam/p/6237837.html)
+1.[protocol buffer 官网](https://developers.google.cn/protocol-buffers/)
+2.[Cocos2d-JS/Ajax用Protobuf与NodeJS/Java通信](https://www.cnblogs.com/roam/p/6237837.html)
