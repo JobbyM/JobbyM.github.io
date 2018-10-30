@@ -67,6 +67,12 @@ Run `apm help <command>` to see the more details about a specific command.
 $ apm install react
 ```
 
+## 快捷键
+1.修改当前文件的类型
+Atom会自动识别你当前编辑的文件的类型
+如果识别失败,Atom 会将此文件当做普通的文本文档来处理
+在这种情况下我们可以使用`Ctrl+Shift+L`来手动指定或改变当前文件的类型
+
 ## 参考文档
 1. [Atom GitHub 地址](https://github.com/atom/atom)
 2. [Atom 官网](https://atom.io/)
