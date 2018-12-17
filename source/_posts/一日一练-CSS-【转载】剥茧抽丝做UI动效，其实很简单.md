@@ -2,6 +2,11 @@
 title: 一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单
 date: 2018-12-17 14:43:21
 tags:
+  - 技术
+  - 一日一练
+  - CSS
+  - 转载
+categories: 技术
 ---
 
 本文转载自[剥茧抽丝做 UI 动效，其实很简单](https://mp.weixin.qq.com/s/6xViWef8Po0N-x8BQiGw2Q)，有部分删减，看原文请到原地址。
