@@ -75,5 +75,69 @@ function adapt(designWidth, rem2px){
 })(document, window, 750, 100)
 ```
 
+[猫眼](http://piaofang.maoyan.com)的`rem` 适配方法
+```js
+/**
+ * 使用 rem 布局不要使用 text-size-adjust 改变字体效果，
+ * 在 <meta name="viewport"> 之后使用该代码
+ * @param {Number} designCSSWidth       设计基准CSS宽度，设备宽度 / dpr
+ * @param {Number} baseFontSize         基准字体大小，当前 innerWidth 和 designCSSWidth 宽度相同时，html 的 font-size px 值
+ * @param {Number} maxScale             最大的缩小放大倍数
+ */
+function rem(designCSSWidth, baseFontSize, maxScale){
+    designCSSWidth = designCSSWidth || 760;
+    baseFontSize = baseFontSize || 100;
+    maxScale = maxScale || 1.5;
+
+    var w = window;
+    var d = document;
+    var on = 'addEventListener';
+    var html = d.documentElement;
+    var maxSize = maxScale * baseFontSize;
+    var remStyle = d.getElementById('rem-style');
+    function setRem() {
+        var isVertical = w.innerWidth < w.innerHeight;
+        var width = w.innerWidth;
+        if (!isVertical) {
+            width = 375;
+            remStyle.innerText = 'body { max-width: ' + width + 'px}';
+        } else {
+            remStyle.innerText = '';
+        }
+        var size = baseFontSize * width / designCSSWidth;
+        html.style.fontSize = Math.min(size, maxSize) + 'px';
+    }
+
+    var isAnd = w.navigator.userAgent.match(/Android/);
+    var raf = w.requestAnimationFrame || w.webkitRequestAnimationFrame;
+    var limit = 10;
+    function setRemFallback() {
+        // 经测试不能保证第一次就拿到正确 innerWidth，所以设置一个延时（即次数限制）。
+        limit--;
+        if (limit && w.innerWidth > 500) {
+            raf && raf(setRemFallback)
+        } else {
+            setRem();
+            d.documentElement.style.display = 'block';
+        }
+    }
+    if (w.innerWidth > 500 && isAnd) {
+        d.documentElement.style.display = 'none';
+        /**
+         * 部分机型在 WebView 内需要 load 之后才能获取正确 innerWidth。判断标准为其大于 500 的时候。
+         * 先隐藏 HTML，拿到正确的 innerWidth 再显示。有问题的机器包括魅族 M1
+         */
+        if (!raf) {
+            w[on]('load', setRemFallback, false);
+        } else {
+            raf(setRemFallback);
+        }
+    }
+    w[on]('resize', setRem, false);
+    setRem();
+}
+rem(375, 50);
+```
+
 ## 参考文档
 1.[rem布局在webview中页面错乱](https://edu.aliyun.com/a/65330)
