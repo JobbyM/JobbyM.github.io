@@ -16,11 +16,11 @@ before_install:
 - cp .travis/ssh_config ~/.ssh/config
 - git config --global user.name JobbyM
 - git config --global user.email songzhipengmune@gmail.com
+- export HEXO_ALGOLIA_INDEXING_KEY=c7d219504e44d09ab55f5f7a195fce98
 install:
 - npm install hexo-cli -g
 - npm install
 - npm install hexo-deployer-git --save
-- npm install hexo-algolia@1.0.1 --save
 - npm install hexo-generator-sitemap --save
 script:
 - hexo clean
