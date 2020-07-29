@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "6"
+  - "12"
 
 branches:
   only:
@@ -31,7 +31,7 @@ install:
   - npm install hexo-cli -g
   - npm install
   - npm install hexo-deployer-git --save
-  - npm install hexo-algolia@0.2.0 --save
+  - npm install hexo-algolia@1.0.1 --save
   - npm install hexo-generator-sitemap --save
 
 script:
