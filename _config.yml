@@ -75,5 +75,6 @@ deploy:
 # Algolia
 algolia:
   applicationID: 'JQFAQAQAP5'
+  apiKey: 'fbb18262d0b784c1d03f095a83eadbcf'
   indexName: 'dev_jobbymsblog'
   chunkSize: 5000
