@@ -2,6 +2,11 @@
 title: 使用Travis CI 自动部署Hexo 之后续维护
 date: 2020-07-30 08:46:29
 tags:
+  - 技术
+  - 静态独立博客
+  - Hexo
+  - Algolia
+categories: 技术
 ---
 
 # 简介
