@@ -37,9 +37,14 @@ $(document).ready(function () {
       hitsPerPage: algoliaSettings.hits.per_page || 10,
       templates: {
         item: function (data) {
+          // return (
+          //   '<a href="' + CONFIG.root + data.path + '" class="algolia-hit-item-link">' +
+          //     data._highlightResult.title.value +
+          //   '</a>'
+          // );
           return (
-            '<a href="' + CONFIG.root + data.path + '" class="algolia-hit-item-link">' +
-              data._highlightResult.title.value +
+            '<a href="' + data.permalink + '" class="algolia-hit-item-link" target="_blank">' +
+            data._highlightResult.title.value +
             '</a>'
           );
         },
