@@ -161,3 +161,4 @@ console.log(target, cloneTarget)
 
 ## 参考文档
 1.[浅拷贝与深拷贝](https://juejin.cn/post/6844904197595332622)
+2.[如何写出一个惊艳面试官的深拷贝](https://juejin.cn/post/6844903929705136141)
