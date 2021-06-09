@@ -146,7 +146,7 @@ console.log(add(1, 2))
 ### 1.分析模块
 模块的分析相当于对读取的文件代码字符串进行解析。这一步其实和高级语言的编译过程一致。需要将模块解析为抽象语法树 AST。我们借助 @babel/parser 来完成。
 
-> AST （Abstract Syntax Tree）抽象语法树 在计算机科学中，或简称语法树（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。（(astexplorer.net/)[astexplorer.net/]）
+> AST （Abstract Syntax Tree）抽象语法树 在计算机科学中，或简称语法树（Syntax tree），是源代码语法结构的一种抽象表示。它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。（[astexplorer.net/](astexplorer.net/)）
 
 分析模块分为以下三个步骤：
 * 读取文件
