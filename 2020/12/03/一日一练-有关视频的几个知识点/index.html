@@ -1,0 +1,1013 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JS,一日一练," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="俗话说得好，好记性不如记博客。工作中总会遇到一些视频播放相关任务，视频点播、视频直播、视频直播时移等，在这里将几个知识点记录一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练 有关视频的几个知识点">
+<meta property="og:url" content="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="俗话说得好，好记性不如记博客。工作中总会遇到一些视频播放相关任务，视频点播、视频直播、视频直播时移等，在这里将几个知识点记录一下。">
+<meta property="og:image" content="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/2.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/3.jpg">
+<meta property="article:published_time" content="2020-12-03T03:45:00.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.533Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2020/12/03/一日一练-有关视频的几个知识点/"/>
+
+
+
+
+
+  <title> 一日一练 有关视频的几个知识点 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练 有关视频的几个知识点
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-03T03:45:00+00:00">
+                2020-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/03/一日一练-有关视频的几个知识点/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/" class="leancloud_visitors" data-flag-title="一日一练 有关视频的几个知识点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>俗话说得好，好记性不如记博客。<br>工作中总会遇到一些视频播放相关任务，视频点播、视频直播、视频直播时移等，在这里将几个知识点记录一下。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="第一点：视频播放的主要技术"><a href="#第一点：视频播放的主要技术" class="headerlink" title="第一点：视频播放的主要技术"></a>第一点：视频播放的主要技术</h1><p>视频播放的主要技术点为封装技术，视音频压缩编码技术，流媒体技术</p>
+<h2 id="封装技术："><a href="#封装技术：" class="headerlink" title="封装技术："></a>封装技术：</h2><p>视频数据和音频数据打包成一个文件的规范。既我们生活中所看到的各种视频格式，包括avi、mp4、rmvb、flv、mkv、ts等。</p>
+<h2 id="视音频压缩编码技术"><a href="#视音频压缩编码技术" class="headerlink" title="视音频压缩编码技术"></a>视音频压缩编码技术</h2><p>视频是由一张一张的照片组成的，每秒24帧，如果把所有的图片存储起来，数据量会很大，基于相邻的图片只会有比较微小的差别，视频压缩的原理就是存储每张图片和上一张不一样的地方，这样就大大的压缩的视频的体积，目前常用技术包括H.264、MPEG2、VP9、VP8等，音频编码压缩主要使用AAC、AC-3、MP3、WMA。</p>
+<h2 id="流媒体技术"><a href="#流媒体技术" class="headerlink" title="流媒体技术"></a>流媒体技术</h2><p>流媒体技术主要用于网络视频播放和直播，在所有封装格式中，除了avi其他都支持流媒体。</p>
+<h1 id="第二点：视频播放原理"><a href="#第二点：视频播放原理" class="headerlink" title="第二点：视频播放原理"></a>第二点：视频播放原理</h1><img src="/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/1.jpg" class="">
+
+<h2 id="解协议"><a href="#解协议" class="headerlink" title="解协议"></a>解协议</h2><p>将流媒体协议的数据，解析为标准的相应的封装格式数据。视音频在网络上传播的时候，常常采用各种流媒体协议，例如HTTP，RTMP，或是MMS等等。这些协议在传输视音频数据的同时，也会传输一些信令数据。这些信令数据包括对播放的控制（播放，暂停，停止），或者对网络状态的描述等。解协议的过程中会去除掉信令数据而只保留视音频数据。例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
+<h2 id="解封装"><a href="#解封装" class="headerlink" title="解封装"></a>解封装</h2><p>将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。封装格式种类很多，例如MP4，MKV，RMVB，TS，FLV，AVI等等，它的作用就是将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
+<h2 id="解码"><a href="#解码" class="headerlink" title="解码"></a>解码</h2><p>将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。音频的压缩编码标准包含AAC，MP3，AC-3等等，视频的压缩编码标准则包含H.264，MPEG2，VC-1等等。解码是整个系统中最重要也是最复杂的一个环节。通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P，RGB等等；压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
+<h2 id="视音频同步"><a href="#视音频同步" class="headerlink" title="视音频同步"></a>视音频同步</h2><p>根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
+<h1 id="第三点：当前主要的直播技术"><a href="#第三点：当前主要的直播技术" class="headerlink" title="第三点：当前主要的直播技术"></a>第三点：当前主要的直播技术</h1><img src="/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/2.jpg" class="">
+
+<h1 id="第四点：-HLS-协议"><a href="#第四点：-HLS-协议" class="headerlink" title="第四点： HLS 协议"></a>第四点： HLS 协议</h1><p>HLS 是由Apple Lnc. 推出的基于HTTP 的流媒体网络传输协议。主要由两部分组成，一个是m3u8 的索引文件，一个是ts 封装格式的视频文件，客户端获取m3u8 文件之后，根据索引再请求下载对应的ts 文件，流程如下：</p>
+<img src="/2020/12/03/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%9C%89%E5%85%B3%E8%A7%86%E9%A2%91%E7%9A%84%E5%87%A0%E4%B8%AA%E7%9F%A5%E8%AF%86%E7%82%B9/3.jpg" class="">
+
+<p>将录制的视频使用MPEG-2编码切片，生成m3u8索引文件和ts封装格式的切片视频，客户端通过HTTP 请求获取。</p>
+<p>兼容方面，目前移动端和Safari浏览器可以直接使用HTML5 的video 标签直接播放，其他浏览器需要做兼容，现在有很多的基于hls 的兼容方案， 包括video.js的videojs/videojs-contrib-hls、hls.js、Chimeejs/chimee等。</p>
+<p>这些HLS 的兼容方案工作原理大概相同：<br>1.通过HTTP 请求获取索引文件<br>2.将传输的视频流二进制数据封装成可直接播放的视频格式。videojs-contrib-hls是利用video.js 里SWF 的一个特殊模块，将视频二进制数据打包成flv 格式。hls.js 是转换为MP4格式<br>3.使用appendBuffer将视频片段添加到SourceBuffer 中</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p>1.总结视音频编解码技术零基础学习方法 <a href="https://developer.mozilla.org/en-US/docs/Web/API/SourceBuffer" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/SourceBuffer</a><br>2.视频播放与HLS 直播技术总结：<a href="https://www.jianshu.com/p/8845b976fcaf" target="_blank" rel="noopener">https://www.jianshu.com/p/8845b976fcaf</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/05/git-cherry-pick-%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="git cherry-pick 的使用">
+                <i class="fa fa-chevron-left"></i> git cherry-pick 的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/12/03/Hexo%E9%9B%86%E6%88%90Algolia%E6%90%9C%E7%B4%A2%E6%8F%92%E4%BB%B6%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="Hexo集成Algolia搜索插件时遇到的问题">
+                Hexo集成Algolia搜索插件时遇到的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一点：视频播放的主要技术"><span class="nav-number">1.</span> <span class="nav-text">第一点：视频播放的主要技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装技术："><span class="nav-number">1.1.</span> <span class="nav-text">封装技术：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视音频压缩编码技术"><span class="nav-number">1.2.</span> <span class="nav-text">视音频压缩编码技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流媒体技术"><span class="nav-number">1.3.</span> <span class="nav-text">流媒体技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二点：视频播放原理"><span class="nav-number">2.</span> <span class="nav-text">第二点：视频播放原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解协议"><span class="nav-number">2.1.</span> <span class="nav-text">解协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解封装"><span class="nav-number">2.2.</span> <span class="nav-text">解封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解码"><span class="nav-number">2.3.</span> <span class="nav-text">解码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视音频同步"><span class="nav-number">2.4.</span> <span class="nav-text">视音频同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三点：当前主要的直播技术"><span class="nav-number">3.</span> <span class="nav-text">第三点：当前主要的直播技术</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四点：-HLS-协议"><span class="nav-number">4.</span> <span class="nav-text">第四点： HLS 协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2020/12/03/一日一练-有关视频的几个知识点/';
+
+      var disqus_title = "一日一练 有关视频的几个知识点";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1046 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JS,一日一练,转载,事件循环,Event Loop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文转载自JavaScript 运行机制详解：再谈Event Loop ruanyifeng，有部分删节，看原文请到原地址。 本文由作者受Philip Roberts 的演讲《Help，I’m stuck in an event-loop》 启发。 关于setTimeout 的更多解释和示例，请参阅《JavaScript标准参考教程》 一、为什么JavaScript 是单线程？JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop">
+<meta property="og:url" content="https://jobbym.github.io/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="本文转载自JavaScript 运行机制详解：再谈Event Loop ruanyifeng，有部分删节，看原文请到原地址。 本文由作者受Philip Roberts 的演讲《Help，I’m stuck in an event-loop》 启发。 关于setTimeout 的更多解释和示例，请参阅《JavaScript标准参考教程》 一、为什么JavaScript 是单线程？JavaScript">
+<meta property="og:image" content="https://jobbym.github.io/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/event_loop_0.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/event_loop_1.png">
+<meta property="article:published_time" content="2018-11-27T02:25:25.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.521Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="事件循环">
+<meta property="article:tag" content="Event Loop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/event_loop_0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/11/27/一日一练-JS-【转载】JavaScript-运行机制详解：再谈Event-Loop/"/>
+
+
+
+
+
+  <title> 一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-27T02:25:25+00:00">
+                2018-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/27/一日一练-JS-【转载】JavaScript-运行机制详解：再谈Event-Loop/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/" class="leancloud_visitors" data-flag-title="一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文转载自<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈Event Loop ruanyifeng</a>，有部分删节，看原文请到原地址。</p>
+<p>本文由作者受Philip Roberts 的演讲<a href="http://vimeo.com/96425312" target="_blank" rel="noopener">《Help，I’m stuck in an event-loop》</a> 启发。</p>
+<p>关于<code>setTimeout</code> 的更多解释和示例，请参阅<a href="http://javascript.ruanyifeng.com/bom/timer.html" target="_blank" rel="noopener">《JavaScript标准参考教程》</a></p>
+<h2 id="一、为什么JavaScript-是单线程？"><a href="#一、为什么JavaScript-是单线程？" class="headerlink" title="一、为什么JavaScript 是单线程？"></a>一、为什么JavaScript 是单线程？</h2><p>JavaScript 语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。那么，为什么JavaScript 不能有多个线程呢？这样能提高效率啊。</p>
+<p>JavaScript 的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript 的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来复杂的同步问题。比如，假定JavaScript 同时有两个线程，一个线程在某个DOM 节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？</p>
+<p>所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成为这门语言的核心特征，将来也不会改变。</p>
+<p>为了利用多核CPU 的计算能力，HTML5 提出了Web Worker 标准，允许JavaScript 脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM。所以，这个新标准并没有改变JavaScript 单线程的本质。</p>
+<a id="more"></a>
+
+<h2 id="二、任务队列"><a href="#二、任务队列" class="headerlink" title="二、任务队列"></a>二、任务队列</h2><p>单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。</p>
+<p>如果排队是因为计算量大，CPU忙不过来，倒也算了，但是很多时候CPU 是闲着的，因为I/O 设备（输入输出设备）很慢（比如Ajax 操作从网络读取数据），不得不等着结果出来，再往下执行。</p>
+<p>JavaScript 语言的设计者意识到，这时主线程完全可以不管I/O设备，挂起处于等待中任务，先运行排在后面的任务。等到I/O 设备返回了结果，把挂起的任务继续执行下去。</p>
+<p>于是，所有任务可以分为两种，一种是同步任务（synchronous），另一种是异步任务（asynchronous）。同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行下一个任务；异步任务指的是，不进入主线程、而进入“任务队列”（task queue）的任务，只有“任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。</p>
+<p>具体来说，异步执行的运行机制如下。（同步任务也是如此，因为它可以被视为没有异步任务的异步执行。）</p>
+<p>（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。<br>（2）主线程之外，还存在一个“任务队列”（task queue）。只要异步任务有了运行结果，就在“任务队列”之中放置一个事件。<br>（3）一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面有哪些事件。那些对应的异步任务， 于是结束等待状态，进入执行栈，开始执行。<br>（4）主线程不断重复上面的第三步。</p>
+<p>下图就是主线程和任务队列的示意图。</p>
+<img src="/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/event_loop_0.jpg" class="">
+
+<p>只要主线程空了，就会去读取“任务队列”，这就是JavaScript 的运行机制。这个过程会不断重复。</p>
+<h2 id="三、事件和回调函数"><a href="#三、事件和回调函数" class="headerlink" title="三、事件和回调函数"></a>三、事件和回调函数</h2><p>“任务队列”是一个事件的队列（也可以理解成消息队列），I/O 设备完成一项任务，就在“任务队列”中田间一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。</p>
+<p>“任务队列”中的事件，除了I/O 设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入“任务队列”，等待主线程读取。</p>
+<p>所谓“回调函数”（callback），就是哪些会被主线程挂起来的代码。异步任务必须指定回调函数，当主线程开始执行异步任务，就是执行对应的回调函数。</p>
+<p>“任务队列”是一个先进先出的数据结构，排在前面的事件，优先被主线程读取。主线程的读取过程基本上是自动的，只要执行栈一清空，“任务队列”上第一位的事件就会自动进入主线程。但是，由于存在后文提到的“定时器”功能，主线程首先检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。</p>
+<h2 id="四、Event-Loop"><a href="#四、Event-Loop" class="headerlink" title="四、Event Loop"></a>四、Event Loop</h2><p>主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为Event Loop（事件循环）。</p>
+<p>为了更好地理解Event Loop，请看下图（转自Philip Roberts 的演讲<a href="http://vimeo.com/96425312" target="_blank" rel="noopener">《Help，I’m stuck in an event-loop》</a>）。</p>
+<img src="/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/event_loop_1.png" class="">
+
+<p>上图中，主线程运行时，产生堆（heap）和栈（stack），栈中的代码调用各种外部API，它们在“任务队列”中加入各种事件（click、load、done）。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。</p>
+<p>执行栈中的代码（同步任务）。总是在读取“任务队列”（异步任务）之前执行。请看下面这个例子。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">req.open(<span class="string">'GET'</span>, url)</span><br><span class="line">req.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">req.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">req.send()</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中的req.send 方法是Ajax 操作向服务器发送数据，它是一个异步任务，意味着只有当前脚本的所有代码执行完，系统才会去读取“任务队列”。所以，它与下面的写法等价。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">req.open(<span class="string">'GET'</span>, url)</span><br><span class="line">req.send()</span><br><span class="line">req.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">req.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，指定回调函数的部分（onload 和onerror），在send 方法的前面或后面无关紧要，因为它们属于执行栈的一部分，系统总是执行完它们，才会去读取“任务队列”。</p>
+<h2 id="五、定时器"><a href="#五、定时器" class="headerlink" title="五、定时器"></a>五、定时器</h2><p>除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能。也就是定时执行的代码。</p>
+<p>定时器功能主要由setTimeout() 和setInterval() 这两个函数来完成，它们的内部运行机制完全一样，区别在于前者指定的代码是一次性执行，后者则为反复执行。以下主要讨论setTimeout()。</p>
+<p>setTimeout() 接受两个参数，第一个是回调函数，第二个是推迟执行的毫秒数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'1'</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="number">2</span>);&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'3'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码的执行结果是1，3，2，因为setTimeout() 将第二行推迟到1000 毫秒之后执行。</p>
+<p>如果将setTimeout() 的第二个参数设为0，就表示当前代码执行完（执行栈清空）以后，立即执行（0毫秒间隔）指定的回调函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="number">1</span>);&#125;, <span class="number">0</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'2'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码的执行结果是2、1，因为只有在执行完第二行以后，系统才会去执行“任务队列”中的回调函数。</p>
+<p>总之，setTimeout(fn, 0)的含义是，指定某个任务在主线程最早可得的空闲时间执行，也就是说，尽可能早得执行。它在“任务队列”的尾部添加一个事件，因此要等到同步任务和“任务队列”现有的事件都处理完，才会得到执行。</p>
+<p>HTML5 标准规定了setTimeout() 的第二个参数的最小值（最短间隔），不得低于4 毫秒，如果低于这个值，就会自动增加。在此之前，老版本的浏览器都将最短间隔设为10 毫秒。另外，对于那些DOM 的变动（尤其是涉及页面重新渲染的部分），通常不会立即执行，而是每16 毫秒执行一次。这时使用requestAnimationFrame() 的效果要好于setTimeout()。</p>
+<p>需要注意的是，setTimeout() 只是将事件插入了“任务队列”，必须等到当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码耗时很长，有可能要等很久，所以并没有办法保证，回调函数一定会在setTimeout()指定的时间执行。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" rel="tag"># 事件循环</a>
+          
+            <a href="/tags/Event-Loop/" rel="tag"># Event Loop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E4%B8%8E%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" rel="next" title="一日一练-浏览器 【转载】并发模型与事件循环">
+                <i class="fa fa-chevron-left"></i> 一日一练-浏览器 【转载】并发模型与事件循环
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%A6%82%E8%BF%B0/" rel="prev" title="一日一练-JS 【转载】异步操作概述">
+                一日一练-JS 【转载】异步操作概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、为什么JavaScript-是单线程？"><span class="nav-number">1.</span> <span class="nav-text">一、为什么JavaScript 是单线程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、任务队列"><span class="nav-number">2.</span> <span class="nav-text">二、任务队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、事件和回调函数"><span class="nav-number">3.</span> <span class="nav-text">三、事件和回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Event-Loop"><span class="nav-number">4.</span> <span class="nav-text">四、Event Loop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、定时器"><span class="nav-number">5.</span> <span class="nav-text">五、定时器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/11/27/一日一练-JS-【转载】JavaScript-运行机制详解：再谈Event-Loop/';
+
+      var disqus_title = "一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

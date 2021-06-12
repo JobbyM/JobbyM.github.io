@@ -1,0 +1,1086 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译SyntheticEvent这篇React（版本v15.4.0）官方文档。  SyntheticEventSynthecticEvent 入门参考文档包括React 时间系统中的表单部分。参考Handling Event 获取更多信息。 Overview你的事件句柄将会传入一个SyntheticEvent 实例，一个跨浏览器的包装器包装着浏览器原生事件。它有着和浏览器原生事件相同的接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react SyntheticEvent">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/16/react-SyntheticEvent/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译SyntheticEvent这篇React（版本v15.4.0）官方文档。  SyntheticEventSynthecticEvent 入门参考文档包括React 时间系统中的表单部分。参考Handling Event 获取更多信息。 Overview你的事件句柄将会传入一个SyntheticEvent 实例，一个跨浏览器的包装器包装着浏览器原生事件。它有着和浏览器原生事件相同的接">
+<meta property="article:published_time" content="2017-01-16T01:47:08.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.341Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/16/react-SyntheticEvent/"/>
+
+
+
+
+
+  <title> react SyntheticEvent | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/16/react-SyntheticEvent/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react SyntheticEvent
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T01:47:08+00:00">
+                2017-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/16/react-SyntheticEvent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/16/react-SyntheticEvent/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/16/react-SyntheticEvent/" class="leancloud_visitors" data-flag-title="react SyntheticEvent">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/events.html" target="_blank" rel="noopener">SyntheticEvent</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="SyntheticEvent"><a href="#SyntheticEvent" class="headerlink" title="SyntheticEvent"></a>SyntheticEvent</h2><p>SynthecticEvent 入门参考文档包括React 时间系统中的表单部分。参考<a href="https://facebook.github.io/react/docs/handling-events.html" target="_blank" rel="noopener">Handling Event</a> 获取更多信息。</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>你的事件句柄将会传入一个<code>SyntheticEvent</code> 实例，一个跨浏览器的包装器包装着浏览器原生事件。它有着和浏览器原生事件相同的接口，包括<code>stopPropagation()</code> 和<code>preventDefault()</code> ,除了事件同一工作跨所有浏览器。</p>
+<a id="more"></a>
+
+<p>如果你发现由于某些原因你需要底层浏览器事件，可以简单地使用<code>nativeEvent</code> 特性去处理它。每一个<code>SyntheticEvent</code> 对象有下面这些特性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">boolean bubbles</span><br><span class="line">boolean cancelable</span><br><span class="line">DOMEventTarget currentTarget</span><br><span class="line">boolean defaultPrevented</span><br><span class="line">number eventPhase</span><br><span class="line">boolean isTrusted</span><br><span class="line">DOMEvent nativeEvent</span><br><span class="line"><span class="keyword">void</span> preventDefault()</span><br><span class="line">boolean isDefaultPrevented()</span><br><span class="line"><span class="keyword">void</span> stopPropagation()</span><br><span class="line">boolean isPropagationStopped()</span><br><span class="line">DOMEventTarget target</span><br><span class="line">number timeStamp</span><br><span class="line">string type</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Note：</strong><br>截至v0.14 这个版本，事件局部中返回<code>false</code>不再阻止事件传递。相反，视情况而定手动的触发<code>e.stopPropagation()</code> 或者<code>e.preventDefault()</code> 方法。</p>
+</blockquote>
+<h2 id="Event-Pooling"><a href="#Event-Pooling" class="headerlink" title="Event Pooling"></a>Event Pooling</h2><p><code>SyntheticEvent</code> 是一个池子（pooled）。这意味着<code>SyntheticEvent</code> 对象是可复用的并且所有的属性在事件函数被调用后都是无效的。这是考虑到性能问题。本身，你不能异步地访问这些事件。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onClick</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(event); <span class="comment">// =&gt; nullified object</span></span><br><span class="line">  <span class="built_in">console</span>.log(event.type); <span class="comment">// =&gt; "click"</span></span><br><span class="line">  <span class="keyword">const</span> eventType = event.type; <span class="comment">// =&gt; "click"</span></span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event.type); <span class="comment">// =&gt; null</span></span><br><span class="line">    <span class="built_in">console</span>.log(eventType); <span class="comment">// =&gt; "click"</span></span><br><span class="line">  &#125;,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Won't work, this.state.clickEvent will only contain null values</span></span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">clickEvent</span>: event&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// You can still export event properties.</span></span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">eventType</span>: event.type&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Note：</strong><br>如果你想要异步地访问事件属性，你应该调用事件的<code>event.persist</code>，这回从池子（pool）中移除合成事件（synthetic event）并且允许引用通过用户代码保存的事件。</p>
+</blockquote>
+<h2 id="Supported-Events"><a href="#Supported-Events" class="headerlink" title="Supported Events"></a>Supported Events</h2><p>React 标准化事件以至于它们有跨浏览器一致的属性。</p>
+<p>下面的事件局部在冒泡阶段（in bubbling phase）被触发。在捕获节点（the capture phase）注册一个事件句柄，追加<code>Capture</code> 到事件名称上：例如，替代使用<code>onClick</code>，你应该使用<code>onClickCapture</code> 在捕获阶段去处理事件。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/events.html#clipboard-events" target="_blank" rel="noopener">Clipboard Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#composition-events" target="_blank" rel="noopener">Composition Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#keyboard-events" target="_blank" rel="noopener">Keyboard Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#focus-events" target="_blank" rel="noopener">Focus Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#form-events" target="_blank" rel="noopener">Form Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#,mouse-events" target="_blank" rel="noopener">Mouse Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#selection-events" target="_blank" rel="noopener">Selection Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#touch-events" target="_blank" rel="noopener">Touch Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#ui-events" target="_blank" rel="noopener">UI Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#wheel-events" target="_blank" rel="noopener">Wheel Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#media-events" target="_blank" rel="noopener">Media Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#image-events" target="_blank" rel="noopener">Image Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#animation-events" target="_blank" rel="noopener">Animation Events</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#transition-events" target="_blank" rel="noopener">Transition Events</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="Clipboard-Events"><a href="#Clipboard-Events" class="headerlink" title="Clipboard Events"></a>Clipboard Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onCopy onCute onPaste</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DOMDataTransfer clipboardData</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Composition-Events"><a href="#Composition-Events" class="headerlink" title="Composition Events"></a>Composition Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onCompositionEnd onCompositionStart onCompositionUpdate</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string data</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Keyboard-Events"><a href="#Keyboard-Events" class="headerlink" title="Keyboard Events"></a>Keyboard Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onKeyDown onKeyPress onKeyUp</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">boolean altKey</span><br><span class="line">number charCode</span><br><span class="line">boolean ctrlKey</span><br><span class="line">boolean getModifierState(key)</span><br><span class="line">string key</span><br><span class="line">number keyCode</span><br><span class="line">string locale</span><br><span class="line">number location</span><br><span class="line">boolean metaKey</span><br><span class="line">boolean repeat</span><br><span class="line">boolean shiftKey</span><br><span class="line">number which</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Focus-Events"><a href="#Focus-Events" class="headerlink" title="Focus Events"></a>Focus Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onFocus onBlur</span><br></pre></td></tr></table></figure>
+<p>这些focus event 工作在React DOM 上所有的element，不仅是form element<br>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DOMEventTarget relatedTarget</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Form-Events"><a href="#Form-Events" class="headerlink" title="Form Events"></a>Form Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onChange onInput onSubmit</span><br></pre></td></tr></table></figure>
+<p>了解更多关于onChange event，参考<a href="https://facebook.github.io/react/docs/forms.html" target="_blank" rel="noopener">Forms</a></p>
+<h3 id="Mouse-Events"><a href="#Mouse-Events" class="headerlink" title="Mouse Events"></a>Mouse Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit onDragLeave onDragOver onDragStart onDrop onMouseDown onMouseEnter onMouseLeave onMouseMove onMouseOut onMouseOver onMouseUp</span><br></pre></td></tr></table></figure>
+<p><code>onMouseEnter</code> 和<code>onMouseLeave</code> 事件传播是从离开的element 到进入的element而不是任意冒泡并且没有捕获阶段。<br>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">boolean altKey</span><br><span class="line">number button</span><br><span class="line">number buttons</span><br><span class="line">number clientX</span><br><span class="line">number clientY</span><br><span class="line">boolean ctrlKey</span><br><span class="line">boolean getModifierState(key)</span><br><span class="line">boolean metaKey</span><br><span class="line">number pageX</span><br><span class="line">number pageY</span><br><span class="line">DOMEventTarget relatedTarget</span><br><span class="line">number screenX</span><br><span class="line">number screenY</span><br><span class="line">boolean shiftKey</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Selection-Events"><a href="#Selection-Events" class="headerlink" title="Selection Events"></a>Selection Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onSelect</span><br></pre></td></tr></table></figure>
+
+<h3 id="Touch-Events"><a href="#Touch-Events" class="headerlink" title="Touch Events"></a>Touch Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onTouchCancel onTouchEnd onTouchMove onTouchStart</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">boolean altKey</span><br><span class="line">DOMTouchList changedTouches</span><br><span class="line">boolean ctrlKey</span><br><span class="line">boolean getModifierState(key)</span><br><span class="line">boolean metaKey</span><br><span class="line">boolean shiftKey</span><br><span class="line">DOMTouchList targetTouches</span><br><span class="line">DOMTouchList touches</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="UI-Events"><a href="#UI-Events" class="headerlink" title="UI Events"></a>UI Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onScroll</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">number detail</span><br><span class="line">DOMAbstractView view</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Wheel-Events"><a href="#Wheel-Events" class="headerlink" title="Wheel Events"></a>Wheel Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onWheel</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">number deltaMode</span><br><span class="line">number deltaX</span><br><span class="line">number deltaY</span><br><span class="line">number deltaZ</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Media-Events"><a href="#Media-Events" class="headerlink" title="Media Events"></a>Media Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncryted onEnded onError onLoadeData onLoadeMetadata onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting</span><br></pre></td></tr></table></figure>
+
+<h3 id="Image-Events"><a href="#Image-Events" class="headerlink" title="Image Events"></a>Image Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onLoad onError</span><br></pre></td></tr></table></figure>
+
+<h3 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onAnimationStart onAnimationEnd onAnimationIteration</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string animationName</span><br><span class="line">string pseudoElement</span><br><span class="line">float elapsedTime</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Transition-Events"><a href="#Transition-Events" class="headerlink" title="Transition Events"></a>Transition Events</h3><p>事件名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onTransitionEnd</span><br></pre></td></tr></table></figure>
+<p>属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string propertyName</span><br><span class="line">string pseudoElement</span><br><span class="line">float elapsedTime</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/events.html" target="_blank" rel="noopener">SyntheticEvent</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/13/react-DOM-Elements/" rel="next" title="react DOM Elements">
+                <i class="fa fa-chevron-left"></i> react DOM Elements
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/16/Hexo%E9%9B%86%E6%88%90Algolia%E6%90%9C%E7%B4%A2%E6%8F%92%E4%BB%B6/" rel="prev" title="Hexo集成Algolia搜索插件">
+                Hexo集成Algolia搜索插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SyntheticEvent"><span class="nav-number">1.</span> <span class="nav-text">SyntheticEvent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-Pooling"><span class="nav-number">3.</span> <span class="nav-text">Event Pooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Supported-Events"><span class="nav-number">4.</span> <span class="nav-text">Supported Events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clipboard-Events"><span class="nav-number">5.1.</span> <span class="nav-text">Clipboard Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Composition-Events"><span class="nav-number">5.2.</span> <span class="nav-text">Composition Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keyboard-Events"><span class="nav-number">5.3.</span> <span class="nav-text">Keyboard Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Focus-Events"><span class="nav-number">5.4.</span> <span class="nav-text">Focus Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Form-Events"><span class="nav-number">5.5.</span> <span class="nav-text">Form Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mouse-Events"><span class="nav-number">5.6.</span> <span class="nav-text">Mouse Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selection-Events"><span class="nav-number">5.7.</span> <span class="nav-text">Selection Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Touch-Events"><span class="nav-number">5.8.</span> <span class="nav-text">Touch Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-Events"><span class="nav-number">5.9.</span> <span class="nav-text">UI Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wheel-Events"><span class="nav-number">5.10.</span> <span class="nav-text">Wheel Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Media-Events"><span class="nav-number">5.11.</span> <span class="nav-text">Media Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image-Events"><span class="nav-number">5.12.</span> <span class="nav-text">Image Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animation-Events"><span class="nav-number">5.13.</span> <span class="nav-text">Animation Events</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transition-Events"><span class="nav-number">5.14.</span> <span class="nav-text">Transition Events</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/16/react-SyntheticEvent/';
+
+      var disqus_title = "react SyntheticEvent";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

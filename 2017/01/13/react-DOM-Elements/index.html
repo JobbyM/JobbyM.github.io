@@ -1,0 +1,1029 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译DOM Elements这篇React（版本v15.4.0）官方文档。  DOM ElementsReact 为了性能和跨浏览器兼容实现了一个独立的DOM 系统。我们有机会去除一些粗糙的浏览器实现。 在React 中，所有的DOM 属性（properties）和特性（attributes）（包括事件句柄）都应该是camelCased。例如，HTML 特性tabindex 对于Reac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react DOM Elements">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/13/react-DOM-Elements/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译DOM Elements这篇React（版本v15.4.0）官方文档。  DOM ElementsReact 为了性能和跨浏览器兼容实现了一个独立的DOM 系统。我们有机会去除一些粗糙的浏览器实现。 在React 中，所有的DOM 属性（properties）和特性（attributes）（包括事件句柄）都应该是camelCased。例如，HTML 特性tabindex 对于Reac">
+<meta property="article:published_time" content="2017-01-13T01:01:26.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/13/react-DOM-Elements/"/>
+
+
+
+
+
+  <title> react DOM Elements | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/13/react-DOM-Elements/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react DOM Elements
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T01:01:26+00:00">
+                2017-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/13/react-DOM-Elements/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/13/react-DOM-Elements/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/13/react-DOM-Elements/" class="leancloud_visitors" data-flag-title="react DOM Elements">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/dom-elements.html" target="_blank" rel="noopener">DOM Elements</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="DOM-Elements"><a href="#DOM-Elements" class="headerlink" title="DOM Elements"></a>DOM Elements</h2><p>React 为了性能和跨浏览器兼容实现了一个独立的DOM 系统。我们有机会去除一些粗糙的浏览器实现。</p>
+<p>在React 中，所有的DOM 属性（properties）和特性（attributes）（包括事件句柄）都应该是camelCased。例如，HTML 特性<code>tabindex</code> 对于React 特性<code>tabIndex</code>。特例是<code>aria-*</code> 和<code>data-*</code> 特性应该是lowercased。</p>
+<a id="more"></a>
+
+<h2 id="Differences-In-Attributes"><a href="#Differences-In-Attributes" class="headerlink" title="Differences In Attributes"></a>Differences In Attributes</h2><p>在React 和HTML 中有许多特性的工作是不同的：</p>
+<h3 id="checked"><a href="#checked" class="headerlink" title="checked"></a>checked</h3><p><code>checkbox</code> 或<code>radio</code> 类型的<code>&lt;input&gt;</code> component 是支持<code>checked</code> 特性。你可以使用它用来设置一个component 是否被选中（checked）。这对于构建可控的component 是有用的。<code>defaultChecked</code> 等同于不可控的，用来设置一个component 首次加载时是否被选中。</p>
+<h3 id="className"><a href="#className" class="headerlink" title="className"></a>className</h3><p>配置CSS class，使用<code>className</code> 特性。这应用在所有的正规的DOM 和SVG 的元素像<code>&lt;div&gt;</code>，<code>&lt;a&gt;</code> 以及其它元素。</p>
+<p>如果你用Web Component （这并不常用）来使用React，使用<code>class</code> 特性来替代。</p>
+<h3 id="dangerouslySetInnerHTML"><a href="#dangerouslySetInnerHTML" class="headerlink" title="dangerouslySetInnerHTML"></a>dangerouslySetInnerHTML</h3><p><code>dangerouslySetInnerHTML</code> 是React 中用来替代浏览器DOM 中的<code>innerHTML</code>。通常，在代码中设置HTML 是危险的因为它很容易无意的暴露你的用户受到<a href="https://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank" rel="noopener">cross-site scripting(XSS)</a>攻击。所以，你可以在React 中直接设置HTML，但是你必须使用<code>dangerouslySetInnerHTML</code> 并传递一个代码<code>__html</code> key 的对象，用来提醒你这是危险的。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMarkup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">__html</span>: <span class="string">'First &amp;middot; Second'</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyComponent</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">dangerouslySetInnerHTML</span>=<span class="string">&#123;createMarkup()&#125;</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="htmlFor"><a href="#htmlFor" class="headerlink" title="htmlFor"></a>htmlFor</h3><p>由于<code>for</code> 是JavaScript 中的保留字，所以React element 使用<code>htmlFor</code> 来替代。</p>
+<h3 id="onChange"><a href="#onChange" class="headerlink" title="onChange"></a>onChange</h3><p><code>onChange</code> 事件行为就如果你期待的那样：无论何时一个表单域改变了，这个事件都会触发。我们有意不使用已经存在的浏览器行为因为<code>onChange</code> 这个名称同它的行为是不匹配的，React 依赖这个事件去实时控制用户的输入。</p>
+<h3 id="selected"><a href="#selected" class="headerlink" title="selected"></a>selected</h3><p><code>&lt;option&gt;</code> component 支持<code>selected</code> 特性。你可以使用它去设置component 是否被选中。这对构建可控的component 是有用的。</p>
+<h3 id="style"><a href="#style" class="headerlink" title="style"></a>style</h3><p><code>stye</code> 特性接受一个camelCased 的JavaScript 对象而不是一个CSS 字符串。这同DOM 的style 这个JavaScript 属性是一致的，是更有效的，并且阻止了XSS 安全漏洞。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> divStryle = &#123;</span><br><span class="line">  color: <span class="string">'blue'</span>,</span><br><span class="line">  backgroundImage: <span class="string">'url('</span> + imgUrl + <span class="string">')'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWorldComponent</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;divStyle&#125;</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到style 并不是自动加前缀的。为了支持老版本浏览器，你需要补充响应的浏览器style 属性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> divStyle = &#123;</span><br><span class="line">  WebkitTransition: <span class="string">'all'</span>, <span class="comment">// note the capital 'W' here</span></span><br><span class="line">  msTransition: <span class="string">'all'</span> <span class="comment">// 'ms' is ht only lowercase vendor prefix</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ComponentWithTransition</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;divStyle&#125;</span>&gt;</span>This should work cross-browser<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Style keys 是camelCased 为了保持同JS 访问DOM 节点上的属性一致（例如，<code>node.style.backgroundImage</code>）。厂商（vendor）前缀<a href="http://www.andismith.com/blog/2012/02/modernizr-prefixed/" target="_blank" rel="noopener">除了ms</a>都应该是大写字母开头。这就是为什么<code>WebkitTransition</code> 是以<code>W</code>开头。</p>
+<h3 id="suppressContentEditableWarning"><a href="#suppressContentEditableWarning" class="headerlink" title="suppressContentEditableWarning"></a>suppressContentEditableWarning</h3><p>通常，当自己点的element 被标记为<code>contentEditable</code> 时会有警告，因为它不会工作。这个特性就是为了阻止这个警告。不要使用它，除非你正在构建一个类似<a href="https://facebook.github.io/draft-js/" target="_blank" rel="noopener">Draft.js</a> 的库用来手动管理<code>contentEditable</code>。</p>
+<h3 id="value"><a href="#value" class="headerlink" title="value"></a>value</h3><p><code>&lt;input&gt;</code>和<code>&lt;textarea&gt;</code> component 支持<code>value</code> 特性。你可以用它设置component 的value。这对构建可控的component 是有用的。 <code>defaultValued</code> 等同于不可控的，用来设置一个component 首次加载时的value。</p>
+<h2 id="All-Supported-HTML-Attributes"><a href="#All-Supported-HTML-Attributes" class="headerlink" title="All Supported HTML Attributes"></a>All Supported HTML Attributes</h2><p>React 支持所有的<code>data-*</code>和<code>aria-*</code> 特性，还有下面这些特性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">accept acceptCharset accessKey action allowFullScreen allowTransparency alt</span><br><span class="line"><span class="keyword">async</span> autoComplete autoFocus autoPlay capture cellPadding cellSpacing challenge</span><br><span class="line">charSet checked cite classID className colSpan cols content contentEditable</span><br><span class="line">contextMenu controls coords crossOrigin data dateTime <span class="keyword">default</span> defer dir</span><br><span class="line">disabled download draggable encType form formAction formEncType formMethod</span><br><span class="line">formNoValidate formTarget frameBorder headers height hidden high href hrefLang</span><br><span class="line">htmlFor httpEquiv icon id inputMode integrity is keyParams keyType kind label</span><br><span class="line">lang list loop low manifest marginHeight marginWidth max maxLength media</span><br><span class="line">mediaGroup method min minLength multiple muted name noValidate nonce open</span><br><span class="line">optimum pattern placeholder poster preload profile radioGroup readOnly rel</span><br><span class="line">required reversed role rowSpan rows sandbox scope scoped scrolling seamless</span><br><span class="line">selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step</span><br><span class="line">style summary tabIndex target title type useMap value width wmode wrap</span><br></pre></td></tr></table></figure>
+<p>这些RDFa 特性是被支持的（几个同标准的HTML 特性重复的RDFa特性是排除在这个列表的）：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">about datatype inlist prefix property resource <span class="keyword">typeof</span> vocab</span><br></pre></td></tr></table></figure>
+<p>除此之外，下面这些非标准的特性也是被支持的：</p>
+<ul>
+<li>Mobile Safari 中的<code>autoCapitalize autoCorrect</code></li>
+<li>Safari 中的为<code>&lt;link ref=&quot;mask-icon&quot; /&gt;</code> 这种<code>color</code></li>
+<li><a href="http://schema.org/docs/gs.html" target="_blank" rel="noopener">HTML5 mircodata</a> 中的<code>itemProp itemScope itemType itemRef itemID</code></li>
+<li>老版本IE浏览器中的<code>security</code></li>
+<li>IE 浏览器中的<code>unselectable</code></li>
+<li>对WebKit/Blink 中的<code>search</code> 类型输入域中的<code>results autoSave</code></li>
+</ul>
+<h2 id="All-Supported-SVG-Attributes"><a href="#All-Supported-SVG-Attributes" class="headerlink" title="All Supported SVG Attributes"></a>All Supported SVG Attributes</h2><p>React 支持这些SVG 特性：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">accentHeight accumulate additive alignmentBaseline allowReorder alphabetic</span><br><span class="line">amplitude arabicForm ascent attributeName attributeType autoReverse azimuth</span><br><span class="line">baseFrequency baseProfile baselineShift bbox begin bias by calcMode capHeight</span><br><span class="line">clip clipPath clipPathUnits clipRule colorInterpolation</span><br><span class="line">colorInterpolationFilters colorProfile colorRendering contentScriptType</span><br><span class="line">contentStyleType cursor cx cy d decelerate descent diffuseConstant direction</span><br><span class="line">display divisor dominantBaseline dur dx dy edgeMode elevation enableBackground</span><br><span class="line">end exponent externalResourcesRequired fill fillOpacity fillRule filter</span><br><span class="line">filterRes filterUnits floodColor floodOpacity focusable fontFamily fontSize</span><br><span class="line">fontSizeAdjust fontStretch fontStyle fontVariant fontWeight format <span class="keyword">from</span> fx fy</span><br><span class="line">g1 g2 glyphName glyphOrientationHorizontal glyphOrientationVertical glyphRef</span><br><span class="line">gradientTransform gradientUnits hanging horizAdvX horizOriginX ideographic</span><br><span class="line">imageRendering <span class="keyword">in</span> in2 intercept k k1 k2 k3 k4 kernelMatrix kernelUnitLength</span><br><span class="line">kerning keyPoints keySplines keyTimes lengthAdjust letterSpacing lightingColor</span><br><span class="line">limitingConeAngle local markerEnd markerHeight markerMid markerStart</span><br><span class="line">markerUnits markerWidth mask maskContentUnits maskUnits mathematical mode</span><br><span class="line">numOctaves offset opacity operator order orient orientation origin overflow</span><br><span class="line">overlinePosition overlineThickness paintOrder panose1 pathLength</span><br><span class="line">patternContentUnits patternTransform patternUnits pointerEvents points</span><br><span class="line">pointsAtX pointsAtY pointsAtZ preserveAlpha preserveAspectRatio primitiveUnits</span><br><span class="line">r radius refX refY renderingIntent repeatCount repeatDur requiredExtensions</span><br><span class="line">requiredFeatures restart result rotate rx ry scale seed shapeRendering slope</span><br><span class="line">spacing specularConstant specularExponent speed spreadMethod startOffset</span><br><span class="line">stdDeviation stemh stemv stitchTiles stopColor stopOpacity</span><br><span class="line">strikethroughPosition strikethroughThickness string stroke strokeDasharray</span><br><span class="line">strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit strokeOpacity</span><br><span class="line">strokeWidth surfaceScale systemLanguage tableValues targetX targetY textAnchor</span><br><span class="line">textDecoration textLength textRendering to transform u1 u2 underlinePosition</span><br><span class="line">underlineThickness unicode unicodeBidi unicodeRange unitsPerEm vAlphabetic</span><br><span class="line">vHanging vIdeographic vMathematical values vectorEffect version vertAdvY</span><br><span class="line">vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing</span><br><span class="line">writingMode x x1 x2 xChannelSelector xHeight xlinkActuate xlinkArcrole</span><br><span class="line">xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlBase xmlLang xmlSpace</span><br><span class="line">y y1 y2 yChannelSelector z zoomAndPan</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/dom-elements.html" target="_blank" rel="noopener">DOM Elements</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/12/react-Installation/" rel="next" title="react Installation">
+                <i class="fa fa-chevron-left"></i> react Installation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/16/react-SyntheticEvent/" rel="prev" title="react SyntheticEvent">
+                react SyntheticEvent <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-Elements"><span class="nav-number">1.</span> <span class="nav-text">DOM Elements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Differences-In-Attributes"><span class="nav-number">2.</span> <span class="nav-text">Differences In Attributes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#checked"><span class="nav-number">2.1.</span> <span class="nav-text">checked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#className"><span class="nav-number">2.2.</span> <span class="nav-text">className</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dangerouslySetInnerHTML"><span class="nav-number">2.3.</span> <span class="nav-text">dangerouslySetInnerHTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#htmlFor"><span class="nav-number">2.4.</span> <span class="nav-text">htmlFor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onChange"><span class="nav-number">2.5.</span> <span class="nav-text">onChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#selected"><span class="nav-number">2.6.</span> <span class="nav-text">selected</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style"><span class="nav-number">2.7.</span> <span class="nav-text">style</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#suppressContentEditableWarning"><span class="nav-number">2.8.</span> <span class="nav-text">suppressContentEditableWarning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#value"><span class="nav-number">2.9.</span> <span class="nav-text">value</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#All-Supported-HTML-Attributes"><span class="nav-number">3.</span> <span class="nav-text">All Supported HTML Attributes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#All-Supported-SVG-Attributes"><span class="nav-number">4.</span> <span class="nav-text">All Supported SVG Attributes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/13/react-DOM-Elements/';
+
+      var disqus_title = "react DOM Elements";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

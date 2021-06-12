@@ -1,0 +1,1058 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Design Principles这篇React（版本v15.4.0）官方文档。  Design Principles我们写了这篇文档，以至于你可以有一个更好的想法关于我们怎么决定，React 做什么，React 不做什么以及我们的开发理念是什么。虽然我们很高兴看到社区贡献，但是我们不希望选择一个破坏一个或多个这些规则的路径。  Note：这篇文档假设对React 深入的了解。它描述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Design Principles">
+<meta property="og:url" content="https://jobbym.github.io/2017/02/15/react-Design-Principles/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Design Principles这篇React（版本v15.4.0）官方文档。  Design Principles我们写了这篇文档，以至于你可以有一个更好的想法关于我们怎么决定，React 做什么，React 不做什么以及我们的开发理念是什么。虽然我们很高兴看到社区贡献，但是我们不希望选择一个破坏一个或多个这些规则的路径。  Note：这篇文档假设对React 深入的了解。它描述">
+<meta property="article:published_time" content="2017-02-15T01:50:26.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/02/15/react-Design-Principles/"/>
+
+
+
+
+
+  <title> react Design Principles | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/02/15/react-Design-Principles/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Design Principles
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T01:50:26+00:00">
+                2017-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/15/react-Design-Principles/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/15/react-Design-Principles/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/15/react-Design-Principles/" class="leancloud_visitors" data-flag-title="react Design Principles">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="noopener">Design Principles</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Design-Principles"><a href="#Design-Principles" class="headerlink" title="Design Principles"></a>Design Principles</h2><p>我们写了这篇文档，以至于你可以有一个更好的想法关于我们怎么决定，React 做什么，React 不做什么以及我们的开发理念是什么。虽然我们很高兴看到社区贡献，但是我们不希望选择一个破坏一个或多个这些规则的路径。</p>
+<blockquote>
+<p><strong>Note：</strong><br>这篇文档假设对React 深入的了解。它描述了React 自身的设计规则，而不是React component 或应用。<br>作为一个对React 的介绍，查看<a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="noopener">Thinking in React</a>替代。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Composition"><a href="#Composition" class="headerlink" title="Composition"></a>Composition</h3><p>React 的主要特征是component 的组合（composition）。由不同人编写的components 应该也能一起很好地工作。你可以添加功能到component 而不会引起涟漪性改变在整个代码库中，这对我们是重要的。</p>
+<p>例如，它应该可以引入一些state 到component 而不会改变任何component 使用它。同样，可以添加一些初始化和销毁代码到任何component ，在必要时。</p>
+<p>在component 中使用state 或声明周期钩子并没有什么不好。像任何强大功能，它们应该适度使用，但是我们没有理由去移除它们。相反，我们认为它们是使React 有用的必要部分。未来，我们可能启用<a href="https://github.com/reactjs/react-future/tree/master/07%20-%20Returning%20State" target="_blank" rel="noopener">更多功能性模式</a>，但是本地state 和生命周期钩将会是该模型的一部分。</p>
+<p>Components 经常被描述为“只是函数（just function）”，但是在我们看来，它们需要的不仅仅是有用。在React 中，component 描述任何组合的行为，这包括渲染、生命周期和state。一些外部库，像<a href="http://facebook.github.io/relay/" target="_blank" rel="noopener">Relay</a>利用其他职责如描述数据依赖来增强components。</p>
+<h3 id="Common-Abstraction"><a href="#Common-Abstraction" class="headerlink" title="Common Abstraction"></a>Common Abstraction</h3><p>通常我们<a href="">反对添加功能（resist adding features）</a>，那些可以在用户区实现的功能。我们不想使用无用的库的代码使你的应用膨胀。然而，也有例外。</p>
+<p>例如，如果React 不为本地state 或生命周期钩子提供支持，人们会为它们创建自定义的抽象。当有多个抽象竞争，React 不能强制或利用它们任何一个的属性。它只能使用它们最小的公共特性工作。</p>
+<p>这就是为什么有时我们添加功能到React 自身。如果我们注意到许多component 以不兼容或低效的方式实现某些特性，我们可能会倾向于将它们合并到React 中。我们不会轻率地做它。当我们这样做，是因为我们有信心提高抽象层次有利于整个生态系统。State、生命周期钩子、 跨浏览器事件标准化据i时很好的例子。</p>
+<p>我们经常同社区讨论这些改提案。你可以找到一些讨论通过位于React 问题追踪器上的“大图（big picture）”标签。</p>
+<h3 id="Escape-Hatches"><a href="#Escape-Hatches" class="headerlink" title="Escape Hatches"></a>Escape Hatches</h3><p>React 是务实的。它是由在Facebook 中编写的产品需求驱动的。虽然它受到像功能性编程这种还没有完全成为主流的范式影响，同官方的不同技能和经验水平的开发者接触是这个项目的一个明确的目标。</p>
+<p>如果我们要不赞同一个我们不喜欢的模式，我们的责任是考虑所有现有的用例和<a href="https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html" target="_blank" rel="noopener">教育社区的替代品（educate the community about the alternatives）</a>之前，我们反对它。如果一些模式对构建应用是有用的，但是很难用声明的方式表述它，我们将为它<a href="https://facebook.github.io/react/docs/more-about-refs.html" target="_blank" rel="noopener">提供一个命名式API（provide an imperative API）</a>。如果我们在许多应用中不能为一些我们发现的必须的事情提供完美的API，我们将提供一个<a href="https://facebook.github.io/react/docs/context.html" target="_blank" rel="noopener">临时的不够标准的工作API（provide a temporary subpar working API）</a>，只要稍后我们能够处理它，并且为未来的改进留一个后门。</p>
+<h3 id="Stability"><a href="#Stability" class="headerlink" title="Stability"></a>Stability</h3><p>我们重视API 的稳定性。在Facebook 中，我们有超过2 万个component 使用React。许多其他公司，包括<a href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a> 和<a href="https://www.airbnb.com/" target="_blank" rel="noopener">Airbnb</a>，也是React 的重度用户。这就是为什么我们不愿意去改变公共APIs 或行为。</p>
+<p>然而，我们认为“没有变化（nothing change）”意思的稳定性被高估了。它很快就编程停滞了。相反，我们更喜欢“在生产中 被大量使用，当反生改变时，有一个清晰的（最好是自动的）迁移路径。”</p>
+<p>当我们废弃一个模式时，我们研究在Facebook 的内部使用并田间废弃警告。它们让我们评估改变的影响。有时如果我们太早了，我们会回滚（back out），并且我们需要更具策略性的思考此刻的代码库是否已经为这次改变准备好了。</p>
+<p>如果我们确认这次的改变不会具有太大的破坏性并且迁移策略对所有用例是可行的，我们释放废弃警告到开源社区。我们与Facebook 外的大量React 用户进行紧密接触，我们检测流行的开源项目并且引导它们修复这些废弃。</p>
+<p>鉴于Facebook React 庞大规模的代码库，成功的内部迁移通常是一个很好的指标，其余公司也不会遇到问题。然而，有时人们支持其他一些我们还没有遇到的例子，我们将会为他们添加逃生窗口（escape hatch）或者重新思考我们的方法。</p>
+<p>我们不会没有任何原因的废弃一些东西。我们意识到有时废弃警告导致挫折，但是我们添加它们是因为废弃清理了路径为改善和新特性 ，我们和社区中的许多人都认为是有价值的。</p>
+<p>例如，我们在React 15.2.0 增加了一个<a href="https://facebook.github.io/react/warnings/unknown-prop.html" target="_blank" rel="noopener">关于未知DOM props 的警告（warning about unknow DOM props）</a>。许多项目都会收到影响。然而修复这个警告是重要的，以至于我们能够引入<a href="https://github.com/facebook/react/issues/140" target="_blank" rel="noopener">自定义属性（custom attributes）</a> 支持为React。像这样的原因在每一个我们添加的废弃后面。</p>
+<p>当我们添加一个废弃警告，我们保留它在当前主版本，并且<a href="https://facebook.github.io/react/blog/2016/02/19/new-versioning-scheme.html" target="_blank" rel="noopener">在下一个主版本中改变这个行为（change the behavior in the next major version）</a>。如果这涉及到大量的重复手动工作，我们将释放一个<a href="https://www.youtube.com/watch?v=d0pOgY8__JM" target="_blank" rel="noopener">codemod</a>脚本去自动完成大多数改变。codemods能让我们向前移动而不会停滞在大量代码中，并且我们也鼓励你使用它们。</p>
+<p>你可以在我们释放的<a href="https://github.com/reactjs/react-codemod" target="_blank" rel="noopener">react-codemode</a> 库中到找到codemods。</p>
+<h3 id="Interoperability"><a href="#Interoperability" class="headerlink" title="Interoperability"></a>Interoperability</h3><p>我们将同现有系统的互动放在高价值上并且逐步采用。Facebook 有一个庞大的非React 的代码块。它的网站使用称为XHP 的一个服务器端（server-side）component 系统的混合，内部UI 库在React 和React 自身之前产生。对我们来说，任何产品团队能够<a href="">从小特性开始使用React（start using React for a small feature）</a> 而不是重写它们的代码。</p>
+<p>这就是为什么React 提供逃生舱（escape hatches）去和可变性的模块工作，并且尝试和其它UI 库也能很好的工作。你可以包裹一个已经存在的命令式UI 到一个声明式component，反之亦然。这是逐步采用的关键。</p>
+<h3 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h3><p>即使当你的components 被描述为函数，当你使用React 时，你不会直接调用它们。每一个component 返回一个<a href="https://facebook.github.io/react/blog/2015/12/18/react-components-elements-and-instances.html#elements-describe-the-tree" target="_blank" rel="noopener">需要被渲染成什么的描述（description of what need to be rendered）</a>，并且那个描述包裹可以包括像<code>&lt;LikeButton&gt;</code> 的用户编写的component 已经像<code>&lt;div&gt;</code>的平台特定的component。它是由React 在未来某点“展看（unroll）”<code>&lt;LikeButton&gt;</code> 并且按照component 的递归真实地应用改变到这个UI 树上。</p>
+<p>这是一个微小的区别但是一个强大的功能。既然你不调用component 的函数，但是让React 调用它，这意味着React 在必要时有能力延迟调用它。在当前实现React 递归遍历这个树，并且在整个更新树的一次tick 中，调用这个渲染函数。然而在未来，它可能开始<a href="https://github.com/facebook/react/issues/6170" target="_blank" rel="noopener">为了避免掉帧而延迟一些更新（delaying some updates to avoid droppoing frames）</a>。</p>
+<p>这是React 设计的共同的主题。一些流行的库实现了“推（push）”的方法，当新的数据可用时就进行计算。然而，React 坚持“拉（pull）”的方法，计算可以被推迟非常必要。</p>
+<p>React 不是一般的数据处理库。这是一个构建用户界面的库。我们认为它是唯一一个定位在一个应用中去了解现在那一个计算是相关的，那一个不是相关的。</p>
+<p>如果一些是在幕后，我们可以推迟和它相关的任何逻辑。如果数据刀疤比帧速率（frame rate）更快，我们可以合并和批量更新。我们可以优先处理来自用户交互的工作（例如有按钮点击导致的一个动画）而不是不重要的后台工作（例如从网络中加载新内容），以避免掉帧。</p>
+<p>很明显，我们现在还没有利用这一点。然而这样做的自由就是为什么我们更喜欢控制调度，并且为什么<code>setState()</code> 是异步的。从概念上讲，我们认为它是一个“调度更新（scheduling an update）”。</p>
+<p>如果我们让用户直接以“退（push）”为基础的范式，通常<a href="https://en.wikipedia.org/wiki/Functional_reactive_programming" target="_blank" rel="noopener">在函数性响应编程（Functional Reactive Programming）</a>中的一些变化，控制调度将会是困难的，对我们来说。我们想要自己拥有这个“胶水（glue）”代码。</p>
+<p>这对React 是一个关键目标，大量的用户代码在执行之前，需要返回到最小的React。这能够确保React 保留能够调度，已经分块执行，按照它知道的UI 样子。</p>
+<p>团队内部有一个玩笑，React 应该被称为“调度（schedule）”因为React 不想完全成为“响应（reactive）”。</p>
+<h3 id="Develper-Experience"><a href="#Develper-Experience" class="headerlink" title="Develper Experience"></a>Develper Experience</h3><p>提供良好的开发经验对我们很重要。</p>
+<p>例如，我们维护<a href="https://github.com/facebook/react-devtools" target="_blank" rel="noopener">React DevTools</a>，它让你在Chrome 和Firefox 中检测React component 树。我们听所，它给Facebook 工程师和社区带来了巨大的生产力提升。</p>
+<p>我们也尝试去一个外部的距离提供有用的开发者警告。例如，如果你在开发中，以浏览器不能理解的方式嵌套了标签，React 将警告你，或者如果在API 中写了一个拼写错误。开发者警告和相关的警告是React 开发版本比生产版本慢的主要原因。</p>
+<p>我们在Facebook 内部看到的使用模式帮助我们理解常见的错误是什么，以及如何及早防止它们。当我们添加新特性，我们视图遇见常见的错误，并警告它们。</p>
+<p>我们一直寻找改善开发者体验的方式。我们很高兴听到你的建议，接受你的贡献，使它更好。</p>
+<h3 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h3><p>出事的时候，你有面包屑去跟踪位于代码库的错误来源是很重要的。在React 中，props 和state 就是这些面包屑。</p>
+<p>如果你在屏幕上看到一些错误，你可以打开React DevTools，找到负责渲染的component，然后看props 和state 是否是正确的。如果它们是正确的，你知道问题发生在component 的<code>render()</code> 函数中，或者是被<code>render()</code> 调用的一些函数中。这个问题是独立的。</p>
+<p>如果state 是错误的，你知道问题是被这个文件中的某一个<code>setState()</code> 方法的调用导致的。这也是相对简单的定位和修复，因为通常在一个文件中只有几个<code>setState()</code> 调用。</p>
+<p>如果props 是错误的，你可以在检测器（inspector）中向上遍历这个树，查找由于向下传递错误rpops 的第一个“毒井（posioned the well）”的component。</p>
+<p>这种追踪任何UI 到当前props 和state 的形式下产生数据的能力是对React 是非常重要的。这是一个明确的设计目标，state 不是“困在（trapped）”在闭包和组合器中，直接对React 有用。</p>
+<p>虽然UI 是动态的，我们相信，props 和state 转换调试从猜测到枯燥但有限的进程的同步<code>render()</code> 函数。我们像保留React 中这个约束，即使它使一些用例，像负责的动画，变得更难。</p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>我们发现全局运行时配置选项是有问题的。</p>
+<p>例如，它偶尔要求我们实现像<code>React.configure(options)</code> 或<code>React.register(component)</code> 的函数。然而，这带来多个问题，并且我们没有意识到好的解决方法。</p>
+<p>如果有人调用一些来自第三方的component 的库的这样的函数怎么办？如果一个React 应用程序嵌入另一个React 应用程序，并且它们要求的配置不是兼容的怎么办？一个第三方component 怎么配置它要求的特定的配置？我们认为全局配置同组合不能很好的工作。既然组合是React 的中心，我们不能在代码中提供全局配置。</p>
+<p>然而，我们在构建级别上提供一些全局配置。例如，我们提供独立的开发和生产构建。未来我们也<a href="https://github.com/facebook/react/issues/6627" target="_blank" rel="noopener">add a profiling build</a>，并且我们也考虑其他的构建标志。</p>
+<h3 id="Beyond-the-DOM"><a href="#Beyond-the-DOM" class="headerlink" title="Beyond the DOM"></a>Beyond the DOM</h3><p>我们看到React 的价值，它运行我们编写component 具有很少的bug 并且能很好的组合起来。DOM 是React 最初的渲染目标，但是<a href="">React Native</a> 对Facebook 和社区有同样的重要。</p>
+<p>称为不可知的渲染器对React 设计约束是重要的。它在内部表示中增加了一些开销。相反，任何对核心的转换提升是跨浏览器的。</p>
+<p>有一个单个的编程模式，让我们围绕产品形成工程师团队而不是平台。到目前为止，这种权衡（tradeoff）对我没来说是值得的。</p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>我们尝试在任何地方提供优雅的API。我们不关心实现的优雅。现实世界远非完美，在某种程度上，如果这意味着用户不必写它，我们更愿意把丑陋的代码放到库中，当我们评估新的代码，我们正在寻找一个实现是正确的、高效的并且提供一个很好的开发经验。优雅是次要的。</p>
+<p>我们喜欢枯燥的代码而不是聪明的代码。代码是一次性的并且经常改变。因此，更重要的是，他<a href="https://youtu.be/4anAwXYqLG8?t=13m9s" target="_blank" rel="noopener">不会引入新的内部抽象，除非绝对必要（doesn<br>‘t introduce new internal abstractions unless absolutely necessary）</a>。冗余的代码，容易移动、改变和删除，优雅的代码是过早抽线的并且很难去改变。</p>
+<h3 id="Optimized-for-Tooling"><a href="#Optimized-for-Tooling" class="headerlink" title="Optimized for Tooling"></a>Optimized for Tooling</h3><p>一些常用的API 有冗长的名字。例如，我们使用<code>componentDidMount()</code> 而不是<code>didMount()</code> 或者<code>onMount()</code>。这是<a href="https://github.com/reactjs/react-future/issues/40#issuecomment-142442124" target="_blank" rel="noopener">故意的（intentional ）</a>。目标是是的交互点同库是高度可见。</p>
+<p>在一个像Facebook 庞大的代码库中，能够对特定的API 使用搜索是非常重要的。我们评价不同的冗余的名字，特别是应该谨慎使用的特点。例如<code>dangerouslySetInnerHTML</code> 在代码审查中很难出错。</p>
+<p>对搜索优化也很重要，因为我们依赖<a href="https://www.youtube.com/watch?v=d0pOgY8__JM" target="_blank" rel="noopener">codemods</a> 做出重大改变。我们希望它是简单的安全的应用大量自动改变在代码库中，并且唯一冗余的明智帮助我们实现它。同样，独特的名字使得写自定义<a href="https://github.com/yannickcr/eslint-plugin-react" target="_blank" rel="noopener">lint rules</a> 关于使用React 而不必担心潜在的误报。</p>
+<p><a href="https://facebook.github.io/react/docs/displaying-data.html#jsx-syntax" target="_blank" rel="noopener">JSX</a> 扮演同样的角色。虽然它不需要React，我们广泛在Facebook 中使用它由于不可知的和务实的原因。</p>
+<p>在我们代码库中，JSX 提供一个不明显的暗示对它们处理React element 树。这使得它可能增加构建时间优化像<a href="http://babeljs.io/docs/plugins/transform-react-constant-elements/" target="_blank" rel="noopener">hoisting constant elements</a>，安全的lint 和codemode 的内部component 使用，以及<a href="https://github.com/facebook/react/pull/6771" target="_blank" rel="noopener">包括JSX 源代码定位（include JSX source location）</a> 警告。</p>
+<h3 id="Dogfooding"><a href="#Dogfooding" class="headerlink" title="Dogfooding"></a>Dogfooding</h3><p>我们尽力解决社区提出的问题。然而我们有可能优先考虑的问题，在Facebook 内部人们经历的问题。也许反直觉，我们认为这是为什么社区可以打赌在React 上的主要原因。</p>
+<p>重度的内部使用给我们信心，React 在明天不会消失。React 在Facebook 内部被创建是为了解决其问题。它为公司带来有形的商业价值，并在许多产品中使用。<a href="https://en.wikipedia.org/wiki/Eating_your_own_dog_food" target="_blank" rel="noopener">Dogfooding</a> 这意味着我们的愿景保持敏锐，我们有一个集中的方向前进。</p>
+<p>这不意味着我们忽略来自社区的问题。例如，我们为了React 添加了<a href="https://facebook.github.io/react/docs/webcomponents.html" target="_blank" rel="noopener">web components</a> 和<a href="https://github.com/facebook/react/pull/6243" target="_blank" rel="noopener">SVG</a> 支持，尽管我们内部不依赖它们中的任意一个。我们正在积极<a href="https://github.com/facebook/react/issues/2686" target="_blank" rel="noopener">聆听你的痛点（listening to your pian points）</a> 和并尽我们的能力<a href="https://facebook.github.io/react/blog/2016/07/11/introducing-reacts-error-code-system.html" target="_blank" rel="noopener">解决它（address them）</a>。社区使得React 对我们是特别的，我们很荣幸能够反馈它。</p>
+<p>在Facebook 发布了许多开源项目后，我们已经了解到，试图让每一个人都开心的同时，却产生了一个注意力不集中、成长不好的项目。相反，我们选择一个小众的并且专注于使他们高兴带来了积极的净效果。这正是我们使用React 所做的，到目前为止，解决Facebook 产品团队遇到的问题已经很好的反馈到开源社区。</p>
+<p>这种方式的缺点是，有时我们不能给予纵狗的关注那些Facebook 团队没有处理的事情，就像“开始（get started）”经验。我们敏锐的意识到这点，我们正在考虑如何以一种对社区中所有人有益的方式提升它，而不会产生我们之前的开源项目中遇到的问题。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="noopener">Design Principles</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/14/react-Implementation-Notes/" rel="next" title="react Implementation Notes">
+                <i class="fa fa-chevron-left"></i> react Implementation Notes
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/16/react-Higher-Order-Components/" rel="prev" title="react Higher-Order Components">
+                react Higher-Order Components <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Principles"><span class="nav-number">1.</span> <span class="nav-text">Design Principles</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Composition"><span class="nav-number">1.1.</span> <span class="nav-text">Composition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Common-Abstraction"><span class="nav-number">1.2.</span> <span class="nav-text">Common Abstraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Escape-Hatches"><span class="nav-number">1.3.</span> <span class="nav-text">Escape Hatches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stability"><span class="nav-number">1.4.</span> <span class="nav-text">Stability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interoperability"><span class="nav-number">1.5.</span> <span class="nav-text">Interoperability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scheduling"><span class="nav-number">1.6.</span> <span class="nav-text">Scheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Develper-Experience"><span class="nav-number">1.7.</span> <span class="nav-text">Develper Experience</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debugging"><span class="nav-number">1.8.</span> <span class="nav-text">Debugging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration"><span class="nav-number">1.9.</span> <span class="nav-text">Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beyond-the-DOM"><span class="nav-number">1.10.</span> <span class="nav-text">Beyond the DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implementation"><span class="nav-number">1.11.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimized-for-Tooling"><span class="nav-number">1.12.</span> <span class="nav-text">Optimized for Tooling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dogfooding"><span class="nav-number">1.13.</span> <span class="nav-text">Dogfooding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/02/15/react-Design-Principles/';
+
+      var disqus_title = "react Design Principles";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

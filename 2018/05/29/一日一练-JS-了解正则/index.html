@@ -1,0 +1,1262 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JS,一日一练," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：学好正则，走遍天下都不怕  1.RegExp 对象JavaScript 有两种方式表示RegExp 对象：  字面量 RegExp 构造函数  字面量 123const reg &#x3D; &#x2F;all&#x2F;console.log(reg)  &#x2F;&#x2F;&#x3D;&gt; &#x2F;all&#x2F;&#39;This is all I have&#39;.replace(reg, &#39;ALL&#39;) &#x2F;&#x2F; This is ALL I have RegExp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-JS 了解正则">
+<meta property="og:url" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：学好正则，走遍天下都不怕  1.RegExp 对象JavaScript 有两种方式表示RegExp 对象：  字面量 RegExp 构造函数  字面量 123const reg &#x3D; &#x2F;all&#x2F;console.log(reg)  &#x2F;&#x2F;&#x3D;&gt; &#x2F;all&#x2F;&#39;This is all I have&#39;.replace(reg, &#39;ALL&#39;) &#x2F;&#x2F; This is ALL I have RegExp">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/reg.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/tools.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_1.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_3.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_4.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_0.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_2.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_5.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_3.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_6.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_4.jpg">
+<meta property="article:published_time" content="2018-05-29T00:48:26.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.525Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/reg.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/05/29/一日一练-JS-了解正则/"/>
+
+
+
+
+
+  <title> 一日一练-JS 了解正则 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-JS 了解正则
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-29T00:48:26+00:00">
+                2018-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/29/一日一练-JS-了解正则/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/" class="leancloud_visitors" data-flag-title="一日一练-JS 了解正则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：学好正则，走遍天下都不怕</p>
+</blockquote>
+<h2 id="1-RegExp-对象"><a href="#1-RegExp-对象" class="headerlink" title="1.RegExp 对象"></a>1.RegExp 对象</h2><p>JavaScript 有两种方式表示RegExp 对象：</p>
+<ul>
+<li>字面量</li>
+<li>RegExp 构造函数</li>
+</ul>
+<p>字面量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/all/</span></span><br><span class="line"><span class="built_in">console</span>.log(reg)  <span class="comment">//=&gt; /all/</span></span><br><span class="line"><span class="string">'This is all I have'</span>.replace(reg, <span class="string">'ALL'</span>) <span class="comment">// This is ALL I have</span></span><br></pre></td></tr></table></figure>
+<p>RegExp 构造函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'all'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(reg)  <span class="comment">//=&gt; /all/</span></span><br><span class="line"><span class="string">'This is all I have'</span>.replace(reg, <span class="string">'ALL'</span>) <span class="comment">// This is ALL I have</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h2 id="2-元字符"><a href="#2-元字符" class="headerlink" title="2.元字符"></a>2.元字符</h2><ul>
+<li>原义文本字符<br>代表它本来含义的字符。比如正则表达式<code>/abc/</code>、<code>/123/</code>，它们分别匹配的是<code>abc</code>、<code>123</code></li>
+<li>元字符<br>在正则表达式中，有特殊含义的非数字字符。如：<code>\b</code> <code>\d</code> <code>\w</code> <code>.</code> <code>+</code> <code>()</code> 等。部分元字符的含义并不唯一，在不同的书写方式，含义可能不同。</li>
+</ul>
+<p>元字符表，下图来自<a href="http://tool.oschina.net/uploads/apidocs/jquery/regexp.html" target="_blank" rel="noopener">网址</a></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/reg.jpg" class="">
+
+<h2 id="3-工具推荐"><a href="#3-工具推荐" class="headerlink" title="3.工具推荐"></a>3.工具推荐</h2><p>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 将正则表达式转换成状态机图。<br>例如将<code>^http(|s):\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+\/$</code> 转换成如下图所示：</p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/tools.png" class="">
+
+<h2 id="4-量词"><a href="#4-量词" class="headerlink" title="4.量词"></a>4.量词</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>?</td>
+<td align="left">出现零次次或一次（最多出现一次）</td>
+</tr>
+<tr>
+<td>+</td>
+<td align="left">出现一次或多次（至少出现一次）</td>
+</tr>
+<tr>
+<td>*</td>
+<td align="left">出现零次或多次（任意次）</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td align="left">出现n 次</td>
+</tr>
+<tr>
+<td>{n, m}</td>
+<td align="left">出现n 到m 次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td align="left">至少出现n次</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// \d 表示匹配数字</span></span><br><span class="line"><span class="comment">// 匹配一个数字</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a234567890</span></span><br><span class="line"><span class="comment">// 匹配一个或多个数字（至少匹配一个）</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d?/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a234567890</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d+/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d*/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d&#123;3&#125;/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a4567890</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d&#123;2,4&#125;/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a567890</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d&#123;3,&#125;/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a</span></span><br><span class="line"><span class="string">'12'</span>.replace(<span class="regexp">/\d&#123;3,&#125;/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; 12</span></span><br></pre></td></tr></table></figure>
+<p>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 图解<code>\d{2,7}</code></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_0.png" class="">
+
+<h2 id="5-贪婪模式和非贪婪模式"><a href="#5-贪婪模式和非贪婪模式" class="headerlink" title="5.贪婪模式和非贪婪模式"></a>5.贪婪模式和非贪婪模式</h2><p>从上面<code>4.量词</code> 的例子中，<code>&#39;1234567890&#39;.replace(/\d+/, &#39;a&#39;)</code> 输出的是<code>a</code> 而不是<code>a234567890</code>;<code>&#39;1234567890&#39;.replace(/\d{2,4}/, &#39;a&#39;)</code> 输出的是<code>a567890</code> 而不是<code>a34567890</code>。</p>
+<ul>
+<li>贪婪模式<br>正则表达式尽可能多的匹配，一直到匹配失败</li>
+<li>非贪婪模式<br>正则表达式尽可能少的匹配，一旦匹配成功就不再匹配</li>
+</ul>
+<p>默认情况下，正则表达式都是使用贪婪模式做匹配的。如果想要让正则表达式使用非贪婪模式匹配，在量词后面加个<code>?</code> 就可以了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d&#123;2,4&#125;/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a567890</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d&#123;2,4&#125;?/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a34567890</span></span><br><span class="line"></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d+/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a</span></span><br><span class="line"><span class="string">'1234567890'</span>.replace(<span class="regexp">/\d+?/</span>, <span class="string">'a'</span>) <span class="comment">// =&gt; a234567890</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-类"><a href="#6-类" class="headerlink" title="6.类"></a>6.类</h2><ul>
+<li>正则表达式中，可以使用<code>[]</code> 来构建一个类，正则表达式中的类是指符合某些特性的对象</li>
+</ul>
+<h3 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h3><p>正则表达式<code>[abcd]</code> 是吧<code>a</code>、<code>b</code>、<code>c</code>、<code>d</code> 归为一类，该表达式可以匹配这类字符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'12345a6b7c8D9e'</span>.replace(<span class="regexp">/[abcd]/g</span>, <span class="string">'|'</span>) <span class="comment">// =&gt; 12345|6|7|8D9e</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="范围类"><a href="#范围类" class="headerlink" title="范围类"></a>范围类</h3><p>正则表达式提供了<code>[a-z]</code> 来表示从<code>a</code> 到<code>z</code> 的任意字符（包含<code>a</code> 和<code>z</code>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'1a2b3c4T5Z'</span>.replace(<span class="regexp">/[a-z]/g</span>, <span class="string">'|'</span>) <span class="comment">// =&gt; 1|2|3|4T5Z</span></span><br><span class="line"><span class="string">'1a2b3c4T5Z'</span>.replace(<span class="regexp">/[a-zA-Z]/g</span>, <span class="string">'|'</span>) <span class="comment">// =&gt; 1|2|3|4|5|</span></span><br><span class="line"><span class="string">'1a2b3c4T5Z'</span>.replace(<span class="regexp">/[0-9]/g</span>, <span class="string">'|'</span>) <span class="comment">// =&gt; |a|b|c|T|Z</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 图解<code>[a-zA-Z0-9]</code></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_1.png" class="">
+
+<h3 id="预定义类"><a href="#预定义类" class="headerlink" title="预定义类"></a>预定义类</h3><table>
+<thead>
+<tr>
+<th>字符</th>
+<th align="left">等价于</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\d</td>
+<td align="left">[0-9]</td>
+<td>数字字符</td>
+</tr>
+<tr>
+<td>\D</td>
+<td align="left">[^0-9]</td>
+<td>非数字字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td align="left">[a-zA-Z0-9_]</td>
+<td>字母、数字、下划线（单词字符）</td>
+</tr>
+<tr>
+<td>\W</td>
+<td align="left">[^a-zA-Z0-9_]</td>
+<td>非字母、数字、下划线（非单词字符）</td>
+</tr>
+<tr>
+<td>\s</td>
+<td align="left">[\t\n\x0B\f\r]</td>
+<td>空白字符</td>
+</tr>
+<tr>
+<td>\S</td>
+<td align="left">[^\t\n\x0B\f\r]</td>
+<td>非空白字符</td>
+</tr>
+<tr>
+<td>.</td>
+<td align="left">[^\n\r]</td>
+<td>除了换行回车之外的任意字符</td>
+</tr>
+</tbody></table>
+<h2 id="7-边界"><a href="#7-边界" class="headerlink" title="7.边界"></a>7.边界</h2><table>
+<thead>
+<tr>
+<th>字符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^</td>
+<td align="left">以xxx 开头</td>
+</tr>
+<tr>
+<td>$</td>
+<td align="left">以xxx 结尾</td>
+</tr>
+<tr>
+<td>\b</td>
+<td align="left">单词边界</td>
+</tr>
+<tr>
+<td>\B</td>
+<td align="left">非单词边界</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'img/png/img-1.png'</span>.replace(<span class="regexp">/img/g</span>, <span class="string">'image'</span>) <span class="comment">// =&gt; image/png/image-1.png</span></span><br><span class="line"><span class="string">'img/png/img-1.png'</span>.replace(<span class="regexp">/^img/g</span>, <span class="string">'image'</span>) <span class="comment">// =&gt; image/png/img-1.png</span></span><br><span class="line"></span><br><span class="line"><span class="string">'img/png/img-1.png'</span>.replace(<span class="regexp">/png/g</span>, <span class="string">'jpg'</span>) <span class="comment">// =&gt; img/jpg/img-1.jpg</span></span><br><span class="line"><span class="string">'img/png/img-1.png'</span>.replace(<span class="regexp">/png$/g</span>, <span class="string">'jpg'</span>) <span class="comment">// =&gt; img/png/img-1.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="string">'This is all I have.'</span>.replace(<span class="regexp">/is/g</span>, <span class="string">'IS'</span>) <span class="comment">// =&gt; ThIS IS all I have.</span></span><br><span class="line"><span class="string">'This is all I have.'</span>.replace(<span class="regexp">/\bis/g</span>, <span class="string">'IS'</span>) <span class="comment">// =&gt; This IS all I have.</span></span><br><span class="line"><span class="string">'This is all I have.'</span>.replace(<span class="regexp">/\Bis/g</span>, <span class="string">'IS'</span>) <span class="comment">// =&gt; ThIS is all I have.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-分组"><a href="#8-分组" class="headerlink" title="8.分组"></a>8.分组</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>与<code>|</code> 使用</li>
+<li>与量词使用</li>
+<li>反向引用</li>
+</ul>
+<h3 id="与-使用"><a href="#与-使用" class="headerlink" title="与| 使用"></a>与<code>|</code> 使用</h3><p>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 图解 <code>/http(|s):\/\//</code></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_2.png" class="">
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/http(|s):\/\<span class="comment">//.test('https://')    // =&gt; true</span></span><br><span class="line">/http(|s):\/\<span class="comment">//.test('http://')     // =&gt; true</span></span><br><span class="line">/a(b|c)d/.test(<span class="string">'ad'</span>)                <span class="comment">// =&gt; false</span></span><br><span class="line">/a(b|c)d/.test(<span class="string">'abd'</span>)               <span class="comment">// =&gt; true</span></span><br><span class="line">/a(b|c)d/.test(<span class="string">'acd'</span>)               <span class="comment">// =&gt; true</span></span><br><span class="line">/a(b|c)d/.test(<span class="string">'abcd'</span>)              <span class="comment">// =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="与量词使用"><a href="#与量词使用" class="headerlink" title="与量词使用"></a>与量词使用</h3><p>如何匹配<code>java</code> 出现两次<code>javajava</code>？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/java&#123;<span class="number">2</span>&#125;/.test(<span class="string">'javajava'</span>)   <span class="comment">// =&gt; false</span></span><br><span class="line">/(java)&#123;<span class="number">2</span>&#125;/.test(<span class="string">'javajava'</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h3><p>含有分组的正则表达式匹配成功时，将子表达式匹配到的内容，保存到内存中一个以数字编号的组里，可以简单的认为是对一个局部变量进行了赋值，这是就可以通过反向引用方式，应用这个局部变量的值。</p>
+<p>很多情况下，我们可能需要将某种格式的字符串转换成另一种格式的字符串。例如：将<code>06/02/2018</code> 转换成<code>2018-06-02</code>；将Markdown 语法的超链接<code>[github](https://github.com/)</code> 转换成HTML 的超链接<code>&lt;a href=&quot;https://github.com/&quot;&gt;github&lt;/a&gt;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'06/02/2018'</span>.replace(<span class="regexp">/(\d&#123;2&#125;)\/(\d&#123;2&#125;)\/(\d&#123;4&#125;)/</span>, <span class="string">'$3-$1-$2'</span>) <span class="comment">// =&gt; 2018-06-02</span></span><br><span class="line"><span class="string">'[github](https://github.com/)'</span>.replace(<span class="regexp">/\[(.+)\]\((http(|s):\/\/.+)\)/</span>,<span class="string">'&lt;a href="$2"&gt;$1&lt;/a&gt;'</span>) <span class="comment">// =&gt; &lt;a href="https://github.com/"&gt;github&lt;/a&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="忽略分组"><a href="#忽略分组" class="headerlink" title="忽略分组"></a>忽略分组</h3><p>有时候我们在写正则表达式时会多次使用分组，但有一些分组是不需要反向引用的，比如正则表达式<code>/http(|s):\/\//</code> 中的分组，我们不需要进行反向引用，这是我们应该使用<code>(?:)</code>来忽略分组</p>
+<p><strong>不忽略分组</strong><br>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 图解 <code>/http(|s):\/\//</code></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_3.png" class="">
+
+<p><strong>忽略分组</strong><br>使用<a href="https://regexper.com/" target="_blank" rel="noopener">https://regexper.com</a> 图解 <code>/http(?:|s):\/\//</code></p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_4.png" class="">
+
+<h2 id="9-前瞻后顾"><a href="#9-前瞻后顾" class="headerlink" title="9.前瞻后顾"></a>9.前瞻后顾</h2><ul>
+<li>正则表达式从头部（左）向尾部（右）开始匹配的，文本的尾部方向称为“前”，文本的头部方向称为“后”</li>
+<li>前瞻：正则表达式在匹配到规则的时候，向前检查是否符合断言</li>
+<li>后顾：正则表达式在匹配到规则的时候，向后检查是否符合断言</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th align="left">正则</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正向前瞻</td>
+<td align="left">exp(?=assert)</td>
+<td>向前检查符合断言</td>
+</tr>
+<tr>
+<td>负向前瞻</td>
+<td align="left">exp(?!assert)</td>
+<td>向前检查不符合断言</td>
+</tr>
+<tr>
+<td>正向后顾</td>
+<td align="left">exp(?&lt;=assert)</td>
+<td>向后检查符合断言</td>
+</tr>
+<tr>
+<td>负向后顾</td>
+<td align="left">exp(?&lt;!assert)</td>
+<td>向后检查不符合断言</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'ab2cde2fg'</span>.replace(<span class="regexp">/[a-z](?=\d)/g</span>,<span class="string">'X'</span>)   <span class="comment">// =&gt; aX2cdX2fg</span></span><br><span class="line"><span class="string">'ab2cde2fg'</span>.replace(<span class="regexp">/[a-z](?!\d)/g</span>,<span class="string">'X'</span>)   <span class="comment">// =&gt; Xb2XXe2XX</span></span><br><span class="line"></span><br><span class="line"><span class="string">'ab2cde2fg'</span>.replace(<span class="regexp">/(?&lt;=\d)[a-z]/g</span>,<span class="string">'X'</span>)   <span class="comment">// =&gt;ab2Xde2Xg</span></span><br><span class="line"><span class="string">'ab2cde2fg'</span>.replace(<span class="regexp">/(?&lt;!\d)[a-z]/g</span>,<span class="string">'X'</span>)   <span class="comment">// =&gt;XX2cXX2fX</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="10-修饰符"><a href="#10-修饰符" class="headerlink" title="10.修饰符"></a>10.修饰符</h2><ul>
+<li><code>global</code>：是否全文搜索，默认是<code>false</code></li>
+<li><code>ignoreCase</code>：是否大小写敏感，默认是<code>false</code></li>
+<li><code>multiline</code>：是否多行搜索，默认是<code>false</code></li>
+<li><code>lastIndex</code>：是当前表达式匹配内容的最后一个字符的下一个位置</li>
+<li><code>source</code>：正则表达式的文本字符</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'aaaa'</span>.replace(<span class="regexp">/a/</span>,<span class="string">'A'</span>) <span class="comment">// =&gt; Aaaa  </span></span><br><span class="line"><span class="string">'aaaa'</span>.replace(<span class="regexp">/a/g</span>,<span class="string">'A'</span>) <span class="comment">// =&gt; AAAA</span></span><br><span class="line"></span><br><span class="line"><span class="string">'aABb'</span>.replace(<span class="regexp">/[a-z]/g</span>, <span class="string">'X'</span>) <span class="comment">// =&gt; XABX</span></span><br><span class="line"><span class="string">'aABb'</span>.replace(<span class="regexp">/[a-z]/gi</span>, <span class="string">'X'</span>) <span class="comment">// =&gt; XXXX</span></span><br><span class="line"></span><br><span class="line"><span class="string">`img/png/img-1.png</span></span><br><span class="line"><span class="string">img/png/img-1.png</span></span><br><span class="line"><span class="string">img/png/img-1.png`</span>.replace(<span class="regexp">/^img/g</span>, <span class="string">'image'</span>)</span><br><span class="line"><span class="comment">// =&gt; image/png/img-1.png</span></span><br><span class="line"><span class="comment">//    img/png/img-1.png</span></span><br><span class="line"><span class="comment">//    img/png/img-1.png</span></span><br><span class="line"><span class="string">`img/png/img-1.png</span></span><br><span class="line"><span class="string">img/png/img-1.png</span></span><br><span class="line"><span class="string">img/png/img-1.png`</span>.replace(<span class="regexp">/^img/gm</span>, <span class="string">'image'</span>)</span><br><span class="line"><span class="comment">// =&gt; image/png/img-1.png</span></span><br><span class="line"><span class="comment">//    image/png/img-1.png</span></span><br><span class="line"><span class="comment">//    image/png/img-1.png</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\d/gim</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.source) <span class="comment">// =&gt; \d</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="11-RegExp-对象中的test-和exec"><a href="#11-RegExp-对象中的test-和exec" class="headerlink" title="11.RegExp 对象中的test() 和exec()"></a>11.RegExp 对象中的test() 和exec()</h2><h3 id="test"><a href="#test" class="headerlink" title="test()"></a>test()</h3><p>用于测试参数字符串中是否存在匹配正则表达式模式的字符串；如果存在则返回true，否则返回false</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\w/</span></span><br><span class="line">reg.test(<span class="string">'|'</span>) <span class="comment">// =&gt; false</span></span><br><span class="line">reg.test(<span class="string">'a'</span>) <span class="comment">// =&gt; true</span></span><br><span class="line">reg.test(<span class="string">'b'</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<p>当时使用<code>g</code> 全文搜索时，<code>test</code> 函数会出现如下问题：</p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_0.jpg" class="">
+
+<p>上述问题其实是正则表达式对象的<code>lastIndex</code> 属性在作怪</p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_1.jpg" class="">
+
+<p>如果正则表达式使用了全文搜索<code>g</code>，又想避免上述问题，应在执行<code>test</code> 函数前先将<code>lastIndex</code> 置<code>0</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\w/g</span></span><br><span class="line">reg.test(<span class="string">'ab'</span>) <span class="comment">// =&gt; true</span></span><br><span class="line">reg.lastIndex = <span class="number">0</span></span><br><span class="line">reg.test(<span class="string">'ab'</span>) <span class="comment">// =&gt; true</span></span><br><span class="line">reg.lastIndex = <span class="number">0</span></span><br><span class="line">reg.test(<span class="string">'ab'</span>) <span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h3><p>使用正则表达式对字符串执行搜索，并将匹配到的的结果以数组形式返回，如果没有匹配，返回null</p>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_2.jpg" class="">
+
+<p><strong>结果数组属性</strong></p>
+<ul>
+<li><code>index</code>：匹配字符的第一个字符的位置</li>
+<li><code>input</code>：被匹配的字符串</li>
+</ul>
+<p><strong>返回的数组</strong></p>
+<ul>
+<li>第一个元素是与正则表达式匹配的内容</li>
+<li>第二个元素是与第一个子表达式相匹配的内容</li>
+<li>第三个元素是与第二个子表达式相匹配的内容（以此类推）</li>
+</ul>
+<p>现有如下字符串数组，我们使用<code>exec</code> 从每个元素中提取图片的路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [</span><br><span class="line">  <span class="string">'[测试1](https://www.baidu.com/img/img-1.png)'</span>,</span><br><span class="line">  <span class="string">'[测试2](http://www.baidu.com/img/img-2.jpg)'</span>,</span><br><span class="line">  <span class="string">'[测试3](https://static.baidu.com/images/details/img-3.jpg)'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>正则表达式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/\[.+\]\(http(|s):\/\/[a-zA-Z0-g_-]+(\.[a-zA-Z0-9_-]+)+\/((.+\/)+.+\.(png|jpg))\)/</span></span><br></pre></td></tr></table></figure>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_5.png" class="">
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = reg.exec(arr[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_3.jpg" class="">
+
+<p>上述正则表达式使用了较多的分组，我们在阅读图形的时候可能造成干扰，可以忽略不必要的分组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg2 = <span class="regexp">/\[.+\]\(http(?:|s):\/\/[a-zA-Z0-g_-]+(?:\.[a-zA-Z0-9_-]+)+\/((?:.+\/)+.+\.(?:png|jpg))\)/</span></span><br></pre></td></tr></table></figure>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/graph_6.png" class="">
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res2 = reg2.exec(arr[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<img src="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/note_4.jpg" class="">
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.<a href="https://segmentfault.com/a/1190000015101341" target="_blank" rel="noopener">正则表达式：从Copy到手写 segmentfault</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/" rel="next" title="一日一练-网络 HTTP 缓存">
+                <i class="fa fa-chevron-left"></i> 一日一练-网络 HTTP 缓存
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3DDoS-%E6%94%BB%E5%87%BB/" rel="prev" title="一日一练-网络 了解DDoS 攻击">
+                一日一练-网络 了解DDoS 攻击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RegExp-对象"><span class="nav-number">1.</span> <span class="nav-text">1.RegExp 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-元字符"><span class="nav-number">2.</span> <span class="nav-text">2.元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-工具推荐"><span class="nav-number">3.</span> <span class="nav-text">3.工具推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-量词"><span class="nav-number">4.</span> <span class="nav-text">4.量词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-贪婪模式和非贪婪模式"><span class="nav-number">5.</span> <span class="nav-text">5.贪婪模式和非贪婪模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-类"><span class="nav-number">6.</span> <span class="nav-text">6.类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符类"><span class="nav-number">6.1.</span> <span class="nav-text">字符类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范围类"><span class="nav-number">6.2.</span> <span class="nav-text">范围类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义类"><span class="nav-number">6.3.</span> <span class="nav-text">预定义类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-边界"><span class="nav-number">7.</span> <span class="nav-text">7.边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-分组"><span class="nav-number">8.</span> <span class="nav-text">8.分组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">8.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与-使用"><span class="nav-number">8.2.</span> <span class="nav-text">与| 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与量词使用"><span class="nav-number">8.3.</span> <span class="nav-text">与量词使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向引用"><span class="nav-number">8.4.</span> <span class="nav-text">反向引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略分组"><span class="nav-number">8.5.</span> <span class="nav-text">忽略分组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-前瞻后顾"><span class="nav-number">9.</span> <span class="nav-text">9.前瞻后顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-修饰符"><span class="nav-number">10.</span> <span class="nav-text">10.修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-RegExp-对象中的test-和exec"><span class="nav-number">11.</span> <span class="nav-text">11.RegExp 对象中的test() 和exec()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#test"><span class="nav-number">11.1.</span> <span class="nav-text">test()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec"><span class="nav-number">11.2.</span> <span class="nav-text">exec()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">12.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/05/29/一日一练-JS-了解正则/';
+
+      var disqus_title = "一日一练-JS 了解正则";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

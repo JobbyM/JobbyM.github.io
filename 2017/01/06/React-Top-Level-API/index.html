@@ -1,0 +1,1140 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译React Top-Level API这篇React（版本v15.4.0）官方文档。  React Top-Level APIReact 是React 库的入口。如果你用script 标签来使用React，这些顶级API 都在React 这个全局变量上。如果你在npm  下使用ES6，你可以这样写import React from &#39;react&#39;。如果你在npm 下使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Top-Level API">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/06/React-Top-Level-API/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译React Top-Level API这篇React（版本v15.4.0）官方文档。  React Top-Level APIReact 是React 库的入口。如果你用script 标签来使用React，这些顶级API 都在React 这个全局变量上。如果你在npm  下使用ES6，你可以这样写import React from &#39;react&#39;。如果你在npm 下使">
+<meta property="article:published_time" content="2017-01-06T01:05:46.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.309Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/06/React-Top-Level-API/"/>
+
+
+
+
+
+  <title> React Top-Level API | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/06/React-Top-Level-API/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Top-Level API
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-06T01:05:46+00:00">
+                2017-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/06/React-Top-Level-API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/06/React-Top-Level-API/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/06/React-Top-Level-API/" class="leancloud_visitors" data-flag-title="React Top-Level API">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/react-api.html" target="_blank" rel="noopener">React Top-Level API</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="React-Top-Level-API"><a href="#React-Top-Level-API" class="headerlink" title="React Top-Level API"></a>React Top-Level API</h2><p><code>React</code> 是React 库的入口。如果你用script 标签来使用React，这些顶级API 都在<code>React</code> 这个全局变量上。如果你在npm  下使用ES6，你可以这样写<code>import React from &#39;react&#39;</code>。如果你在npm 下使用ES5，你可以这样写<code>var React = require(&#39;react&#39;)</code>。</p>
+<a id="more"></a>
+
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h3 id="Components"><a href="#Components" class="headerlink" title="Components"></a>Components</h3><p>React components 让你将UI 分成独立的、可复用的块，并且独立的思考每一块。React comoponents 可以被<code>React.Component</code> 和 <code>React.PureComponent</code>子类定义。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.component" target="_blank" rel="noopener">React.Component</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.purecomponent" target="_blank" rel="noopener">React.PureComponent</a></li>
+</ul>
+<p>如果你不使用ES6 classes，你也可以使用下面这个帮助类（helper）来替代。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#createclass" target="_blank" rel="noopener">createClass()</a></li>
+</ul>
+<h3 id="Creating-React-Elements"><a href="#Creating-React-Elements" class="headerlink" title="Creating React Elements"></a>Creating React Elements</h3><p>我们建议<a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="noopener">使用JSX</a>去描述你的UI 应该是什么样。每一个JSX element 都是调用<code>React.createElement()</code> 的语法糖。如果你使用JSX，你不必显示地调用下面的方法。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#createelement" target="_blank" rel="noopener">createElement()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#createfactory" target="_blank" rel="noopener">createFactory()</a></li>
+</ul>
+<p>参考<a href="https://facebook.github.io/react/docs/react-without-jsx.html" target="_blank" rel="noopener">Using React Without JSX</a> 获取更多信息。</p>
+<h3 id="Transforming-Elements"><a href="#Transforming-Elements" class="headerlink" title="Transforming Elements"></a>Transforming Elements</h3><p><code>React</code> 也提供一些其他APIs：</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#cloneelement" target="_blank" rel="noopener">cloneElement()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#isvalidelement" target="_blank" rel="noopener">isValidElement()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.children" target="_blank" rel="noopener">React.Children</a></li>
+</ul>
+<h3 id="Typechecking-with-PropTypes"><a href="#Typechecking-with-PropTypes" class="headerlink" title="Typechecking with PropTypes"></a>Typechecking with PropTypes</h3><p>你可以使用<code>React.PropTypes</code> 来为component 的props 做类型检测。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes" target="_blank" rel="noopener">React.PropTypes</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.array" target="_blank" rel="noopener">React.PropTypes.array</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.bool" target="_blank" rel="noopener">React.PropTypes.bool</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.func" target="_blank" rel="noopener">React.PropTypes.func</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.number" target="_blank" rel="noopener">React.PropTypes. number</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.object" target="_blank" rel="noopener">React.PropTypes.object</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.string" target="_blank" rel="noopener">React.PropTypes.string</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.symbol" target="_blank" rel="noopener">React.PropTypes.symbol</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.node" target="_blank" rel="noopener">React.PropTypes.node</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.element" target="_blank" rel="noopener">React.PropTypes.element</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.instanceof" target="_blank" rel="noopener">React.PropTypes.instanceOf()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.oneof" target="_blank" rel="noopener">React.PropTypes.oneOf()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.oneoftype" target="_blank" rel="noopener">React.PropTypes.oneOfType</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.arrayof" target="_blank" rel="noopener">React.PropTypes.arrayOf</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.objectof" target="_blank" rel="noopener">React.PropTypes.objectOf</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.shape" target="_blank" rel="noopener">React.PropTypes.shape()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes.any" target="_blank" rel="noopener">React.PropTypes.any</a></li>
+</ul>
+<p>验证器（Validator）对待props 默认是可选的。你可以使用<code>isReuqired</code> 去确认警告（warning）的显示如果prop 没有被提供。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#isrequired" target="_blank" rel="noopener">isRequired</a></li>
+</ul>
+<h3 id="Add-Ons"><a href="#Add-Ons" class="headerlink" title="Add-Ons"></a>Add-Ons</h3><p>如果你使用<a href="https://facebook.github.io/react/docs/addons.html" target="_blank" rel="noopener">react-with-addons.js</a>，React Add-Ons 将通过<code>React.addons</code> 来使用。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-api.html#react.addons" target="_blank" rel="noopener">React.addons</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="React-Component"><a href="#React-Component" class="headerlink" title="React.Component"></a>React.Component</h3><p><code>React.Component</code> 是React components 的基类（base class），当使用<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">ES6 classes</a> 来定义。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeting</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查看<a href="https://facebook.github.io/react/docs/react-component.html" target="_blank" rel="noopener">React.Component API Reference</a> 获取基于<code>React.Component</code> 类的相关的一系列方法和属性（methods and properties）。</p>
+<h3 id="React-PureComponent"><a href="#React-PureComponent" class="headerlink" title="React.PureComponent"></a>React.PureComponent</h3><p><code>React.PureComponent</code> 是完全像<a href="https://facebook.github.io/react/docs/react-api.html#react.component" target="_blank" rel="noopener">React.Component</a>但是实现了使用浅比较props 和state 的<a href="https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener">shouldComponentUpdate()</a> 方法。</p>
+<p>如果你的React component 的<code>render()</code> 方法渲染通过props 和state 来获取相同的结果，在这种情况下你可以使用<code>React.PureComponent</code> 提升性能。</p>
+<blockquote>
+<p><strong>Note</strong><br><code>React.PureComponent</code> 的<code>shouldComponentUpdate()</code> 只能浅比较对象（shallowly compares the objects）。如果包含复杂的数据结构，它可能产生false-negative 对深度不同（deeper differences）。只能将拥有简单的props 和state 的component 混合或者使用<a href="https://facebook.github.io/react/docs/react-component.html#forceupdate" target="_blank" rel="noopener">foreUpdate()</a> 方法，当你确定深度数据结构（deep data structures）发生改变。 或者使用<a href="https://facebook.github.io/immutable-js/" target="_blank" rel="noopener">immuatable objects</a> 帮助快速比较嵌套数据。<br>再者，<code>React.PureComponent</code> 的<code>shouldComponentUpdate()</code> 方法跳过了整个component 子树的props 更新。确认所有的孩子component 都是”pure”。</p>
+</blockquote>
+<h3 id="createClass"><a href="#createClass" class="headerlink" title="createClass()"></a>createClass()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.createClass(specification)</span><br></pre></td></tr></table></figure>
+<p>如果你不实用ES6，你可以使用<code>React.createClass()</code> 帮助类来创建一个component 类。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Greeting = React.createClass(&#123;</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>参考<a href="https://facebook.github.io/react/docs/react-without-es6.html" target="_blank" rel="noopener">Using React Without ES6</a> 获取更多信息。</p>
+<h3 id="createElement"><a href="#createElement" class="headerlink" title="createElement"></a>createElement</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">React.createElement(</span><br><span class="line">  type,</span><br><span class="line">  [props],</span><br><span class="line">  [...children]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>创建并返回一个新的给定类型的<a href="https://facebook.github.io/react/docs/rendering-elements.html" target="_blank" rel="noopener">React element</a>。这个类型参数要么是一个标签名字字符串（像<code>div</code> 或者是<code>span</code>），要么是一个<a href="https://facebook.github.io/react/docs/components-and-props.html" target="_blank" rel="noopener">React component</a> 类型（类或者是函数）。</p>
+<p><code>React.DOM</code> 提供了一个方便的包装为DOM component 的<code>React.createElement()</code>的方法。例如，<code>React.DOM.a(...)</code> 是一个<code>React.createElement(&#39;a&#39;,...)</code> 的方法包装。它们都被认为是合法的，并且我们孤立你使用JSX，而不是直接使用<code>React.createElement()</code>。</p>
+<p>使用<a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="noopener">JSX</a> 编写的代码可以被转成使用<code>React.createElement()</code> 。你可以不必显示地直接、调用<code>React.createElement()</code>如果你使用JSX。参考<a href="https://facebook.github.io/react/docs/react-without-jsx.html" target="_blank" rel="noopener">React Without JSX</a> 获取更多信息。</p>
+<h3 id="cloneElement"><a href="#cloneElement" class="headerlink" title="cloneElement()"></a>cloneElement()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">React.cloneElement(</span><br><span class="line">  element,</span><br><span class="line">  [props],</span><br><span class="line">  [...children]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>克隆并返回一个使用<code>element</code> 开始的的React element。这个将会有有一个原始的element 的props 和新props 浅合并的element。新的子节点将会替换已经存在的子节点。来自原始element 的<code>key</code> 和<code>ref</code>将会被保留。</p>
+<p><code>React.cloneElement()</code> 几乎等同于：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;element.type &#123;...element.props&#125; &#123;...props&#125;&gt;&#123;children&#125;&lt;<span class="regexp">/element.type&gt;</span></span><br></pre></td></tr></table></figure>
+<p>无论如何，它也会保留<code>ref</code>。这意味着如果你通过它上面的<code>ref</code> 获取自己的子节点，你将不会有机会从你的祖先获取它。你只会获得绑定在你的新element 上相同的<code>ref</code>。</p>
+<p>这个API  也可以作为<code>React.addons.cloneWithProps()</code> 废弃的替代。</p>
+<h3 id="createFactory"><a href="#createFactory" class="headerlink" title="createFactory()"></a>createFactory()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.createFactory(type)</span><br></pre></td></tr></table></figure>
+<p>返回一个生成指定类型的React elements的函数。像<a href="https://facebook.github.io/react/docs/react-api.html#createElement" target="_blank" rel="noopener">React.createElement</a>，这个类型参数要么是一个标签名字字符串（像<code>div</code> 或者是<code>span</code>），要么是一个<a href="https://facebook.github.io/react/docs/components-and-props.html" target="_blank" rel="noopener">React component</a> 类型（类或者是函数）。</p>
+<p>这个帮助类被认为是合法的，我们滚里你要么使用JSX 恶如表示直接使用<code>React.createElement()</code>替代。</p>
+<p>你将不必显示地直接调用<code>React.createFactory()</code>如果你使用JSX。参考<a href="https://facebook.github.io/react/docs/react-without-jsx.html" target="_blank" rel="noopener">React Without JSX</a> 获取更多信息。</p>
+<h3 id="isValidElement"><a href="#isValidElement" class="headerlink" title="isValidElement()"></a>isValidElement()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.isValidElement(object)</span><br></pre></td></tr></table></figure>
+<p>验证对象是一个React element。返回<code>true</code> 或<code>false</code>。</p>
+<h3 id="React-Children"><a href="#React-Children" class="headerlink" title="React.Children"></a>React.Children</h3><p><code>React.Children</code> 提供有助于处理<code>this.props.children</code> 这种不透明的数据结构。</p>
+<h3 id="React-Children-map"><a href="#React-Children-map" class="headerlink" title="React.Children.map"></a>React.Children.map</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.Children.map(children, function[(thisArg)])</span><br></pre></td></tr></table></figure>
+<p>在每一个直接子节点包含<code>children</code> 使用<code>this</code> 设置<code>thisArg</code>。如果<code>children</code> 是一个关键帧或数组，它将被改变：函数永远不会作为对象传入。如果节点是<code>null</code> 或<code>undefined</code>，返回一个<code>null</code> 或者是<code>undefined</code> 而不是一个数组。</p>
+<h3 id="React-Chidren-forEach"><a href="#React-Chidren-forEach" class="headerlink" title="React.Chidren.forEach"></a>React.Chidren.forEach</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.Children.forEach(children, function[(thisArg)])</span><br></pre></td></tr></table></figure>
+<p>像<a href="https://facebook.github.io/react/docs/react-api.html#react.children.map" target="_blank" rel="noopener">React.Children.map()</a>但是不会返回一个数组。</p>
+<h3 id="React-Children-count"><a href="#React-Children-count" class="headerlink" title="React.Children.count"></a>React.Children.count</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Children.count(children)。</span><br></pre></td></tr></table></figure>
+<p>返回<code>children</code> 中的components 个数，等于传入<code>map</code> 或<code>forEach</code> 中回调函数的调用次数。</p>
+<h3 id="React-Children-only"><a href="#React-Children-only" class="headerlink" title="React.Children.only"></a>React.Children.only</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.Children.only(children)</span><br></pre></td></tr></table></figure>
+<p>返回<code>children</code> 中的唯一子节点。其它的抛出。</p>
+<h3 id="React-Children-toArray"><a href="#React-Children-toArray" class="headerlink" title="React.Children.toArray"></a>React.Children.toArray</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.Children.toArray(children)</span><br></pre></td></tr></table></figure>
+<p>返回<code>children</code> 不透明的数据结构作为平面数组其中键赋给每一个子节点。如果你想要在你的渲染方法中处理集合，尤其是你想要重新排序后者在向下传递之前将其分割<code>this.props.children</code></p>
+<blockquote>
+<p><strong>Note：</strong><br><code>React.Children.toArray</code> 改变键值去防止嵌套数组的语法当扁平化子节点列表。也就是，在返回数组中<code>toArray</code> 前置每一个键，所以每一个element 键的作用范围是包含它的输入数组。</p>
+</blockquote>
+<h3 id="React-PropTypes"><a href="#React-PropTypes" class="headerlink" title="React.PropTypes"></a>React.PropTypes</h3><p><code>React.PropTypes</code> 导出一系列的验证器它们可以在一个component 的<code>propTypes</code> 对象去验证被出入你的component 中的props。</p>
+<p>获取关于<code>PropTypes</code> 的更多信息，请看<a href="https://facebook.github.io/react/docs/typechecking-with-proptypes.html" target="_blank" rel="noopener">Typechecking with PropTypes</a>。</p>
+<h3 id="React-PropTypes-array"><a href="#React-PropTypes-array" class="headerlink" title="React.PropTypes.array"></a>React.PropTypes.array</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.array</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个原生的JavaScript 数组。</p>
+<h3 id="React-PropTypes-bool"><a href="#React-PropTypes-bool" class="headerlink" title="React.PropTypes.bool"></a>React.PropTypes.bool</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.bool</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个原生的JavaScript 布尔值。</p>
+<h3 id="React-PropTypes-func"><a href="#React-PropTypes-func" class="headerlink" title="React.PropTypes.func"></a>React.PropTypes.func</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.func</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个JavaScript 函数。</p>
+<h3 id="React-PropTypes-number"><a href="#React-PropTypes-number" class="headerlink" title="React.PropTypes.number"></a>React.PropTypes.number</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.number</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个原生的JavaScript 数值。</p>
+<h3 id="React-PropTypes-object"><a href="#React-PropTypes-object" class="headerlink" title="React.PropTypes.object"></a>React.PropTypes.object</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.object</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个JavaScript 对象。</p>
+<h3 id="React-PropTypes-string"><a href="#React-PropTypes-string" class="headerlink" title="React.PropTypes.string"></a>React.PropTypes.string</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.string</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个原生的JavaScript 字符串。</p>
+<h3 id="React-PropTypes-symbol"><a href="#React-PropTypes-symbol" class="headerlink" title="React.PropTypes.symbol"></a>React.PropTypes.symbol</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.symbol</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个JavaScript symbol。</p>
+<h3 id="React-PropTypes-node"><a href="#React-PropTypes-node" class="headerlink" title="React.PropTypes.node"></a>React.PropTypes.node</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.node</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个原生的JavaScript 数组。</p>
+<h3 id="React-PropTypes-array-1"><a href="#React-PropTypes-array-1" class="headerlink" title="React.PropTypes.array"></a>React.PropTypes.array</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.array</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个任何可以被渲染的东西：数字，字符串，elements 或者是数组（片段）包含这些类型。</p>
+<h3 id="React-PropTypes-element"><a href="#React-PropTypes-element" class="headerlink" title="React.PropTypes.element"></a>React.PropTypes.element</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.element</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个React element。</p>
+<h3 id="React-PropTypes-instanceOf"><a href="#React-PropTypes-instanceOf" class="headerlink" title="React.PropTypes.instanceOf()"></a>React.PropTypes.instanceOf()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.instanceOf(<span class="class"><span class="keyword">class</span>)</span></span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个类的实例。使用JavaScript 的<code>instanceof</code> 操作符。</p>
+<h3 id="React-PropTypes-oneOf"><a href="#React-PropTypes-oneOf" class="headerlink" title="React.PropTypes.oneOf()"></a>React.PropTypes.oneOf()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.oneOf(arrayOfValue)</span><br></pre></td></tr></table></figure>
+<p>验证prop 被限制为一个特殊的值通过将其作为一个枚举。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">     optionalEnum: React.PropTypes.oneOf([<span class="string">'News'</span>, <span class="string">'Photos'</span>]),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-PropTypes-oneOfType"><a href="#React-PropTypes-oneOfType" class="headerlink" title="React.PropTypes.oneOfType()"></a>React.PropTypes.oneOfType()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.oneOfType(arrayOfPropTypes)</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个对象可以是许多类型中的一个。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  optionalUnion: React.PropTypes.oneOfType([</span><br><span class="line">    React.PropTypes.string,</span><br><span class="line">    React.PropTypes.number,</span><br><span class="line">    React.PropTypes.instanceOf(Message)</span><br><span class="line">  ]),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-PropTypes-arrayOf"><a href="#React-PropTypes-arrayOf" class="headerlink" title="React.PropTypes.arrayOf()"></a>React.PropTypes.arrayOf()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.arrayOf(propType)</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个确定类型的数组 。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  optionalArrayOf: React.PropTypes.arrayOf(React.PropTypes.number),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-PropTypes-objectOf"><a href="#React-PropTypes-objectOf" class="headerlink" title="React.PropTypes.objectOf()"></a>React.PropTypes.objectOf()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.objectOf(propType)</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个具有某种类型属性值的对象。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  optionalObjectOf: React.PropTypes.objectOf(React.PropTypes.number),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-PropTypes-shape"><a href="#React-PropTypes-shape" class="headerlink" title="React.PropTypes.shape()"></a>React.PropTypes.shape()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.shape(object)</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个特定形状的对象。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  optionalObjectWithShape: React.PropTypes.shape(&#123;</span><br><span class="line">    color: React.PropTypes.string,</span><br><span class="line">    fontSize: React.PropTypes.number</span><br><span class="line">  &#125;),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-PropTypes-any"><a href="#React-PropTypes-any" class="headerlink" title="React.PropTypes.any()"></a>React.PropTypes.any()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.PropTypes.any</span><br></pre></td></tr></table></figure>
+<p>验证prop 是一个任意数据类型的值。通过后面跟着<code>isRequired</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  requiredAny: React.PropTypes.any.isRequired,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="isRequired"><a href="#isRequired" class="headerlink" title="isRequired"></a>isRequired</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">propType.isRequired</span><br></pre></td></tr></table></figure>
+<p>你可以使用<code>isRequired</code> 去链式上述任何验证器去确保警告显示如果prop 没有被提供。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  requiredFunc: React.PropTypes.func.isRequired,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="React-addons"><a href="#React-addons" class="headerlink" title="React.addons"></a>React.addons</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.addons</span><br></pre></td></tr></table></figure>
+<p>当使用<a href="https://facebook.github.io/react/docs/addons.html" target="_blank" rel="noopener">react-with-addons.js</a><code>React.addons</code> 导出一系列add-ons。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/react-api.html" target="_blank" rel="noopener">React Top-Level API</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/05/react-Web-Components/" rel="next" title="react Web Components">
+                <i class="fa fa-chevron-left"></i> react Web Components
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/09/React-Component/" rel="prev" title="React.Component">
+                React.Component <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Top-Level-API"><span class="nav-number">1.</span> <span class="nav-text">React Top-Level API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Components"><span class="nav-number">2.1.</span> <span class="nav-text">Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-React-Elements"><span class="nav-number">2.2.</span> <span class="nav-text">Creating React Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transforming-Elements"><span class="nav-number">2.3.</span> <span class="nav-text">Transforming Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Typechecking-with-PropTypes"><span class="nav-number">2.4.</span> <span class="nav-text">Typechecking with PropTypes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-Ons"><span class="nav-number">2.5.</span> <span class="nav-text">Add-Ons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Component"><span class="nav-number">3.1.</span> <span class="nav-text">React.Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PureComponent"><span class="nav-number">3.2.</span> <span class="nav-text">React.PureComponent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createClass"><span class="nav-number">3.3.</span> <span class="nav-text">createClass()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createElement"><span class="nav-number">3.4.</span> <span class="nav-text">createElement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cloneElement"><span class="nav-number">3.5.</span> <span class="nav-text">cloneElement()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createFactory"><span class="nav-number">3.6.</span> <span class="nav-text">createFactory()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isValidElement"><span class="nav-number">3.7.</span> <span class="nav-text">isValidElement()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Children"><span class="nav-number">3.8.</span> <span class="nav-text">React.Children</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Children-map"><span class="nav-number">3.9.</span> <span class="nav-text">React.Children.map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Chidren-forEach"><span class="nav-number">3.10.</span> <span class="nav-text">React.Chidren.forEach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Children-count"><span class="nav-number">3.11.</span> <span class="nav-text">React.Children.count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Children-only"><span class="nav-number">3.12.</span> <span class="nav-text">React.Children.only</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Children-toArray"><span class="nav-number">3.13.</span> <span class="nav-text">React.Children.toArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes"><span class="nav-number">3.14.</span> <span class="nav-text">React.PropTypes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-array"><span class="nav-number">3.15.</span> <span class="nav-text">React.PropTypes.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-bool"><span class="nav-number">3.16.</span> <span class="nav-text">React.PropTypes.bool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-func"><span class="nav-number">3.17.</span> <span class="nav-text">React.PropTypes.func</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-number"><span class="nav-number">3.18.</span> <span class="nav-text">React.PropTypes.number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-object"><span class="nav-number">3.19.</span> <span class="nav-text">React.PropTypes.object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-string"><span class="nav-number">3.20.</span> <span class="nav-text">React.PropTypes.string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-symbol"><span class="nav-number">3.21.</span> <span class="nav-text">React.PropTypes.symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-node"><span class="nav-number">3.22.</span> <span class="nav-text">React.PropTypes.node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-array-1"><span class="nav-number">3.23.</span> <span class="nav-text">React.PropTypes.array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-element"><span class="nav-number">3.24.</span> <span class="nav-text">React.PropTypes.element</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-instanceOf"><span class="nav-number">3.25.</span> <span class="nav-text">React.PropTypes.instanceOf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-oneOf"><span class="nav-number">3.26.</span> <span class="nav-text">React.PropTypes.oneOf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-oneOfType"><span class="nav-number">3.27.</span> <span class="nav-text">React.PropTypes.oneOfType()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-arrayOf"><span class="nav-number">3.28.</span> <span class="nav-text">React.PropTypes.arrayOf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-objectOf"><span class="nav-number">3.29.</span> <span class="nav-text">React.PropTypes.objectOf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-shape"><span class="nav-number">3.30.</span> <span class="nav-text">React.PropTypes.shape()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-PropTypes-any"><span class="nav-number">3.31.</span> <span class="nav-text">React.PropTypes.any()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isRequired"><span class="nav-number">3.32.</span> <span class="nav-text">isRequired</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-addons"><span class="nav-number">3.33.</span> <span class="nav-text">React.addons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/06/React-Top-Level-API/';
+
+      var disqus_title = "React Top-Level API";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

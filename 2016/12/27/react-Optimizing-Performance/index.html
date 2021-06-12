@@ -1,0 +1,1049 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Optimizing Performance这篇React（版本v15.4.0）官方文档。  Optimizing Performance在内部，React 使用一些聪明的技术去减少更新UI 操作所需要花费的昂贵的DOM 操作数量。对于许多应用，使用React 产生一个开始的用户操作而不需要做大量的专门优化性能的操作。不过，这里仍有集中方式去加速你的应用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Optimizing Performance">
+<meta property="og:url" content="https://jobbym.github.io/2016/12/27/react-Optimizing-Performance/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Optimizing Performance这篇React（版本v15.4.0）官方文档。  Optimizing Performance在内部，React 使用一些聪明的技术去减少更新UI 操作所需要花费的昂贵的DOM 操作数量。对于许多应用，使用React 产生一个开始的用户操作而不需要做大量的专门优化性能的操作。不过，这里仍有集中方式去加速你的应用。">
+<meta property="og:image" content="https://jobbym.github.io/2016/12/27/react-Optimizing-Performance/should-component-update.png">
+<meta property="article:published_time" content="2016-12-27T01:09:33.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2016/12/27/react-Optimizing-Performance/should-component-update.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/12/27/react-Optimizing-Performance/"/>
+
+
+
+
+
+  <title> react Optimizing Performance | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/12/27/react-Optimizing-Performance/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Optimizing Performance
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-27T01:09:33+00:00">
+                2016-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/27/react-Optimizing-Performance/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/27/react-Optimizing-Performance/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/27/react-Optimizing-Performance/" class="leancloud_visitors" data-flag-title="react Optimizing Performance">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/optimizing-performance.html" target="_blank" rel="noopener">Optimizing Performance</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Optimizing-Performance"><a href="#Optimizing-Performance" class="headerlink" title="Optimizing Performance"></a>Optimizing Performance</h2><p>在内部，React 使用一些聪明的技术去减少更新UI 操作所需要花费的昂贵的DOM 操作数量。对于许多应用，使用React 产生一个开始的用户操作而不需要做大量的专门优化性能的操作。不过，这里仍有集中方式去加速你的应用。</p>
+<a id="more"></a>
+
+<h3 id="Use-The-Production-Build"><a href="#Use-The-Production-Build" class="headerlink" title="Use The Production Build"></a>Use The Production Build</h3><p>如果你正在你的React apps 中检测或测试性能问题，请确保你使用最小生产环境（minified production）构建测试：</p>
+<ul>
+<li>对于Create React App，你需要按照说明运行<code>npm run build</code>。</li>
+<li>对于单个文件构建（single-file builds），我们提供为生产准备（production-ready） 的<code>.min.js</code> 版本。</li>
+<li>对于Browserify，你需要使用<code>NODE_ENV=production</code> 去运行。</li>
+<li>对于Webpack，你需要在你的生产环境配置进行添加如下插件：</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> webpack.DefinePlugin(&#123;</span><br><span class="line">  <span class="string">'process.env'</span>: &#123;</span><br><span class="line">    NODE_ENV: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;),</span><br><span class="line"><span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</span><br></pre></td></tr></table></figure>
+
+<p>在开发环境构建你的app 时，额外的警告会有用，但是由于额外的记账会变慢。</p>
+<h3 id="Avoid-Reconciliation"><a href="#Avoid-Reconciliation" class="headerlink" title="Avoid Reconciliation"></a>Avoid Reconciliation</h3><p>React 构建保持一个内部的渲染UI 的展现。它包括你从component 中返回的React elements。这种表现会让React 避免创建DOM 节点以及访问除必要之外的已经存在的节点，这会使得比在JavaScript 对象上的操作慢。有时它引用一个虚拟DOM（virtual DOM），但是它的工作方式和React Native 一致。</p>
+<p>当一个component 的props 和state 反生改变，React 通过对比最新返回的element 同之前已经渲染的element 进行对比来决定师傅更新一个真实的DOM。当它们不想等，React 将会更新这个DOM。</p>
+<p>在一些情况下，你的component 会加速这一切通过重写lifecycle function <code>shouldComponentUpdate</code> ，此函数在重新渲染过程之前触发。这个函数的默认实现是返回<code>true</code>,这让React 去执行这个更新：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shouldComponentUpdate(nextProps, nextState)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你知道在某些情况下你的component 不需要更新，你可以通过在<code>shouldComponentUpdate</code> 中返回<code>false</code> 来跳过整个更新进程，包括调用component 上的<code>render()</code> 方法。</p>
+<h3 id="shouldComponentUpdate-In-Action"><a href="#shouldComponentUpdate-In-Action" class="headerlink" title="shouldComponentUpdate In Action"></a>shouldComponentUpdate In Action</h3><p>这有一个component 的子树。对于每一个节点，<code>SCU</code> 表示<code>shouldComponentUpdate</code> 返回值，<code>vDOMEq</code> 表示这个渲染的React element 是否等价。最后，这个圆圈的颜色表示这个component 是否已经使一致。</p>
+<img src="/2016/12/27/react-Optimizing-Performance/should-component-update.png" class="">
+<p>由于<code>shouldComponentUpdate</code> 返回<code>false</code> 在子树的C2 处，React 不必渲染C2，也就不需要在C4 和C5 处调用<code>shouldComponentUpdate</code>。</p>
+<p>在C1 和C3 处，<code>shouldComponentUpdate</code> 返回<code>true</code>，所以React 继续向下叶子节点并检测它们。在C6 处，<code>shouldComponentUpdate</code> 返回<code>true</code>，由于和已经渲染的element 不想等所以React 必须更新DOM。</p>
+<p>最有趣的案例是C8。React 必须去渲染这个component，但是由于它返回的React element 同之前的已经渲染的element 相等，所以它不必去更新这个DOM。</p>
+<p>注意，React 必须为C6 做DOM 改变，这是不可避免的。在C8 处，和已经渲染的React elements 摆脱了困境，对于C2 的子树和C7，它甚至不需要比较我们已经接受了<code>shouldComponentUpdate</code> 的elements，这个<code>render</code> 也不需要调用。</p>
+<h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><p>当<code>props.color</code> 或者<code>state.count</code> 变量改变时，你的component 是否需要改变，应该通过这个<code>shouldComponentUpdate</code> 去检测：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterButton</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      count: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  shouldComponentUpdate(nextProps, nextState)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.props.color !== nextProps.color)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.state.count !== nextState.count)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;button</span><br><span class="line">        color=&#123;<span class="keyword">this</span>.props.color&#125;</span><br><span class="line">        onClick=&#123;() =&gt; <span class="keyword">this</span>.setState(<span class="function"><span class="params">state</span> =&gt;</span> (&#123;<span class="attr">count</span>: state.count + <span class="number">1</span>&#125;))&#125;&gt;</span><br><span class="line">        Count : &#123;<span class="keyword">this</span>.state.count&#125;</span><br><span class="line">      &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在上面代码中，<code>shouldComponentUpdate</code> 只是检测<code>props.color</code> 或者<code>state.count</code> 是否有任何改变。如果这些值没有改变，那么这个component 不需要更新。如果你的component 变得更复杂了，你需要使用一种类似的方法”shallow comparison” 在<code>props</code> 和<code>state</code> 域中去决定这个component 是否应该更新。这个方式是足够通用的并且React 提供了一个helper 去使用这个逻辑-只需要继承<code>React.PureComponent</code>。所以下面的代码去实现相同的功能是非常简单的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CounterButton</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      count : <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;button</span><br><span class="line">        color=&#123;<span class="keyword">this</span>.props.color&#125;</span><br><span class="line">        onClick=&#123;() =&gt; <span class="keyword">this</span>.setState(<span class="function"><span class="params">state</span> =&gt;</span> (&#123;<span class="attr">count</span>: state.count + <span class="number">1</span>&#125;))&#125;&gt;</span><br><span class="line">        Count : &#123;<span class="keyword">this</span>.state.count&#125;</span><br><span class="line">      &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>大多数时间，你可以使用<code>React.PureComponent</code> 去替代你写<code>shouldComponentUpdate</code>。它只能做一个浅比较（shallow comparison），所以你不能使用它，当props 和state 在发生突变时，由于浅比较会错过。</p>
+<p>对于更加复杂的数据结构这是一个问题。例如，我们说你想要<code>ListOfWords</code> component 去渲染一个分号分割（comma-separated ）的单词列表，它的父component 让你点击一个按钮去添加一个单词到列表中。下面代码不能正确运行：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListOfWords</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;this.props.words.join(',')&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WordAdder</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      words: [<span class="string">'marklar'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.handleClick = <span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleClick()&#123;</span><br><span class="line">    <span class="comment">// This section is bad style and causes a bug</span></span><br><span class="line">    <span class="keyword">const</span> words = <span class="keyword">this</span>.state.words</span><br><span class="line">    words.push(<span class="string">'marklar'</span>)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">          words: words</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.handleClick&#125; &gt;Click Me&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;ListOfWords words=&#123;this.state.words&#125;/</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>问题是<code>PureComponent</code> 将会做一个简单的对比在<code>this.props.words</code> 的旧值和新值之间。由于这块代码在<code>WorldAddr</code> 中的<code>handleClick</code> 方法中改变了这个<code>words</code> 数组，这个<code>this.props.word</code> 的旧值和新值是相等的，即使是这个words 已经改变了。这个<code>ListOfWorlds</code> 不会更新即使它有了一个新值应该去更新。</p>
+<h3 id="The-Power-Of-Not-Mutating-DAta"><a href="#The-Power-Of-Not-Mutating-DAta" class="headerlink" title="The Power Of Not Mutating DAta"></a>The Power Of Not Mutating DAta</h3><p>避免这个问题最简单的方法是当你使用props 和state 时不去改变值。例如，上面的例子可以使用<code>concat</code> 去重写：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(<span class="function"><span class="params">prevState</span> =&gt;</span> (&#123;</span><br><span class="line">    words: prevState.words.concat([<span class="string">'marklar'</span>])</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6 支持的数组的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator" target="_blank" rel="noopener">spread syntax</a> 是其更简单。如果你his用Create React App，它已经默认支持了。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(<span class="function"><span class="params">prevState</span> =&gt;</span> (&#123;</span><br><span class="line">    words: [...prevState.words, <span class="string">'marklar'</span>]</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按同样的方式，你可以重新这个可改变对象去避免改变。例如，我们说我们有一个<code>colormap</code> 的对象，我们写一个函数去改变<code>colormap.right</code> 为<code>blue</code>。我们可以这样写：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateColorMap</span>(<span class="params">colormap</span>)</span>&#123;</span><br><span class="line">  colormap.right = <span class="string">'blue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写一个代码如果不改变原始对象，我们可以使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign</a> 方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateColorMap</span>(<span class="params">colormap</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.assing(&#123;&#125;, colormap, &#123;<span class="attr">right</span>: <span class="string">'blue'</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>updateColorMap</code> 现在返回一个新对象而不是改变的就对象。<code>Object.assign</code> 是ES6 方法需要使用一个 polyfill。</p>
+<p>这有一个添加<a href="">object spread properties</a>的JavaScript 提案（proposal），使得不需要改变就能简单更新对象：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateColorMap</span>(<span class="params">colormap</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;...colormap, <span class="attr">right</span>: <span class="string">'blue'</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你使用Create React App，使用<code>Object.assign</code> 和<code>the object spread syntax</code> 默认是等价的。</p>
+<h3 id="Using-Immutable-Data-Structures"><a href="#Using-Immutable-Data-Structures" class="headerlink" title="Using Immutable Data Structures"></a>Using Immutable Data Structures</h3><p><a href="https://github.com/facebook/immutable-js" target="_blank" rel="noopener">Immutable.js</a> 是另一种解决这个问题的方法。它同结构共享提供不可变的、持久的集合来工作：</p>
+<pre><code>* Immutable：一旦创建，一个集合在另一个时间点不能被改变。
+* Persistent：新集合可以从之前集合或一个可变的set 中创建。当新集合被创建之后原始的集合仍然有效。
+* Structral Sharing：创建的新集合尽可能和使用同原始集合一样的结构，减少复制量提示性能。</code></pre>
+<p>不变性（immutability）使得追踪改变非常简单。改变总是产生一个新对象所以我们只需要检测这个对象的引用是否改变。例如，下面常规的JavaScript 代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span>&#125;</span><br><span class="line"><span class="keyword">const</span> y = x</span><br><span class="line">y.foo = <span class="string">"baz"</span></span><br><span class="line">x === y <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>虽然y 已经被编辑了，由于它和x 是同一个引用，这个比较返回<code>true</code>。你可以使用immutable.js 写类似的代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> SomeRecord = Immutable.Record(&#123; <span class="attr">foo</span>: <span class="literal">null</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> x = <span class="keyword">new</span> SomeRecord(&#123; <span class="attr">foo</span>: <span class="string">'bar'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> y = x.set(<span class="string">'foo'</span>, <span class="string">'baz'</span>)</span><br><span class="line">x === y <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>在这个例子中，当改变<code>x</code> 时返回一个新的引用，我们可以安全的假设<code>x</code> 已经改变了。</p>
+<p><a href="https://github.com/rtfeldman/seamless-immutable" target="_blank" rel="noopener">seamless-immutable</a>和<a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">immutability-helper</a> 这两个库也可以帮助使用不可变数据。</p>
+<p>不可变数据结构提供给你一个简单的方式追踪一个对象的改变，那是需要我们去实现<code>shouldComponentUpdate</code> 。它可以提供给你一个非常好的性能提升。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/optimizing-performance.html" target="_blank" rel="noopener">Optimizing Performance</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/26/react-Uncontrolled-Components/" rel="next" title="react Uncontrolled Components">
+                <i class="fa fa-chevron-left"></i> react Uncontrolled Components
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/28/React-Without-ES6/" rel="prev" title="React Without ES6">
+                React Without ES6 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimizing-Performance"><span class="nav-number">1.</span> <span class="nav-text">Optimizing Performance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-The-Production-Build"><span class="nav-number">1.1.</span> <span class="nav-text">Use The Production Build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Avoid-Reconciliation"><span class="nav-number">1.2.</span> <span class="nav-text">Avoid Reconciliation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shouldComponentUpdate-In-Action"><span class="nav-number">1.3.</span> <span class="nav-text">shouldComponentUpdate In Action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Examples"><span class="nav-number">1.4.</span> <span class="nav-text">Examples</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Power-Of-Not-Mutating-DAta"><span class="nav-number">1.5.</span> <span class="nav-text">The Power Of Not Mutating DAta</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Immutable-Data-Structures"><span class="nav-number">1.6.</span> <span class="nav-text">Using Immutable Data Structures</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/12/27/react-Optimizing-Performance/';
+
+      var disqus_title = "react Optimizing Performance";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

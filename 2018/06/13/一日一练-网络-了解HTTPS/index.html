@@ -1,0 +1,1048 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,一日一练,网络,TLS,SSL," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：了解HTTPS  一日一练-网络 了解密码学史 中的Bob 了解了密码学，最终同Alice 幸福生活在里一起。在幸福生活之余，Bob 不忘继续学习HTTPS。  HTTPS 是最常见的HTTP 安全版本。HTTPS 将HTTP 协议与一组强大的对称、非对称和基于证书的加密技术结合在一起，使得HTTPS 不仅很安全，而且很灵活，很容易在处于无序状态的、分散的全球互联网上进行管理。 HTTPS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-网络 了解HTTPS">
+<meta property="og:url" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：了解HTTPS  一日一练-网络 了解密码学史 中的Bob 了解了密码学，最终同Alice 幸福生活在里一起。在幸福生活之余，Bob 不忘继续学习HTTPS。  HTTPS 是最常见的HTTP 安全版本。HTTPS 将HTTP 协议与一组强大的对称、非对称和基于证书的加密技术结合在一起，使得HTTPS 不仅很安全，而且很灵活，很容易在处于无序状态的、分散的全球互联网上进行管理。 HTTPS">
+<meta property="og:image" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_2.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_3.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_4.jpg">
+<meta property="article:published_time" content="2018-06-13T06:41:08.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.601Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="网络">
+<meta property="article:tag" content="TLS">
+<meta property="article:tag" content="SSL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/06/13/一日一练-网络-了解HTTPS/"/>
+
+
+
+
+
+  <title> 一日一练-网络 了解HTTPS | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-网络 了解HTTPS
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-13T06:41:08+00:00">
+                2018-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/13/一日一练-网络-了解HTTPS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/" class="leancloud_visitors" data-flag-title="一日一练-网络 了解HTTPS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：了解HTTPS</p>
+</blockquote>
+<a href="/2018/06/08/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8F%B2/" title="一日一练-网络 了解密码学史">一日一练-网络 了解密码学史</a> 中的Bob 了解了密码学，最终同Alice 幸福生活在里一起。在幸福生活之余，Bob 不忘继续学习HTTPS。
+
+<p>HTTPS 是最常见的HTTP 安全版本。HTTPS 将HTTP 协议与一组强大的对称、非对称和基于证书的加密技术结合在一起，使得HTTPS 不仅很安全，而且很灵活，很容易在处于无序状态的、分散的全球互联网上进行管理。</p>
+<p>HTTPS 在将HTTP 报文发送给TCP 之前，先将其发送给了一个安全层，对其进行加密。</p>
+<p>现在，HTTP 安全层是通过SSL 及其现代替代协议TLS 来实现的。我们遵循常见的用法，用术语SSL 来表示SSL 或者TLS。</p>
+<a id="more"></a>
+
+<h2 id="SSL协议"><a href="#SSL协议" class="headerlink" title="SSL协议"></a>SSL协议</h2><p>SSL 协议位于TCP/IP 协议与各种引用层协议之间，为数据通信提供安全支持。SSL 协议可分为两层：</p>
+<ol>
+<li>SSL 记录协议（SSL Record Protocol）：<br>它建立在可靠的传输协议（如TCP）之上，为高层协议提供数据封装、压缩、加密等基本功能的支持。</li>
+<li>SSL 握手协议（SSL Handshake Protocol）：<br>它建立在SSL 记录协议之上，用于在实际的数据传输开始之前，通讯双方进行身份认证、协商机密算法、交换加密密钥等。</li>
+</ol>
+<p>SSL 协议可以在OSI（Open System Interconnection） 七层模型中的会话层和传输层进行一一对应</p>
+<ol>
+<li>会话层（Session Layer）：<br>对传输的报文提供同步管理服务。在两个不同系统的互相通信的应用进程之间建立、组织和协调交互。例如，确定是双工还是半双工工作。</li>
+<li>表示层（Presentation Layer）：<br>主要任务是把传送的数据的抽象语法变换为传送语法，即把不同计算机内部的不同表示形式转换成网络通信中标准表示形式。此外，对传送的数据加密（或解密）、正文压缩（或还原）也是表示层的任务。</li>
+</ol>
+<h2 id="HTTPS方案"><a href="#HTTPS方案" class="headerlink" title="HTTPS方案"></a>HTTPS方案</h2><p>在安全HTTPS 协议中，URL 的方案前缀是<code>https</code>。请求一个客户端（比如Web 浏览器）对某Web 资源执行某事务时，它会检查URL 的方案。</p>
+<ol>
+<li>如果URL 的方案为<code>http</code>，客户端就会打开一条到服务器端口（默认情况下）的了解，并想起发送HTTP 命令</li>
+<li>如果URL 的方案为<code>https</code>，客户端就会打开一条到服务器端口443（默认情况下）的连接，然后与服务器“握手”，以二进制格式与服务器交换一些SSL 安全参数，附上加密的HTTP 命令。</li>
+</ol>
+<img src="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_1.jpg" class="">
+
+<h2 id="建立安全传输"><a href="#建立安全传输" class="headerlink" title="建立安全传输"></a>建立安全传输</h2><p>在HTTPS 中，客户端首先打开一条到Web 服务器端口443 的连接。一旦建立了TCP 连接，客户端和服务器救护初始化SSL 层，对加密参数进行沟通，并将换密钥。握手完成之后，SSL 初始化就完成了，客户端就可以将请求报文发送给安全层。在将这些报文发送给TCP之前，要先对其进行加密。</p>
+<img src="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_2.jpg" class="">
+
+<p>在通过网络传输任何以加密的HTTP 数据之前，SSL 已经发送了一组握手数据来建立通信连接了，上图中的HTTPS 事务中的第2 步，下图显示SSL 握手的基本思想。</p>
+<img src="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_3.jpg" class="">
+
+<h2 id="服务器证书"><a href="#服务器证书" class="headerlink" title="服务器证书"></a>服务器证书</h2><p>SSL 支持双向认证，将服务器证书承载回客户端，再将客户端的证书回送给服务器。</p>
+<h2 id="站点证书的有效性"><a href="#站点证书的有效性" class="headerlink" title="站点证书的有效性"></a>站点证书的有效性</h2><p>SSL 自身不要求用户检查Web 服务器证书，但大部分现代浏览器都会对证书进行简单的完整性检查，并为用户提供进一步彻查的手段。</p>
+<h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>SSL 是一个复杂的二进制协议。除非你是密码专家，否则就不应该直接发送原始的SSL 流量。借助一些商业或开源的库，编写SSL 客户端和服务器并不十分困难。</p>
+<p>OpenSSL 就是SSL 和TLS 最常见的开源实现。其目标是开发一个强壮的、具有完备功能的商业级工具集，以实现SSL 和TLS 协议以及一个全功能的通用加密库。</p>
+<h2 id="通过代理以隧道形式传输安全流量"><a href="#通过代理以隧道形式传输安全流量" class="headerlink" title="通过代理以隧道形式传输安全流量"></a>通过代理以隧道形式传输安全流量</h2><p>客户端通常会用Web 代理服务器来访问Web 服务器，代理是防火墙路由器唯一允许进行HTTP 流量交换的设备。</p>
+<p>只要客户端开始用服务器的公开密钥对发往服务器的数据进行加密，代理就再也不能读取HTTP 首部了！代理不能读取HTTP 首部，就无法知道应该将请求转向何处了。</p>
+<img src="/2018/06/13/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3HTTPS/https_4.jpg" class="">
+
+<p>为了使HTTPS 与代理配合工作，要进行几处星期以告知代理连接到何处。一种常用的技术就是HTTPS SSL 隧道协议。使用HTTPS 隧道协议，客户端首先要告知代理，它想要连接的安全主机和端口。这是在开始加密之前，以明文形式告知的，所以代理可以理解这条信息。</p>
+<p>HTTP 通过新的名为CONNECT 的扩展方法来发送明文形式的端点信息。CONNECT 方法会告诉代理，打开一条到所期望主机和端口号的连接。这项工作完成之后，直接在客户端和服务器之间以隧道形式传输数据。CONNECT 方法就是一条单行的文本命令，它提供里由冒号分隔的安全原始服务器的主机名和端口号。<code>host:port</code> 后面跟着一个空格和HTTP 版本字符串，在后面是CRLF。接下来是0 个或多个HTTP 请求行首部，后面跟着一个空行。空行之后，如果建立连接的握手过程成功完成，就可以开始传输SSL 数据了。</p>
+<p>下面是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CONNECT home.netscape.com:443 HTTP&#x2F;1.0</span><br><span class="line">User-agent: Mozilla&#x2F;1.1N</span><br><span class="line"></span><br><span class="line">&lt;raw SSL-encrypted data would follow here...&gt;</span><br></pre></td></tr></table></figure>
+<p>在请求中的空行之后，客户端会等待来自代理的响应。代理会对请求进行评估，确保它是有效的，而且用户有权请求这样一条连接。如果一切正常，代理会建立一条到目标服务器的连接。如果成功，就像客户端发送一条<code>200 Connection Established</code> 响应。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.0 200 Connection established</span><br><span class="line">Proxy-agent: Netscape-Proxy&#x2F;1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li>《HTTP 权威指南》 第14 章 安全HTTP</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          
+            <a href="/tags/TLS/" rel="tag"># TLS</a>
+          
+            <a href="/tags/SSL/" rel="tag"># SSL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/08/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8F%B2/" rel="next" title="一日一练-网络 了解密码学史">
+                <i class="fa fa-chevron-left"></i> 一日一练-网络 了解密码学史
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/15/git-archive-%E5%91%BD%E4%BB%A4%E6%89%93%E5%8C%85/" rel="prev" title="git archive 命令打包">
+                git archive 命令打包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL协议"><span class="nav-number">1.</span> <span class="nav-text">SSL协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS方案"><span class="nav-number">2.</span> <span class="nav-text">HTTPS方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立安全传输"><span class="nav-number">3.</span> <span class="nav-text">建立安全传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器证书"><span class="nav-number">4.</span> <span class="nav-text">服务器证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#站点证书的有效性"><span class="nav-number">5.</span> <span class="nav-text">站点证书的有效性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenSSL"><span class="nav-number">6.</span> <span class="nav-text">OpenSSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过代理以隧道形式传输安全流量"><span class="nav-number">7.</span> <span class="nav-text">通过代理以隧道形式传输安全流量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">8.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/06/13/一日一练-网络-了解HTTPS/';
+
+      var disqus_title = "一日一练-网络 了解HTTPS";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

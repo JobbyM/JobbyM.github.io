@@ -1,0 +1,1074 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,一日一练,转载,浏览器," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文地址：Inside look at modern web browser (part 2) 原文作者：Mariko Kosaka 译文出自：掘金翻译计划 本文永久链接：https:&#x2F;&#x2F;github.com&#x2F;xitu&#x2F;gold-miner&#x2F;blob&#x2F;master&#x2F;TODO1&#x2F;inside-browser-part2.md 译者：CoolRice 校对者：ThomasWhyne, tian-l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-浏览器 【转载】现代浏览器内部揭秘（第二部分）">
+<meta property="og:url" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文地址：Inside look at modern web browser (part 2) 原文作者：Mariko Kosaka 译文出自：掘金翻译计划 本文永久链接：https:&#x2F;&#x2F;github.com&#x2F;xitu&#x2F;gold-miner&#x2F;blob&#x2F;master&#x2F;TODO1&#x2F;inside-browser-part2.md 译者：CoolRice 校对者：ThomasWhyne, tian-l">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/1.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/3.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/4.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/5.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/6.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/7.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/8.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/9.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/10.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/11.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/12.png">
+<meta property="article:published_time" content="2018-12-21T10:39:43.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.573Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/12/21/一日一练-浏览器-【转载】现代浏览器内部揭秘（第二部分）/"/>
+
+
+
+
+
+  <title> 一日一练-浏览器 【转载】现代浏览器内部揭秘（第二部分） | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-浏览器 【转载】现代浏览器内部揭秘（第二部分）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-21T10:39:43+00:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/21/一日一练-浏览器-【转载】现代浏览器内部揭秘（第二部分）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/" class="leancloud_visitors" data-flag-title="一日一练-浏览器 【转载】现代浏览器内部揭秘（第二部分）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>原文地址：<a href="https://developers.google.com/web/updates/2018/09/inside-browser-part2" target="_blank" rel="noopener">Inside look at modern web browser (part 2)</a></li>
+<li>原文作者：<a href="https://developers.google.com/web/resources/contributors/kosamari" target="_blank" rel="noopener">Mariko Kosaka</a></li>
+<li>译文出自：<a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a></li>
+<li>本文永久链接：<a href="https://github.com/xitu/gold-miner/blob/master/TODO1/inside-browser-part2.md" target="_blank" rel="noopener">https://github.com/xitu/gold-miner/blob/master/TODO1/inside-browser-part2.md</a></li>
+<li>译者：<a href="https://github.com/CoolRice" target="_blank" rel="noopener">CoolRice</a></li>
+<li>校对者：<a href="https://github.com/ThomasWhyne" target="_blank" rel="noopener">ThomasWhyne</a>, <a href="https://github.com/tian-li" target="_blank" rel="noopener">tian-li</a></li>
+</ul>
+</blockquote>
+<h1 id="现代浏览器内部揭秘（第二部分）"><a href="#现代浏览器内部揭秘（第二部分）" class="headerlink" title="现代浏览器内部揭秘（第二部分）"></a>现代浏览器内部揭秘（第二部分）</h1><h2 id="导航时发生了什么"><a href="#导航时发生了什么" class="headerlink" title="导航时发生了什么"></a>导航时发生了什么</h2><p>这是关于 Chrome 内部工作的 4 篇博客系列的第 2 篇。在<a href="https://github.com/xitu/gold-miner/blob/master/TODO1/inside-look-at-modern-web-browser-part1.md" target="_blank" rel="noopener">上一篇文章</a>中，我们研究了不同的进程和线程如何处理浏览器的不同部分。在这篇文章中，我们会更深入研究每个进程和线程如何进行通信以展示网站。</p>
+<p>让我们看一个网络浏览的简单用例：你在浏览器中键入 URL，然后浏览器从互联网获取数据并显示一个页面。在这篇文章中，我们将重点放在用户请求站点和浏览器准备渲染页面部分 —— 亦即导航。</p>
+<a id="more"></a>
+
+<h2 id="它以浏览器进程开始"><a href="#它以浏览器进程开始" class="headerlink" title="它以浏览器进程开始"></a>它以浏览器进程开始</h2><img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/0.png" class="">
+<p>图 1：顶部是浏览器 UI，底部是拥有 UI、网络和存储线程的浏览器进程图</p>
+<p>正如我们在<a href="https://developers.google.com/web/updates/2018/09/inside-browser-part1" target="_blank" rel="noopener">第 1 部分：CPU、GPU、内存和多进程架构</a>中所述，tab 外的一切都被浏览器进程处理。浏览器进程有很多线程，例如绘制浏览器按钮和输入栏的 UI 线程、处理网络栈以从因特网获取数据的网络线程、控制文件访问的存储线程等。当你在地址栏中键入 URL 时，你的输入将由浏览器进程的 UI 线程处理。</p>
+<h2 id="一个简单导航"><a href="#一个简单导航" class="headerlink" title="一个简单导航"></a>一个简单导航</h2><h3 id="第-1-步：处理输入"><a href="#第-1-步：处理输入" class="headerlink" title="第 1 步：处理输入"></a>第 1 步：处理输入</h3><p>当用户开始在地址栏键入时，UI 线程要问的第一件事是 “这是一次搜索查询还是一个 URL 地址？”。在 Chrome 中，地址栏同时也是一个搜索输入栏，所以 UI 线程需要解析和决定把你的请求发送到搜索引擎，或是你要请求的网站。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/1.png" class="">
+<p>图 1：UI 线程询问输入内容是搜索查询还是 URL 地址</p>
+<h3 id="第-2-步：开始导航"><a href="#第-2-步：开始导航" class="headerlink" title="第 2 步：开始导航"></a>第 2 步：开始导航</h3><p>当用户按下 Enter 键时，UI 线程启用网络调取去获取站点内容。加载动画会显示在标签页的一角，网络线程会通过适当的协议，像 DNS 查找和为请求建立 TLS 连接。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/2.png" class="">
+<p>图 2：UI 线程告诉网络线程要导航到 mysite.com</p>
+<p>在这时，网络线程可能会收到像 HTTP 301 那样的服务器重定向头。这种情况下，网络线程会告诉 UI 线程，服务器正在请求重定向。然后，另一个 URL 请求会被启动。</p>
+<h3 id="第-3-步：读取响应"><a href="#第-3-步：读取响应" class="headerlink" title="第 3 步：读取响应"></a>第 3 步：读取响应</h3><img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/3.png" class="">
+<p>图 3：包含 Content-Type 的响应头以及作为实际数据的 payload</p>
+<p>一旦开始收到响应主体（payload），网络线程会在必要时查看数据流的前几个字节。响应报文的 Content-Type 字段会声明数据的类型，但是它有可能会丢失或者错误，所以就有了 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types" target="_blank" rel="noopener">MIME 类型嗅探</a>来解决这个问题。这是<a href="https://cs.chromium.org/chromium/src/net/base/mime_sniffer.cc?sq=package:chromium&dr=CS&l=5" target="_blank" rel="noopener">源码</a>中评论的“棘手的问题”。你可以阅读注释看一下不同浏览器是怎么匹配 content-type 和 payload 的。</p>
+<p>如果响应是一个 HTML 文件，那么下一步就会把数据传给渲染进程，但是如果是一个压缩文件或是其他文件，那么意味着它是一个下载请求，因此需要将数据传递给下载管理器。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/4.png" class="">
+<p>图 4：网络线程询问一个响应数据是否是从安全网站来的 HTML</p>
+<p>此时也会进行 <a href="https://safebrowsing.google.com/" target="_blank" rel="noopener">SafeBrowsing</a> 检查。如果域名和响应数据似乎匹配到一个已知的恶意网站，那么网络线程会显示一个警告页面。除此之外，还会发生 <a href="https://www.chromium.org/Home/chromium-security/corb-for-developers" target="_blank" rel="noopener"><strong>C</strong>ross <strong>O</strong>rigin <strong>R</strong>ead <strong>B</strong>locking（<strong>CORB</strong>）</a>检查，以确保敏感的跨域数据不被传给渲染进程。</p>
+<h3 id="第-4-步：查找渲染进程"><a href="#第-4-步：查找渲染进程" class="headerlink" title="第 4 步：查找渲染进程"></a>第 4 步：查找渲染进程</h3><p>一旦所有的检查执行完毕并且网络线程确信浏览器会导航到请求的站点，网络线程会告诉 UI 线程所有的数据准备完毕。UI 线程会寻找渲染进程去开始渲染 web 页面。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/5.png" class="">
+<p>图 5：网络线程告诉 UI 线程去查找渲染进程</p>
+<p>由于网络请求会花费几百毫秒才获取回响应，因此可以应用一个优化措施。当第 2 步 UI 线程正发送一个 URL 请求给网络线程时，它已经知道它们会导航到哪个站点。在网络请求的同时，UI 并行地线程尝试主动寻找或开启一个渲染进程。这样，如果一切按预期进行，渲染进程在网络线程接受到数据时就已经处于待命状态。如果导航跨域重定向，这个待命进程也许不会被用到，这种情况下也许会用到另一个进程。</p>
+<h3 id="第-5-步：提交导航"><a href="#第-5-步：提交导航" class="headerlink" title="第 5 步：提交导航"></a>第 5 步：提交导航</h3><p>现在数据和渲染进程已经就绪，浏览器进程会发送一个 IPC（进程间通信）到渲染进程去提交导航。它也会传递数据流，所以渲染进程可以保持接收 HTML 数据。一旦浏览器进程收到渲染进程已经提交的确认消息，导航完毕并且文档加载解析开始。</p>
+<p>这时，地址栏已经更新，安全指示器和站点设置 UI 会反映新页面的站点信息。此标签页的 session 历史记录会被更新，所以前进/后退按钮会走向刚导航过的站点。当你关闭标签页或者窗口，为了优化 tab/session 的还原，session 历史被保存在硬盘上。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/6.png" class="">
+<p>图 6：浏览器和渲染进程间的 IPC，请求渲染页面。</p>
+<h3 id="额外的步骤：初始加载完毕"><a href="#额外的步骤：初始加载完毕" class="headerlink" title="额外的步骤：初始加载完毕"></a>额外的步骤：初始加载完毕</h3><p>一旦导航被提交，渲染进程开始加载资源和渲染页面。我们将在下一篇文章中讲解这个阶段发生什么的细节。一旦渲染进程渲染“完毕”。它会发送一个 IPC 返回给浏览器进程（这会在页面所有的 frame 的 <code>onload</code> 事件已经触发和执行完毕后发生）。这时，UI 线程停止标签页上的加载动画。</p>
+<p>我之所以说“结束”，是因为客户端 JavaScript 可以在这时之后仍然加载额外的资源并且渲染新视图。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/7.png" class="">
+<p>图 7：渲染进程发送 IPC 到浏览器进程通知页面“已被加载”</p>
+<h2 id="导航到另一个站点"><a href="#导航到另一个站点" class="headerlink" title="导航到另一个站点"></a>导航到另一个站点</h2><p>简单导航已经完毕！但是用户在地址栏输入另一个 URL 会怎样呢？好吧，浏览器进程会执行相同的步骤来导航到一个不同的站点。但是在它做这个之前，它会检查当前已经渲染的站点是否关心 <a href="https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload" target="_blank" rel="noopener"><code>beforeunload</code></a> 事件。</p>
+<p><code>beforeunload</code> 可以在你试图导航离开或关闭标签页时创建“离开此站点？”警告。包括你的 JavaScript 代码，所有标签页内的东西都是由渲染进程处理，所以当新的导航请求到来时，浏览器进程必须要跟当前的渲染进程核对。</p>
+<p><strong>注意：</strong> 不要添加无条件的 <code>beforeunload</code> 处理程序。它会产生更多延迟，因为处理程序需要在导航开始之前执行。应仅在需要时添加此事件处理程序，例如如果需要警告用户他们可能会丢失他们在页面上输入的数据。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/8.png" class="">
+<p>图 8：浏览器进程向渲染进程发送 IPC 告诉它将要导航到另一个站点</p>
+<p>如果渲染进程已经启动了导航（像用户点击一个链接或者客户端 JavaScript 运行 <code>window.location = &quot;https://newsite.com&quot;</code>），渲染进程会先检查 <code>beforeunload</code> 事件处理程序。然后，它会像浏览器处理启动导航一样执行相同的步骤。唯一不同的是导航请求是由渲染进程发送到浏览器进程的。</p>
+<p>当新导航到的站点不同于当前已渲染的站点时，会调用一个独立的渲染进程来处理新导航，同时保持当前的渲染进程来处理类似 <code>unload</code> 的事件。有关更多信息，请查看<a href="https://developers.google.com/web/updates/2018/07/page-lifecycle-api#overview_of_page_lifecycle_states_and_events" target="_blank" rel="noopener">页面生命周期概览</a>以及如何使用<a href="https://developers.google.com/web/updates/2018/07/page-lifecycle-api" target="_blank" rel="noopener">页面生命周期 API</a> 挂钩事件。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/9.png" class="">
+<p>图 9：2 个 IPC（从浏览器进程到新渲染进程）告知渲染页面并告知旧渲染进程卸载</p>
+<h2 id="如果有-Service-Worker"><a href="#如果有-Service-Worker" class="headerlink" title="如果有 Service Worker"></a>如果有 Service Worker</h2><p>最近对导航过程的改变是引入了 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="noopener">service worker</a>。service worker 是一种在你的应用代码中编写网络代理的方法；允许 Web 开发者更好地控制本地缓存内容以及何时从网络获取新数据。如果将 service worker 设置为从缓存加载页面，则无需从网络请求数据。</p>
+<p>要记住的重要部分是 Service Worker 是在渲染进程中运行的 JavaScript 代码。但是当导航请求进入时，浏览器进程如何知道该站点有 service worker？</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/10.png" class="">
+<p>图 10：浏览器进程中的网络线程查找 service worker 作用域</p>
+<p>当注册一个 service worker 时，保持 service worker 的作用域作为一个引用（你可以在这篇文章 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/lifecycle" target="_blank" rel="noopener">The Service Worker Lifecycle</a> 中阅读更多关于作用域的知识）。当一个导航发生时，网络线程用已注册的 service worker 作用域来检查域名，如果已经为该 URL 注册了一个 service worker，UI 线程会找一个渲染线程来执行 service worker 的代码。service worker 可能从缓存中加载数据，无需从网络请求数据，或者可以从网络请求新资源。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/11.png" class="">
+<p>图 11：浏览器中的 UI 线程启动渲染进程来处理 service workers；然后，渲染进程中的工作线程从网络请求数据</p>
+<h2 id="导航预加载"><a href="#导航预加载" class="headerlink" title="导航预加载"></a>导航预加载</h2><p>你可以看到，如果 service worker 最终决定从网络请求数据，则浏览器进程和渲染器进程之间的往返可能会导致延迟。<a href="https://developers.google.com/web/updates/2017/02/navigation-preload" target="_blank" rel="noopener">导航预加载</a>是一种通过与 service worker 启动并行加载资源来加速此过程的机制。它用一个头部来标记这些请求，允许服务器决定为这些请求发送不同的内容；例如，只更新数据而不是完整文档。</p>
+<img src="/2018/12/21/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%89/12.png" class="">
+<p>图 12：浏览器进程中的 UI 线程启动渲染进程以在并行启动网络请求的同时处理 service worker</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在这篇文章中，我们研究了导航过程中发生了什么，以及你的 Web 应用代码（例如响应头和客户端 JavaScript）如何与浏览器交互。了解浏览器通过网络获取数据的步骤，可以更容易地理解为什么开发导航预加载等 API。在下一篇文章中，我们将深入探讨浏览器如何分析 HTML/CSS/JavaScript 以渲染页面。</p>
+<p>你喜欢这篇文章吗？如果您对以后的文章有任何问题或建议，欢迎在下面的评论区或在 Twitter <a href="https://twitter.com/kosamari" target="_blank" rel="noopener">@kosamari</a> 上留下您的宝贵意见。</p>
+<blockquote>
+<p>如果发现译文存在错误或其他需要改进的地方，欢迎到 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 对译文进行修改并 PR，也可获得相应奖励积分。文章开头的 <strong>本文永久链接</strong> 即为本文在 GitHub 上的 MarkDown 链接。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 是一个翻译优质互联网技术文章的社区，文章来源为 <a href="https://juejin.im/" target="_blank" rel="noopener">掘金</a> 上的英文分享文章。内容覆盖 <a href="https://github.com/xitu/gold-miner#android" target="_blank" rel="noopener">Android</a>、<a href="https://github.com/xitu/gold-miner#ios" target="_blank" rel="noopener">iOS</a>、<a href="https://github.com/xitu/gold-miner#%E5%89%8D%E7%AB%AF" target="_blank" rel="noopener">前端</a>、<a href="https://github.com/xitu/gold-miner#%E5%90%8E%E7%AB%AF" target="_blank" rel="noopener">后端</a>、<a href="https://github.com/xitu/gold-miner#%E5%8C%BA%E5%9D%97%E9%93%BE" target="_blank" rel="noopener">区块链</a>、<a href="https://github.com/xitu/gold-miner#%E4%BA%A7%E5%93%81" target="_blank" rel="noopener">产品</a>、<a href="https://github.com/xitu/gold-miner#%E8%AE%BE%E8%AE%A1" target="_blank" rel="noopener">设计</a>、<a href="https://github.com/xitu/gold-miner#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD" target="_blank" rel="noopener">人工智能</a>等领域，想要查看更多优质译文请持续关注 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a>、<a href="http://weibo.com/juejinfanyi" target="_blank" rel="noopener">官方微博</a>、<a href="https://zhuanlan.zhihu.com/juejinfanyi" target="_blank" rel="noopener">知乎专栏</a>。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag"># 浏览器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/19/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E5%88%9B%E5%BB%BA%E5%B9%B6%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDJavaScript%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" rel="next" title="一日一练-JS 创建并部署高性能JavaScript应用程序">
+                <i class="fa fa-chevron-left"></i> 一日一练-JS 创建并部署高性能JavaScript应用程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/24/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%89/" rel="prev" title="一日一练-浏览器 【转载】现代浏览器内部揭秘（第三部分）">
+                一日一练-浏览器 【转载】现代浏览器内部揭秘（第三部分） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#现代浏览器内部揭秘（第二部分）"><span class="nav-number">1.</span> <span class="nav-text">现代浏览器内部揭秘（第二部分）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导航时发生了什么"><span class="nav-number">1.1.</span> <span class="nav-text">导航时发生了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#它以浏览器进程开始"><span class="nav-number">1.2.</span> <span class="nav-text">它以浏览器进程开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单导航"><span class="nav-number">1.3.</span> <span class="nav-text">一个简单导航</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第-1-步：处理输入"><span class="nav-number">1.3.1.</span> <span class="nav-text">第 1 步：处理输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-2-步：开始导航"><span class="nav-number">1.3.2.</span> <span class="nav-text">第 2 步：开始导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-3-步：读取响应"><span class="nav-number">1.3.3.</span> <span class="nav-text">第 3 步：读取响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-4-步：查找渲染进程"><span class="nav-number">1.3.4.</span> <span class="nav-text">第 4 步：查找渲染进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第-5-步：提交导航"><span class="nav-number">1.3.5.</span> <span class="nav-text">第 5 步：提交导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#额外的步骤：初始加载完毕"><span class="nav-number">1.3.6.</span> <span class="nav-text">额外的步骤：初始加载完毕</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航到另一个站点"><span class="nav-number">1.4.</span> <span class="nav-text">导航到另一个站点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果有-Service-Worker"><span class="nav-number">1.5.</span> <span class="nav-text">如果有 Service Worker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航预加载"><span class="nav-number">1.6.</span> <span class="nav-text">导航预加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/12/21/一日一练-浏览器-【转载】现代浏览器内部揭秘（第二部分）/';
+
+      var disqus_title = "一日一练-浏览器 【转载】现代浏览器内部揭秘（第二部分）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

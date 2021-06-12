@@ -1,0 +1,1111 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React 系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：[React 系列] What Is React  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;08&#x2F;what-is-react作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React（本文） 什么是React Native Components，Props and State 重新阐释Props 和Stat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[React 系列] What Is React">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：[React 系列] What Is React  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;08&#x2F;what-is-react作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React（本文） 什么是React Native Components，Props and State 重新阐释Props 和Stat">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/02-domo-browser.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/04-jquery-phone.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/05-model-agent.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/06-middleman.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/07-step-by-step.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/08-thinker.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/09-thinker-with-hat.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/code_0.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/10-slow-dom.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/11-sketches.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/12-optimize-sketches.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/13-components.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/14-hair-style.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/pic_htmltree.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/table.gif">
+<meta property="article:published_time" content="2018-08-07T08:42:27.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.317Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React 系列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/02-domo-browser.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/07/React-系列-What-Is-React/"/>
+
+
+
+
+
+  <title> [React 系列] What Is React | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [React 系列] What Is React
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-07T08:42:27+00:00">
+                2018-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/07/React-系列-What-Is-React/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/" class="leancloud_visitors" data-flag-title="[React 系列] What Is React">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：[React 系列] What Is React</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://learnreact.design/2017/06/08/what-is-react" target="_blank" rel="noopener">https://learnreact.design/2017/06/08/what-is-react</a><br>作者：@<a href="https://twitter.com/lintonye" target="_blank" rel="noopener">Linton Ye</a></p>
+<p>博客系列：用简单的英语和涂鸦解释的React 术语</p>
+<ul>
+<li><a href="https://learnreact.design/2017/06/08/what-is-react/" target="_blank" rel="noopener">什么是React（本文）</a></li>
+<li><a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">什么是React Native</a></li>
+<li><a href="https://learnreact.design/2017/08/16/components-props-and-state" target="_blank" rel="noopener">Components，Props and State</a></li>
+<li><a href="https://learnreact.design/2018/01/15/props-and-state-re-explained" target="_blank" rel="noopener">重新阐释Props 和State</a></li>
+<li><a href="https://learnreact.design/2018/02/14/react-native-vs-cordova-phone-gap-ionic-etc" target="_blank" rel="noopener">React Native 同Cordova、PhoneGap、Ionic 等对比</a></li>
+</ul>
+<p>React，ReactJS，React.js，React Native ……你最近有多少次听说过这些事情？你对它们的真正含义感到困惑吗？</p>
+<p>如果您是团队中使用（或正在考虑使用）React的设计师，或者你只是对这个“React”事物感到好奇，那么这些文章都适合你。</p>
+<p>我将使用通俗移动的余元以及涂鸦来解释React 系列中的术语，并深入了解什么使React 如此特别。我希望你先熟悉一些概念，如果你将来需要查看任何内容，可以随时回到这里。</p>
+<p>让我们开始吧！</p>
+<h2 id="学习目标（Learning-Goals）"><a href="#学习目标（Learning-Goals）" class="headerlink" title="学习目标（Learning Goals）"></a>学习目标（Learning Goals）</h2><p>当你看完这篇文章后，希望你能够轻松回答这些问题：</p>
+<ul>
+<li>什么是DOM？</li>
+<li>什么是React？它哪里适合开发应用程序？</li>
+<li>React 与jQuery 有何不同？</li>
+<li>React的核心思想是什么？</li>
+<li>为什么我们需要Virtual DOM？</li>
+<li>什么是响应式用户界面？</li>
+<li>组件有哪些好处？</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="关于Web的几件事（A-Couple-Of-Things-About-Web）"><a href="#关于Web的几件事（A-Couple-Of-Things-About-Web）" class="headerlink" title="关于Web的几件事（A Couple Of Things About Web）"></a>关于Web的几件事（A Couple Of Things About Web）</h2><p>让我们从你可能已经听过多年的几个术语开始。第一个，DOM。</p>
+<h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3><p>DOM就是文档对象模型。它是文档的对象模型。</p>
+<p>让我们看看著名的艺术工作室“Web Browser”！你能在下面的涂鸦中找到DOM吗？</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/02-domo-browser.png" class="">
+
+<p>DOM是是一棵树！计算机中的很多东西看起来都像一棵树。</p>
+<p>给DOM 一个昵称Domo。Domo 是“Web Browser”工作室的模特。他的工作是在画一幅肖像画（或者数百万幅肖像画）的艺术家面前摆姿势。</p>
+<p>这些肖像是我们在访问网站时在网络浏览器中看到的。开发人员的工作就像是导演告诉Domo 要穿什么以及要做什么姿势。这决定了这些肖像最终的样子。jQuery 或React 被称为库，它们是开发人员用来与Domo 通信的工具。</p>
+<h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><p>jQuery 是一个JavaScript 库，使开发人员可以更轻松地操作DOM。它在Domo 的故事中扮演什么角色？</p>
+<p>这是一个让开发人员更容易与Domo 交谈的工具，就像手机一样。无论何时何地，你都可以随时给他打电话。它比以前更方便（原生JavaScript）–还记得人们在电话发明之前必须在物理上足够近才能进行对话的时间吗？</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/04-jquery-phone.png" class="">
+
+<p>多年来我们一直使用jQuery 直接与Domo 通信。它很方便但不是没有问题。</p>
+<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><p>向你介绍新的超级英雄，React：</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/05-model-agent.png" class="">
+
+<p>使用React，开发人员不再直接与Domo 交谈。React 充当开发人员和Domo 之间的中间人。他解决了沟通并简化了肖像创作的过程。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/06-middleman.png" class="">
+
+<p>React 有一些解决jQuery 和其他工具的问题的技巧。以下是三个主要技巧：</p>
+<ul>
+<li>响应式 UI</li>
+<li>虚拟 DOM</li>
+<li>组件</li>
+</ul>
+<h3 id="响应式-UI（Reactive-UI）"><a href="#响应式-UI（Reactive-UI）" class="headerlink" title="响应式 UI（Reactive UI）"></a>响应式 UI（Reactive UI）</h3><p>使用jQuery 更新DOM，你必须在按时间顺序指定要更改的元素。这相当于向Domo 描述如何为每一幅肖像逐步定位他的头部，手臂和腿部。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/07-step-by-step.png" class="">
+
+<p>这听起来很乏味且容易出错！为什么你不能告诉Domo 你想要 <strong>什么</strong> 而不是 <strong>如何</strong> 摆pose？</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/08-thinker.png" class="">
+
+<p>更酷的是，想象一下，如果你可以在请求中留下占位符来表示同一姿势的不同变化。React 就是是这样做的！</p>
+<p>这样，当有人要求戴着不同帽子的Domo 肖像时，你不必再与Domo 交谈。你可以坐下来让他自己改变它。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/09-thinker-with-hat.png" class="">
+
+<p>这个技巧使得React 得名。使用React 构建的UI是 <strong>响应的</strong>。作为开发人员，你只需写下你想要的 <strong>内容</strong>，React 就会知道 <strong>如何</strong> 操作。当数据更改时，你的UI 会相应更改。你无需操心更新DOM，React 会自动为你执行此操作。响应式UI 的想法极大地简化了UI 开发。</p>
+<p>我说的不需要任何编码知识，只是为了帮助我把问题放在一边，我已经把它放进去了。看看这个例子（尝试改变Domo 的帽子）：</p>
+<p>位于CodePen 上的<a href="https://codepen.io/focuser/pen/gROrXx" target="_blank" rel="noopener">例子</a></p>
+<p>我将在以后的文章中解释它的完整代码，此时你可以看看这个核心部分：</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/code_0.jpg" class="">
+
+<p>注意，你只需要定义你想要的内容（带帽子的思考者），然后“连接”数据（“<code>type = {hat}</code>”）。 当数据更改（用户选择帽子）时，UI 会自动更新。</p>
+<h3 id="虚拟-DOM（Virtual-DOM）"><a href="#虚拟-DOM（Virtual-DOM）" class="headerlink" title="虚拟 DOM（Virtual DOM）"></a>虚拟 DOM（Virtual DOM）</h3><p>jQuery 的另一个问题是速度。</p>
+<p>作为一个要求很高的导演，你讨厌等待。你想让肖像尽快出现。然而，Domo 和艺术家都很慢。Domo 需要时间来换衣服和摆姿势，艺术家需要时间来画画。</p>
+<p>更糟糕的是，在再次与Domo 交谈之前，你必须等待艺术家完成一幅肖像。事实上，除了等待，你什么都做不了。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/10-slow-dom.png" class="">
+
+<p>React提出另一个技巧来解决这个问题。他快速绘制快速草图。几乎在你告诉他你的指示之后，他已经完成了草图并准备接受下一个要求。现在不用再等了！你可以不停地告诉React你想要的肖像，不间断。React 用草图记录所有内容，并在适当的时间将其显示给Domo。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/11-sketches.png" class="">
+
+<p>更重要的是，React 非常聪明。他可以对草图进行排序，删除任何重复内容，并确保Domo 和艺术家尽可能少地工作。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/12-optimize-sketches.png" class="">
+
+<p>这些草图称为“虚拟DOM”。虚拟DOM 比DOM 操作快得多。开发人员大多数时间使用虚拟DOM 而不是直接管理DOM。React处理管理慢速DOM的肮脏工作。</p>
+<h3 id="组件（Components）"><a href="#组件（Components）" class="headerlink" title="组件（Components）"></a>组件（Components）</h3><p>React 的第三个技巧是组件的概念。</p>
+<p>组件应该易于理解，因为它是我们现实世界的工作方式。我们的汽车，房屋甚至我们的s身体都由可标志的组件组成，这些组件是单独的功能单元。这些组件由较小的组件组成，这些组件由更小的组件组成，一直到原子。</p>
+<p>如果您熟悉Sketch，则组件很像<a href="https://www.sketchapp.com/learn/documentation/symbols/" target="_blank" rel="noopener">symbole</a>。在React 中构建应用程序几乎都是关于组件的工作：为作业找到最佳组件，使用另一个组件，从现有组件创建新组件等。</p>
+<p>回到我们的工作室“Web Browser”，你描述了对肖像作为组件的要求，React 将其转换为Domo 理解的内容。这样可以节省大量时间，因为你无需在说明中重复常用部件。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/13-components.png" class="">
+
+<p>组件的另一个很酷的事情是，如果更改一个组件，包含此组件的所有内容都将自动更新。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/14-hair-style.png" class="">
+
+<h2 id="总结（Conclusion）"><a href="#总结（Conclusion）" class="headerlink" title="总结（Conclusion）"></a>总结（Conclusion）</h2><p>希望你对React有所了解。它本质上是一个工具，帮助开发人员操纵DOM 来构建用户界面。响应式UI，虚拟DOM 和组件是React 的三个核心思想。当然还有其他有趣的想法，例如单向数据流，我将在以后的文章中展开。</p>
+<p>在<a href="https://learnreact.design/2017/06/20/what-is-react-native/" target="_blank" rel="noopener">下一篇文章</a>中，我们将看看ReactJS，React Native和React Sketch.app之类的内容是如何相互关联的。</p>
+<h2 id="回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"><a href="#回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！" class="headerlink" title="回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"></a>回到<a href="https://learnreact.design/2017/06/08/what-is-react/#learning-goals" target="_blank" rel="noopener">学习目标</a>，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！</h2><h2 id="想进一步了解React？立即注册并获得独家更新！"><a href="#想进一步了解React？立即注册并获得独家更新！" class="headerlink" title="想进一步了解React？立即注册并获得独家更新！"></a><strong>想进一步了解React？立即<a href="http://learnreact.design/" target="_blank" rel="noopener">注册</a>并获得独家更新！</strong></h2><h2 id="后台（Backstage）"><a href="#后台（Backstage）" class="headerlink" title="后台（Backstage）"></a>后台（Backstage）</h2><h3 id="谁画了插图？（Who-drew-the-illustrations-）"><a href="#谁画了插图？（Who-drew-the-illustrations-）" class="headerlink" title="谁画了插图？（Who drew the illustrations?）"></a>谁画了插图？（Who drew the illustrations?）</h3><p>很多人问我是不是我画的。好吧，我希望我能。我的涂鸦就像<a href="https://learnreact.design/linton-doodles-2017" target="_blank" rel="noopener">这样</a>。</p>
+<p>这些插图由<a href="https://beebeeye.github.io/" target="_blank" rel="noopener">Beebee Ye</a>慷慨制作，他也帮助确保文章真正可以理解。</p>
+<p>BTW：学会画画是我的人生目标之一–希望我能在几年内向你展示一些更好的涂鸦。我们会看到……</p>
+<h3 id="我8-岁的女儿（My-8-yo）"><a href="#我8-岁的女儿（My-8-yo）" class="headerlink" title="我8 岁的女儿（My 8 yo）"></a>我8 岁的女儿（My 8 yo）</h3><p>开始我设定了一个目标，这个文章必须足够有趣，能让我8 岁的女儿阅读，并且很容易让她理解一些事情。</p>
+<p>至少她可以记住DOM 是一棵树，React与DOM对话。</p>
+<p>她还在上面的交互式示例中贡献了一些帽子，并观察我将它们放入代码中。那是黄金时间！猜猜哪些是她画的？我的女儿希望你在<a href="https://learnreact.design/2017/06/08/what-is-react/#endofpost" target="_blank" rel="noopener">评论</a>中回答。</p>
+<h3 id="特别感谢（Special-thanks）"><a href="#特别感谢（Special-thanks）" class="headerlink" title="特别感谢（Special thanks）"></a>特别感谢（Special thanks）</h3><p>很幸运，这么多人对这篇文章很感兴趣。我要感谢所有花时间阅读早期草稿的人，并给我发了鼓舞人心的话和富有洞察力的建议。</p>
+<h2 id="我想对自愿成为这篇文章编辑的DemingFactor的Phil-Khoo表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！"><a href="#我想对自愿成为这篇文章编辑的DemingFactor的Phil-Khoo表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！" class="headerlink" title="我想对自愿成为这篇文章编辑的DemingFactor的Phil Khoo表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！"></a>我想对自愿成为这篇文章编辑的<a href="http://demingfactor.com/" target="_blank" rel="noopener">DemingFactor</a>的<a href="http://philkhoo.com/" target="_blank" rel="noopener">Phil Khoo</a>表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！</h2><h2 id="脚注（Footnotes）"><a href="#脚注（Footnotes）" class="headerlink" title="脚注（Footnotes）"></a>脚注（Footnotes）</h2><hr>
+<ol>
+<li><p>实际上，计算机不是装满树枝的堆肥容器。树的概念来自于人们如何以一种易于计算机处理的方式组织信息。人们通常会绘制图表，这些图表类似于颠倒的树木，就像这样或那样。</p>
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/pic_htmltree.gif" class="">
+<img src="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/table.gif" class="">
+</li>
+<li><p>在花哨的技术俚语中，如果代码定义了你想要的 <strong>东西</strong>，它就叫做<code>声明式</code>;如果它定义了你希望 <strong>如何</strong> 完成它，那就称为<code>命令式</code>。<code>命令式</code>的编程从计算机最初发明之日起就出现了。当计算机是原始的时，人们必须详细地指导它们：在哪里存储数字，如何相乘等等。一开始很好，但是随着给计算机的任务变得越来越复杂，这种编码变得越来越难以管理。然后人们编写了智能软件，将问题的定义转换为详细的说明。<code>声明式</code>程诞生了。今天，越来越多的编程语言和框架（如React）允许我们以声明方式而不是命令式进行编码。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React-%E7%B3%BB%E5%88%97/" rel="tag"># React 系列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/" rel="next" title="[React 系列] Props and State Re-explained">
+                <i class="fa fa-chevron-left"></i> [React 系列] Props and State Re-explained
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/" rel="prev" title="[React 系列] What Is React Native">
+                [React 系列] What Is React Native <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习目标（Learning-Goals）"><span class="nav-number">1.</span> <span class="nav-text">学习目标（Learning Goals）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Web的几件事（A-Couple-Of-Things-About-Web）"><span class="nav-number">2.</span> <span class="nav-text">关于Web的几件事（A Couple Of Things About Web）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM"><span class="nav-number">2.1.</span> <span class="nav-text">DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery"><span class="nav-number">2.2.</span> <span class="nav-text">jQuery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-number">2.3.</span> <span class="nav-text">React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式-UI（Reactive-UI）"><span class="nav-number">2.4.</span> <span class="nav-text">响应式 UI（Reactive UI）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟-DOM（Virtual-DOM）"><span class="nav-number">2.5.</span> <span class="nav-text">虚拟 DOM（Virtual DOM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件（Components）"><span class="nav-number">2.6.</span> <span class="nav-text">组件（Components）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结（Conclusion）"><span class="nav-number">3.</span> <span class="nav-text">总结（Conclusion）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"><span class="nav-number">4.</span> <span class="nav-text">回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想进一步了解React？立即注册并获得独家更新！"><span class="nav-number">5.</span> <span class="nav-text">想进一步了解React？立即注册并获得独家更新！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台（Backstage）"><span class="nav-number">6.</span> <span class="nav-text">后台（Backstage）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#谁画了插图？（Who-drew-the-illustrations-）"><span class="nav-number">6.1.</span> <span class="nav-text">谁画了插图？（Who drew the illustrations?）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我8-岁的女儿（My-8-yo）"><span class="nav-number">6.2.</span> <span class="nav-text">我8 岁的女儿（My 8 yo）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特别感谢（Special-thanks）"><span class="nav-number">6.3.</span> <span class="nav-text">特别感谢（Special thanks）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我想对自愿成为这篇文章编辑的DemingFactor的Phil-Khoo表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！"><span class="nav-number">7.</span> <span class="nav-text">我想对自愿成为这篇文章编辑的DemingFactor的Phil Khoo表示深深的谢意。他的建议真的是让这篇文章大放异彩！再次感谢Phil！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚注（Footnotes）"><span class="nav-number">8.</span> <span class="nav-text">脚注（Footnotes）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/07/React-系列-What-Is-React/';
+
+      var disqus_title = "[React 系列] What Is React";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

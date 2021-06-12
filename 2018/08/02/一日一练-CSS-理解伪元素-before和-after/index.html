@@ -1,0 +1,1056 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,CSS,一日一练,伪元素," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：一日一练-CSS 理解伪元素::before和::after  关于本文：原文：https:&#x2F;&#x2F;www.hongkiat.com&#x2F;blog&#x2F;pseudo-element-before-after&#x2F;作者：@Thoriq Firdaus CSS 将样式应用于HTML 标记，在某些情况下，当向文档添加额外标记是不必允许的，CSS 使用伪元素 添加额外的标记。 在我们的课程 中提到过这个术语。 :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-CSS 理解伪元素::before和::after">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：一日一练-CSS 理解伪元素::before和::after  关于本文：原文：https:&#x2F;&#x2F;www.hongkiat.com&#x2F;blog&#x2F;pseudo-element-before-after&#x2F;作者：@Thoriq Firdaus CSS 将样式应用于HTML 标记，在某些情况下，当向文档添加额外标记是不必允许的，CSS 使用伪元素 添加额外的标记。 在我们的课程 中提到过这个术语。 :">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/syntax.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/quotationmark.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/styles.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/dimension.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/image-background.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/hover.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/fascinating-shadows.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/stacked-image.jpg">
+<meta property="article:published_time" content="2018-08-02T02:57:37.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.509Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="伪元素">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/syntax.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/02/一日一练-CSS-理解伪元素-before和-after/"/>
+
+
+
+
+
+  <title> 一日一练-CSS 理解伪元素::before和::after | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-CSS 理解伪元素::before和::after
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T02:57:37+00:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/02/一日一练-CSS-理解伪元素-before和-after/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/" class="leancloud_visitors" data-flag-title="一日一练-CSS 理解伪元素::before和::after">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：一日一练-CSS 理解伪元素::before和::after</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://www.hongkiat.com/blog/pseudo-element-before-after/" target="_blank" rel="noopener">https://www.hongkiat.com/blog/pseudo-element-before-after/</a><br>作者：@<a href="https://www.hongkiat.com/blog/author/thoriq/" target="_blank" rel="noopener">Thoriq Firdaus</a></p>
+<p><a href="https://www.hongkiat.com/blog/tag/css/" target="_blank" rel="noopener">CSS</a> 将样式应用于<a href="https://www.hongkiat.com/blog/tag/css/" target="_blank" rel="noopener">HTML</a> 标记，在某些情况下，当向文档添加额外标记是不必允许的，CSS 使用<a href="http://www.w3.org/TR/selectors/#pseudo-elements" target="_blank" rel="noopener">伪元素</a> 添加额外的标记。</p>
+<p>在<a href="https://www.hongkiat.com/blog/tag/css+coding/" target="_blank" rel="noopener">我们的课程</a> 中提到过这个术语。</p>
+<p><code>:first-line</code>，<code>:first-letter</code>，<code>::selection</code>，<code>:before</code> 和<code>:after</code> 这些CSS 成员被归类为伪元素。 本文中伪元素特指<code>:before</code> 和<code>:after</code>，从基础开始研究伪元素。</p>
+<a id="more"></a>
+
+<h2 id="语法和浏览器支持（The-Syntax-and-Brower-Support）"><a href="#语法和浏览器支持（The-Syntax-and-Brower-Support）" class="headerlink" title="语法和浏览器支持（The Syntax and Brower Support）"></a>语法和浏览器支持（The Syntax and Brower Support）</h2><hr>
+<p>伪元素实际上从<a href="http://reference.sitepoint.com/css/pseudoelements" target="_blank" rel="noopener">CSS1</a>就存在了，而<code>:before</code> 和<code>:after</code> 是在 <strong>CSS2.1</strong> 时发布的。开始伪元素使用单冒号作为语法，然后随着网络的发展，在CSS3中，伪元素被修改为使用双冒号–成为<code>::before</code> &amp;<code>::after</code>–来区分伪类（即<code>:hover</code>，<code>:active</code>等）。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/syntax.jpg" class="">
+
+<p>无论是单冒号还是双冒号格式，浏览器都会识别。但是由于IE8 仅支持单冒号格式，为了获得<a href="http://reference.sitepoint.com/css/pseudoelement-before#compatibilitysection" target="_blank" rel="noopener">更好的浏览器兼容性</a>，使用单冒号更安全。</p>
+<h3 id="它是做什么的（What-dose-it-do？）"><a href="#它是做什么的（What-dose-it-do？）" class="headerlink" title="它是做什么的（What dose it do？）"></a>它是做什么的（What dose it do？）</h3><p>伪元素将在内容元素之前或之后插入一个额外元素，在技术上同下列标记是相等的。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>:before<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    This the main content.</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>:after<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但这些元素实际上并未在文档中生成。它在表面上仍然可见，但你不会在文档源上找到它们，因此实际上它们是 <strong>假</strong> 元素。</p>
+<h2 id="使用伪元素（Using-pseudo-elements）"><a href="#使用伪元素（Using-pseudo-elements）" class="headerlink" title="使用伪元素（Using pseudo-elements）"></a>使用伪元素（Using pseudo-elements）</h2><hr>
+<p>使用伪元素相对容易; <code>selector:before</code> 将在内容的选择器之前添加一个元素，<code>selector:after</code> 将在它后面添加，使用<a href="http://www.w3schools.com/cssref/pr_gen_content.asp" target="_blank" rel="noopener"><code>content</code> 属性</a> 向其中添加内容。</p>
+<p>下面的代码段将在<code>blockquote</code> 前后添加引号。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/quotationmark.jpg" class="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: open-quote;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: close-quote;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修饰伪元素（Styling-pseudo-elements）"><a href="#修饰伪元素（Styling-pseudo-elements）" class="headerlink" title="修饰伪元素（Styling pseudo-elements）"></a>修饰伪元素（Styling pseudo-elements）</h3><p>尽管伪元素是假的元素，但伪元素实际上就像一个“真实”元素; 我们可以在它们上添加任何样式声明，例如更改颜色，添加背景，调整字体大小，对齐文本内容等等。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/styles.jpg" class="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: open-quote;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: close-quote;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定大小（Specifying-the-dimension）"><a href="#指定大小（Specifying-the-dimension）" class="headerlink" title="指定大小（Specifying the dimension）"></a>指定大小（Specifying the dimension）</h3><p>默认情况生成的元素是<a href="http://webdesign.about.com/od/htmltags/g/bldefinlineelem.htm" target="_blank" rel="noopener">内联级元素</a>，因此当我们要指定高度和宽度时，必须首先使用<code>display:block</code> 声明将其定义为块元素。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/dimension.jpg" class="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: open-quote;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">30px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* define it as a block element */</span></span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">25px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: close-quote;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* define it as a block element */</span></span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">25px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="附上背景图片（Attach-background-image）"><a href="#附上背景图片（Attach-background-image）" class="headerlink" title="附上背景图片（Attach background image）"></a>附上背景图片（Attach background image）</h3><p>我们也可以用图像而不是纯文本替换内容。尽管<code>content</code> 属性提供了一个<code>url()</code> 字符串来插入图像，但在大多数情况下，<code>background</code> 属性能更好地控制附加的图像。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/image-background.jpg" class="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">30px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(images/quotationmark.png) -<span class="number">3px</span> -<span class="number">3px</span> <span class="number">#ddd</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">25px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">24pt</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">42px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#ddd</span>;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(images/quotationmark.png) -<span class="number">1px</span> -<span class="number">32px</span> <span class="number">#ddd</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">25px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但从上面的代码片段中可以看到，我们仍然使用空字符串声明<code>content</code>属性。这是必须的，否则伪元素将无法正常工作。</p>
+<h3 id="结合伪类（Combining-with-pseudo-classes）"><a href="#结合伪类（Combining-with-pseudo-classes）" class="headerlink" title="结合伪类（Combining with pseudo-classes）"></a>结合伪类（Combining with pseudo-classes）</h3><p>虽然伪元素和伪类不同，但是我们仍可以在一个CSS 规则中将伪类和伪元素一起使用，例如，当鼠标悬停在<code>blockquote</code> 上时将 <strong>引号背景</strong> 变得更暗。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/hover.jpg" class="">
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">blockquote</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:after</span>, <span class="selector-tag">blockquote</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#555</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加过渡效果（Adding-Transition-Effect）"><a href="#添加过渡效果（Adding-Transition-Effect）" class="headerlink" title="添加过渡效果（Adding Transition Effect）"></a>添加过渡效果（Adding Transition Effect）</h3><p>也可以应用<code>transition</code> 属性来创建优美的颜色过渡效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">transition: all 350ms;</span><br><span class="line">-o-transition: all 350ms;</span><br><span class="line">-moz-transition: all 350ms;</span><br><span class="line">-webkit-transition: all 350ms;</span><br></pre></td></tr></table></figure>
+<p>不过，转换效果似乎只适用于<a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener">最新版本的Firefox</a>。 希望<a href="https://www.hongkiat.com/blog/20-awesome-battle-of-the-browsers-artworks/" target="_blank" rel="noopener">更多的浏览器</a> 能够在将来允许在过渡属性中应用伪元素。</p>
+<p><a href="https://assets.hongkiat.com/uploads/before-after-elements/demo/index.html" target="_blank" rel="noopener">DEMO</a><br><a href="https://assets.hongkiat.com/uploads/before-after-elements/demo/source.zip" target="_blank" rel="noopener">DOWNLOAD SOURCE</a></p>
+<h2 id="更多灵感（More-Inspiration）"><a href="#更多灵感（More-Inspiration）" class="headerlink" title="更多灵感（More Inspiration）"></a>更多灵感（More Inspiration）</h2><hr>
+<p>这里有两个例子，可以为你的网页设计提供想法。</p>
+<h3 id="迷人的阴影"><a href="#迷人的阴影" class="headerlink" title="迷人的阴影"></a><a href="http://www.paulund.co.uk/creating-different-css3-box-shadows-effects" target="_blank" rel="noopener">迷人的阴影</a></h3><p>在本教程中，Paul Underwood 解释了如何使用<code>:before</code> 和<code>:after</code> 伪元素创建更逼真，更迷人的阴影效果。它们绝对定位于最后面，并设置<code>z-index</code> 值为负值。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/fascinating-shadows.jpg" class="">
+
+<h3 id="图片叠加效果"><a href="#图片叠加效果" class="headerlink" title="图片叠加效果"></a><a href="http://designshack.net/articles/css/use-pseudo-elements-to-create-an-image-stack-illusion/" target="_blank" rel="noopener">图片叠加效果</a></h3><p>在单个图片标记上使用伪元素创建杂乱的堆叠图像效果也是可能的。伪元素使用负<code>z-index</code> 在实际图像的后部创建堆叠图像的错觉。</p>
+<img src="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/stacked-image.jpg" class="">
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
+<p>伪元素为每个元素都添加了两个额外元素，而不会干扰实际的HTML 结构，并且可以转换为几乎所有内容。</p>
+<p>事实上正在进行<a href="http://www.w3.org/TR/css3-content/" target="_blank" rel="noopener">伪元素的改进</a>，例如嵌套伪元素<code>div::before::before {content：&#39;&#39;;}</code> 和多个伪元素<code>div::before(3) {content：&#39;&#39;;}</code> 这将开辟更多的可能性。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.<a href="https://www.hongkiat.com/blog/pseudo-element-before-after/" target="_blank" rel="noopener">理解伪元素::before 和::after</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E4%BC%AA%E5%85%83%E7%B4%A0/" rel="tag"># 伪元素</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/" rel="next" title="一日一练-CSS 使用伪元素创建图片叠加效果">
+                <i class="fa fa-chevron-left"></i> 一日一练-CSS 使用伪元素创建图片叠加效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/03/React-%E7%B3%BB%E5%88%97-components-props-and-state/" rel="prev" title="[React 系列] components props and state">
+                [React 系列] components props and state <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法和浏览器支持（The-Syntax-and-Brower-Support）"><span class="nav-number">1.</span> <span class="nav-text">语法和浏览器支持（The Syntax and Brower Support）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#它是做什么的（What-dose-it-do？）"><span class="nav-number">1.1.</span> <span class="nav-text">它是做什么的（What dose it do？）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用伪元素（Using-pseudo-elements）"><span class="nav-number">2.</span> <span class="nav-text">使用伪元素（Using pseudo-elements）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修饰伪元素（Styling-pseudo-elements）"><span class="nav-number">2.1.</span> <span class="nav-text">修饰伪元素（Styling pseudo-elements）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定大小（Specifying-the-dimension）"><span class="nav-number">2.2.</span> <span class="nav-text">指定大小（Specifying the dimension）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附上背景图片（Attach-background-image）"><span class="nav-number">2.3.</span> <span class="nav-text">附上背景图片（Attach background image）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结合伪类（Combining-with-pseudo-classes）"><span class="nav-number">2.4.</span> <span class="nav-text">结合伪类（Combining with pseudo-classes）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加过渡效果（Adding-Transition-Effect）"><span class="nav-number">2.5.</span> <span class="nav-text">添加过渡效果（Adding Transition Effect）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多灵感（More-Inspiration）"><span class="nav-number">3.</span> <span class="nav-text">更多灵感（More Inspiration）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迷人的阴影"><span class="nav-number">3.1.</span> <span class="nav-text">迷人的阴影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片叠加效果"><span class="nav-number">3.2.</span> <span class="nav-text">图片叠加效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/02/一日一练-CSS-理解伪元素-before和-after/';
+
+      var disqus_title = "一日一练-CSS 理解伪元素::before和::after";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

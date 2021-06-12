@@ -1,0 +1,1091 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,NodeJS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="特别声明：此篇文章内容来源于@Aditya Sridhar 的How to use NodeJS without frameworks and external libraries  NodeJS最常用于Express 框架。许多其他外部库也使用了NodeJS。 这些框架和库与NodeJS 一起使用的原因是使开发更容易，更快捷。 在处理任何实际项目时，最好在需要时使用框架和库来实现更快的开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[译]NodeJS 入门">
+<meta property="og:url" content="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="特别声明：此篇文章内容来源于@Aditya Sridhar 的How to use NodeJS without frameworks and external libraries  NodeJS最常用于Express 框架。许多其他外部库也使用了NodeJS。 这些框架和库与NodeJS 一起使用的原因是使开发更容易，更快捷。 在处理任何实际项目时，最好在需要时使用框架和库来实现更快的开发">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/how-to-use-nodejs_md.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/get_name.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/post_request.jpg">
+<meta property="article:published_time" content="2018-12-07T02:39:40.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.697Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/how-to-use-nodejs_md.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/12/07/译-NodeJS-入门/"/>
+
+
+
+
+
+  <title> [译]NodeJS 入门 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [译]NodeJS 入门
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-07T02:39:40+00:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/07/译-NodeJS-入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/" class="leancloud_visitors" data-flag-title="[译]NodeJS 入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/how-to-use-nodejs_md.jpg" class="">
+
+<blockquote>
+<p>特别声明：此篇文章内容来源于<a href="https://github.com/aditya-sridhar" target="_blank" rel="noopener">@Aditya Sridhar</a> 的<a href="https://adityasridhar.com/posts/how-to-use-nodejs-without-frameworks-and-external-libraries" target="_blank" rel="noopener">How to use NodeJS without frameworks and external libraries</a></p>
+</blockquote>
+<p>NodeJS最常用于Express 框架。许多其他外部库也使用了NodeJS。</p>
+<p>这些框架和库与NodeJS 一起使用的原因是使开发更容易，更快捷。</p>
+<p>在处理任何实际项目时，最好在需要时使用框架和库来实现更快的开发😄</p>
+<p>也就是说，在这篇文章中，我将展示如何在不使用Express 框架或任何其他外部库的情况下使用NodeJS 构建简单REST API。本文仅使用NodeJS 本身提供的那些功能。</p>
+<p>这样做的原因是为了展示NodeJS 如何在没有框架和库的情况下使用😄。这也将更好地了解NodeJS 的工作原理</p>
+<a id="more"></a>
+
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>按照<a href="https://nodejs.org/" target="_blank" rel="noopener">https://nodejs.org</a> 安装NodeJS。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>我的<a href="https://github.com/aditya-sridhar/simple-rest-apis-nodejs-without-frameworks" target="_blank" rel="noopener">github 仓库</a>中提供了本文的代码。</p>
+<h2 id="从代码开始😄"><a href="#从代码开始😄" class="headerlink" title="从代码开始😄"></a>从代码开始😄</h2><p>创建一个名为<code>simple-rest-apis-nodejs-without-frameworks</code> 的文件夹。 这将是我们的NodeJS 项目文件夹。</p>
+<p>进入项目文件夹并使用<code>npm init</code> 将项目转换为NodeJS 项目。执行此操作的命令是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> simple-rest-apis-nodejs-without-frameworks</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p>运行<code>npm init</code> 后，将在项目文件夹中创建<code>package.json</code> 文件。</p>
+<p><code>package.json</code> 包含有关项目的信息，如项目名称，版本，描述等。另外，<code>package.json</code> 是添加Node 依赖项的地方。在本文中，我们不会有任何依赖关系，因为我们只使用NodeJS 本身提供的功能。</p>
+<h2 id="第一个API"><a href="#第一个API" class="headerlink" title="第一个API"></a>第一个API</h2><h3 id="server-js"><a href="#server-js" class="headerlink" title="server.js"></a>server.js</h3><p>在项目文件夹中创建一个名为<code>server.js</code> 的文件。这将是我们应用的起点。</p>
+<p>将以下代码复制到<code>server.js</code>中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hostname = <span class="string">'127.0.0.1'</span></span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = <span class="built_in">require</span>(<span class="string">'./controller.js'</span>)</span><br><span class="line"></span><br><span class="line">server.listen(port, hostname, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Server running at https://<span class="subst">$&#123;hostname&#125;</span>:<span class="subst">$&#123;port&#125;</span>/`</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这段代码实际上依赖于一个名为<code>controller.js</code> 的文件，我们将很快添加它。 此代码告诉服务器需要侦听<code>localhost</code> 上的<code>3000</code> 端口</p>
+<p>服务器创建在<code>controller.js</code> 中完成</p>
+<h3 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h3><p>这是我们将创建服务器并定义其余端点的文件。创建一个名为<code>controller.js</code> 的文件</p>
+<p>让我们先在<code>controller.js</code> 中创建一个GET 端点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> service = <span class="built_in">require</span>(<span class="string">'./service.js'</span>)</span><br><span class="line">  <span class="keyword">const</span> reqUrl = req.parse(req.url, <span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// GET Endpoint</span></span><br><span class="line">  <span class="keyword">if</span> (reqUrl.pathname == <span class="string">'/sample'</span> &amp;&amp; req.method === <span class="string">'GET'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Request Type: '</span> +</span><br><span class="line">      req.method + <span class="string">' Endpoint: '</span> +</span><br><span class="line">      reqUrl.pathname)</span><br><span class="line"></span><br><span class="line">    service.sampleRequest(req, res)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>首先导入<code>http</code> 和<code>url</code> 模块。这些模块由NodeJS 本身提供。</p>
+<p><code>http</code> 模块可以创建Web 应用程序。它支持客户端和服务器操作。</p>
+<p><code>url</code> 模块用于解析网址</p>
+<p><code>http.createServer((req, res) =&gt; {</code> 表示需要创建一个http 服务器，<code>其请求为req，响应为res</code></p>
+<p><code>module.exports</code> 用于将此文件导出为模块。这就是我们可以使用<code>const server = require(&#39;./controller.js&#39;)</code> 在<code>server.js</code> 中导入<code>controller.js</code> 的原因</p>
+<p>可以看出，这个文件需要<code>service.js</code>，我们稍后会讨论。</p>
+<p>代码<code>const reqUrl = req.parse(req.url, true)</code> 获取请求<code>url</code> 并解析它，以便我们可以在其上运行一些<code>url</code> 函数。</p>
+<p>我们要创建的第一个端点是一个<code>GET</code> 端点，端点<code>url</code>为<code>/sample</code></p>
+<p>为了进行<code>url</code> 路由，我们将使用<code>if else条件</code></p>
+<p>行<code>if (reqUrl.pathname == &#39;/sample&#39; &amp;&amp; req.method === &#39;GET&#39;) {</code> 检查请求的<code>url</code> 是否为<code>/sample</code>，并检查请求类型是否为<code>GET</code></p>
+<p>此<code>get</code> 请求的逻辑出现在<code>service.sampleRequest(req, res)</code>中,是<code>service.js</code> 中定义的函数</p>
+<h3 id="service-js"><a href="#service-js" class="headerlink" title="service.js"></a>service.js</h3><p>这是实际的<code>api</code> 逻辑将存在的地方。创建一个名为<code>service.js</code> 的文件。</p>
+<p>将以下代码复制到<code>service.js</code> 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line">exports.sampleRequest = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> reqUrl = url.parse(req.url, <span class="literal">true</span>)</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">'World'</span></span><br><span class="line">  <span class="keyword">if</span> (reqUrl.query.name) &#123;</span><br><span class="line">    name = reqUrl.query.name</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> response = &#123;</span><br><span class="line">    <span class="string">'text'</span>: <span class="string">'Hello '</span> + name</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.statusCode = <span class="number">200</span></span><br><span class="line">  res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)</span><br><span class="line">  res.end(<span class="built_in">JSON</span>.stringify(response))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此代码检查请求<code>URL</code> 是否具有名为<code>name</code> 的查询参数，并将其存储在<code>name</code> 变量中。如果不存在查询参数，则默认为字符串<code>World</code></p>
+<p>响应状态设置为<code>200</code>，响应的内容类型为<code>JSON</code>，最后使用<code>res.end(JSON.stringify(response))</code> 返回响应</p>
+<p>因为<code>响应变量</code> 是一个<code>JSON</code> 对象，我们在它上面使用<code>JSON.stringify</code> 将它转换为字符串，然后再发回<code>http</code> 响应</p>
+<p>现在我们可以使用该命令运行应用程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><p>为了测试端点使用<code>postman</code>。你可以在<a href="https://www.getpostman.com/" target="_blank" rel="noopener">这里</a>下载</p>
+<p>在<code>postman</code> 中选择<code>Get</code> 请求并输入<code>URL</code> 为<code>http://localhost:3000/sample?name=aditya</code> 并点击发送</p>
+<img src="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/get_name.jpg" class="">
+
+<p>此请求的输出如下所示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">'text'</span>: <span class="string">'Hello aditya'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在输入网址为<code>http://localhost:3000/sample</code> 并点击发送</p>
+<p>此请求的输出如下所示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">'text'</span>: <span class="string">'Hello World'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="第二个API"><a href="#第二个API" class="headerlink" title="第二个API"></a>第二个API</h2><p>在本节中，我们将构建第二个API，它是一个<code>POST</code>请求。此外，如果用户点击一些随机网址，我们将需要指出它是无效路由。我们也将在这里添加逻辑。</p>
+<h3 id="controller-js"><a href="#controller-js" class="headerlink" title="controller.js"></a>controller.js</h3><p>将<code>controller.js</code> 中的代码更新为如下所示的代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> service = <span class="built_in">require</span>(<span class="string">'./service.js'</span>)</span><br><span class="line">  <span class="keyword">const</span> reqUrl = url.parse(req.url, <span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// GET Endpoint</span></span><br><span class="line">  <span class="keyword">if</span> (reqUrl.pathname == <span class="string">'/sample'</span> &amp;&amp; req.method === <span class="string">'GET'</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Request Type:'</span> +</span><br><span class="line">      req.method + <span class="string">' Endpoint: '</span> +</span><br><span class="line">      reqUrl.pathname)</span><br><span class="line"></span><br><span class="line">    service.sampleRequest(req, res)</span><br><span class="line">    <span class="comment">// POST Endpoint</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (reqUrl.pathname == <span class="string">'/test'</span> &amp;&amp; req.method === <span class="string">'POST'</span>)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Request Type:'</span> +</span><br><span class="line">      req.method + <span class="string">' Endpoint: '</span> +</span><br><span class="line">      reqUrl.pathname)</span><br><span class="line"></span><br><span class="line">    service.testRequest(req, res)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Request Type:'</span> +</span><br><span class="line">      req.method + <span class="string">' Invalid Endpoint: '</span> +</span><br><span class="line">      reqUrl.pathname)</span><br><span class="line"></span><br><span class="line">    service.invalidRequest(req, res)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>post端点将具有url <code>/test</code>。此代码具有检查<code>/test</code> 端点的条件。<code>/test</code> 端点的逻辑将在<code>service.testRequest(req, res)</code> 这是在<code>service.js</code></p>
+<p>此代码还具有无效路由的<code>else 条件</code>。无效路由的逻辑在<code>service.invalidRequest(req, res)</code> 中处理</p>
+<h3 id="service-js-1"><a href="#service-js-1" class="headerlink" title="service.js"></a>service.js</h3><p>将以下代码添加到<code>service.js</code>。不要删除<code>service.js</code> 中的现有代码。在现有代码下面添加此代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">exports.testRequest = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  body = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">  req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">    body += chunk</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    postBody = <span class="built_in">JSON</span>.parse(body)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> response = &#123;</span><br><span class="line">      <span class="string">'text'</span>: <span class="string">'Post Request Value is '</span> + postBody.value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.statusCode = <span class="number">200</span></span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)</span><br><span class="line">    res.end(<span class="built_in">JSON</span>.stringify(response))</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>POST</code> 请求，在调用端点时会给出输入<code>POST</code> body。</p>
+<p>在代码中，我们需要从请求中获取此<code>POST</code> body。</p>
+<p>以下代码执行此操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">  body += chunk</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>请求以<code>流steam</code> 的形式出现。此代码获取数据流并继续将其附加到<code>body</code>。</p>
+<p><code>req.on(&#39;end&#39;, function () {</code> 仅在流式传输完成并且收到完整的<code>post body</code>后执行。</p>
+<p><code>postBody = JSON.parse(body)</code> 此代码将输入的<code>post body</code> 转换为JSON格式，以便我们可以使用其中的值。</p>
+<p>在代码中我们在<code>postBody</code>中使用<code>value</code> 字段。</p>
+<p>响应的设置类似于我们为<code>GET</code> 请求所做的操作。</p>
+<h3 id="无效请求的逻辑"><a href="#无效请求的逻辑" class="headerlink" title="无效请求的逻辑"></a>无效请求的逻辑</h3><p>将以下代码添加到<code>service.js</code>。不要删除<code>service.js</code> 中的现有代码。在现有代码下面添加此代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">exports.invalidRequest = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.statusCode = <span class="number">404</span></span><br><span class="line">  res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)</span><br><span class="line">  res.end(<span class="string">'Invalid Request'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于无效请求，状态设置为<code>404</code>，内容类型设置为<code>text</code>。发回的实际内容是<code>Invalid Request</code></p>
+<h3 id="Testing-1"><a href="#Testing-1" class="headerlink" title="Testing"></a>Testing</h3><p>进入<code>postman</code>。选择请求类型为<code>POST</code> 并键入以下URL <code>http://localhost:3000/test</code>。</p>
+<img src="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/post_request.jpg" class="">
+
+<p>同时选择如图所示的<code>Body</code>，<code>raw</code>和<code>application/json</code></p>
+<p>输入<code>Post body</code>如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">'value'</span>: <span class="string">'nodejs'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>点击<code>postman</code> 发送</p>
+<p>API 输出如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">'text'</span>: <span class="string">'Post Request Value is nodejs'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你也可以尝试使用无效请求。在<code>postman</code> 中选择<code>GET</code> 并输入URL <code>http://localhost:3000/test123</code></p>
+<p>对此的响应将是<code>Invalid Text</code></p>
+<h2 id="恭喜😄"><a href="#恭喜😄" class="headerlink" title="恭喜😄"></a>恭喜😄</h2><p>你现在知道如何在不使用任何框架或外部库的情况下在NodeJS 中创建REST API</p>
+<p>在真实项目中，尽可能使用框架或库来使开发更容易，更快捷</p>
+<p>在<a href="https://www.linkedin.com/in/aditya1811" target="_blank" rel="noopener">LinkedIn</a>中与我联系或在<a href="https://www.twitter.com/adityasridhar18" target="_blank" rel="noopener">Twitter</a>上关注我</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/04/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E9%81%8D%E5%8E%86%E7%9A%845-%E4%B8%AD%E6%96%B9%E6%B3%95/" rel="next" title="一日一练-JS 对象属性遍历的5 中方法">
+                <i class="fa fa-chevron-left"></i> 一日一练-JS 对象属性遍历的5 中方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" rel="prev" title="一日一练-JS AST抽象语法树">
+                一日一练-JS AST抽象语法树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从代码开始😄"><span class="nav-number">3.</span> <span class="nav-text">从代码开始😄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#package-json"><span class="nav-number">4.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个API"><span class="nav-number">5.</span> <span class="nav-text">第一个API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#server-js"><span class="nav-number">5.1.</span> <span class="nav-text">server.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#controller"><span class="nav-number">5.2.</span> <span class="nav-text">controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service-js"><span class="nav-number">5.3.</span> <span class="nav-text">service.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing"><span class="nav-number">5.4.</span> <span class="nav-text">Testing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二个API"><span class="nav-number">6.</span> <span class="nav-text">第二个API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#controller-js"><span class="nav-number">6.1.</span> <span class="nav-text">controller.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service-js-1"><span class="nav-number">6.2.</span> <span class="nav-text">service.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无效请求的逻辑"><span class="nav-number">6.3.</span> <span class="nav-text">无效请求的逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing-1"><span class="nav-number">6.4.</span> <span class="nav-text">Testing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恭喜😄"><span class="nav-number">7.</span> <span class="nav-text">恭喜😄</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/12/07/译-NodeJS-入门/';
+
+      var disqus_title = "[译]NodeJS 入门";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

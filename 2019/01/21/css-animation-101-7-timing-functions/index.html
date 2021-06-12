@@ -1,0 +1,1055 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,css animation 101," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文地址：css animation 101 #timing-functions 原文作者：Donovan Hutchinson 译者：JobbyM   Timing functions定时功能是对转换速度变化率的描述。当动画以固定的线性速度出现时，它们看起来毫无生气。使用定时功能可以使转换更逼真。 例如，在第一幅图像中，转换使用linear 定时功能：  Linear 过渡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[css-animation-101] 7 timing functions">
+<meta property="og:url" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文地址：css animation 101 #timing-functions 原文作者：Donovan Hutchinson 译者：JobbyM   Timing functions定时功能是对转换速度变化率的描述。当动画以固定的线性速度出现时，它们看起来毫无生气。使用定时功能可以使转换更逼真。 例如，在第一幅图像中，转换使用linear 定时功能：  Linear 过渡">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/3.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/4.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/5.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/6.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/7.png">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/8.gif">
+<meta property="og:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/9.png">
+<meta property="article:published_time" content="2019-01-21T10:04:50.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.333Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="css animation 101">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/0.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/"/>
+
+
+
+
+
+  <title> [css-animation-101] 7 timing functions | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2019/01/21/css-animation-101-7-timing-functions/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [css-animation-101] 7 timing functions
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-21T10:04:50+00:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/21/css-animation-101-7-timing-functions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/21/css-animation-101-7-timing-functions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2019/01/21/css-animation-101-7-timing-functions/" class="leancloud_visitors" data-flag-title="[css-animation-101] 7 timing functions">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>原文地址：<a href="https://cssanimation.rocks/css-animation-101/#timing-functions" target="_blank" rel="noopener">css animation 101 #timing-functions</a></li>
+<li>原文作者：<a href="https://cssanimation.rocks/" target="_blank" rel="noopener">Donovan Hutchinson</a></li>
+<li>译者：<a href="https://github.com/JobbyM" target="_blank" rel="noopener">JobbyM</a></li>
+</ul>
+</blockquote>
+<h1 id="Timing-functions"><a href="#Timing-functions" class="headerlink" title="Timing functions"></a>Timing functions</h1><p>定时功能是对转换速度变化率的描述。当动画以固定的线性速度出现时，它们看起来毫无生气。使用定时功能可以使转换更逼真。</p>
+<p>例如，在第一幅图像中，转换使用<code>linear</code> 定时功能：</p>
+<img src="/2019/01/21/css-animation-101-7-timing-functions/0.gif" class="">
+<p>Linear 过渡</p>
+<a id="more"></a>
+
+<p>对于这个例子，我们使用定制的<code>cubic-bezier</code> 定时功能：</p>
+<img src="/2019/01/21/css-animation-101-7-timing-functions/1.gif" class="">
+<p>Cubic-bezier 定时功能</p>
+<p>在本例中，<code>cubic-bezier</code> 方法告诉动画在快速移动到第二个状态之前稍微向后摇摆，并且实际上到达正确位置之前稍微超过它。</p>
+<p>每个示例的开始和悬停状态的CSS 是相同的，所更改的只是计时函数。</p>
+<p>让我们逐一研究一下它们是如何影响我们的元素的移动方式的。</p>
+<p>如果你想在一个例子中使用这些，我设置了一个<a href="http://codepen.io/donovanh/pen/GgaRNv" target="_blank" rel="noopener">CodePen 例子</a>。</p>
+<h2 id="Linear"><a href="#Linear" class="headerlink" title="Linear"></a>Linear</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/2.gif" class="">
+<p>Linear</p>
+<p>线性过渡从开始到结束以稳定的速率移动。因为在过渡过程中没有曲线，所以它从不加速或减速。如果制作需要稳定移动的动画，例如场景经过火车窗口背景或稳定旋转的月亮，这可能很有用。</p>
+<h2 id="Ease-in"><a href="#Ease-in" class="headerlink" title="Ease-in"></a>Ease-in</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/3.gif" class="">
+<p>Ease-in</p>
+<p><code>ease-in</code> 定时功能开始缓慢，并在过渡结束时加速。它类似于一个球开始从山上滚下来，在底部以最快的速度结束。或者一条无聊的鱼左右游动。</p>
+<h2 id="Ease-out"><a href="#Ease-out" class="headerlink" title="Ease-out"></a>Ease-out</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/4.gif" class="">
+<p>Ease-out</p>
+<p><code>ease-out</code> 与<code>ease-in</code> 相反。它开始得很快，在过渡期结束时会变慢。当有什么东西需要出现时，就像是从屏幕外冲入，然后慢慢停下来一样，这很有用。</p>
+<h2 id="Ease-in-out"><a href="#Ease-in-out" class="headerlink" title="Ease-in-out"></a>Ease-in-out</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/5.gif" class="">
+<p>Ease-in-out</p>
+<p><code>ease-in-out</code> 兼容了<code>easy-in</code> 和<code>ease-out</code> 功能。它开始缓慢，在过渡的中间部分加速，然后减速到最后。它可以说明汽车从静止开始，加速，然后在停止前放慢速度。如果制作加载动画，这样的东西看起来会很不错。</p>
+<h2 id="Cubic-bezier"><a href="#Cubic-bezier" class="headerlink" title="Cubic-bezier"></a>Cubic-bezier</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/6.gif" class="">
+<p>Cubic-bezier(自定义)</p>
+<p>到目前为止我们看到的所有定时功能都是三次贝塞尔曲线（cubic bezier curve）的例子。这是描述定时功能的“形状”的曲线。</p>
+<p>通过这种方式，指定<code>cubic-bezier</code> 定时功能就像创建我们自己的定时功能一样。</p>
+<p>它们由4个值组成，代表两个坐标。三次贝塞尔曲线可以如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition-timing-function: cubic-bezier(1,-0.49,.13,1.09);</span><br></pre></td></tr></table></figure>
+
+<p>这里的两个坐标是(1, -0.49) 和(.13, 1.09)。在图表上，它们看起来像这样：</p>
+<img src="/2019/01/21/css-animation-101-7-timing-functions/7.png" class="">
+<p>来源<a href="http://cubic-bezier.com/#1,-0.49,.13,1.09" target="_blank" rel="noopener">http://cubic-bezier.com/#1,-0.49,.13,1.09</a></p>
+<p>我不是手工创建这些，而是使用<a href="http://cubic-bezier.com/" target="_blank" rel="noopener">cubic-bezier.com</a>。这是创造一些有趣效果的好方法。</p>
+<p>当使用大于1的值时，它们真的很有趣。可以创建过冲和反弹的过渡。</p>
+<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><img src="/2019/01/21/css-animation-101-7-timing-functions/8.gif" class="">
+<p>Steps</p>
+<p>在大多数定时功能涉及曲线的情况下，step 功能将转换分为一组步骤并在每个步骤之间跳转。例如，如果指定<code>step(4)</code>，则过渡将持续时间分为4个离散跳转（如上图所示）。</p>
+<img src="/2019/01/21/css-animation-101-7-timing-functions/9.png" class="">
+
+<p>这对sprite 动画很有用。例如，加载loading spinner 或动画视频游戏角色。通过设置一系列帧开始时的背景位置，可以使用步骤定时功能跳过每个帧并创建移动的外观。</p>
+<p>要看到一个很好的例子，请查看<a href="https://cssanimation.rocks/twitter-fave/" target="_blank" rel="noopener">twitter的fave按钮</a>动画。</p>
+<p>你还可以指定过渡是为持续时间片段保留第一帧，还是保留最后一帧。默认设置为“end”，因为这假定在动画开始之前已经显示了精灵中的第一帧。</p>
+<p>我们可以指定在设置步骤时适用的步骤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">transition: all 2s steps(10, start);</span><br><span class="line">transition: all 2s steps(10, end);</span><br></pre></td></tr></table></figure>
+
+<h2 id="更多例子"><a href="#更多例子" class="headerlink" title="更多例子"></a>更多例子</h2><p>如果想阅读更多内容并查看其他示例，我已经在这里介绍了<a href="https://medium.com/css-tutorials/bouncy-transitions-c0c8085d489" target="_blank" rel="noopener">定时功能</a>的主题。</p>
+<h2 id="家庭作业"><a href="#家庭作业" class="headerlink" title="家庭作业"></a>家庭作业</h2><p>从<a href="http://codepen.io/donovanh/pen/NPYNGa?editors=110" target="_blank" rel="noopener">上一个家庭作业示例</a>开始，尝试更改过渡定时功能值，看看它如何更改过渡的感觉。</p>
+<p>你也可以尝试<a href="http://codepen.io/donovanh/pen/GgaRNv" target="_blank" rel="noopener">在此演示</a>中更改值。从技术上讲，这是一个动画而不是一个过渡，但定时功能的应用方式相同。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/css-animation-101/" rel="tag"># css animation 101</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/16/css-animation-101-6-transitions-properties/" rel="next" title="[css-animation-101] 6 transitions properties">
+                <i class="fa fa-chevron-left"></i> [css-animation-101] 6 transitions properties
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/22/css-animation-101-8-multiple-transitions/" rel="prev" title="[css-animation-101] 8 multiple transitions">
+                [css-animation-101] 8 multiple transitions <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Timing-functions"><span class="nav-number">1.</span> <span class="nav-text">Timing functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear"><span class="nav-number">1.1.</span> <span class="nav-text">Linear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ease-in"><span class="nav-number">1.2.</span> <span class="nav-text">Ease-in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ease-out"><span class="nav-number">1.3.</span> <span class="nav-text">Ease-out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ease-in-out"><span class="nav-number">1.4.</span> <span class="nav-text">Ease-in-out</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cubic-bezier"><span class="nav-number">1.5.</span> <span class="nav-text">Cubic-bezier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-number">1.6.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多例子"><span class="nav-number">1.7.</span> <span class="nav-text">更多例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#家庭作业"><span class="nav-number">1.8.</span> <span class="nav-text">家庭作业</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2019/01/21/css-animation-101-7-timing-functions/';
+
+      var disqus_title = "[css-animation-101] 7 timing functions";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

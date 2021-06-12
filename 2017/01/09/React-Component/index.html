@@ -1,0 +1,1111 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译React.Component这篇React（版本v15.4.0）官方文档。  React.ComponentComponents让你将UI 分成独立的、可复用的块，并且独立的思考每一块。React.Component 是由React提供。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React.Component">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/09/React-Component/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译React.Component这篇React（版本v15.4.0）官方文档。  React.ComponentComponents让你将UI 分成独立的、可复用的块，并且独立的思考每一块。React.Component 是由React提供。">
+<meta property="article:published_time" content="2017-01-09T01:07:24.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.309Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/09/React-Component/"/>
+
+
+
+
+
+  <title> React.Component | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/09/React-Component/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                React.Component
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T01:07:24+00:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/09/React-Component/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/09/React-Component/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/09/React-Component/" class="leancloud_visitors" data-flag-title="React.Component">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/react-component.html" target="_blank" rel="noopener">React.Component</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="React-Component"><a href="#React-Component" class="headerlink" title="React.Component"></a>React.Component</h2><p><a href="https://facebook.github.io/react/docs/components-and-props.html" target="_blank" rel="noopener">Components</a>让你将UI 分成独立的、可复用的块，并且独立的思考每一块。<code>React.Component</code> 是由<a href="https://facebook.github.io/react/docs/react-api.html" target="_blank" rel="noopener">React</a>提供。</p>
+<a id="more"></a>
+
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p><code>React.Component</code> 是一个抽象的基类，所以它几乎很少去直接引用<code>React.Component</code>。相反，通常你将它作为一个子类，并定义至少一个<code>render()</code> 方法。</p>
+<p>通常你看可以使用纯<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">JavaScript class</a> 去定义一个React component：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeting</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你不曾使用ES6，你可以使用<a href="https://facebook.github.io/react/docs/react-api.html#createclass" target="_blank" rel="noopener">React.createClass</a>帮助类来代替。参考<a href="https://facebook.github.io/react/docs/react-without-es6.html" target="_blank" rel="noopener">Using React without ES6</a> 去了解更多。</p>
+<h3 id="The-Component-Lifecycle"><a href="#The-Component-Lifecycle" class="headerlink" title="The Component Lifecycle"></a>The Component Lifecycle</h3><p>每一个component 都有几个“lifecycle methods” 你可以在进程的特殊时间去重写去运行代码。方法是<strong>will</strong>前缀表示在某些事情发生前调用，方法是<strong>did</strong>前缀表示在某些事情发生后调用。</p>
+<h4 id="Mounting"><a href="#Mounting" class="headerlink" title="Mounting"></a>Mounting</h4><p>当component 的实例已经被创建并被插入到DOM 时被调用：</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#constructor" target="_blank" rel="noopener">constructor()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentwillmount" target="_blank" rel="noopener">componentWillMount()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#render" target="_blank" rel="noopener">render()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentdidmount" target="_blank" rel="noopener">componentDidMount()</a></li>
+</ul>
+<h4 id="Updating"><a href="#Updating" class="headerlink" title="Updating"></a>Updating</h4><p>props 或state 的改变导致产生update。当component 正在重新渲染（re-rendered）时，下面方法被调用：</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentwillreceiveprops" target="_blank" rel="noopener">componentWillReceiveProps()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener">shouldComponentUpdate()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentwillupdate" target="_blank" rel="noopener">componentWillUpdate()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#render" target="_blank" rel="noopener">render()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentdidupdate" target="_blank" rel="noopener">componentDidUpdate()</a></li>
+</ul>
+<h4 id="Unmounting"><a href="#Unmounting" class="headerlink" title="Unmounting"></a>Unmounting</h4><p>当component 从DOM 中移除时这个方法被调用：</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#componentwillunmount" target="_blank" rel="noopener">componentWillUnmount()</a></li>
+</ul>
+<h3 id="Other-APIs"><a href="#Other-APIs" class="headerlink" title="Other APIs"></a>Other APIs</h3><p>每一个component 也提供以下几个APIs：</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#setstate" target="_blank" rel="noopener">setState()</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#forceupdate" target="_blank" rel="noopener">forceUpdate()</a></li>
+</ul>
+<h3 id="Class-Properties"><a href="#Class-Properties" class="headerlink" title="Class Properties"></a>Class Properties</h3><ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#defaultprops" target="_blank" rel="noopener">defaultProps</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#displayname" target="_blank" rel="noopener">displayName</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#proptypes" target="_blank" rel="noopener">propTypes</a></li>
+</ul>
+<h3 id="Instance-Properties"><a href="#Instance-Properties" class="headerlink" title="Instance Properties"></a>Instance Properties</h3><ul>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#props" target="_blank" rel="noopener">props</a></li>
+<li><a href="https://facebook.github.io/react/docs/react-component.html#state" target="_blank" rel="noopener">state</a></li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="render"><a href="#render" class="headerlink" title="render()"></a>render()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">render()</span><br></pre></td></tr></table></figure>
+
+<p><code>render()</code> 方法是必须的。</p>
+<p>当调用是，它应该检测<code>this.props</code> 和<code>this.state</code> 并返回一个React element。element 可以是代表一个本地的DOM component，就像<code>&lt;div /&gt;</code>，也可以是一个用你自己定义的component 合成的component。</p>
+<p>你可以返回<code>null</code> 或者是<code>false</code> 代表你不想渲染任何东西。打死那个返回是<code>null</code> 或者是<code>false</code> 时，<code>ReactDOM.findDOMNode(this)</code> 将会返回<code>null</code>。</p>
+<p><code>render()</code> 方法应该是纯粹的，意味着你它不会修改component state，每次被调用都会返回相同的结果，并且它并不直接和浏览器交互。如果你需要同浏览器交互，在<code>componentDidMount()</code> 或其它lifecycle methods 中执行你的操作。 保持<code>render()</code> 使component 更容易去思考</p>
+<blockquote>
+<p><strong>Note</strong><br>如果<code>shouldComponentUpdate()</code> 方法返回false，<code>render()</code> 不会被调用。</p>
+</blockquote>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props)</span><br></pre></td></tr></table></figure>
+<p>在它被加载（mounted）前，React component 的constructor 被调用。当实现<code>React.Component</code> 子类的constructor 方法时，你应该在其它任何语句之前调用<code>super(props)</code>，否则，<code>this.props</code> 在constructor 中是undefined ，这将导致bug。</p>
+<p>在constructor 中正确初始化state。如果你不初始化state 并且不绑定方法，你不必为你的React component 去实现这个constructor。</p>
+<p>如果你知道你要做什么，使用props 去初始化state 是正确的。这里有一个有效的<code>React.Component</code> 子类的constructor：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      color: props.initalColor</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>谨防这种形式，因为它有效地“fork”props 会导致bugs 。而不是同步props 到state，你经常想要提升state。</p>
+<p>如果你为了state 使用它们来“fork” props，你可以也想要实现<code>componentWillReceiveProps(nextProps)</code> 去保持state 和它们同步更新。但是提升state 通常是更容易的并且很少产生错误。</p>
+<h3 id="componentWillMount"><a href="#componentWillMount" class="headerlink" title="componentWillMount()"></a>componentWillMount()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillMount()</span><br></pre></td></tr></table></figure>
+<p><code>componentWillMount()</code> 在加载（mounting） 发生之前被立即调用。它在<code>render()</code> 之前被调用，因此在这个方法中设置state 将不会触发重新渲染。</p>
+<p>避免在这个方法中引入任何副作用或订阅。</p>
+<h3 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount()"></a>componentDidMount()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount()</span><br></pre></td></tr></table></figure>
+<p><code>componentDidMount()</code> 在当component 被加载（mounted）时被立即调用。初始化需要DOM node 已经在这里了。如果你需要从远端（remote endpoint）去加载数据，这里实例化一个网络请求是正确的。在这个方法中设置state 将会触发重新渲染。</p>
+<h3 id="componentWillReceiveProps"><a href="#componentWillReceiveProps" class="headerlink" title="componentWillReceiveProps()"></a>componentWillReceiveProps()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillRecevieProps(nextProps)</span><br></pre></td></tr></table></figure>
+<p>当加载的（mounted）component 接受新的props 之前<code>componentWillReceiveProps()</code> 方法被调用。如果你需要更新state 去响应prop 改变（例如，重置它），你可以对比<code>this.props</code> 和<code>nextProps</code> 并在这个方法中使用<code>this.setState()</code> 去执行state 改变。</p>
+<p>注意当props 还没有发生改变，React 也可以调用这个方法， 所以如果你只像处理变化，请确保去比较当前值和下一个值。当父 component 导致你的component 重新渲染时，可能会发生这种状况。</p>
+<p>如果你只是调用<code>this.setState()</code>，<code>componentWillReceiveProps()</code> 将不会被调用。</p>
+<h3 id="shouldComponentUpdate"><a href="#shouldComponentUpdate" class="headerlink" title="shouldComponentUpdate()"></a>shouldComponentUpdate()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shouldComponentUpdate(nextProps, nextState)</span><br></pre></td></tr></table></figure>
+<p>使用<code>shouldComponentUpdate()</code> 让React 了解如果一个component 的输出不被当前state 或props 的改变影响。默认行为是在每一次state 改变时，都重新渲染，并且在大部分情况下，你应该依赖默认行为。</p>
+<p>当新的props 或state 被接受时，<code>shouldComponentUpdate()</code> 在渲染之前被调用。默认是<code>true</code>。在一次渲染后者当<code>forceUpdate()</code> 被使用时，这个方法不被调用。</p>
+<p>当它们的state 改变时，返回<code>false</code> 不能阻止子component 重新渲染。</p>
+<p>当前，如果<code>shouldComponentUpdate()</code>  返回<code>false</code>，那么<a href="https://facebook.github.io/react/docs/react-component.html#componentwillupdate" target="_blank" rel="noopener">componentWillUpdate()</a> ，<a href="https://facebook.github.io/react/docs/react-component.html#render" target="_blank" rel="noopener">render()</a> 和<a href="https://facebook.github.io/react/docs/react-component.html#componentdidupdate" target="_blank" rel="noopener">componentDidUpdate()</a> 都不会被调用。注意在未来React 可能将<code>shouldComponentUpdate()</code>作为一个提示而不是一个严格的指令，并且返回<code>false</code> 仍然导致component 重新渲染。</p>
+<p>如果你在分析后确定特定的component 是慢的，你可以改变它去继承<a href="https://facebook.github.io/react/docs/react-api.html#react.purecomponent" target="_blank" rel="noopener">React.PureComponent</a>，而它实现了一个浅prop和state 比较的<code>shouldComponentUpdate()</code>方法。 如果你有信息去亲自实现它，你可以比较<code>this.props</code> 和<code>nextProps</code> 以及<code>this.state</code> 和<code>nextState</code> 并返回<code>false</code> 告诉React 这次更新可以被跳过。</p>
+<h3 id="componentWillUpdate"><a href="#componentWillUpdate" class="headerlink" title="componentWillUpdate()"></a>componentWillUpdate()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillUpdate(nextProps, nextState)</span><br></pre></td></tr></table></figure>
+<p>当新的props 或state 正在被接受，<code>componentWillUpdate()</code>在渲染之前将立即被调用。在更新发生之前使用这个方法作为一个机会去执行这个准备。这个方法在第一次渲染时不会被调用。</p>
+<p>注意你不能在这里调用<code>this.setState()</code>。如果你需要更新state 去响应prop 改变，使用<code>componentWillReceiveProps()</code> 来代替。</p>
+<blockquote>
+<p><strong>Note</strong><br>如果<a href="https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener">shouldComponentUpdate()</a> 返回false，<code>componentWillUpdate()</code> 将不会被调用。</p>
+</blockquote>
+<h3 id="componentDidUpdate"><a href="#componentDidUpdate" class="headerlink" title="componentDidUpdate()"></a>componentDidUpdate()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidUpdate(prevProps, prevState)</span><br></pre></td></tr></table></figure>
+<p>当更新反生后<code>componentDidUpdate()</code>立即被调用。这个方法在第一次渲染时不会被调用。</p>
+<p>当component 已经被更新时，使用这个方法有机会去操作DOM。这也是一个好地方去做网络请求只要你对比当前props 和之前props（例如，如果props 还没有发生改变，网络请求可能不是必须的）。</p>
+<blockquote>
+<p><strong>Note</strong><br>如果<a href="https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener">shouldComponentUpdate()</a> 返回false，<code>componentDidUpdate()</code> 将不会被调用。</p>
+</blockquote>
+<h3 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount()"></a>componentWillUnmount()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillUnmount()</span><br></pre></td></tr></table></figure>
+<p>在component 被卸载（unmount）或销毁之前，<code>componentWillUnmount()</code>立即被调用。在这个方法中执行必须的清理，例如，使定时器无效，取消网络请求或清楚在<code>componentDidMount()</code> 中创建的任何DOM<br> element。</p>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState()"></a>setState()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setState(nextState, callback)</span><br></pre></td></tr></table></figure>
+<p>将当前state 和下一个state 执行一个浅合并（shallow merge）。这个是主要的方法，你使用它去触发UI 更新从事件句柄和服务器请求回调中。</p>
+<p>第一个参数可以是一个对象（包含0个或多个key 去更新）或者是一个函数（state 和props）可以返回一个对象包含keys 去更新。</p>
+<p>这有一个简单对象用例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">mykey</span>: <span class="string">'my new value'</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p>这也可能使用这个签名函数<code>function(state, props) =&gt; newState</code> 传入。这个入队的原子更新在设置任何值之前需要分析之前的state 和props 的值。例如，假设我们想要通过<code>props.step</code> 来增加state 的值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(<span class="function">(<span class="params">prevState, props</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">myInteger</span>: prevState.myInteger + props.step&#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>第二参数是一个可选的回调函数，一旦<code>setState</code> 执行完成并且component 已经重新渲染时这个回调函数将会被执行。通常我们建议使用<code>componentDidUpdate()</code> 来代替执行这种逻辑。</p>
+<p><code>setState()</code>不会理解使<code>this.state</code> 发生改变而是创建一个挂起（pending）的state 转换。调用这个方法之后访问<code>this.state</code> 可能返回当前存在的值。</p>
+<p>没有保证调用<code>setState</code> 的成批的同步操作会有性能增益。</p>
+<p><code>setState()</code> 将总会导致重新渲染除非<code>shouldComponentUpdate()</code> 返回<code>false</code>。如果可变对象正在被使用和条件渲染逻辑不能在<code>shouldComponentUpdate()</code> 中被实现，只有当新的state 不同于之前state 时才调用<code>setState()</code> ，来避免不必要的重新渲染。</p>
+<h3 id="forceUpdate"><a href="#forceUpdate" class="headerlink" title="forceUpdate()"></a>forceUpdate()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">component.forceUpdate(callback)</span><br></pre></td></tr></table></figure>
+<p>按照默认，当你的component 的state 或props 反生改变时，你的component 将会被重新渲染。如果你的<code>render()</code> 方法依赖一些其他的数据，你可以告诉React，component 需要调用<code>foreceUpdate()</code> 来重新渲染。</p>
+<p>调用<code>forceUpdate()</code> 将会导致component 的<code>render()</code> 被调用，跳过<code>shouldComponentUpdate()</code>。这将触发孩子component 的普通的lifecycle methods，包括每一个孩子的<code>shouldComponentUpdate()</code> 方法。如果这个标记改变React 将仍然只更新这个DOM。</p>
+<p>通常你应该超时避免<code>forceUpdate()</code> 的所有使用，并且<code>render()</code> 方法中的<code>this.props</code> 和<code>this.state</code> 应该是只读的。</p>
+<h2 id="Class-Properties-1"><a href="#Class-Properties-1" class="headerlink" title="Class Properties"></a>Class Properties</h2><h3 id="defaultProps"><a href="#defaultProps" class="headerlink" title="defaultProps"></a>defaultProps</h3><p><code>defaultProps</code> 可以作为component 类的属性来定义，为类设置默认的props。这是为undefined 的props 使用，而不是为null props 使用。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomButton</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CustomButton.defaultProps = &#123;</span><br><span class="line">  color: <span class="string">'blue'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果<code>props.color</code> 没有被提供，它将默认被设置为<code>blue</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">CustomButton</span> /&gt;</span></span>;<span class="comment">// props.color will be set to blue</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果<code>props.color</code> 被设置为null，它将仍然是null：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">CustomButton</span> <span class="attr">color</span>=<span class="string">&#123;null&#125;</span> /&gt;</span></span>;<span class="comment">// props.color will remain null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="displayName"><a href="#displayName" class="headerlink" title="displayName"></a>displayName</h3><p><code>displayName</code> 字符串被用在调试信息中。JSX 自动设置这个值；参考<a href="https://facebook.github.io/react/docs/jsx-in-depth.html" target="_blank" rel="noopener">JSX in Depth</a>。</p>
+<h3 id="propTypes"><a href="#propTypes" class="headerlink" title="propTypes"></a>propTypes</h3><p><code>propTypes</code> 可以作为component 类的属性来定义，去定义这个props 应该是什么类型。它应该是在<a href="https://facebook.github.io/react/docs/react-api.html#react.proptypes" target="_blank" rel="noopener">React.PropTypes</a> 中从prop 名称到类型的一个映射。在开发模式中，当一个无效的值提供给props，一个警告将会在JavaScript console 中被显示。在生产模式中，为了效率，<code>propsTypes</code> 的检测将会被跳过。</p>
+<p>例如，下面的例子确保<code>color</code> 是一个字符串：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomButton</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CustomButton.propTypes = &#123;</span><br><span class="line">  color: React.PropTypes.string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们建议尽可能的使用<a href="https://flowtype.org/" target="_blank" rel="noopener">Flow</a>，去获取编译时（compile-time）类型检测去替代运行时（runtime）类型检测。<a href="https://flowtype.org/docs/react.html" target="_blank" rel="noopener">React 已经内置支持Flow</a>，所以它很容易在一个React app 中进行静态分析。</p>
+<h2 id="Instance-Properites"><a href="#Instance-Properites" class="headerlink" title="Instance Properites"></a>Instance Properites</h2><h3 id="props"><a href="#props" class="headerlink" title="props"></a>props</h3><p><code>this.props</code> 包含compoent 被调用着的props。参考<a href="https://facebook.github.io/react/docs/components-and-props.html" target="_blank" rel="noopener">Components and Props</a>去了解props。</p>
+<p>尤其，<code>this.props.children</code> 是个特殊的props，明显地被JSX 表达式中的孩子标签定义，而不是这个标签自身。</p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>component 包含特定于该compoent 的数据，可能随着时间而改变。state 是用户定义的，它应该是一个普通的（plain）JavaScript 对象。</p>
+<p>如果你不在<code>render()</code> 中使用它，它就不应该是state。例如，你可以直接在实例上设置定时器ID。</p>
+<p>参考<a href="https://facebook.github.io/react/docs/state-and-lifecycle.html" target="_blank" rel="noopener">State and Lifecycle</a> 去了解更多关于state 的信息。</p>
+<p>永远不要直接改变<code>this.state</code>，通过调用<code>setState()</code> 来替代你做的这个改变。对待<code>this.state</code> 就像它是不会改变。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/react-component.html" target="_blank" rel="noopener">React.Component</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/06/React-Top-Level-API/" rel="next" title="React Top-Level API">
+                <i class="fa fa-chevron-left"></i> React Top-Level API
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/10/react-ReactDOM/" rel="prev" title="react ReactDOM">
+                react ReactDOM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Component"><span class="nav-number">1.</span> <span class="nav-text">React.Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Component-Lifecycle"><span class="nav-number">2.1.</span> <span class="nav-text">The Component Lifecycle</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mounting"><span class="nav-number">2.1.1.</span> <span class="nav-text">Mounting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Updating"><span class="nav-number">2.1.2.</span> <span class="nav-text">Updating</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unmounting"><span class="nav-number">2.1.3.</span> <span class="nav-text">Unmounting</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-APIs"><span class="nav-number">2.2.</span> <span class="nav-text">Other APIs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-Properties"><span class="nav-number">2.3.</span> <span class="nav-text">Class Properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instance-Properties"><span class="nav-number">2.4.</span> <span class="nav-text">Instance Properties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#render"><span class="nav-number">3.1.</span> <span class="nav-text">render()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">3.2.</span> <span class="nav-text">constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillMount"><span class="nav-number">3.3.</span> <span class="nav-text">componentWillMount()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentDidMount"><span class="nav-number">3.4.</span> <span class="nav-text">componentDidMount()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillReceiveProps"><span class="nav-number">3.5.</span> <span class="nav-text">componentWillReceiveProps()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shouldComponentUpdate"><span class="nav-number">3.6.</span> <span class="nav-text">shouldComponentUpdate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillUpdate"><span class="nav-number">3.7.</span> <span class="nav-text">componentWillUpdate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentDidUpdate"><span class="nav-number">3.8.</span> <span class="nav-text">componentDidUpdate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillUnmount"><span class="nav-number">3.9.</span> <span class="nav-text">componentWillUnmount()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setState"><span class="nav-number">3.10.</span> <span class="nav-text">setState()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forceUpdate"><span class="nav-number">3.11.</span> <span class="nav-text">forceUpdate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Properties-1"><span class="nav-number">4.</span> <span class="nav-text">Class Properties</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#defaultProps"><span class="nav-number">4.1.</span> <span class="nav-text">defaultProps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#displayName"><span class="nav-number">4.2.</span> <span class="nav-text">displayName</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#propTypes"><span class="nav-number">4.3.</span> <span class="nav-text">propTypes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Instance-Properites"><span class="nav-number">5.</span> <span class="nav-text">Instance Properites</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#props"><span class="nav-number">5.1.</span> <span class="nav-text">props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state"><span class="nav-number">5.2.</span> <span class="nav-text">state</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/09/React-Component/';
+
+      var disqus_title = "React.Component";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

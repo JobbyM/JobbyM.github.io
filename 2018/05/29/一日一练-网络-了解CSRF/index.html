@@ -1,0 +1,1028 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,一日一练,网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：了解CSRF  0x00 CSRF 简介通过XHR 访问的URL 可以通过浏览器或服务器来访问。下面的URL 就是一个例子。 1&#x2F;getuserinfo.php?id&#x3D;23 如果向这个URL 发送请求，可以想象结果会返回ID 为23 的用户的某些数据。别人可以将这个URL 的用户ID 修改我24、25。因此getuserinfo.php 文件必须知道请求者是否真的有权限">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-网络 了解CSRF">
+<meta property="og:url" content="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3CSRF/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：了解CSRF  0x00 CSRF 简介通过XHR 访问的URL 可以通过浏览器或服务器来访问。下面的URL 就是一个例子。 1&#x2F;getuserinfo.php?id&#x3D;23 如果向这个URL 发送请求，可以想象结果会返回ID 为23 的用户的某些数据。别人可以将这个URL 的用户ID 修改我24、25。因此getuserinfo.php 文件必须知道请求者是否真的有权限">
+<meta property="article:published_time" content="2018-05-29T01:01:12.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.601Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/05/29/一日一练-网络-了解CSRF/"/>
+
+
+
+
+
+  <title> 一日一练-网络 了解CSRF | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3CSRF/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-网络 了解CSRF
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-29T01:01:12+00:00">
+                2018-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3CSRF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/29/一日一练-网络-了解CSRF/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3CSRF/" class="leancloud_visitors" data-flag-title="一日一练-网络 了解CSRF">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：了解CSRF</p>
+</blockquote>
+<h2 id="0x00-CSRF-简介"><a href="#0x00-CSRF-简介" class="headerlink" title="0x00 CSRF 简介"></a>0x00 CSRF 简介</h2><p>通过XHR 访问的URL 可以通过浏览器或服务器来访问。下面的URL 就是一个例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;getuserinfo.php?id&#x3D;23</span><br></pre></td></tr></table></figure>
+<p>如果向这个URL 发送请求，可以想象结果会返回ID 为23 的用户的某些数据。别人可以将这个URL 的用户ID 修改我24、25。因此<code>getuserinfo.php</code> 文件必须知道请求者是否真的有权限访问要请求的数据；否则，你的服务器上的任何人的数据都可能被泄漏出去。</p>
+<a id="more"></a>
+
+<p>对于未被授权系统有权访问某个资源的情况，我们称之为 <strong>CSRF（Cross-Site Request Forgery, 跨站点请求伪造）</strong>。未被授权系统会伪装自己，让处理请求的服务器认为它是合法的。</p>
+<p><strong>CSRF 请求有两个关键点</strong><br>0x00.跨站点的请求</p>
+<p>从字面上看，跨站请求的来源是其他站点，比如，目标网站的删除文章功能接收到来自恶意网站客户端（JavaScript、Flash、HTML 等）发出的删除文章请求，这个请求就是跨站点的请求，目标网站应该区分请求来源。</p>
+<p>字面上的定义总是狭义的，这样恶意的请求也有可能来自本站。</p>
+<p>0x01.请求是伪造的</p>
+<p>如果请求的发出不是用户的意愿，那么这个请求就是伪造的。</p>
+<h2 id="0x01-CSRF-场景"><a href="#0x01-CSRF-场景" class="headerlink" title="0x01 CSRF 场景"></a>0x01 CSRF 场景</h2><p>目标网站A：<code>www.a.com</code><br>恶意网站B：<code>www.b.com</code><br>两个域不一样，目标网站A 上有一个删除文章的功能，通常是用户单击“删除链接”时才会删除指定的文章，这个链接是<code>www.a.com/blog/del?id=1</code>，id 代表不同的文章。</p>
+<p><strong>CSRF的思路</strong><br>1.在恶意网站B 上编写一个CSRF 页面（<code>www.b.com/crsf.html</code>），想想有什么办法可以发出一个GET 请求到目标网站A 上？<br>2.利用AJAX？不行，它禁止跨域传输数据。<br>3.那么，用代码<code>&lt;img src=htt://www.a.com/blog/del?id=1/&gt;</code><br>4.然后欺骗已经登录目标网站A 的用户访问<code>www.b.com/csrf.html</code> 页面，则攻击发生。</p>
+<p>这个攻击过程有三个关键点：跨域发出了一个GET 请求，可以无JavaScript 参与、请求是身份认证后的。</p>
+<h2 id="0x02-CSRF-类型"><a href="#0x02-CSRF-类型" class="headerlink" title="0x02 CSRF 类型"></a>0x02 CSRF 类型</h2><p>1.按照请求类型区分：GET 型和POST 型CSRF 攻击<br>2.按照攻击方式区分：HTML CSRF 攻击、JSON HiJacking 攻击、Flash CSRF 攻击</p>
+<h3 id="HTML-CSRF-攻击"><a href="#HTML-CSRF-攻击" class="headerlink" title="HTML CSRF 攻击"></a>HTML CSRF 攻击</h3><p>HTML 中能够设置<code>src/href</code> 等连接地址的标签都可以发起一个GET 请求，而GET 请求可以是CSRF 攻击</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;link href&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;img src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;img lowsrc&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;img dynsrc&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;refresh&quot; content&#x3D;&quot;0; url&#x3D;&quot;&gt;</span><br><span class="line">&lt;iframe src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;frame src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;script src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;bgsound src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;embed src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;video src&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;a href&#x3D;&quot;&quot;&gt;</span><br><span class="line">&lt;table background&#x3D;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>CSS 样式中的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@import &quot;&quot;</span><br><span class="line">background:url(&quot;&quot;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="JSON-HiJacking-攻击"><a href="#JSON-HiJacking-攻击" class="headerlink" title="JSON HiJacking 攻击"></a>JSON HiJacking 攻击</h3><p>JSON HiJacking 技术非常经典，攻击过程是CSRF，不过是对AJAX 响应中最常见的JSON 数据类型进行的劫持攻击。</p>
+<h3 id="Flash-CSRF-攻击"><a href="#Flash-CSRF-攻击" class="headerlink" title="Flash CSRF 攻击"></a>Flash CSRF 攻击</h3><p>Flash 的世界同样遵循同源策略，发起的CSRF 攻击是通过ActionScript 脚本来完成的，说到Flash CSRF 时，我们通常会想到以下两点：<br>1.跨域获取隐私数据。<br>2.跨域提交数据操作，一些如添加、删除、编辑等操作的请求，这里并不会获取到隐私数据。</p>
+<h2 id="0x03-CSRF-危害"><a href="#0x03-CSRF-危害" class="headerlink" title="0x03 CSRF 危害"></a>0x03 CSRF 危害</h2><ul>
+<li>篡改目标网站上的用户数据。</li>
+<li>盗取用户隐私数据。</li>
+<li>作为其他攻击向量的辅助攻击手法。</li>
+<li>传播CSRF 蠕虫。</li>
+</ul>
+<h2 id="0x04-CSRF-预防"><a href="#0x04-CSRF-预防" class="headerlink" title="0x04 CSRF 预防"></a>0x04 CSRF 预防</h2><p>为了确保通过XHR 访问的URL  安全，通行的做法就是验证发送请求者是否有权限访问相应的资源。有下列几种方式可供选择。</p>
+<ol>
+<li>要求以SSL 连接来访问可以通过XHR 请求的资源</li>
+<li>要求每一次请求都要附带经过相应算法计算得到的验证码。<br>请注意，下列措施对防范CSRF 攻击不起作用。</li>
+<li>要求发送POST 请求而不是GET 请求 – 很容易改变。</li>
+<li>检查来源URL 以确定是否可信 – 来源记录很容易伪造。</li>
+<li>基于cookie 信息进行验证 – 同样很容易伪造。</li>
+</ol>
+<h2 id="0x05-区别"><a href="#0x05-区别" class="headerlink" title="0x05 区别"></a>0x05 区别</h2><p>CSRF（跨站请求伪造）会借用目标用户的权限去做一些借刀杀人的事（注意是“借用”，而不是“盗用” 目标权限），然后去做坏事，“盗取”通常是XSS（跨站脚本攻击）最喜欢做的事。</p>
+<h2 id="0x06-参考文章"><a href="#0x06-参考文章" class="headerlink" title="0x06 参考文章"></a>0x06 参考文章</h2><p>1.《Web 前端黑客技术揭秘》第4 章 前端黑客之CSRF</p>
+<h2 id="0x07-相关文章"><a href="#0x07-相关文章" class="headerlink" title="0x07 相关文章"></a>0x07 相关文章</h2><p>1.<a href="https://www.zhuyingda.com/blog/b5.html" target="_blank" rel="noopener">CSRF 漏洞的原理</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3XSS/" rel="next" title="一日一练-网络 了解XSS">
+                <i class="fa fa-chevron-left"></i> 一日一练-网络 了解XSS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/30/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E4%BA%86%E8%A7%A3%E4%BB%A3%E7%90%86%E3%80%81%E7%BD%91%E5%85%B3%E5%92%8C%E9%9A%A7%E9%81%93/" rel="prev" title="一日一练-网络 了解代理、网关和隧道">
+                一日一练-网络 了解代理、网关和隧道 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-CSRF-简介"><span class="nav-number">1.</span> <span class="nav-text">0x00 CSRF 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-CSRF-场景"><span class="nav-number">2.</span> <span class="nav-text">0x01 CSRF 场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-CSRF-类型"><span class="nav-number">3.</span> <span class="nav-text">0x02 CSRF 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-CSRF-攻击"><span class="nav-number">3.1.</span> <span class="nav-text">HTML CSRF 攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-HiJacking-攻击"><span class="nav-number">3.2.</span> <span class="nav-text">JSON HiJacking 攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flash-CSRF-攻击"><span class="nav-number">3.3.</span> <span class="nav-text">Flash CSRF 攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-CSRF-危害"><span class="nav-number">4.</span> <span class="nav-text">0x03 CSRF 危害</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-CSRF-预防"><span class="nav-number">5.</span> <span class="nav-text">0x04 CSRF 预防</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-区别"><span class="nav-number">6.</span> <span class="nav-text">0x05 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-参考文章"><span class="nav-number">7.</span> <span class="nav-text">0x06 参考文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-相关文章"><span class="nav-number">8.</span> <span class="nav-text">0x07 相关文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/05/29/一日一练-网络-了解CSRF/';
+
+      var disqus_title = "一日一练-网络 了解CSRF";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

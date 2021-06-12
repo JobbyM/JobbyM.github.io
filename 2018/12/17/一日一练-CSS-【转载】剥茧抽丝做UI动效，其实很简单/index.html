@@ -1,0 +1,1069 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,CSS,一日一练,转载," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文转载自剥茧抽丝做 UI 动效，其实很简单，有部分删减，看原文请到原地址。   作者 &#x2F; Jonas Naimark，Google Material Design 团队动效设计师  动效有助于改善 UI 的表现力和易用性。它拥有很大的潜力，但它也可能是所有设计学科中最不被人了解的一门。这可能是因为，动效正式被认为是 UI 设计的一环的时间还很短。视觉和交互设计可以追溯到早期的 GUI，但动效却必">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单">
+<meta property="og:url" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="本文转载自剥茧抽丝做 UI 动效，其实很简单，有部分删减，看原文请到原地址。   作者 &#x2F; Jonas Naimark，Google Material Design 团队动效设计师  动效有助于改善 UI 的表现力和易用性。它拥有很大的潜力，但它也可能是所有设计学科中最不被人了解的一门。这可能是因为，动效正式被认为是 UI 设计的一环的时间还很短。视觉和交互设计可以追溯到早期的 GUI，但动效却必">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/hero.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/3.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_3.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_4.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/5.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/6.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/8.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/10.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/11.gif">
+<meta property="article:published_time" content="2018-12-17T06:43:21.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.345Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/hero.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/12/17/一日一练-CSS-【转载】剥茧抽丝做UI动效，其实很简单/"/>
+
+
+
+
+
+  <title> 一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-17T06:43:21+00:00">
+                2018-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/17/一日一练-CSS-【转载】剥茧抽丝做UI动效，其实很简单/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/" class="leancloud_visitors" data-flag-title="一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文转载自<a href="https://mp.weixin.qq.com/s/6xViWef8Po0N-x8BQiGw2Q" target="_blank" rel="noopener">剥茧抽丝做 UI 动效，其实很简单</a>，有部分删减，看原文请到原地址。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/hero.gif" class="">
+<blockquote>
+<p>作者 / Jonas Naimark，Google Material Design 团队动效设计师</p>
+</blockquote>
+<p>动效有助于改善 UI 的表现力和易用性。它拥有很大的潜力，但它也可能是所有设计学科中最不被人了解的一门。这可能是因为，动效正式被认为是 UI 设计的一环的时间还很短。视觉和交互设计可以追溯到早期的 GUI，但动效却必须在现代化硬件的加持下才能平滑地渲染成为大家能看到的动画效果。UI 动效和传统动画之间模糊的界限使得这个领域更加让人困惑。就拿做传统动画来说，光是掌握迪士尼的 12 个基本原则，就可能会让一个人耗尽一辈子的时间。这是否意味着 UI 动效也要如此复杂？人们经常告诉我，设计动效很复杂，很难做到 “恰到好处”。我主张，在那些对 UI 最重要的环节里，动效设计可以而且应该是很简单的。</p>
+<ul>
+<li>迪士尼动画 12 原则: <a href="https://en.wikipedia.org/wiki/12_basic_principles_of_animation" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/12_basic_principles_of_animation</a></li>
+</ul>
+<a id="more"></a>
+
+<h2 id="如何开始"><a href="#如何开始" class="headerlink" title="如何开始"></a>如何开始</h2><p>动效的主要作用是，通过说明各 UI 元素之间的关系，帮助用户在应用中导航。动效还可以使用动画图标、logo 和插图为应用增添个性; 但是需要记住，可用性应该始终优先于表达性。在展示个性化的动画技巧之前，让我们首先关注导航的转场动效，从而设计出强大的动效基础。</p>
+<h3 id="转场动效模式"><a href="#转场动效模式" class="headerlink" title="转场动效模式"></a>转场动效模式</h3><p>在设计导航转场动效时，简单性和一致性最为关键。为此，我们将从两种类型的动效模式中进行选择:</p>
+<ul>
+<li>基于容器的转场</li>
+<li>无容器转场</li>
+</ul>
+<h3 id="基于容器的转场"><a href="#基于容器的转场" class="headerlink" title="基于容器的转场"></a>基于容器的转场</h3><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/0.gif" class="">
+<p>如果作品中涉及了按钮、卡片或列表这样的容器，那么转场设计就要基于容器的变形动画。容器通常很容易被发现，因为它们的边缘清晰可见，但请记住，它们在动画开始之前也可以是不可见的，就像没有分隔符的列表项一样。这种模式可以分为三个步骤:</p>
+<ol>
+<li>使用 Material 的标准缓动为容器设置动画 (快速加速，然后慢慢减速到最终状态)。在这个动画示例中，通过修改容器的尺寸和角半径让其从圆形按钮变成了填充屏幕的矩形。<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/1.gif" class=""></li>
+<li>对容器中的元素进行缩放，以便适应新的宽度。元素固定在顶部并被遮罩在容器的轮廓内。这样就在容器和内部元素之间创建了清晰的连接 (即视觉树上的 “从属关系”)。<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/2.gif" class=""></li>
+<li>在转场中退出画面的元素会随着容器的加速形变而逐渐消失。新的元素在容器变形减速时淡入。由于元素在快速移动时，淡出淡入的内容都拥有很高的移动速度，从而得以创建出平滑且简练的动效。<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/3.gif" class="">
+
+</li>
+</ol>
+<p>将这一模式应用于涉及容器的所有转场，就可以建立起一致的动效风格。它还使得作品中的开始和结束环节之间的关系变得更加清晰，因为它们是由容器的形变串联在一起的的。为了展示这种模式的灵活性，下面我把它适配给五种不同的布局，注意观察不同布局间的一致性:</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_0.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_1.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_2.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_3.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/4_4.gif" class="">
+<p>△ 为了展现动效淡入淡出细节，动画都为慢速播放</p>
+<p>有些容器只使用 Material 的标准缓动从屏幕外滑入。滑动的方向取决于与之关联的组件的位置。例如，点击左上角的导航抽屉图标将导致容器从左侧滑入。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/5.gif" class="">
+
+<p>如果容器没有从屏幕外进入，而是从屏幕内 “弹出” 呢？则它会淡入并放大。注意它不会从 0% 的尺寸比例开始放大，而是从 95% 开始，以避免过度夸张的形变分散用户的注意力。缩放动画使用了 Material 的减速缓动，这意味着它在开始时呈现出最高的速度，并平缓地减速到最终状态。想要退出的话，容器会在没有缩放的情况下淡出。和进入动画相比，容器的退出动画往往做得更低调，以便用户将注意力始终集中在新内容上。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/6.gif" class="">
+<p>△ 动画同样为慢速播放，注意淡入和淡出动画的区别</p>
+<h3 id="无容器转场"><a href="#无容器转场" class="headerlink" title="无容器转场"></a>无容器转场</h3><p>有些动效没有容器可以用来构建转场的基础，例如点击底部导航栏中的图标，就会将用户带到新的栏目，除导航外的整个画面都会变化。在这些情况下，可以使用两步模式：</p>
+<p>1.前一个画面淡出，接下来新的画面淡入。<br>2.在新画面淡入的同时，它也会使用 Material 的减速缓动来巧妙地实现 “一点点” 缩放。再次强调，放大动画仅适用于入场的画面，以此强调新内容对旧内容的替换。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_0.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_1.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/7_2.gif" class="">
+<p>△ 动画同样为慢速播放，注意只有入场画面有放大的过程</p>
+<p>如果动效中进场和出场的元素拥有清晰的空间或顺序关系，则可以使用共享动效来对其进行强化。例如下图左侧，当在步骤列表中进行导航时，上一个步骤和下一个步骤的内容都会在对应的淡入淡出时使用垂直位移，这样就强调了二者都从属于这个垂直布局的属性。再比如下图右侧，当点击入门流程中的 “下一步” 按钮时，各画面都会使用水平移动的动效。从左向右的移动强化了 “在序列中前进” 的概念。注意这里共享的动效都使用了 Material 的标准缓动。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/8.gif" class="">
+<p>△ 动画同样为慢速播放，注意理解动效表达出来的前后两个元素的逻辑关系</p>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="涉及到可用性时，尽量做到简单"><a href="#涉及到可用性时，尽量做到简单" class="headerlink" title="涉及到可用性时，尽量做到简单"></a>涉及到可用性时，尽量做到简单</h3><p>导航转场的使用频率较高，而且与可用性密切相关，所以它通常应该优先考虑功能而非风格。这并不意味着它永远不应该被风格化，只要确保采用的风格符合产品的气质就可以了。引人注目的动效通常最适用于小图标、logo、加载过程或空页面状态等元素中。下面的简单示例虽然平实基础，但它有助于改善应用的可用性。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_0.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_1.gif" class=""><img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/9_2.gif" class="">
+<p>△ 第一个: 最简转场；第二个: 元素动画依次启动；第三个: 弹性动画。注意均为慢速播放</p>
+<h3 id="选择合适的动画时长和缓动"><a href="#选择合适的动画时长和缓动" class="headerlink" title="选择合适的动画时长和缓动"></a>选择合适的动画时长和缓动</h3><p>选取导航转场的持续时长时，要优先考虑功能方面的因素，要快，但不要太快，以免让用户晕头转向。要根据动画占用的屏幕尺寸来选择持续时间。由于导航转场通常占据屏幕的大部分空间，因此根据经验法则，选取一段较长的时长 (300毫秒) 较为合适。相比之下，像开关这样的小组件就只需要使用很短的时长，如100毫秒。如果转场感觉太快或太慢，请选用 25 毫秒的增量调整其持续时长，直到效果合适。</p>
+<p>缓动 (easing) 用来描述动画加速和减速的速度。大多数导航转场使用 Material 的标准缓动，这是一种非对称缓动类型。这意味着元素快速加速，然后慢慢减速，以便将用户的注意力集中在转场结束时。这种类型的缓动可以让动画看起来更加自然，因为现实世界中的物体不会立即开始或停止移动 (即加速和减速都有一个过程)。如果转场看起来过于僵硬或机械化，原因可能是使用了对称或线性的缓动。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/10.gif" class="">
+<p>△ 注意对称和线性缓动动画相比 Material 标准非对称缓动的区别。图中的动画为慢速播放</p>
+<p>本文中概述的模式和最佳实践旨在建立实用和简明的动效风格。这一风格适用于大多数应用，但有些品牌可能需要更强烈的风格化表达。想要了解有关风格化动效的更多信息，请使用下面的信息阅读我们的风格化设计指南:</p>
+<ul>
+<li>Material 缓动:<a href="https://material.io/design/motion/speed.html#easing" target="_blank" rel="noopener">https://material.io/design/motion/speed.html#easing</a></li>
+<li>Material 动效风格化指南: <a href="https://material.io/design/motion/customization.html" target="_blank" rel="noopener">https://material.io/design/motion/customization.html</a></li>
+</ul>
+<p>在导航转场完成之后，您要面临的下一个挑战就是为您的应用增添个性。简单的模式在这里不再适用，从这里开始，就是传统动画技艺大显身手的舞台了。</p>
+<img src="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%89%A5%E8%8C%A7%E6%8A%BD%E4%B8%9D%E5%81%9AUI%E5%8A%A8%E6%95%88%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E7%AE%80%E5%8D%95/11.gif" class="">
+<p>△ 如果出现恼人的错误信息，一个幽默的角色动画可以缓解尴尬</p>
+<p>如果您有兴趣进一步释放动效中蕴含的潜能，请务必阅读我们的 Material 动效指南，也欢迎在评论区和我们分享您在 UI 动效设计以及开发中的想法和疑问。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/14/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-CSS-%E5%B1%9E%E6%80%A7%E4%B8%AD%E9%BB%98%E8%AE%A4%E5%80%BC/" rel="next" title="一日一练-CSS CSS 属性中默认值">
+                <i class="fa fa-chevron-left"></i> 一日一练-CSS CSS 属性中默认值
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/17/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%89/" rel="prev" title="一日一练-浏览器 【转载】现代浏览器内部揭秘（第一部分）">
+                一日一练-浏览器 【转载】现代浏览器内部揭秘（第一部分） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何开始"><span class="nav-number">1.</span> <span class="nav-text">如何开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转场动效模式"><span class="nav-number">1.1.</span> <span class="nav-text">转场动效模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于容器的转场"><span class="nav-number">1.2.</span> <span class="nav-text">基于容器的转场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无容器转场"><span class="nav-number">1.3.</span> <span class="nav-text">无容器转场</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳实践"><span class="nav-number">2.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#涉及到可用性时，尽量做到简单"><span class="nav-number">2.1.</span> <span class="nav-text">涉及到可用性时，尽量做到简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择合适的动画时长和缓动"><span class="nav-number">2.2.</span> <span class="nav-text">选择合适的动画时长和缓动</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/12/17/一日一练-CSS-【转载】剥茧抽丝做UI动效，其实很简单/';
+
+      var disqus_title = "一日一练-CSS 【转载】剥茧抽丝做UI动效，其实很简单";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

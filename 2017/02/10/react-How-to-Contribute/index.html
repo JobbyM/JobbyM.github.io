@@ -1,0 +1,1067 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译How to Contribute这篇React（版本v15.4.0）官方文档。  How to ContributeReact 是Facebook 的第一个开源项目，它正在积极发展并且在迁移代码到facebook.com 任何位置。我们仍然正在解决节点（kinkes）去是贡献这个项目尽可能的容易和透明，但是我们还没有达到。希望这篇文档能够使贡献清晰并且能够回答你可能遇到的一些问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react How to Contribute">
+<meta property="og:url" content="https://jobbym.github.io/2017/02/10/react-How-to-Contribute/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译How to Contribute这篇React（版本v15.4.0）官方文档。  How to ContributeReact 是Facebook 的第一个开源项目，它正在积极发展并且在迁移代码到facebook.com 任何位置。我们仍然正在解决节点（kinkes）去是贡献这个项目尽可能的容易和透明，但是我们还没有达到。希望这篇文档能够使贡献清晰并且能够回答你可能遇到的一些问题。">
+<meta property="article:published_time" content="2017-02-10T01:56:59.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/02/10/react-How-to-Contribute/"/>
+
+
+
+
+
+  <title> react How to Contribute | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/02/10/react-How-to-Contribute/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react How to Contribute
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T01:56:59+00:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/10/react-How-to-Contribute/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/10/react-How-to-Contribute/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/10/react-How-to-Contribute/" class="leancloud_visitors" data-flag-title="react How to Contribute">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/contributing/how-to-contribute.html" target="_blank" rel="noopener">How to Contribute</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="How-to-Contribute"><a href="#How-to-Contribute" class="headerlink" title="How to Contribute"></a>How to Contribute</h2><p>React 是Facebook 的第一个开源项目，它正在积极发展并且在迁移代码到<a href="https://www.facebook.com/" target="_blank" rel="noopener">facebook.com</a> 任何位置。我们仍然正在解决节点（kinkes）去是贡献这个项目尽可能的容易和透明，但是我们还没有达到。希望这篇文档能够使贡献清晰并且能够回答你可能遇到的一些问题。</p>
+<a id="more"></a>
+
+<h3 id="Code-of-Conduct"><a href="#Code-of-Conduct" class="headerlink" title="Code of Conduct"></a><a href="https://code.facebook.com/codeofconduct" target="_blank" rel="noopener">Code of Conduct</a></h3><p>Facebook 已经采纳了我们希望项目参与者坚持的Code of Conduct。请阅读<a href="https://code.facebook.com/codeofconduct" target="_blank" rel="noopener">全文（the full text）</a>，这样你就可以了解什么行为将不会被允许。</p>
+<h3 id="Open-Development"><a href="#Open-Development" class="headerlink" title="Open Development"></a>Open Development</h3><p>在React 上的所有工作都直接发生在<a href="https://github.com/facebook/react" target="_blank" rel="noopener">GitHub</a> 上。包括核心团队成员和外部贡献者发送的pull request 都通过同样的审核过程。</p>
+<h3 id="Branch-Organization"><a href="#Branch-Organization" class="headerlink" title="Branch Organization"></a>Branch Organization</h3><p>我们将尽最大努力保持<a href="https://github.com/facebook/react/tree/master" target="_blank" rel="noopener"><code>master</code> branch</a> 良好状态，通过每一次测试都通过。但是为了快速移动（move），我们将使API 改变，你的应用程序可能不会兼容。我们推荐你使用<a href="https://facebook.github.io/react/downloads.html" target="_blank" rel="noopener">React 的最新稳定版本</a>。</p>
+<p>如果你发出一个pull request，请不要在<code>master</code> 分支上。我们分别为主版本保留稳定分支，但是我们不直接接受pull request。相反，我们从master 摘樱桃（cherry-pick）不破坏（non-breaking）改变到最新的稳定主版本。</p>
+<h3 id="Semantic-Versioning"><a href="#Semantic-Versioning" class="headerlink" title="Semantic Versioning"></a>Semantic Versioning</h3><p>React 遵循<a href="http://semver.org/" target="_blank" rel="noopener">语义化版本（sematic versioning）</a>。我们发布修订号（patch version）为问题修复，次版本号（minor version）为新特性，主版本号（major version）为任何突破性改变。当我们产生突破性改变，我们也引入废弃警告（deprecation warning）在次版本号，以至于我们的用户了解到升级改变以及提前迁移他们的代码。</p>
+<p>我们使用标签为每一个pull request 打tag，标志改变是否应该进入下一个<a href="https://github.com/facebook/react/pulls?q=is%253Aopen+is%253Apr+label%253Asemver-patch" target="_blank" rel="noopener">patch</a>、<a href="https://github.com/facebook/react/pulls?q=is%253Aopen+is%253Apr+label%253Asemver-minor" target="_blank" rel="noopener">minor</a>、<a href="https://github.com/facebook/react/pulls?q=is%253Aopen+is%253Apr+label%253Asemver-major" target="_blank" rel="noopener">major</a> 版本号中。我们每隔几周发布一个修订号，每隔几月发布一个次版本号，每年发布一两次主版本号。</p>
+<p>每一次重大改变都在<a href="https://github.com/facebook/react/blob/master/CHANGELOG.md" target="_blank" rel="noopener">changelog file</a>记录。</p>
+<h3 id="Bugs"><a href="#Bugs" class="headerlink" title="Bugs"></a>Bugs</h3><h4 id="Where-to-Find-Know-Issues"><a href="#Where-to-Find-Know-Issues" class="headerlink" title="Where to Find Know Issues"></a>Where to Find Know Issues</h4><p>我们为我们的公共bug 使用<a href="https://github.com/facebook/react/issues" target="_blank" rel="noopener">GitHub Issues</a>。我们密切关注这块，并且当我们有一个内部解决进程时，将尝试解决它。在提交一个新的task 之前，请确保你的问题还没有存在过。</p>
+<h4 id="Reporting-New-Issues"><a href="#Reporting-New-Issues" class="headerlink" title="Reporting New Issues"></a>Reporting New Issues</h4><p>使你的问题得到解决的最好方式是提供一个简介的测试例子。<a href="https://jsfiddle.net/reactjs/69z2wepo/" target="_blank" rel="noopener">JSFiddle tempalte</a> 是非常好的开始点。</p>
+<h4 id="Security-Bugs"><a href="#Security-Bugs" class="headerlink" title="Security Bugs"></a>Security Bugs</h4><p>Facebook 有一个安全漏洞的安全泄漏的奖金项目。考虑到这一点，请不要，请不要写到公共问题中；通过该页概述的过程。</p>
+<h3 id="How-to-Get-in-Touch"><a href="#How-to-Get-in-Touch" class="headerlink" title="How to Get in Touch"></a>How to Get in Touch</h3><ul>
+<li>IRC: <a href="https://webchat.freenode.net/?channels=reactjs" target="_blank" rel="noopener">#reactjs on freenode</a></li>
+<li>Discussion forum: <a href="https://discuss.reactjs.org/" target="_blank" rel="noopener">discuss.reactjs.org</a></li>
+</ul>
+<p>假使你需要React 帮助，这也有<a href="http://www.reactiflux.com/" target="_blank" rel="noopener">an active community of React users on the Discord chat platform</a></p>
+<h3 id="Proposing-a-Change"><a href="#Proposing-a-Change" class="headerlink" title="Proposing a Change"></a>Proposing a Change</h3><p>如果你打算更改公共的API，或者为实现任何重大的改变，我们推荐你<a href="https://github.com/facebook/react/issues/new" target="_blank" rel="noopener">提交一个问题（filing an issue）</a>。在你投入大量努力之前，先让我们对你的建议达成一致。</p>
+<p>如果你只是修复一个bug，提交关于pull request 是否正确的方式，但是我们仍推荐你提交一个问题，描述你修复的问题。这是有用的，假如我们不接收这个具体的修复（specific fix）但是想要跟踪这个问题。</p>
+<h3 id="Your-First-Pull-Request"><a href="#Your-First-Pull-Request" class="headerlink" title="Your First Pull Request"></a>Your First Pull Request</h3><p>工作在你的第一个Pull Request？你能够从这免费的视频系列：<a href="https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github" target="_blank" rel="noopener">How to Contribute to an Open Source Project on GitHub</a>学习。</p>
+<p>为了帮助你从实践中学习，并且让你熟悉我们的贡献构成，我们有一系列的<a href="https://github.com/facebook/react/labels/good%20first%20bug" target="_blank" rel="noopener">good first bugs</a>，它名包括相对容易去解决的bug。这是一个开始的伟大的地方。</p>
+<p>如果你决定去修复一个问题，请确保检查这个评论线程，以防有人已经在修复这个问题。如果此刻没有人在工作，请留下一条评论，陈述你想要去工作，以至于其他人不会意外地重复你的努力。</p>
+<p>如果有人提出了一个问题，但是超过两周没有被跟进，这是好的接管它，但是你应该仍然留一个评论。</p>
+<h3 id="Sending-a-Pull-Request"><a href="#Sending-a-Pull-Request" class="headerlink" title="Sending a Pull Request"></a>Sending a Pull Request</h3><p>核心团队监控pull request。我们将审查你的pull request，要么合并它，请求改变它，要么解释关闭它。对于API 改变，我们可能需要去在Facebook.com 去修复我们内部的使用，这将导致一些延迟。我们将尽我们最大的努力去更新并且反馈整个过程。</p>
+<p><strong>在提交一个pull request 之前，</strong> 请确保以下操作完成：</p>
+<ol>
+<li>派生<a href="https://github.com/facebook/react" target="_blank" rel="noopener">the repository</a>，并且从<code>master</code> 中创建你的分支。</li>
+<li>如果你已经添加了代码，这些代码应该被测试，添加测试！</li>
+<li>如果你已经改变了APIs，更新这个文档。</li>
+<li>确保测试套件通过（<code>npm test</code>）。</li>
+<li>确保你的代码lints（<code>npm run lint</code>）。</li>
+<li>运行<a href="https://flowtype.org/" target="_blank" rel="noopener">Flow</a> 类型检测（<code>npm run flow</code>）。</li>
+<li>如果你还没有，完成CLA。</li>
+</ol>
+<h3 id="Contributor-License-Agreement-CLA"><a href="#Contributor-License-Agreement-CLA" class="headerlink" title="Contributor License Agreement(CLA)"></a>Contributor License Agreement(CLA)</h3><p>为了接受你的pull request，我们需要你去提交CLA。你只需要去做一次，所以如果你已经为另一个Facebook 开源项目做过，你可以继续。如果你是第一次提交pull request，只要让我们知道你已经完成了CLA，我们可以再次确认（cross-check）你的GitHub 用户名</p>
+<p><a href="https://code.facebook.com/cla" target="_blank" rel="noopener">Complete your CLA here.</a></p>
+<h3 id="Contribution-Prerequisites"><a href="#Contribution-Prerequisites" class="headerlink" title="Contribution Prerequisites"></a>Contribution Prerequisites</h3><ul>
+<li>你已经安装了v4.0.0+ 的<code>node</code> ，以及v2.0.0+ 的<code>npm</code>。</li>
+<li>你已经安装了<code>gcc</code>，或安装需要的编译器。我们<code>npm</code> 中的一些依赖可能需要一个编译步骤。在OS X 上，Xcode 命令行工具将包括这限额。在Ubuntu 上，<code>apt-get install build-essential</code> 将会安装需要的包。类似的命令应该也在其它Linux distros 上工作。Windows 需要一些额外的步骤，查看<a href="https://github.com/nodejs/node-gyp#installation" target="_blank" rel="noopener"><code>node-gyp</code> installation instructions</a> 详细。</li>
+<li>你熟悉<code>npm</code> 并且知道当安装全局包时，是否需要使用<code>sudo</code>。</li>
+<li>你熟悉<code>git</code>。</li>
+</ul>
+<h3 id="Development-Workflow"><a href="#Development-Workflow" class="headerlink" title="Development Workflow"></a>Development Workflow</h3><p>复制完React 之后，运行<code>npm install</code> 去获取它的依赖。然后，你可以运行下面几个命令：</p>
+<ul>
+<li><code>npm run lint</code> 检测代码样式。</li>
+<li><code>npm test</code> 运行完整的测试套件。</li>
+<li><code>npm test -- --watch</code> 运行一个交互测试观测者。</li>
+<li><code>npm test &lt;pattern&gt;</code> 在匹配的文件名运行测试。</li>
+<li><code>npm run flow</code> 运行<a href="https://flowtype.org/" target="_blank" rel="noopener">Flow</a> 类型检测。</li>
+<li><code>npm run build</code> 创建一个所有包的<code>build</code> 文件夹。</li>
+</ul>
+<p>我们推荐运行<code>npm test</code>（获取它的变量上面）去确保你不会引入任何回退，当你工作在你的改变上。然而，它可以被掌握去试验你的React 构建在一个真实的项目中。</p>
+<p>首先，运行<code>npm run build</code> 。这将会生产预构建插件在<code>build</code> 文件夹，以及在<code>build/package</code> 中的准备的npm 包。</p>
+<p>最简单的方式去试验你的改变是去打开并修改<code>examples/basic/index.html</code> 。这文件已经使用来自<code>build </code>文件夹的<code>react.js</code> ，所以它能捡起你的变化。请确保去回滚在<code>examples</code> 中任何意外的变化，在发送一个pull request 之前。</p>
+<p>如果你要在你的已经存在的React 项目中试验你的改变，你可以复制<code>build/react.js</code>、<code>build/react-dom.js</code> 或任何其它构建产品到你的应用中，并使用它们而不是使用稳定版本。如果你的项目使用来自npm 的React，你可以在依赖中删除<code>react</code> 和<code>react-dom</code>，使用<code>npm link</code> 去指示它们在你本地的<code>build</code> 文件夹中：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd your_project</span><br><span class="line">npm link ~<span class="regexp">/path_to_your_react_clone/</span>build/packages/react</span><br><span class="line">npm link ~<span class="regexp">/path_to_your_react_clone/</span>build/packages/react-dom</span><br></pre></td></tr></table></figure>
+<p>每次在React 文件夹中运行<code>npm run build</code>，这个更新的版本将显示在你的项目的<code>node_modules</code>。你能够重新构建你的你的项目去试验的你的改变。</p>
+<p>我们仍然需要你的pull request 包括任何新功能的单元测试。这种方式我们能够确保我们在未来不会破坏你的代码。</p>
+<h3 id="Style-Guide"><a href="#Style-Guide" class="headerlink" title="Style Guide"></a>Style Guide</h3><p>我们linter 将会捕获存在与你的代码中大多数的样式问题。你可以通过简单的运行<code>npm run lint</code> 去查看你的代码样式的状态。</p>
+<p>然而，仍然有一些linter 不能找到一些样式。如果你不缺席呢这些事，查看<a href="https://github.com/airbnb/javascript" target="_blank" rel="noopener">Aribnb’s Style Guide</a> 将会给你一个正确的方向。</p>
+<h3 id="Code-Conventions"><a href="#Code-Conventions" class="headerlink" title="Code Conventions"></a>Code Conventions</h3><ul>
+<li>使用分号 <code>;</code></li>
+<li>最后一个逗号 <code>,</code></li>
+<li>2 个空格代表一个缩进（不是tab）</li>
+<li>使用<code>&#39;</code> 而不是<code>&quot;</code></li>
+<li><code>&#39;use strict&#39;;</code></li>
+<li>每行80 个字符（<strong>除了文档</strong>）</li>
+<li>书写“有魅力的（attractive）”代码</li>
+<li>不要使用<code>setTimeout</code> 和<code>setInterval</code> 可选的参数</li>
+</ul>
+<h3 id="Introductory-Video"><a href="#Introductory-Video" class="headerlink" title="Introductory Video"></a>Introductory Video</h3><p>你可以对观看结合扫如何对React 做贡献的<a href="https://www.youtube.com/watch?v=wUpPsEcGsg8" target="_blank" rel="noopener">短视频(26 mins)</a>感兴趣。</p>
+<h3 id="Meeting-Notes"><a href="#Meeting-Notes" class="headerlink" title="Meeting Notes"></a>Meeting Notes</h3><p>React 小组每周召开一次会议，讨论React 的未来计划、优先项目的开发。你可以找到会议笔记在<a href="https://github.com/reactjs/core-notes/" target="_blank" rel="noopener">a dedicated repository</a>。</p>
+<h3 id="License"><a href="#License" class="headerlink" title="License"></a>License</h3><p>通过给React 作贡献，你同意你的贡献将授权其在BSD 许可下。</p>
+<h3 id="What-Next"><a href="#What-Next" class="headerlink" title="What Next?"></a>What Next?</h3><p>阅读<a href="https://facebook.github.io/react/contributing/codebase-overview.html" target="_blank" rel="noopener">下一章节</a> 去了解代码库是如何被组织的。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/contributing/how-to-contribute.html" target="_blank" rel="noopener">How to Contribute</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/09/react-Two-way-Binding-Helpers/" rel="next" title="react Two-way Binding Helpers">
+                <i class="fa fa-chevron-left"></i> react Two-way Binding Helpers
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/13/react-Codebase-Overview/" rel="prev" title="react Codebase Overview">
+                react Codebase Overview <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Contribute"><span class="nav-number">1.</span> <span class="nav-text">How to Contribute</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-of-Conduct"><span class="nav-number">1.1.</span> <span class="nav-text">Code of Conduct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-Development"><span class="nav-number">1.2.</span> <span class="nav-text">Open Development</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Branch-Organization"><span class="nav-number">1.3.</span> <span class="nav-text">Branch Organization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Semantic-Versioning"><span class="nav-number">1.4.</span> <span class="nav-text">Semantic Versioning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bugs"><span class="nav-number">1.5.</span> <span class="nav-text">Bugs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Where-to-Find-Know-Issues"><span class="nav-number">1.5.1.</span> <span class="nav-text">Where to Find Know Issues</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reporting-New-Issues"><span class="nav-number">1.5.2.</span> <span class="nav-text">Reporting New Issues</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Security-Bugs"><span class="nav-number">1.5.3.</span> <span class="nav-text">Security Bugs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-Get-in-Touch"><span class="nav-number">1.6.</span> <span class="nav-text">How to Get in Touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proposing-a-Change"><span class="nav-number">1.7.</span> <span class="nav-text">Proposing a Change</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Your-First-Pull-Request"><span class="nav-number">1.8.</span> <span class="nav-text">Your First Pull Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sending-a-Pull-Request"><span class="nav-number">1.9.</span> <span class="nav-text">Sending a Pull Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Contributor-License-Agreement-CLA"><span class="nav-number">1.10.</span> <span class="nav-text">Contributor License Agreement(CLA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Contribution-Prerequisites"><span class="nav-number">1.11.</span> <span class="nav-text">Contribution Prerequisites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Development-Workflow"><span class="nav-number">1.12.</span> <span class="nav-text">Development Workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Style-Guide"><span class="nav-number">1.13.</span> <span class="nav-text">Style Guide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-Conventions"><span class="nav-number">1.14.</span> <span class="nav-text">Code Conventions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introductory-Video"><span class="nav-number">1.15.</span> <span class="nav-text">Introductory Video</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Meeting-Notes"><span class="nav-number">1.16.</span> <span class="nav-text">Meeting Notes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#License"><span class="nav-number">1.17.</span> <span class="nav-text">License</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-Next"><span class="nav-number">1.18.</span> <span class="nav-text">What Next?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/02/10/react-How-to-Contribute/';
+
+      var disqus_title = "react How to Contribute";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

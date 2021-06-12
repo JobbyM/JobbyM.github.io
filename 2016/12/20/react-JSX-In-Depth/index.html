@@ -1,0 +1,1076 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译JSX In Depth这篇React（版本v15.4.0）官方文档。  JSX In Depth从根本上说，JSX 只是提供了语法糖（syntactic sugar） 为React.createElement(component, props, ...children) 函数。这种JSX 代码： 123&lt;MyButton color&#x3D;&quot;blue&quot; shadowSize&#x3D;&amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react JSX In Depth">
+<meta property="og:url" content="https://jobbym.github.io/2016/12/20/react-JSX-In-Depth/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译JSX In Depth这篇React（版本v15.4.0）官方文档。  JSX In Depth从根本上说，JSX 只是提供了语法糖（syntactic sugar） 为React.createElement(component, props, ...children) 函数。这种JSX 代码： 123&lt;MyButton color&#x3D;&quot;blue&quot; shadowSize&#x3D;&amp;#1">
+<meta property="article:published_time" content="2016-12-20T00:48:30.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/12/20/react-JSX-In-Depth/"/>
+
+
+
+
+
+  <title> react JSX In Depth | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/12/20/react-JSX-In-Depth/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react JSX In Depth
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T00:48:30+00:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/20/react-JSX-In-Depth/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/20/react-JSX-In-Depth/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/20/react-JSX-In-Depth/" class="leancloud_visitors" data-flag-title="react JSX In Depth">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/jsx-in-depth.html" target="_blank" rel="noopener">JSX In Depth</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="JSX-In-Depth"><a href="#JSX-In-Depth" class="headerlink" title="JSX In Depth"></a>JSX In Depth</h2><p>从根本上说，JSX 只是提供了语法糖（syntactic sugar） 为<code>React.createElement(component, props, ...children)</code> 函数。这种JSX 代码：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyButton color=<span class="string">"blue"</span> shadowSize=&#123;<span class="number">2</span>&#125;&gt;</span><br><span class="line">  Click Me</span><br><span class="line">&lt;<span class="regexp">/MyButton&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编译成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">React.createElement(</span><br><span class="line">  MyButton,</span><br><span class="line">  &#123;<span class="attr">color</span>: <span class="string">'blue'</span>, <span class="attr">shadowSize</span>: <span class="number">2</span>&#125;,</span><br><span class="line">  <span class="string">'Click Me'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>如果没有子节点你也可以使用自闭合（self-closing）标签。像这样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"sidebar"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>编译成：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">React.createElement(</span><br><span class="line">  <span class="string">'div'</span>,</span><br><span class="line">  &#123;<span class="attr">className</span>: <span class="string">'sidebar'</span>&#125;,</span><br><span class="line">  <span class="literal">null</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>如果你想要对一些特殊的JSX 转换成JavaScript进行彻底验证，你可以在<a href="https://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015%2Creact%2Cstage-0" target="_blank" rel="noopener">the online Babel compiler</a> 进行试验。</p>
+<a id="more"></a>
+
+<h3 id="Specifying-The-React-Element-Type"><a href="#Specifying-The-React-Element-Type" class="headerlink" title="Specifying The React Element Type"></a>Specifying The React Element Type</h3><p>JSX 标签的第一部分决定了React element 的类型（type）。</p>
+<p>大写类型（Capitalized types）表明JSX 标签是React component。这些标签直接根据命名变量进行编译，所以如果你使用JSX 的<code>&lt;Foo /&gt;</code> 表达式，<code>Foo</code> 必须在作用域内。</p>
+<h4 id="React-Must-Be-in-Scope"><a href="#React-Must-Be-in-Scope" class="headerlink" title="React Must Be in Scope"></a>React Must Be in Scope</h4><p>既然编译JSX 需要调用<code>React.createElement</code>,这个<code>React</code> 库也必须在你的JSX 代码的作用域内。</p>
+<p>例如，这灵感在代码中都是必须被引入的（import），即使<code>React</code> 和<code>CustomButton</code> 没有被直接引用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> CustomButton <span class="keyword">from</span> <span class="string">'./CustomButton'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">WarningButton</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// return React.createElement(CustomButton, &#123;color: 'red'&#125;, ull)</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">CustomButton</span> <span class="attr">color</span>=<span class="string">"red"</span>/&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你没有使用JavaScript 打包器（bundler）而是直接将React 作为一个脚本标签（script tag），React 已经作为一个全局变量在作用域中了。</p>
+<h4 id="Using-Dot-Notation-for-JSX-Type"><a href="#Using-Dot-Notation-for-JSX-Type" class="headerlink" title="Using Dot Notation for JSX Type"></a>Using Dot Notation for JSX Type</h4><p>在JSX 中你也可以使用dot-notation 的形式引用一个React component。如果你有一个模块（module）导出了许多React component 是非常方便的。例如，如果<code>MyComponents.DatePicker</code> 是一个component，在JSX 中你可以直接使用它：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MyComponents = &#123;</span><br><span class="line">  DatePicker: <span class="function"><span class="keyword">function</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Imagine a &#123;props.color&#125; datepicker here.<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BlueDatePicker</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">MyComponents.DatePicker</span> <span class="attr">color</span>=<span class="string">"blue"</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="User-Defined-Components-Must-Be-Capitalized"><a href="#User-Defined-Components-Must-Be-Capitalized" class="headerlink" title="User-Defined Components Must Be Capitalized"></a>User-Defined Components Must Be Capitalized</h4><p>当一个element 类型是以一个小写字母开始，它表示一个内置（built-in）component 像<code>&lt;div&gt;</code> 和<code>&lt;span&gt;</code> 是作为<code>div</code> 和<code>span</code> 这个字符串传入<code>React.createElement</code>。类型以大写字母开始就像<code>&lt;Foo /&gt;</code> 编译到<code>React.createElement(Foo)</code> 并且响应到一个component 定义或者在一个JavaScript 文件中被引入。</p>
+<p>我们建议使用大写字母来命名components。如果你有一个component 是以小写字母开始的，在JSX 中使用之前需要将其赋给一个大写字母开头的变量（a capitalized variable）。</p>
+<p>例如，此代码不会像预期的那样运行：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Wrong! This is a component and should have been capitalized</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hell</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Correct! This use of &lt;div&gt; is legitimate because div is a valid HTML tag:</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello &#123;props.toWhat&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWorld</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Wrong! React thinks &lt;hello /&gt; is an HTML tag because it's not captialized;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">hello</span> <span class="attr">toWhat</span>=<span class="string">"World"</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了解决它，我们需要将<code>hello</code> 重名为<code>Hello</code> 同时使用<code>&lt;Hello /&gt;</code> 来引用它：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Correct! This is a component and should have been capitalized</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hello</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Correct! This use of &lt;div&gt; is legitimate because div is a valid HTML tag:</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello &#123;props.toWhat&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWorld</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Correct! React knows &lt;Hello /&gt; is a component because it's not captialized;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Hello</span> <span class="attr">toWhat</span>=<span class="string">"World"</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Choosing-the-Type-at-Runtime"><a href="#Choosing-the-Type-at-Runtime" class="headerlink" title="Choosing the Type at Runtime"></a>Choosing the Type at Runtime</h4><p>你不能使用一般的表达式作为React element 类型。如果需要使用一个一般的表达式只是element 的类型，只需要将其赋值给一个大写字母开头的变量。这通常在你需要基于一个props 去渲染不同的component 时发生：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; PhotoStory, VideoStory &#125; <span class="keyword">from</span> <span class="string">'./stories'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> components = &#123;</span><br><span class="line">  photo: PhotoStory,</span><br><span class="line">  vidoe: VideoStory</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Story</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Wrong! JSX type can't be an express</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">components[props.storyType]</span> <span class="attr">story</span>=<span class="string">&#123;props.story&#125;</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了解决它，我们将其赋值给一个大写字母开头的变量：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; PhotoStory, VideoStory &#125; <span class="keyword">from</span> <span class="string">'./stories'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> components = &#123;</span><br><span class="line">  photo: PhotoStory,</span><br><span class="line">  vidoe: VideoStory</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Story</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Correct! JSX type can be a captialized variable</span></span><br><span class="line">  <span class="keyword">const</span> SpecificStory = components[props.storyType]</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">SpecificStory</span> <span class="attr">story</span>=<span class="string">&#123;props.story&#125;</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Props-in-JSX"><a href="#Props-in-JSX" class="headerlink" title="Props in JSX"></a>Props in JSX</h3><p>在JSX 中有集中不同的方式去规定props。</p>
+<h4 id="JavaScript-Expressions"><a href="#JavaScript-Expressions" class="headerlink" title="JavaScript Expressions"></a>JavaScript Expressions</h4><p>你可以使用<code>{}</code>将任意JavaScript 表达式作为props 传入。例如，在JSX 中：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponents foo=&#123;<span class="number">1</span> + <span class="number">2</span> + <span class="number">3</span> + <span class="number">4</span>&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<p>对于<code>MyComponent</code>，这个<code>props.foo</code> 的值将是计算表达式<code>1 + 2 + 3 + 4</code> 得到的结果<code>10</code>。</p>
+<p>在JavaScript 中<code>if</code> 语句和<code>foo</code> 循环不是表达式，所以它们不能直接在JSX 中使用。 反而，你需要将它们在代码中使用。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">NumberDescriber</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> description</span><br><span class="line">  <span class="keyword">if</span> (props.number % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">    description = <span class="xml"><span class="tag">&lt;<span class="name">strong</span>&gt;</span>even<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    description = <span class="xml"><span class="tag">&lt;<span class="name">i</span>&gt;</span>odd<span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.number&#125; is an &#123;description&#125; number<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="String-Literals"><a href="#String-Literals" class="headerlink" title="String Literals"></a>String Literals</h4><p>你可以将字符串字面量作为props 传入。下面两种JSX 表达式是等价的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent message=<span class="string">"hello world"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;MyComponent message=&#123;<span class="string">'hello world'</span>&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<p>当你传入一个字符串字面量时，它的只是HTML 转义（HTML-unescaped）。所以下面两种JSX 表达式是等价的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent message=<span class="string">"&amp;lt;3"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;MyComponent message=&#123;<span class="string">'&lt;3'</span>&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<p>这两中行为并不相关。在这里只是为完整性而被提及。</p>
+<h4 id="Props-Default-to-“True”"><a href="#Props-Default-to-“True”" class="headerlink" title="Props Default to “True”"></a>Props Default to “True”</h4><p>如果你没有为一个prop 传值，它的默认值是<code>true</code>。下面两种JSX 表达式是等价的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyTextBox autocomplete /&gt;</span><br><span class="line"></span><br><span class="line">&lt;MyTextBox autocomplete=&#123;<span class="literal">true</span>&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<p>通常，我们不建议使用这种方式因为这会使<a href="">ES6 object shorthand</a> <code>{foo}</code> 是<code>{foo:foo}</code> 的简写而不是<code>{foo:true}</code> 产生困惑。这种行为在这只是为了匹配HTML的行为。</p>
+<h4 id="Spread-Attribtes"><a href="#Spread-Attribtes" class="headerlink" title="Spread Attribtes"></a>Spread Attribtes</h4><p>如果你已经有了对象作为<code>props</code>，并且你想将在JSX中传入，你可以使用<code>...</code> 这种的“spread” operator 将整个props 对象传入。下面两种components 是等价的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Greeting</span> <span class="attr">firstname</span>=<span class="string">"Ben"</span> <span class="attr">lastName</span>=<span class="string">"Hector"</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  conost props = &#123;<span class="attr">firstname</span>: <span class="string">'Ben'</span>, lastName=<span class="string">'Hector'</span>&#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Greeting</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>Spread attributes 是非常有用的当你构建一般容器（generic containers）。但是，由于非常容易将不相关的props 传入components 而不关心它们会使你的代码非常混乱。</p>
+<h3 id="Children-in-JSX"><a href="#Children-in-JSX" class="headerlink" title="Children in JSX"></a>Children in JSX</h3><p>在JSX 表达式可以包含在一个开合标签和一个闭合标签中，这些内容可以通过一个特殊的prop 传入：<code>props.children</code>。有几种不同的方式来传入子节点：</p>
+<h4 id="String-Literals-1"><a href="#String-Literals-1" class="headerlink" title="String Literals"></a>String Literals</h4><p>你可以在开合标签和闭合标签中传入一个字符串，并且<code>props.children</code> 可以是那个字符串。这对多数HTML  内置element 是有用的。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent&gt;Hello World&lt;<span class="regexp">/MyComponent&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这是有效的JSX，并且在<code>MyComponent</code> 中的<code>props.children</code> 是这个<code>Hello world!</code> 字符串。HTML 是转义的，所以你可以像写HTML 方式写JSX：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;This is valid HTML &amp;amp; JSX at the same time.&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>JSX 会移除一行中开始和结尾的空格。它也移除空行。邻接标签的新行也会被移除；新行在字符串中间出现也会变成一个空格。所以下面这些都会渲染成一样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;Hello World&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;div&gt;</span></span><br><span class="line"><span class="regexp">  Hello World</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  Hello</span><br><span class="line">  World</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  Hello World</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="JSX-Children"><a href="#JSX-Children" class="headerlink" title="JSX Children"></a>JSX Children</h4><p>你可以提供更多的JSX elements 作为子节点。这对于嵌套的components 是非常有用的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyContainer&gt;</span><br><span class="line">  &lt;MyFirstComponent /&gt;</span><br><span class="line">  &lt;MySecondComponent /&gt;</span><br><span class="line">&lt;<span class="regexp">/MyContainer&gt;</span></span><br></pre></td></tr></table></figure>
+<p>你可以混合不同类型的子节点，所以你可以和JSX 子节点一起使用字符串字面量。这是另一种类似HTML的JSX，所以它们都是有效的JSX 和HTML：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  Here is a list:</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;Item <span class="number">1</span>&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">    &lt;li&gt;Item 2&lt;/</span>li&gt;</span><br><span class="line">  &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>一个React component 不能返回多个React elements，但是一个JSX 表达式可以有多个子节点，所以如果你要在一个component 中渲染跟多东西，你可以将其包裹在一个<code>div</code> 中。</p>
+<h4 id="JavaScript-Expressions-1"><a href="#JavaScript-Expressions-1" class="headerlink" title="JavaScript Expressions"></a>JavaScript Expressions</h4><p>你要将任何JavaScript 表达式通过包裹在<code>{}</code> 中将其作为子节点传入。例如：所以下面两种JSX 表达式是等价的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent&gt;foo&lt;<span class="regexp">/MyComponent&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;MyComponent&gt;&#123;'foo'&#125;&lt;/</span>MyComponent&gt;</span><br></pre></td></tr></table></figure>
+<p>这对渲染任意长度的JavaScript 表达式列表是非常有用的。例如：下面渲染一个HTML 列表：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Item</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;props.message&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">TodoList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> todos = [<span class="string">'finish doc'</span>, <span class="string">'submit pr'</span>, <span class="string">'nag dan to review'</span>]</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &#123;todos.map(<span class="function">(<span class="params">message</span>) =&gt;</span> <span class="xml"><span class="tag">&lt;<span class="name">Item</span> <span class="attr">key</span>=<span class="string">&#123;message&#125;</span> <span class="attr">message</span>=<span class="string">&#123;message&#125;</span> /&gt;</span></span>)&#125;</span><br><span class="line">    &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript 表达式可以和其它类型的子节点混合。它经常用来代替字符串模版（string templates）：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hello</span>(<span class="params">props</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello &#123;props.addressee&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Functions-as-Children"><a href="#Functions-as-Children" class="headerlink" title="Functions as Children"></a>Functions as Children</h4><p>通常，在JSX 中的JavaScript 表达式被计算成字符串、React element 或者是列表中这些东西。然后，<code>props.children</code> 工作就像任何其它的prop ，它可以传入任何类型的数据，不仅仅是React 知道如何去渲染的类型。例如，你有一个自定义的component，你可以将props.children 作为一个回调函数传入：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ListOfTenThings</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;Repeat numTimes=&#123;<span class="number">10</span>&#125;&gt;</span><br><span class="line">      &#123;(index) =&gt; <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span>This is item &#123;index&#125; in the list<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;</span><br><span class="line">    &lt;<span class="regexp">/Repeat&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ Calls the children callback numTimes to produce a repeated component</span></span><br><span class="line"><span class="regexp">function Repeat(props)&#123;</span></span><br><span class="line"><span class="regexp">  let items = []</span></span><br><span class="line"><span class="regexp">  for (let i = 0; i &lt; props.numTimes; i++ ) &#123;</span></span><br><span class="line"><span class="regexp">    items.push(props.children(i))</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">  return &lt;div&gt;&#123;items&#125;&lt;/</span>div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子节点可以掺入将任何东西传入自定义component，只要component 在渲染之前将其转成React 可以理解的东西。这种使用方式并不普通，但是如果你想要扩展JSX 的能力时是非常有用的。</p>
+<h4 id="Booleans-Null-and-Undefined-Are-Ignored"><a href="#Booleans-Null-and-Undefined-Are-Ignored" class="headerlink" title="Booleans, Null, and Undefined Are Ignored"></a>Booleans, Null, and Undefined Are Ignored</h4><p><code>false</code>、<code>null</code>、<code>undefined</code>、和<code>true</code> 是有效的子节点。 它们只不过都不渲染。这些JSX 表达式都渲染成同一样东西：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;div&gt;&#123;false&#125;&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&#123;<span class="literal">null</span>&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;div&gt;&#123;true&#125;&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+<p>它们能够条件渲染React elements。如果<code>showHeader</code>为<code>true</code>那么只渲染<code>&lt;Header /&gt;</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;showHeader &amp;&amp; <span class="xml"><span class="tag">&lt;<span class="name">Header</span> /&gt;</span></span>&#125;</span><br><span class="line">  &lt;Content /&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>一个附加说明就是<a href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy" target="_blank" rel="noopener">“falsy” values</a> 就像<code>0</code> number 仍然可以被React 渲染。例如，下面的代码不会按照你期待的那样运行，因为<code>0</code> 会被打印当<code>props.messages</code> 是一个空数组时：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;props.messages.length &amp;&amp;</span><br><span class="line">    &lt;MessageList messages=&#123;props.messages&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为了解决它，请确保<code>&amp;&amp;</code>之前的表达式总是为布尔值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;props.messages.length &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">    &lt;MessageList messages=&#123;props.messages&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>相反的，如果你想将<code>false</code>、<code>true</code>、<code>null</code> 或者是<code>undefined</code> 作为一个值展示出来，你可以使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion" target="_blank" rel="noopener">convert it to string</a>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  My JavaScript variable is &#123;<span class="built_in">String</span>(myVariable)&#125;.</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/jsx-in-depth.html" target="_blank" rel="noopener">JSX In Depth</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/19/react-State-and-Lifecycle/" rel="next" title="react State and Lifecycle">
+                <i class="fa fa-chevron-left"></i> react State and Lifecycle
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/22/react-Typechecking-With-PropTypes/" rel="prev" title="react Typechecking With PropTypes">
+                react Typechecking With PropTypes <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX-In-Depth"><span class="nav-number">1.</span> <span class="nav-text">JSX In Depth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Specifying-The-React-Element-Type"><span class="nav-number">1.1.</span> <span class="nav-text">Specifying The React Element Type</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#React-Must-Be-in-Scope"><span class="nav-number">1.1.1.</span> <span class="nav-text">React Must Be in Scope</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-Dot-Notation-for-JSX-Type"><span class="nav-number">1.1.2.</span> <span class="nav-text">Using Dot Notation for JSX Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Defined-Components-Must-Be-Capitalized"><span class="nav-number">1.1.3.</span> <span class="nav-text">User-Defined Components Must Be Capitalized</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Choosing-the-Type-at-Runtime"><span class="nav-number">1.1.4.</span> <span class="nav-text">Choosing the Type at Runtime</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Props-in-JSX"><span class="nav-number">1.2.</span> <span class="nav-text">Props in JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript-Expressions"><span class="nav-number">1.2.1.</span> <span class="nav-text">JavaScript Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Literals"><span class="nav-number">1.2.2.</span> <span class="nav-text">String Literals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Props-Default-to-“True”"><span class="nav-number">1.2.3.</span> <span class="nav-text">Props Default to “True”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spread-Attribtes"><span class="nav-number">1.2.4.</span> <span class="nav-text">Spread Attribtes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Children-in-JSX"><span class="nav-number">1.3.</span> <span class="nav-text">Children in JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Literals-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">String Literals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSX-Children"><span class="nav-number">1.3.2.</span> <span class="nav-text">JSX Children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript-Expressions-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">JavaScript Expressions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Functions-as-Children"><span class="nav-number">1.3.4.</span> <span class="nav-text">Functions as Children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Booleans-Null-and-Undefined-Are-Ignored"><span class="nav-number">1.3.5.</span> <span class="nav-text">Booleans, Null, and Undefined Are Ignored</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/12/20/react-JSX-In-Depth/';
+
+      var disqus_title = "react JSX In Depth";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

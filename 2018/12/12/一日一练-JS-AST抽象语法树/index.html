@@ -1,0 +1,1144 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,JS,一日一练,AST," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="关于本文：原文：https:&#x2F;&#x2F;itnext.io&#x2F;ast-for-javascript-developers-3e79aeb08343作者：@Bohdan Liashenko译者：@JobbyM文章带有译者的理解，更多内容请查看原文  TL;DR 这篇文章是在Stockholm ReactJS Meetup 上的演讲，可以在https:&#x2F;&#x2F;www.slideshare.net&#x2F;BohdanL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-JS AST抽象语法树">
+<meta property="og:url" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="关于本文：原文：https:&#x2F;&#x2F;itnext.io&#x2F;ast-for-javascript-developers-3e79aeb08343作者：@Bohdan Liashenko译者：@JobbyM文章带有译者的理解，更多内容请查看原文  TL;DR 这篇文章是在Stockholm ReactJS Meetup 上的演讲，可以在https:&#x2F;&#x2F;www.slideshare.net&#x2F;BohdanL">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/hero.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_1.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_3.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_4.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_5.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_6.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_7.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_8.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_9.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_10.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_11.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_12.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_13.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_14.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_15.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_16.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_17.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_18.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_19.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_20.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_21.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_22.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_23.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_24.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_25.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_26.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_27.png">
+<meta property="article:published_time" content="2018-12-12T03:13:32.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.509Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="AST">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/hero.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/12/12/一日一练-JS-AST抽象语法树/"/>
+
+
+
+
+
+  <title> 一日一练-JS AST抽象语法树 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-JS AST抽象语法树
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-12T03:13:32+00:00">
+                2018-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/12/一日一练-JS-AST抽象语法树/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/" class="leancloud_visitors" data-flag-title="一日一练-JS AST抽象语法树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/hero.png" class="">
+
+<p>关于本文：<br>原文：<a href="https://itnext.io/ast-for-javascript-developers-3e79aeb08343" target="_blank" rel="noopener">https://itnext.io/ast-for-javascript-developers-3e79aeb08343</a><br>作者：@<a href="https://itnext.io/@bohdanliashenko?source=post_header_lockup" target="_blank" rel="noopener">Bohdan Liashenko</a><br>译者：@<a href="https://github.com/jobbym" target="_blank" rel="noopener">JobbyM</a><br>文章带有译者的理解，更多内容请查看<a href="https://itnext.io/ast-for-javascript-developers-3e79aeb08343" target="_blank" rel="noopener">原文</a></p>
+<blockquote>
+<p>TL;DR 这篇文章是在Stockholm ReactJS Meetup 上的演讲，可以在<a href="https://www.slideshare.net/BohdanLiashenko/ast-for-javascript-developers" target="_blank" rel="noopener">https://www.slideshare.net/BohdanLiashenko/ast-for-javascript-developers</a> 获取slides</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="为什么讲抽象语法树（Abstract-Syntax-Tree，AST）"><a href="#为什么讲抽象语法树（Abstract-Syntax-Tree，AST）" class="headerlink" title="为什么讲抽象语法树（Abstract Syntax Tree，AST）"></a>为什么讲抽象语法树（Abstract Syntax Tree，AST）</h2><p>查看现代项目的devDependencies，将看到它在过去几年中飞速增长。 我们在那里看到了一系列工具：JavaScript转换，代码压缩，CSS预处理器，eslint，prettier 等等。这些是不需要部署到生产环境的JavaScript 模块，但它们在我们的开发过程中起着非常重要的作用。所有这些工具都以各种方式构建在AST 处理之上。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_0.png" class="">
+
+<p>介绍一下要讨论的内容。首先从什么是AST 开始，以及如何从普通代码构建它。然后，我们将略微触及一些在AST 处理之上构建的最流行的用例和工具。最后是关于我的项目js2flowchart 的讨论，这是使用AST 时可以构建的最好的演示。接下来，让我们开始吧。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_1.png" class="">
+
+<h2 id="AST-是什么？"><a href="#AST-是什么？" class="headerlink" title="AST 是什么？"></a>AST 是什么？</h2><blockquote>
+<p>It is a hierarchical program representation that presents source code structure according to the grammar of a programming language, each AST node corresponds to an item of a source code.</p>
+</blockquote>
+<p>它是一种分层程序表示，根据编程语言的语法呈现源代码结构，每个AST 节点对应一段源代码。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_2.png" class="">
+
+<p>好了，让我们通过一个例子来了解它。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_3.png" class="">
+
+<p>但这是主要的想法。从纯文本中，我们得到了树状数据结构。一段代码与树中的节点匹配。</p>
+<p>如何从普通代码中获取AST？好吧，我们知道编译器已经这样做了。我们来看看普通的编译器吧。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_4.png" class="">
+
+<p>幸好，我们不需要经历将高级语言代码（HLL）转换为二进制的所有阶。我们只对词法分析和语法分析感兴趣。这两个步骤在代码生成AST中起主要作用。</p>
+<p>第一步。词法分析器，也称为扫描仪（scanner），它读取字符流（我们的代码）并使用定义的规则将它们组合成标记（token）。此外，它将删除空格字符，注释等。最后，整个代码字符串将被拆分为一个标记列表。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_5.png" class="">
+
+<p>当词法分析器读取源代码时，它会逐字母地扫描代码; 当它遇到空格，操作符号或特殊符号时，它决定一个单词完成了。</p>
+<p>第二步。 语法分析器（也称为解析器）将在词法分析后获取一个简单的标记列表，并将其转换为树形表示，验证语言语法并抛出语法错误（如果发生这种情况）。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_6.png" class="">
+
+<p>在生成树时，一些解析器会省略不必要的标记（例如冗余括号），因此它们创建AST（不是100％ 的代码匹配），但知道如何处理它。另一方面，完全覆盖所有代码结构的解析器生成的树称为“具体语法树（Concrete Syntax Tree， CST）”。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_7.png" class="">
+
+<h2 id="想要了解有关编译器的更多信息？"><a href="#想要了解有关编译器的更多信息？" class="headerlink" title="想要了解有关编译器的更多信息？"></a>想要了解有关编译器的更多信息？</h2><p>你可以从这个<a href="https://github.com/jamiebuilds/the-super-tiny-compiler" target="_blank" rel="noopener">超微型编译，The-super-tiny-compiler</a> 库开始。它是用JavaScript 编写的所有主要编译器的超简化示例。它有200 行实际代码，其背后的想法是将Lisp 编译成C 语言。所有代码都包含注释和解释。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_8.png" class="">
+
+<p>一个更好的项目<a href="https://github.com/ftomassetti/LangSandbox" target="_blank" rel="noopener">LangSandbox</a>。它说明了如何编写一门编程语言。有文章或书籍列表（如果你愿意）介绍如何做到这一点。所以，它更进一步，因为在这里你可以编写你的语言并编译成C/字节码，并在之后执行，而不是将Lisp 编译为C（就像在前面的例子中一样）。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_9.png" class="">
+
+<p>可以使用库吗？当然，有很多库。你可以访问<a href="https://astexplorer.net/" target="_blank" rel="noopener">astexplorer</a>并选择你喜欢的一个。有一个实时编辑器（live editor），你可以在其中使用AST 解析器。除了JavaScript 之外，它还包含许多其他语言。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_10.png" class="">
+
+<p>我想特别强调其中一个，称为Babylon。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_11.png" class="">
+
+<p>它用于Babel，也许这是它受欢迎的原因。因为它是由Babel 项目支持的，所以你可以期待它将始终与最新的JS 特性保持同步，在过去几年中经常这样做。所以，当我们接下来的事情就像’异步迭代（asynchronouse iteration）’时，这个解析器不会告诉你’意外的令牌（Unexpected token）’。此外，它具有相当好的API 并且通常易于使用。</p>
+<p>现在你知道如何为代码生成AST。接下来是继续讨论现实中的用例。</p>
+<p>第一个用例是代码转换，也就是Babel。</p>
+<blockquote>
+<p>Babel is not a ‘tool for having ES6 support’. Well, it is, but it is far not only what it is about.</p>
+</blockquote>
+<p>Babel不是“使ES6 工具得到支持的工具”。这不是它的全部意义。</p>
+<p>许多人将Babel 与ES6/7/8 特性的支持联系在一起。事实上，这就是我们经常使用它的原因。但它只是一组插件。我们也可以将它用于代码缩小，与React 相关的语法转换（例如JSX），Flow 的插件等。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_12.png" class="">
+
+
+<p>Babel 是一个JS 编译器。在较高的层次上，运行代码分为3 个阶段：解析，转换和生成。Babel 接受JavaScript 代码，修改代码并生成新的代码返回。它如何修改代码？准确说，它构建AST，遍历它，根据应用的插件修改它，然后从修改的AST 生成新代码。</p>
+<p>让我们在一个简单的代码示例中看一下。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_13.png" class="">
+
+<p>正如之前提到的，Babel 使用Babylon，因此，我们首先解析代码，然后遍历AST并反转所有变量名称。最后一步–生成代码。完成。正如你在这里看到的那样，第一步（解析）和第三部（代码生成）阶段看起来很常见，这就是你每次都要做的事情。所以，Babel 会处理它们，因为你唯一真正感兴趣的是AST 转换。</p>
+<p>在开发Babel-plugin 时，你只需描述将改变AST 的节点“visitor”。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_14.png" class="">
+
+<p>将它添加到Babel 插件列表中，在webpack 配置中设置babel-loader，在这里我们可以轻松看到它们。</p>
+<p>如果想了解更多关于如何构建一个babel-plugin 的信息，可以查看<a href="https://github.com/jamiebuilds/babel-handbook" target="_blank" rel="noopener">Babel-handbook</a>。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_15.png" class="">
+
+<p>接下来，我想提到的下一个用例是自动代码重构和<a href="https://github.com/facebook/jscodeshift" target="_blank" rel="noopener">JSCodeshift</a>。</p>
+<p>假设你希望用简短的箭头函数替换所有旧的匿名函数。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_16.png" class="">
+
+<p>代码编辑器很可能无法做到这一点，因为它不是简单的查找替换操作。这就是jscodeshift 发挥作用的地方。</p>
+<p>你很可能会与codemods 一起听到jscodeshift，这会让你感到困惑。Jscodeshift 是一个用于运行codemods 的工具包。codemods 是一个实际描述应该对AST 进行哪种转换的代码。所以，这个想法与Babel 及其插件非常相似。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_17.png" class="">
+
+<p>可以看出它同Babel 插件非常像。</p>
+<p>因此，如果想创建“自动化方式（automated way）”来将代码库迁移到新的框架版本，那么这是一种方法。例如，这里是react 16个prop types 重构。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_18.png" class="">
+
+<p>希望所有人都已经迁移到React 16 版本了;)</p>
+<p>尝试一下，已有创建的许多差异codemodes，你可以节省一些时间。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_19.png" class="">
+
+<p>稍微提及的最后一个用例是Prettier，因为可能每个人日常工作中都会使用它。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_20.png" class="">
+
+<p>Prettier 格式化我们的代码。它会打破长代码，清理空格，括号等。因此它将代码作为输入并将修改后的代码作为输出。听起来很熟悉吧？</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_21.png" class="">
+
+<p>这个想法仍然是一样的。首先，获取代码并生成AST。然后，实际上prettier 的魔法将会发生。AST 将转换为“中间代表（intermediate representation）”或“Doc”。 在更高级别，AST 节点将扩展信息，它们在格式化方面如何相互关联，例如，函数的参数列表应被视为一组项目。因此，如果列表很长并且不适合一行，则将每个参数分成单独的行等。然后，主算法，称为“打印机”将通过IR 并基于整个图片决定如何格式化代码。</p>
+<p>再说一次，如果你想了解漂亮印刷背后的更多理论，你可以参考这本书<a href="http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf" target="_blank" rel="noopener">A prettier printer</a>。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_22.png" class="">
+
+<p>要提到的最后一件事是我的<a href="https://github.com/Bogdan-Lyashenko/js-code-to-svg-flowchart" target="_blank" rel="noopener">js2flowchart</a>（Github上的4.2k星）。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_23.png" class="">
+
+<p>它将JS 代码生成SVG 流程图。</p>
+<p>这是一个很好的例子，因为它告诉你，当你有AST 代码表示时，你可以做任何你想做的事情。没有必要将它返回到代码字符串，你可以绘制它的流程图等等。</p>
+<p>用例是什么？你可以通过流程图解释/记录代码，通过视觉理解学习其它代码，为有效JS 语法简单描述的任何流程创建流程图。</p>
+<p>最简单的尝试方法–转到<a href="https://bogdan-lyashenko.github.io/js-code-to-svg-flowchart/docs/live-editor/index.html" target="_blank" rel="noopener">live editor</a>。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_24.png" class="">
+
+<p>试试看。此外，你可以从代码中使用它，或者它也有CLI，因此你只需指向要生成SVG 文件的文件。此外，还有VS Code扩展（链接 在readme 中）。</p>
+<p>那么，它还能做些什么呢？好吧，首先，除了生成所有代码的大方案之外，你还可以指定抽象级别。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_25.png" class="">
+
+<p>它意味着你只绘制模块导出，或仅绘制类定义，或函数定义及其调用。然后，你可以生成演示文稿，其中每张幻灯片都深入细节。</p>
+<p>还有一堆好用的工具可以修改树。例如，你可以在这里看到’.forEach’方法调用，它只是方法调用，但是我们可以指定它们应该被视为循环，因为我们知道forEach 是一个循环，所以，让我们像一个循环渲染它。</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_26.png" class="">
+
+<p>好吧，它是如何工作的？</p>
+<img src="/2018/12/12/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-AST%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91/ast_27.png" class="">
+
+<p>首先，将代码解析为AST，然后，我们遍历AST 并生成另一棵树，我称之为FlowTree（FT）。它省略了许多小的，不重要的令牌，但将关键块放在一起，如函数，循环，条件等。之后，我们遍历FlowTree 并从中创建ShapesTree（ST）。 ShapesTree 的每个节点都包含有关其视觉类型，定位，树中连接等的信息。最后一步，我们遍历所有形状，并为每个形状生成SVG 表示，将所有形状组合成一个SVG 文件。</p>
+<p>看看吧<a href="https://github.com/Bogdan-Lyashenko/js-code-to-svg-flowchart" target="_blank" rel="noopener">https://github.com/Bogdan-Lyashenko/js-code-to-svg-flowchart</a></p>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p>1.<a href="https://www.slideshare.net/BohdanLiashenko/ast-for-javascript-developers" target="_blank" rel="noopener">https://www.slideshare.net/BohdanLiashenko/ast-for-javascript-developers</a><br>2.<a href="https://github.com/jamiebuilds/the-super-tiny-compiler" target="_blank" rel="noopener">超微型编译，The-super-tiny-compiler</a><br>3.<a href="https://github.com/ftomassetti/LangSandbox" target="_blank" rel="noopener">LangSandbox</a><br>4.<a href="https://astexplorer.net/" target="_blank" rel="noopener">astexplorer</a><br>5.<a href="https://github.com/jamiebuilds/babel-handbook" target="_blank" rel="noopener">Babel-handbook</a><br>6.<a href="https://github.com/facebook/jscodeshift" target="_blank" rel="noopener">JSCodeshift</a><br>7.<a href="http://homepages.inf.ed.ac.uk/wadler/papers/prettier/prettier.pdf" target="_blank" rel="noopener">A prettier printer</a><br>8.<a href="https://github.com/Bogdan-Lyashenko/js-code-to-svg-flowchart" target="_blank" rel="noopener">js2flowchart</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/AST/" rel="tag"># AST</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/07/%E8%AF%91-NodeJS-%E5%85%A5%E9%97%A8/" rel="next" title="[译]NodeJS 入门">
+                <i class="fa fa-chevron-left"></i> [译]NodeJS 入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/14/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-HTML-DOM-%E6%A6%82%E8%BF%B0/" rel="prev" title="一日一练-HTML DOM 概述">
+                一日一练-HTML DOM 概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么讲抽象语法树（Abstract-Syntax-Tree，AST）"><span class="nav-number">1.</span> <span class="nav-text">为什么讲抽象语法树（Abstract Syntax Tree，AST）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-是什么？"><span class="nav-number">2.</span> <span class="nav-text">AST 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想要了解有关编译器的更多信息？"><span class="nav-number">3.</span> <span class="nav-text">想要了解有关编译器的更多信息？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">4.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/12/12/一日一练-JS-AST抽象语法树/';
+
+      var disqus_title = "一日一练-JS AST抽象语法树";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

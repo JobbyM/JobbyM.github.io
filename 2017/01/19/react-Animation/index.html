@@ -1,0 +1,1065 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Animation这篇React（版本v15.4.0）官方文档。  Animation Add-OnsReactTransitionGroup add-on component 是低级的动画API，ReactCSSTransitionGroup 是一个简单显示基本CSS 动画和变形的add-on component。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Animation">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/19/react-Animation/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Animation这篇React（版本v15.4.0）官方文档。  Animation Add-OnsReactTransitionGroup add-on component 是低级的动画API，ReactCSSTransitionGroup 是一个简单显示基本CSS 动画和变形的add-on component。">
+<meta property="article:published_time" content="2017-01-19T01:05:46.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/19/react-Animation/"/>
+
+
+
+
+
+  <title> react Animation | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/19/react-Animation/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Animation
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T01:05:46+00:00">
+                2017-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/19/react-Animation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/19/react-Animation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/19/react-Animation/" class="leancloud_visitors" data-flag-title="react Animation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/animation.html" target="_blank" rel="noopener">Animation</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Animation-Add-Ons"><a href="#Animation-Add-Ons" class="headerlink" title="Animation Add-Ons"></a>Animation Add-Ons</h2><p><a href="https://facebook.github.io/react/docs/animation.html#reacttransitiongroup" target="_blank" rel="noopener">ReactTransitionGroup</a> add-on component 是低级的动画API，<a href="https://facebook.github.io/react/docs/animation.html#reactcsstransitiongroup" target="_blank" rel="noopener">ReactCSSTransitionGroup</a> 是一个简单显示基本CSS 动画和变形的add-on component。</p>
+<a id="more"></a>
+
+<h2 id="High-level-API-ReactCSSTransitionGroup"><a href="#High-level-API-ReactCSSTransitionGroup" class="headerlink" title="High-level API: ReactCSSTransitionGroup"></a>High-level API: ReactCSSTransitionGroup</h2><p><code>ReactCSSTransitionGroup</code> 是一个基于 <a href="https://facebook.github.io/react/docs/animation.html#reacttransitiongroup" target="_blank" rel="noopener">ReactTransitionGroup</a> 的高级API并且当一个React component 进入或离开DOM 时很容易执行CSS 变形和动画。它的灵感来自优秀的<a href="http://www.nganimate.org/" target="_blank" rel="noopener">ng-animate</a> 库。</p>
+<p><strong>Importing</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactCSSTranstionGroup <span class="keyword">from</span> <span class="string">'react-addons-css-transition-group'</span> <span class="comment">// ES6</span></span><br><span class="line"><span class="keyword">var</span> ReactCSSTranstionGroup = <span class="built_in">require</span>(<span class="string">'react-addons-css-transition-group'</span>) <span class="comment">// ES5 with npm</span></span><br><span class="line"><span class="keyword">var</span> ReactCSSTranstionGroup = React.addons.CSSTransitionGroup; <span class="comment">// ES5 with react-with-addons.js</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TodoList</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">items</span>: [<span class="string">'hello'</span>, <span class="string">'world'</span>, <span class="string">'click'</span>, <span class="string">'me'</span>]&#125;;</span><br><span class="line">    <span class="keyword">this</span>.handleAdd = <span class="keyword">this</span>.handleAdd.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleAdd() &#123;</span><br><span class="line">    <span class="keyword">const</span> newItems = <span class="keyword">this</span>.state.items.concat([</span><br><span class="line">      prompt(<span class="string">'Enter some text'</span>)</span><br><span class="line">    ]);</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">items</span>: newItems&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleRemove(i) &#123;</span><br><span class="line">    <span class="keyword">let</span> newItems = <span class="keyword">this</span>.state.items.slice();</span><br><span class="line">    newItems.splice(i, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">items</span>: newItems&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> items = <span class="keyword">this</span>.state.items.map(<span class="function">(<span class="params">item, i</span>) =&gt;</span> (</span><br><span class="line">      &lt;div key=&#123;item&#125; onClick=&#123;() =&gt; <span class="keyword">this</span>.handleRemove(i)&#125;&gt;</span><br><span class="line">        &#123;item&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    ));</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;button onClick=&#123;this.handleAdd&#125;&gt;Add Item&lt;/</span>button&gt;</span><br><span class="line">        &lt;ReactCSSTransitionGroup</span><br><span class="line">          transitionName=<span class="string">"example"</span></span><br><span class="line">          transitionEnterTimeout=&#123;<span class="number">500</span>&#125;</span><br><span class="line">          transitionLeaveTimeout=&#123;<span class="number">300</span>&#125;&gt;</span><br><span class="line">          &#123;items&#125;</span><br><span class="line">        &lt;<span class="regexp">/ReactCSSTransitionGroup&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>Note：</strong><br>你必须为<code>ReactCSSTransitionGroup</code> 的所有子节点提供<a href="https://facebook.github.io/react/docs/multiple-components.html#dynamic-children" target="_blank" rel="noopener">the <code>key</code> attribute</a>，即使值渲染单独的一个条目。这是React 如何决定那一个孩子已经进入、离开或停留。</p>
+</blockquote>
+<p>在component 中，当一个条目被添加到<code>ReactCSSTransitionGroup</code> ，它将会获得<code>example-enter</code> 这个CSS 类，而<code>example-enter-active</code> 这个CSS 类将会在下一次点击时被加入。这是一个基于<code>transitionName</code> prop 的规则。</p>
+<p>你可以使用下面这些类去触发一个CSS 动画或变形。例如，尝试添这个CSS 并添加一个新的条目：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.example-enter</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.01</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.example-enter</span><span class="selector-class">.example-enter-active</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">500ms</span> ease-in;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.example-leave</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.example-leave</span><span class="selector-class">.example-leave-active</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.01</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">300ms</span> ease-in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你已经注意到动画持续时间需要在CSS 和渲染方法中这两个地方配置；这告诉React 什么时候从element 中移除动画类（animation class）– 如果它正在离开–什么时候从DOM 中移除element。</p>
+<h3 id="Animate-Inital-Mounting"><a href="#Animate-Inital-Mounting" class="headerlink" title="Animate Inital Mounting"></a>Animate Inital Mounting</h3><p><code>ReactCSSTransitionGroup</code> 提供一个可选的属性<code>transionAppear</code>，添加一个在首次加载component 时的额外变形阶段。在首次加载时通常没有变形阶段因为<code>transitionAppear</code> 默认值是<code>false</code>。下面这个例子传入的<code>transitionAppear</code> 的值为<code>true</code>。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ReactCSSTransitionGroup</span><br><span class="line">      transitionName=<span class="string">"example"</span></span><br><span class="line">      transitionAppear=&#123;<span class="literal">true</span>&#125;</span><br><span class="line">      transitionAppearTimeout=&#123;<span class="number">500</span>&#125;</span><br><span class="line">      transitionEnter=&#123;<span class="literal">false</span>&#125;</span><br><span class="line">      transitionLeave=&#123;<span class="literal">false</span>&#125;&gt;</span><br><span class="line">      &lt;h1&gt;Fading at Initial Mount&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>ReactCSSTransitionGroup&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在首次加载<code>ReactCSSTransitionGroup</code> 期间将会得到<code>example-appear</code> 这个CSS 类，在下次点击时<code>example-appear-active</code> CSS 类被添加。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.example-appear</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.01</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.example-appear</span><span class="selector-class">.example-appear-active</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity .<span class="number">5s</span> ease-in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在首次加载是，<code>ReactCSSTransitionGroup</code> 的所有的子节点会得到<code>appear</code> 而不是<code>enter</code>。然后，之后所有的子节点都会添加到一个已经存在的<code>ReactCSSTransitionGroup</code> 中是<code>enter</code> 而不是<code>appear</code>。</p>
+<blockquote>
+<p><strong>Note：</strong><br>在<code>0.13</code> 版本中<code>transitionAppear</code> 被添加到<code>ReactCSSTransitionGroup</code>。为了保持向后兼容，默认值被设置为<code>false</code>。<br>然后，<code>transitionEnter</code> 和<code>transitionLeave</code> 的默认值是<code>true</code>因此默认你必须配置<code>transitionEnterTimeout</code> 和<code>transitionLeaveTimeout</code>。如果不需要进入和离开动画，传<code>transitionEnter={false}</code> 或者<code>transitionLeave={false}</code>。</p>
+</blockquote>
+<h3 id="Custom-Classes"><a href="#Custom-Classes" class="headerlink" title="Custom  Classes"></a>Custom  Classes</h3><p>有可能会使用自定义类名为你的变形中的每一个步骤。替代传入一个字符串到变形名称（transitionName），你可以传入一个包含<code>enter</code> 和<code>leave</code> 类名的对象，或者这个对象包含<code>enter</code>，<code>enter-active</code>，<code>leave-active</code>和<code>leave</code> 类名。如果只有进入和离开类被提供，enter-active 和leave-active 类名将同追加<code>-active</code> 到类名之后来决定。下面是两个使用自定义类的例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">&lt;ReactCSSTransitionGroup</span><br><span class="line">  transitionName=&#123; &#123;</span><br><span class="line">    enter: <span class="string">'enter'</span>,</span><br><span class="line">    enterActive: <span class="string">'enterActive'</span>,</span><br><span class="line">    leave: <span class="string">'leave'</span>,</span><br><span class="line">    leaveActive: <span class="string">'leaveActive'</span>,</span><br><span class="line">    appear: <span class="string">'appear'</span>,</span><br><span class="line">    appearActive: <span class="string">'appearActive'</span></span><br><span class="line">  &#125; &#125;&gt;</span><br><span class="line">  &#123;item&#125;</span><br><span class="line">&lt;<span class="regexp">/ReactCSSTransitionGroup&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;ReactCSSTransitionGroup</span></span><br><span class="line"><span class="regexp">  transitionName=&#123; &#123;</span></span><br><span class="line"><span class="regexp">    enter: 'enter',</span></span><br><span class="line"><span class="regexp">    leave: 'leave',</span></span><br><span class="line"><span class="regexp">    appear: 'appear'</span></span><br><span class="line"><span class="regexp">  &#125; &#125;&gt;</span></span><br><span class="line"><span class="regexp">  &#123;item2&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>ReactCSSTransitionGroup&gt;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Animation-Group-Must-Be-Mounted-To-Work"><a href="#Animation-Group-Must-Be-Mounted-To-Work" class="headerlink" title="Animation Group Must Be Mounted To Work"></a>Animation Group Must Be Mounted To Work</h3><p>为了将变形应用到孩子节点上，<code>ReactCSSTransitionGroup</code> 必须已经被加载到DOM 中或这<code>transitionAppear</code> 属性必须被设置为<code>true</code>。</p>
+<p>下面这个例子将<strong>不会</strong>工作，因为<code>ReactCSSTransitionGroup</code> 正在随着新条目被加入，而不是这个新条目随着它被加载。对比这块和上面<a href="https://facebook.github.io/react/docs/animation.html#getting-started" target="_blank" rel="noopener">Getting Started</a> 去查看不同。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  <span class="keyword">const</span> items = <span class="keyword">this</span>.state.items.map(<span class="function">(<span class="params">item, i</span>) =&gt;</span> (</span><br><span class="line">    &lt;div key=&#123;item&#125; onClick=&#123;() =&gt; <span class="keyword">this</span>.handleRemove(i)&#125;&gt;</span><br><span class="line">      &lt;ReactCSSTransitionGroup transitionName=<span class="string">"example"</span>&gt;</span><br><span class="line">        &#123;item&#125;</span><br><span class="line">      &lt;<span class="regexp">/ReactCSSTransitionGroup&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  ));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="keyword">this</span>.handleAdd&#125;&gt;Add Item&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &#123;items&#125;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Animating-One-or-Zero-Items"><a href="#Animating-One-or-Zero-Items" class="headerlink" title="Animating One or Zero Items"></a>Animating One or Zero Items</h3><p>在上述例子中，我们渲染一个条目列表到<code>ReactCSSTransitionGroup</code>。然后，<code>ReactCSSTransitionGroup</code> 中的孩子可能会只有一个或零个条目。这会使得动画知道一个element 上进入或离开。同样的，你可以动画一个新element 替代当前的element。例如，我们可以实现像这样的一个图片旋转（image carousel ）：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactCSSTransitionGroup <span class="keyword">from</span> <span class="string">'react-addons-css-transition-group'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ImageCarousel</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ReactCSSTransitionGroup</span><br><span class="line">        transitionName=<span class="string">"carousel"</span></span><br><span class="line">        transitionEnterTimeout=&#123;<span class="number">300</span>&#125;</span><br><span class="line">        transitionLeaveTimeout=&#123;<span class="number">300</span>&#125;&gt;</span><br><span class="line">        &lt;img src=&#123;props.imageSrc&#125; key=&#123;props.imageSrc&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/ReactCSSTransitionGroup&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Disabling-Animations"><a href="#Disabling-Animations" class="headerlink" title="Disabling Animations"></a>Disabling Animations</h3><p>你可以使动画的<code>enter</code> 或<code>leave</code> 失效如果你想要。例如，有时你可能想要一个<code>enter</code> 动画并且没有<code>leave</code> 动画，但是<code>ReactCSSTransitionGroup</code> 等待一个动画完成在移除你的DOM 节点之前。你可以添加<code>transitionEnter={false}</code>或者<code>transitionLeave={false}</code>属性到<code>ReactCSSTransitionGroup</code>使这些动画失效。</p>
+<blockquote>
+<p><strong>Note：</strong><br>当使用<code>ReactCSSTransitionGroup</code> 时，这没有为你的component 进行提醒到变形已经结束或者去执行任何更多的复杂逻辑在动画上。如果你想要更多粒度的（fine-grained）控制，你可以使用低级的<code>ReactTransitionGroup</code> API 去提供你需要自定义变形的钩子（hook）。</p>
+</blockquote>
+<h2 id="Low-level-API-ReactTransitionGroup"><a href="#Low-level-API-ReactTransitionGroup" class="headerlink" title="Low-level API: ReactTransitionGroup"></a>Low-level API: ReactTransitionGroup</h2><p><strong>Importing</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactTransitionGroup <span class="keyword">from</span> <span class="string">'react-addons-transition-group'</span> <span class="comment">// ES6</span></span><br><span class="line"><span class="keyword">var</span> ReactTransitionGroup = <span class="built_in">require</span>(<span class="string">'react-addons-transition-group'</span>) <span class="comment">// ES5 with npm</span></span><br><span class="line"><span class="keyword">var</span> ReactTransitionGroup = React.addons.TransitionGroup; <span class="comment">// ES5 with react-with-addons.js</span></span><br></pre></td></tr></table></figure>
+
+<p><code>ReactTransitionGroup</code> 是基本的动画。当孩子节点被声明式的添加或移除（就像<a href="https://facebook.github.io/react/docs/animation.html#getting-started" target="_blank" rel="noopener">上例 </a>），配置在它上米昂的生命周期钩子（lifecycle hook）就会被调用。</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentwillappear" target="_blank" rel="noopener">componentWillAppear()</a></li>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentdidappear" target="_blank" rel="noopener">componentDidAppear()</a></li>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentwillenter" target="_blank" rel="noopener">componentWillEnter()</a></li>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentdidenter" target="_blank" rel="noopener">componentDidEnter()</a></li>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentwillleave" target="_blank" rel="noopener">componentWillLeave()</a></li>
+<li><a href="https://facebook.github.io/react/docs/animation.html#componentDidleave" target="_blank" rel="noopener">componentDidLeave()</a></li>
+</ul>
+<h3 id="Rendering-a-Different-Component"><a href="#Rendering-a-Different-Component" class="headerlink" title="Rendering a Different Component"></a>Rendering a Different Component</h3><p><code>ReactTransitionGroup</code> 默认渲染成一个<code>span</code>。你可以通过提供一个<code>component</code> 属性来改变这个默认行为。例如，这里你将渲染成一个<code>&lt;ul&gt;</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ReactTransitionGroup component=<span class="string">"ul"</span>&gt;</span><br><span class="line">  &#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line">&lt;<span class="regexp">/ReactTransitionGroup&gt;</span></span><br></pre></td></tr></table></figure>
+<p>任何额外的、用户自定义的、属性都会称为已经渲染的component 上的属性。例如，这里你讲渲染一个带CSS 类型的<code>&lt;ul&gt;</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ReactTransitionGroup component=<span class="string">"ul"</span> className=<span class="string">"animated-list"</span>&gt;</span><br><span class="line">  &#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line">&lt;<span class="regexp">/ReactTransitionGroup&gt;</span></span><br></pre></td></tr></table></figure>
+<p>每一个React 可以渲染的DOM component 都是可供使用的。然而，<code>component</code> 必须要成为一个DOM component。它可以是你想要的任何React component；甚至每一个你都可以自己写！写一个<code>component={List}</code> ，你的component 将会收到<code>this.props.children</code>。</p>
+<h3 id="Rendering-a-Single-Child"><a href="#Rendering-a-Single-Child" class="headerlink" title="Rendering a Single Child"></a>Rendering a Single Child</h3><p>人们经常使用<code>ReactTransitionGroup</code> 去动画加载并且卸载单个子节点就像一个可拆卸的面板（collapsible panel）。通常<code>ReactTransitionGroup</code> 包裹所有的子节点在一个<code>span</code> 中（或者像上面描述的一个自定义<code>component</code> 中）。这是因为任何React comoennt 必须返回单个根element，<code>ReactTranstionGroup</code> 对这个规则也不例外。</p>
+<p>然而如果你需要在<code>ReactTransitionGroup</code> 中渲染单个子节点，你可以完全避免把它包裹在一个<code>&lt;span&gt;</code> 或任何DOM component 中。为了实现它，创建一个自定义component 去直接渲染传入它的第一个子节点：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FirstChild</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> childrenArray = React.Children.toArray(props.children);</span><br><span class="line">  <span class="keyword">return</span> childrenArray[<span class="number">0</span>] || <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在你可以配置<code>FirstChild</code> 作为<code>&lt;ReactTransitionGroup&gt;</code> 的<code>component</code> 属性，避免在最终DOM 中有任何包裹。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;ReactTransitionGroup component=&#123;FirstChild&#125;&gt;</span><br><span class="line">  &#123;someCondition ? <span class="xml"><span class="tag">&lt;<span class="name">MyComponent</span> /&gt;</span></span> : <span class="literal">null</span>&#125;</span><br><span class="line">&lt;<span class="regexp">/ReactTransitionGroup&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这只在你对单个孩子节点进入或出时工作，就像一个可拆卸的面板（collapsible panel）。当动画多个子节点或使用另一个子节点替换单个子节点，这种方式不会工作，就像一个一个图片轮播（an image carousel）。对于一个图片轮播，当当前图片正在动画出去是，另一个图片将要动画进入，导致<code>&lt;ReactTransitionGroup&gt;</code> 需要给它们一个通用的DOM 父节点。你不能为多个子节点避免包裹器，但是你可以按照上面的描述使用<code>component</code> 自定义包裹器。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><h3 id="componentWillAppear"><a href="#componentWillAppear" class="headerlink" title="componentWillAppear()"></a>componentWillAppear()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillAppear(callback)</span><br></pre></td></tr></table></figure>
+<p>在一个<code>TransitionGroup</code> 中，初始化加载一个component 的<code>componentDidMount()</code> 方法的同时，这个方法被调用。它将阻止其它的动画发生直到<code>callback</code> 被调用。它只在<code>TransitionGroup</code> 的初次渲染中被调用。</p>
+<h3 id="componentDidAppear"><a href="#componentDidAppear" class="headerlink" title="componentDidAppear()"></a>componentDidAppear()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidAppear()</span><br></pre></td></tr></table></figure>
+<p>当传入<code>componentWillAppear</code> 中的<code>callback</code> 函数被调用之后，这个方法才被调用。</p>
+<h3 id="componentWillEnter"><a href="#componentWillEnter" class="headerlink" title="componentWillEnter()"></a>componentWillEnter()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillEnter(callback)</span><br></pre></td></tr></table></figure>
+<p>这个方法同已经被添加到<code>TransitionGroup</code> 中的component 的<code>componentDidMount()</code> 同时被调用。它将会阻止其它的动画反生，直到<code>callback</code> 被调用。它不会在<code>TransitionGroup</code> 的初次渲染时调用。</p>
+<h3 id="componentDidEnter"><a href="#componentDidEnter" class="headerlink" title="componentDidEnter()"></a>componentDidEnter()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidEnter()</span><br></pre></td></tr></table></figure>
+<p>当传入<a href="https://facebook.github.io/react/docs/animation.html#componentwillenter" target="_blank" rel="noopener">componentWillEnter()</a> 中的<code>callback</code> 函数被调用之后，这个方法才被调用。</p>
+<h3 id="componentWillLeave"><a href="#componentWillLeave" class="headerlink" title="componentWillLeave()"></a>componentWillLeave()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentWillLeave(callback)</span><br></pre></td></tr></table></figure>
+<p>当孩子节点已经从<code>ReactTransitionGroup</code> 中被移除后才会被调用。虽然孩子节点已经被移除了，<code>ReactTransitionGroup</code> 仍然将其保留在DOM 中，直到<code>callback</code> 被调用</p>
+<h3 id="componentDidLeave"><a href="#componentDidLeave" class="headerlink" title="componentDidLeave()"></a>componentDidLeave()</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">componentDidLeave()</span><br></pre></td></tr></table></figure>
+<p>当<code>willLeave</code> <code>callback</code> 被调用时（和<code>componentWillUnmount()</code> 同时） ，它才被调用。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/animation.html" target="_blank" rel="noopener">Animation</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/18/react-Test-Utilities/" rel="next" title="react Test Utilities">
+                <i class="fa fa-chevron-left"></i> react Test Utilities
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/20/react-Keyed-Fragments/" rel="prev" title="react Keyed Fragments">
+                react Keyed Fragments <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Animation-Add-Ons"><span class="nav-number">1.</span> <span class="nav-text">Animation Add-Ons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#High-level-API-ReactCSSTransitionGroup"><span class="nav-number">2.</span> <span class="nav-text">High-level API: ReactCSSTransitionGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animate-Inital-Mounting"><span class="nav-number">2.1.</span> <span class="nav-text">Animate Inital Mounting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Classes"><span class="nav-number">2.2.</span> <span class="nav-text">Custom  Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animation-Group-Must-Be-Mounted-To-Work"><span class="nav-number">2.3.</span> <span class="nav-text">Animation Group Must Be Mounted To Work</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Animating-One-or-Zero-Items"><span class="nav-number">2.4.</span> <span class="nav-text">Animating One or Zero Items</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Disabling-Animations"><span class="nav-number">2.5.</span> <span class="nav-text">Disabling Animations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Low-level-API-ReactTransitionGroup"><span class="nav-number">3.</span> <span class="nav-text">Low-level API: ReactTransitionGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rendering-a-Different-Component"><span class="nav-number">3.1.</span> <span class="nav-text">Rendering a Different Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rendering-a-Single-Child"><span class="nav-number">3.2.</span> <span class="nav-text">Rendering a Single Child</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillAppear"><span class="nav-number">4.1.</span> <span class="nav-text">componentWillAppear()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentDidAppear"><span class="nav-number">4.2.</span> <span class="nav-text">componentDidAppear()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillEnter"><span class="nav-number">4.3.</span> <span class="nav-text">componentWillEnter()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentDidEnter"><span class="nav-number">4.4.</span> <span class="nav-text">componentDidEnter()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentWillLeave"><span class="nav-number">4.5.</span> <span class="nav-text">componentWillLeave()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#componentDidLeave"><span class="nav-number">4.6.</span> <span class="nav-text">componentDidLeave()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/19/react-Animation/';
+
+      var disqus_title = "react Animation";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

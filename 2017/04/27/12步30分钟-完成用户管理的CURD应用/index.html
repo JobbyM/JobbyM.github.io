@@ -1,0 +1,1142 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,react,dva," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文链接12步20分钟，完成用户管理的CURD 应用（react+dva+antd），本文对原文进行了部分修改。  开始为了学习mobile-ant，但是发现推荐使用dva，因此找到了这篇文章。 本文是按照12步20分钟，完成用户管理的CURD 应用（react+dva+antd） 一步一步创建一个CURD 应用，包含查询、编辑、删除、创建，以及分页处理，数据mock，自动处理loading 状">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12步30分钟 完成用户管理的CURD应用">
+<meta property="og:url" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文链接12步20分钟，完成用户管理的CURD 应用（react+dva+antd），本文对原文进行了部分修改。  开始为了学习mobile-ant，但是发现推荐使用dva，因此找到了这篇文章。 本文是按照12步20分钟，完成用户管理的CURD 应用（react+dva+antd） 一步一步创建一个CURD 应用，包含查询、编辑、删除、创建，以及分页处理，数据mock，自动处理loading 状">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-1.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-2.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-3.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-4.png">
+<meta property="article:published_time" content="2017-04-27T06:29:52.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.265Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="dva">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-0.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/04/27/12步30分钟-完成用户管理的CURD应用/"/>
+
+
+
+
+
+  <title> 12步30分钟 完成用户管理的CURD应用 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                12步30分钟 完成用户管理的CURD应用
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-27T06:29:52+00:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/27/12步30分钟-完成用户管理的CURD应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/" class="leancloud_visitors" data-flag-title="12步30分钟 完成用户管理的CURD应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接<a href="https://github.com/sorrycc/blog/issues/18" target="_blank" rel="noopener">12步20分钟，完成用户管理的CURD 应用（react+dva+antd）</a>，本文对原文进行了部分修改。</p>
+</blockquote>
+<p>开始为了学习<a href="https://mobile.ant.design/index-cn" target="_blank" rel="noopener">mobile-ant</a>，但是发现推荐使用dva，因此找到了这篇文章。</p>
+<p>本文是按照<a href="https://github.com/sorrycc/blog/issues/18" target="_blank" rel="noopener">12步20分钟，完成用户管理的CURD 应用（react+dva+antd）</a> 一步一步创建一个CURD 应用，包含查询、编辑、删除、创建，以及分页处理，数据mock，自动处理loading 状态等，基于react、dva 和antd。</p>
+<a id="more"></a>
+
+<p>可以通过如下方法进行学习:</p>
+<ol>
+<li>clone 本项目<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/JobbyM/dva-example-user-dashboard.git</span><br></pre></td></tr></table></figure></li>
+<li>进入项目<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd dva-example-user-dashboard</span><br></pre></td></tr></table></figure></li>
+<li>安装依赖<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></li>
+<li>启动<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure></li>
+<li>从Step 2 到Step 12 都添加了tag，所以可以通过如下方法进行学习每一步<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout v2.0.0</span><br></pre></td></tr></table></figure>
+之后，运行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+就可以看到Step 2的效果了，不过Step 2 需要在浏览器中输入<a href="http://localhost:8000/#/users" target="_blank" rel="noopener">http://localhost:8000/#/users</a> 才可以看到响应的效果。</li>
+</ol>
+<p>最终效果：</p>
+<img src="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-0.gif" class="">
+
+<h2 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h2><ol>
+<li>node 版本要求为6.5+，本地为6.10.2</li>
+</ol>
+<h2 id="Step-1-安装dva-cli-并创建应用"><a href="#Step-1-安装dva-cli-并创建应用" class="headerlink" title="Step 1. 安装dva-cli 并创建应用"></a>Step 1. 安装dva-cli 并创建应用</h2><p>本地安装版本为0.7.8</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i dva-cli -g</span><br><span class="line">dva -v</span><br><span class="line">0.7.8</span><br></pre></td></tr></table></figure>
+<p>然后创建应用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dva new dva-example-user-dashboard</span><br><span class="line"><span class="built_in">cd</span> dva-example-user-dashboard</span><br></pre></td></tr></table></figure>
+
+<h2 id="Step-2-配置antd-和babel-plugin-import"><a href="#Step-2-配置antd-和babel-plugin-import" class="headerlink" title="Step 2. 配置antd 和babel-plugin-import"></a>Step 2. 配置antd 和babel-plugin-import</h2><p>babel-plugin-import 用于按需引入antd 的JavaScript 和CSS，这样打包出来的文件不至于太大。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i antd --save</span><br><span class="line">npm i babel-plugin-import --save-dev</span><br></pre></td></tr></table></figure>
+<p>修改<code>.roadhogrc</code>，在<code>&quot;extraBabelPlugins&quot;</code> 里加上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;import&quot;, &#123; &quot;libraryName&quot;: &quot;antd&quot;, &quot;style&quot;: &quot;css&quot; &#125;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>，这里的修改是在<code>.roadhogrc</code> 中的<code>&quot;env&quot;</code> 中的<code>&quot;development&quot;</code> 中的<code>&quot;extraBabelPlugins&quot;</code> 中进行修改的</p>
+<h2 id="Step-3-配置大力，能通过RESTFul-的方式访问-http-localhost-8000-api-users"><a href="#Step-3-配置大力，能通过RESTFul-的方式访问-http-localhost-8000-api-users" class="headerlink" title="Step 3. 配置大力，能通过RESTFul 的方式访问 http://localhost:8000/api/users"></a>Step 3. 配置大力，能通过RESTFul 的方式访问 <a href="http://localhost:8000/api/users" target="_blank" rel="noopener">http://localhost:8000/api/users</a></h2><p>修改<code>.roadhogrc</code>，加上<code>&quot;proxy&quot;</code> 配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;proxy&quot;: &#123;</span><br><span class="line">        &quot;&#x2F;api&quot;: &#123;</span><br><span class="line">          &quot;target&quot;: &quot;http:&#x2F;&#x2F;jsonplaceholder.typicode.com&#x2F;&quot;,</span><br><span class="line">          &quot;changeOrigin&quot;: true,</span><br><span class="line">          &quot;pathRewrite&quot;: &#123; &quot;^&#x2F;api&quot; : &quot;&quot; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>，这里的修改是在<code>.roadhogrc</code> 中的<code>&quot;env&quot;</code> 中的<code>&quot;development&quot;</code> 中进行添加的</p>
+<p>然后启动应用：（这个命令一直开着，后面不需要重启）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p>浏览器会自动启动，并打开<a href="http://localhost:8000/" target="_blank" rel="noopener">http://localhost:8000</a></p>
+<p>访问<a href="http://localhost:8000/api/users" target="_blank" rel="noopener">http://localhost:8000/api/users</a>, 就能访问到<a href="http://jsonplaceholder.typicode.com/users" target="_blank" rel="noopener">http://jsonplaceholder.typicode.com/users</a> 的数据。（由于typicode.com 服务的稳定性，偶尔可能会失败。不过没关系，正好便于我们之后对于出错的处理）</p>
+<img src="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-1.png" class="">
+
+<h2 id="Step-4-生成users-路由"><a href="#Step-4-生成users-路由" class="headerlink" title="Step 4. 生成users 路由"></a>Step 4. 生成users 路由</h2><p>用 dva-cli 生成路由</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dva g route users</span><br></pre></td></tr></table></figure>
+<p>然后访问<a href="http://localhost:8000/#/users" target="_blank" rel="noopener">http://localhost:8000/#/users</a></p>
+<img src="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-2.png" class="">
+
+<h2 id="Step-5-构造users-model-和service"><a href="#Step-5-构造users-model-和service" class="headerlink" title="Step 5. 构造users model 和service"></a>Step 5. 构造users model 和service</h2><p>用dva-cli 生成Model：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dva g model users</span><br></pre></td></tr></table></figure>
+<p>修改<code>src/models/users.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> usersService <span class="keyword">from</span> <span class="string">'../services/users'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  namespace: <span class="string">'users'</span>,</span><br><span class="line">  state: &#123;</span><br><span class="line">    list: [],</span><br><span class="line">    total: <span class="literal">null</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    save(state, &#123; <span class="attr">payload</span>: &#123; <span class="attr">data</span>: list, total &#125; &#125;) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; ...state, list, total &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  effects: &#123;</span><br><span class="line">    *fetch(&#123; <span class="attr">payload</span>: &#123; page &#125; &#125;, &#123; call, put &#125;)&#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; data, headers &#125; = <span class="keyword">yield</span> call(usersService.fetch, &#123; page &#125;)</span><br><span class="line">      <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'save'</span>, <span class="attr">payload</span>: &#123; data, <span class="attr">total</span>: headers[<span class="string">'x-total-count'</span>] &#125; &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  subscriptions: &#123;</span><br><span class="line">    setup(&#123; dispatch, history &#125;)&#123;</span><br><span class="line">      <span class="keyword">return</span> history.listen(<span class="function">(<span class="params">&#123;pathname, query&#125;</span>) =&gt;</span>  &#123;</span><br><span class="line">        <span class="keyword">if</span>(pathname === <span class="string">'/users'</span>)&#123;</span><br><span class="line">          dispatch(&#123; <span class="attr">type</span>: <span class="string">'fetch'</span>, <span class="attr">payload</span>: query &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>新增<code>src/services/users.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">'../utils/request'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fetch</span>(<span class="params">&#123; page = <span class="number">1</span> &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> request(<span class="string">`/api/users?_page=<span class="subst">$&#123;page&#125;</span>&amp;_limit=5`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于我们需要从respose headers 中获取total users 数量，所以需要改造下 <code>src/utils/request.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fetch <span class="keyword">from</span> <span class="string">'dva/fetch'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkStatus</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (response.status &gt;= <span class="number">200</span> &amp;&amp; response.status &lt; <span class="number">300</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> error = <span class="keyword">new</span> <span class="built_in">Error</span>(response.statusText);</span><br><span class="line">  error.response = response;</span><br><span class="line">  <span class="keyword">throw</span> error;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Requests a URL, returning a promise.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;string&#125;</span> </span>url       The URL we want to request</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;object&#125;</span> </span>[options] The options we want to pass to "fetch"</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;object&#125;</span>           </span>An object containing either "data" or "err"</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">url, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url, options)</span><br><span class="line"></span><br><span class="line">  checkStatus(response)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> response.json()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> ret = &#123;</span><br><span class="line">    data,</span><br><span class="line">    headers: &#123;&#125;,</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(response.headers.get(<span class="string">'x-total-count'</span>))&#123;</span><br><span class="line">    ret.headers[<span class="string">'x-total-count'</span>] = response.headers.get(<span class="string">'x-total-count'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>切换到浏览器（会自动刷新），应该没有任何变化，因为数据虽然好了，但并没有视图与之关联。但是打开Redux 开发者工具，应该可以看到<code>users/fetch</code> 和<code>users/save</code> 的action 以及相关的state。</p>
+<img src="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-3.png" class="">
+
+<h2 id="Step-6-添加界面，让用户列表展现出来"><a href="#Step-6-添加界面，让用户列表展现出来" class="headerlink" title="Step 6. 添加界面，让用户列表展现出来"></a>Step 6. 添加界面，让用户列表展现出来</h2><p>用dva-cli 生成component;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dva g component Users/Users</span><br></pre></td></tr></table></figure>
+<p>然后修改生成出来的<code>src/components/Users/Users.js</code> 和<code>src/components/Users/Users.css</code>，并在<code>src/route/Users.js</code> 中引用他。具体参考这个<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/8bd76c71f3f79063284ee7f04b061f6a8d8b58d3" target="_blank" rel="noopener">Commit</a>。<br>需留意两件事：</p>
+<ol>
+<li>对model 进行了微调，加入了page 表示当前页</li>
+<li>由于components 和services 中都用到了pageSize，所以提取到了<code>src/constants.js</code></li>
+</ol>
+<p>改完后，切换浏览器，应该能看到带分页的用户列表。</p>
+<img src="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/dva-4.png" class="">
+
+<h2 id="Step-7-添加layout"><a href="#Step-7-添加layout" class="headerlink" title="Step 7. 添加layout"></a>Step 7. 添加layout</h2><p>添加layout 布局，使得我们可以在首页和用户列表页之间来回切换。</p>
+<ol>
+<li>添加布局，<code>src/components/MainLayout.js</code> 和CSS 文件</li>
+<li>在<code>src/routes</code> 文件夹下的文件中引用这个布局</li>
+</ol>
+<p>参考这个<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/404d040bd0809e4dc48528cc90b189fec2705a3e" target="_blank" rel="noopener">Commit</a></p>
+<p>注意：</p>
+<ol>
+<li>页头的菜单会随着页面切换变化，高亮显示当前页所在的菜单项</li>
+</ol>
+<h2 id="Step-8-通过dva-loading-处理loading-状态"><a href="#Step-8-通过dva-loading-处理loading-状态" class="headerlink" title="Step 8. 通过dva-loading 处理loading 状态"></a>Step 8. 通过dva-loading 处理loading 状态</h2><p>dva 有一个管理effects 执行的hook，并基于此封装了dva-loading 插件。通过这个插件，我们可以不必一遍一遍写showLoading 和hideLoading，当发起请求时，插件会自动设置数据里的loading 状态为true 或false。然后我们在渲染components 时绑定并根据这个数据进行渲染。</p>
+<p>先安装dva-loading：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i dva-loading --save</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>src/index.js</code> 加载插件，在合适的地方加入下面两句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import createLoading from &#39;dva-loading&#39;;</span><br><span class="line">app.use(createLoading())</span><br></pre></td></tr></table></figure>
+<p>然后在<code>src/components/Users/Users.js</code> 里绑定loading 数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loading: state.loading.models.users,</span><br></pre></td></tr></table></figure>
+
+<p>具体参考这个<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/0fdc60dbe65eb27ddd010d6d4e711ac58d919a53" target="_blank" rel="noopener">Commit</a></p>
+<p>切换浏览器，你的用户列表有loading 了没？</p>
+<h2 id="Step-9-处理分页"><a href="#Step-9-处理分页" class="headerlink" title="Step 9. 处理分页"></a>Step 9. 处理分页</h2><p>只改一个文件<code>src/components/Users/Users.js</code> 就好。</p>
+<p>处理分页有两个思路：</p>
+<ol>
+<li>发起action，请求新的分页数据，保存到model，然后自动更新</li>
+<li>切换路由（由于之前监听了路由变化，所以后续的事情会自动处理）</li>
+</ol>
+<p>我们用的是思路2 的方式，好处是用户可以直接访问到page 2 或其他页面。</p>
+<p>参考这个<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/e1d93443015445ce39572439eab9ce47c590698f" target="_blank" rel="noopener">Commit</a></p>
+<h2 id="Step-10-处理用户删除"><a href="#Step-10-处理用户删除" class="headerlink" title="Step 10. 处理用户删除"></a>Step 10. 处理用户删除</h2><p>经过前面的9 步，应用的整体脉络已经清晰，相信大家已经对整体流程也有了一定了解。</p>
+<p>后面的功能调整都可以按照以下三步进行：</p>
+<ol>
+<li>services</li>
+<li>model</li>
+<li>component</li>
+</ol>
+<p>我们现在开始增加用户删除功能。</p>
+<ol>
+<li><p>service，修改<code>src/services/users.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">remove</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> request(<span class="string">`/api/users/<span class="subst">$&#123;id&#125;</span>`</span>, &#123;</span><br><span class="line">    method: <span class="string">'DELETE'</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>model，修改<code>src/models/users.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*remove(&#123; <span class="attr">payload</span>: id &#125;, &#123; call, put, select &#125;) &#123;</span><br><span class="line">  <span class="keyword">yield</span> call(usersService.remove, id);</span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">yield</span> select(<span class="function"><span class="params">state</span> =&gt;</span> state.users.page);</span><br><span class="line">  <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'fetch'</span>, <span class="attr">payload</span>: &#123; page &#125; &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>component，修改<code>src/components/Users.js</code>，替换<code>deleteHandler</code> 内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dispatch(&#123;</span><br><span class="line">  type: <span class="string">'users/remove'</span>,</span><br><span class="line">  payload: id,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="Step-11-处理用户编辑"><a href="#Step-11-处理用户编辑" class="headerlink" title="Step 11. 处理用户编辑"></a>Step 11. 处理用户编辑</h2><p>处理用户编辑和前面的一样，遵循三步走：</p>
+<ol>
+<li>services</li>
+<li>model</li>
+<li>component</li>
+</ol>
+<p>先是service，修改<code>src/services/users.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">patch</span>(<span class="params">id, values</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> request(<span class="string">`/api/users/<span class="subst">$&#123;id&#125;</span>`</span>, &#123;</span><br><span class="line">    method: <span class="string">'PATCH'</span>,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(values),</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再是model，修改<code>src/models/users.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*patch(&#123; <span class="attr">payload</span>: &#123; id, values &#125; &#125;, &#123; call, put, select &#125;) &#123;</span><br><span class="line">  <span class="keyword">yield</span> call(usersService.patch, id, values);</span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">yield</span> select(<span class="function"><span class="params">state</span> =&gt;</span> state.users.page);</span><br><span class="line">  <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'fetch'</span>, <span class="attr">payload</span>: &#123; page &#125; &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>最后是component，详见<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/358caf1d72d6348b29ccdece282d0d404b769196" target="_blank" rel="noopener">Commit</a>。</p>
+<p>需要注意的一点是，我们在这里如何处理Modal 的visible 状态，有几种选择：</p>
+<ol>
+<li>存dva 的model state 里</li>
+<li>存component state 里</li>
+</ol>
+<p>另外，怎么存也是个问题，可以：</p>
+<ol>
+<li>只有一个visible，然后根据用户点选的user 填不同的表单数据</li>
+<li>几个user 几个visible</li>
+</ol>
+<p>此教程选的方案是202，即存component state，并且visible 按user 存。另外为了使用的简便，封装了一个<code>UserModal</code> 的组件。</p>
+<p>完成后，切换到浏览器，应该就能够对用户进行编辑了。</p>
+<h2 id="Step-12-处理用户创建"><a href="#Step-12-处理用户创建" class="headerlink" title="Step 12. 处理用户创建"></a>Step 12. 处理用户创建</h2><p>先比用户编辑，用户创建更简单些，因为可以共用<code>UserModal</code> 组件。和Step 11 比较类似，就不赘述了，详见<a href="https://github.com/JobbyM/dva-example-user-dashboard/commit/d917327aee21e177e37d44d9dd73c685f0e52bb2" target="_blank" rel="noopener">Commit</a></p>
+<p>到这里，我们已经完成了一个完整的CURD 应用。但仅仅是完成，并不完善，比如：</p>
+<ul>
+<li>如何处理错误，比如请求等</li>
+<li>如何处理请求超时</li>
+<li>如果根据路由动态加载JS 和CSS</li>
+<li>…</li>
+</ul>
+<p>请期待下一篇。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/react/" rel="tag"># react</a>
+          
+            <a href="/tags/dva/" rel="tag"># dva</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/21/Lodash-%E5%AD%A6%E4%B9%A0-%E5%85%A5%E9%97%A8/" rel="next" title="Lodash 学习-入门">
+                <i class="fa fa-chevron-left"></i> Lodash 学习-入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="如何开发由Create-React-App 引导的应用（一）">
+                如何开发由Create-React-App 引导的应用（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始之前"><span class="nav-number">1.</span> <span class="nav-text">开始之前</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-安装dva-cli-并创建应用"><span class="nav-number">2.</span> <span class="nav-text">Step 1. 安装dva-cli 并创建应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-配置antd-和babel-plugin-import"><span class="nav-number">3.</span> <span class="nav-text">Step 2. 配置antd 和babel-plugin-import</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-配置大力，能通过RESTFul-的方式访问-http-localhost-8000-api-users"><span class="nav-number">4.</span> <span class="nav-text">Step 3. 配置大力，能通过RESTFul 的方式访问 http:&#x2F;&#x2F;localhost:8000&#x2F;api&#x2F;users</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-生成users-路由"><span class="nav-number">5.</span> <span class="nav-text">Step 4. 生成users 路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-构造users-model-和service"><span class="nav-number">6.</span> <span class="nav-text">Step 5. 构造users model 和service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-6-添加界面，让用户列表展现出来"><span class="nav-number">7.</span> <span class="nav-text">Step 6. 添加界面，让用户列表展现出来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-7-添加layout"><span class="nav-number">8.</span> <span class="nav-text">Step 7. 添加layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-8-通过dva-loading-处理loading-状态"><span class="nav-number">9.</span> <span class="nav-text">Step 8. 通过dva-loading 处理loading 状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-9-处理分页"><span class="nav-number">10.</span> <span class="nav-text">Step 9. 处理分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-10-处理用户删除"><span class="nav-number">11.</span> <span class="nav-text">Step 10. 处理用户删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-11-处理用户编辑"><span class="nav-number">12.</span> <span class="nav-text">Step 11. 处理用户编辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-12-处理用户创建"><span class="nav-number">13.</span> <span class="nav-text">Step 12. 处理用户创建</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/04/27/12步30分钟-完成用户管理的CURD应用/';
+
+      var disqus_title = "12步30分钟 完成用户管理的CURD应用";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

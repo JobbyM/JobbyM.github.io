@@ -1,0 +1,1059 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,鬼懿IT-干货分享," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Rythm.js源文文档1. https:&#x2F;&#x2F;github.com&#x2F;Okazari&#x2F;Rythm.js 思路 是什么，解决什么问题 什么样子，预览 如何使用 如果工作的（源码分析，基本流程） 总结，收获  What 一个可以使也页面跳动的js库。  demo：https:&#x2F;&#x2F;okazari.github.io&#x2F;Rythm.js&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阅读Rythm.js,了解Web Audio API 实现音频可视化">
+<meta property="og:url" content="https://jobbym.github.io/2017/02/28/%E9%98%85%E8%AF%BBRythm-js-%E4%BA%86%E8%A7%A3Web-Audio-API-%E5%AE%9E%E7%8E%B0%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="Rythm.js源文文档1. https:&#x2F;&#x2F;github.com&#x2F;Okazari&#x2F;Rythm.js 思路 是什么，解决什么问题 什么样子，预览 如何使用 如果工作的（源码分析，基本流程） 总结，收获  What 一个可以使也页面跳动的js库。  demo：https:&#x2F;&#x2F;okazari.github.io&#x2F;Rythm.js&#x2F;">
+<meta property="article:published_time" content="2017-02-28T07:13:24.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.701Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="鬼懿IT-干货分享">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/02/28/阅读Rythm-js-了解Web-Audio-API-实现音频可视化/"/>
+
+
+
+
+
+  <title> 阅读Rythm.js,了解Web Audio API 实现音频可视化 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/02/28/%E9%98%85%E8%AF%BBRythm-js-%E4%BA%86%E8%A7%A3Web-Audio-API-%E5%AE%9E%E7%8E%B0%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                阅读Rythm.js,了解Web Audio API 实现音频可视化
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T07:13:24+00:00">
+                2017-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/28/%E9%98%85%E8%AF%BBRythm-js-%E4%BA%86%E8%A7%A3Web-Audio-API-%E5%AE%9E%E7%8E%B0%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/28/阅读Rythm-js-了解Web-Audio-API-实现音频可视化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/28/%E9%98%85%E8%AF%BBRythm-js-%E4%BA%86%E8%A7%A3Web-Audio-API-%E5%AE%9E%E7%8E%B0%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96/" class="leancloud_visitors" data-flag-title="阅读Rythm.js,了解Web Audio API 实现音频可视化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Rythm-js源文文档"><a href="#Rythm-js源文文档" class="headerlink" title="Rythm.js源文文档"></a>Rythm.js源文文档</h2><pre><code>1. https://github.com/Okazari/Rythm.js</code></pre>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>是什么，解决什么问题</li>
+<li>什么样子，预览</li>
+<li>如何使用</li>
+<li>如果工作的（源码分析，基本流程）</li>
+<li>总结，收获</li>
+</ol>
+<h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><blockquote>
+<p>一个可以使也页面跳动的js库。</p>
+</blockquote>
+<p>demo：<a href="https://okazari.github.io/Rythm.js/" target="_blank" rel="noopener">https://okazari.github.io/Rythm.js/</a></p>
+<a id="more"></a>
+
+<h2 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h2><p>按照<a href="https://github.com/Okazari/Rythm.js/blob/master/README.md" target="_blank" rel="noopener">README.md</a> 说明（提供了一版<a href="https://github.com/JobbyM/Rythm.js/blob/master/README.zh-CN.md" target="_blank" rel="noopener">中文版README.zh-CN.md</a>），可以分为两种方式。一种是直接在页面通过<code>&lt;script&gt;</code>标签引入Rythm.js 文件，另外一种就是ES6 模块的方式进行使用。上述demo 中就是使用的第一种方式。</p>
+<p>第一步：在你的页面引入 rythm。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"/path/to/rythm.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中的<code>/path/to/rythm.js </code> 既可以是本地也可以是线上地址<code>https://unpkg.com/rythm.js/</code></p>
+<p>第二步：引入rythm css 类的元素将会跳舞。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"rythm-bass"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中的<code>rythm-bass</code> 可以进行自定义，也可以使用Rythm.js 默认的值，稍后将在How to Work 中进行介绍。</p>
+<p>=第三步：创建一个Rythm 对象，并且传入你的音频url 地址，然后调用start 方法。这样就可以查看效果了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rythm = <span class="keyword">new</span> Rythm();</span><br><span class="line">rythm.setMusic(<span class="string">"path/to/sample.mp3"</span>);</span><br><span class="line">rythm.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="How-to-Work"><a href="#How-to-Work" class="headerlink" title="How to Work"></a>How to Work</h2><p>原理：</p>
+<p>使用Web Audio API 实现的音频可视化。通过获取各个时间点上的音频数据（通常为振幅或频率），之后运用图像技术将其处理为视觉输出（例如一个图像）来实现。Web Audio API 提供了一个不会改变输入信号的音频节点–分析器节点（AnalyserNode），通过它获取声音数据并传递到像<code>&lt;canvas&gt;</code> 等等一样的可视化工具。</p>
+<p>一般流程如下：</p>
+<p>1、创建音频环境<br>2、在音频环境中，创建声源<br>3、创建特效节点<br>4、选择音频的终点<br>5、将声源、特效节点以及音频的终点链接起来</p>
+<p>Web Audio API 的最简代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建音频环境</span></span><br><span class="line"><span class="keyword">var</span> audioCtx = <span class="keyword">new</span> (<span class="built_in">window</span>.AudioContext || <span class="built_in">window</span>.webkitAudioContext)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在音频环境中，创建声源</span></span><br><span class="line"><span class="keyword">var</span> oscillator = audioCtx.createOscillator();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选择音频的终点</span></span><br><span class="line"><span class="comment">// 将声源、特效节点以及音频的终点链接起来</span></span><br><span class="line">oscillator.connect(audioCtx.destination);</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">oscillator.start()</span><br></pre></td></tr></table></figure>
+
+<p>然后将上述js 代码引入一个HTML 页面就可以了，**<em>注意：需要调整一下电脑的音量**</em></p>
+<p>上述代码只是一个简单使用Web Audio API 的例子，因此同介绍的一般流程不同，缺失了流程中的部分。下面根据一般流程来解释Rythm.js 中的代码。</p>
+<h2 id="Review-Code"><a href="#Review-Code" class="headerlink" title="Review Code"></a>Review Code</h2><p>1、 <a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L5-L7" target="_blank" rel="noopener">创建音频环境</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">that._browserAudioCtx = AudioContext || webkitAudioContext</span><br><span class="line"></span><br><span class="line">that._audioCtx = <span class="keyword">new</span> that._browserAudioCtx();</span><br></pre></td></tr></table></figure>
+
+<p>2、<a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L46-L55" target="_blank" rel="noopener">在音频环境中，创建声源</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">that._createSourceFromAudioElement = <span class="function"><span class="keyword">function</span> <span class="title">connectExternalAudioSource</span>(<span class="params">audioElement</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> that._audioCtx.createMediaElementSource(that._audio);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">that.connectExternalAudioElement = <span class="function"><span class="keyword">function</span> <span class="title">connectExternalAudioElement</span>(<span class="params">audioElement</span>) </span>&#123;</span><br><span class="line">  that._audio = audioElement;</span><br><span class="line">  that._rythmInputType = that._rythmInputTypeList[<span class="string">'EXTERNAL'</span>];</span><br><span class="line">  that._source = that._createSourceFromAudioElement(that._audio);</span><br><span class="line">  that._connectSource(that._source);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以及<a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L73-L95" target="_blank" rel="noopener">获取麦克风中的音频流</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">that.plugMicrophone = <span class="function"><span class="keyword">function</span> <span class="title">plugMicrophone</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> that._getMicrophoneStream().then(<span class="function"><span class="keyword">function</span>(<span class="params">stream</span>)</span>&#123;</span><br><span class="line">    that._audio = stream;</span><br><span class="line">    that._rythmInputType = that._rythmInputTypeList[<span class="string">'STREAM'</span>];</span><br><span class="line">    that._source = that._audioCtx.createMediaStreamSource(stream);</span><br><span class="line">    that._connectSource(that._source);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">that._getMicrophoneStream = <span class="function"><span class="keyword">function</span> <span class="title">_getMicrophoneStream</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  navigator.getUserMedia = (navigator.getUserMedia ||</span><br><span class="line">                            navigator.webkitGetUserMedia ||</span><br><span class="line">                            navigator.mozGetUserMedia ||</span><br><span class="line">                            navigator.msGetUserMedia);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    navigator.getUserMedia(&#123;<span class="attr">audio</span>:<span class="literal">true</span>&#125;,</span><br><span class="line">      <span class="function"><span class="keyword">function</span>(<span class="params">medias</span>)</span>&#123;</span><br><span class="line">        resolve(medias);</span><br><span class="line">      &#125;,<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">        reject(error);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、<a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L9-L18" target="_blank" rel="noopener">创建特效节点</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">that._init = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  that._analyser = that._audioCtx.createAnalyser();</span><br><span class="line">  that._gain = that._audioCtx.createGain();</span><br><span class="line">  that._source = &#123;&#125;;</span><br><span class="line">  that._audio = &#123;&#125;;</span><br><span class="line">  that._hzHistory = [];</span><br><span class="line">  that._analyser.fftSize = <span class="number">2048</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">that._init();</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里实现了两个音效节点（AudioNode）一个是分析器节点（ AnalyserNode），一个是音量节点（GainNode），Rythm.js 主要用到的是分析器节点（AnalyserNode）。</p>
+<p>4、<a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L60-L61" target="_blank" rel="noopener">选择音频的终点</a>，这里根据音源的不同，选择不同的音频重点，只有当音源不是来自麦克风才使用系统自带的扬声器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(that._rythmInputType !== that._rythmInputTypeList[<span class="string">'STREAM'</span>])&#123;</span><br><span class="line">  that._analyser.connect(that._audioCtx.destination);</span><br></pre></td></tr></table></figure>
+
+<p>5、<a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L57-L64" target="_blank" rel="noopener">将声源、特效节点以及音频的终点链接起来</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">that._connectSource = <span class="function"><span class="keyword">function</span> <span class="title">_connectSource</span>(<span class="params">source</span>)</span>&#123;</span><br><span class="line">  source.connect(that._gain);</span><br><span class="line">  that._gain.connect(that._analyser);</span><br><span class="line">  <span class="keyword">if</span>(that._rythmInputType !== that._rythmInputTypeList[<span class="string">'STREAM'</span>])&#123;</span><br><span class="line">    that._analyser.connect(that._audioCtx.destination);</span><br><span class="line">    that._audio.addEventListener(<span class="string">"ended"</span>, that.stop);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述就是Rythm.js 源码中对应一般流程中的相关代码，接下来主要是通过对分析器节点（AnalyserNode）获取的数据进行分析，来实现Web Audio API 的可视化。</p>
+<h2 id="Visualizations-with-Web-Audio-API"><a href="#Visualizations-with-Web-Audio-API" class="headerlink" title="Visualizations with Web Audio API"></a>Visualizations with Web Audio API</h2><p>通过调用<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AnalyserNode/getByteFrequencyData" target="_blank" rel="noopener">AnalyserNode.getByteFrequencyData()</a> 获取频率数据，并将其存储到Unit8Array（无符号字节数组）中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">that._analyser.fftSize = <span class="number">2048</span>;</span><br><span class="line"></span><br><span class="line">that._frequences = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(that._analyser.frequencyBinCount);</span><br><span class="line"></span><br><span class="line">that._analyser.getByteFrequencyData(that._frequences);</span><br></pre></td></tr></table></figure>
+
+<p>上述代码相当于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that._analyser.getByteFrequencyData( <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(<span class="number">1024</span>));</span><br></pre></td></tr></table></figure>
+
+<p>通过上述操作，我们就获取到了音频数据。</p>
+<p>我们定义 <a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L127-L149" target="_blank" rel="noopener">renderRythm()</a> 函数来进行可视化。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderRythm</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 判断是否需要进行渲染</span></span><br><span class="line">  <span class="keyword">if</span>(that.stopped)&#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 获取音频数据，并存到_frequences 数组中</span></span><br><span class="line">  that._analyser.getByteFrequencyData(that._frequences);</span><br><span class="line">  <span class="comment">// 遍历_frequences 数组中的数据</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;that._frequences.length; i++)&#123;</span><br><span class="line">    <span class="comment">// 初始化二维数组</span></span><br><span class="line">    <span class="keyword">if</span>(!that._hzHistory[i])&#123;</span><br><span class="line">      that._hzHistory[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 确保二维数组长度为maxValueHistory 的值</span></span><br><span class="line">    <span class="keyword">if</span>(that._hzHistory[i].length &gt; that.maxValueHistory)&#123;</span><br><span class="line">      that._hzHistory[i].shift();</span><br><span class="line">    &#125;</span><br><span class="line">    that._hzHistory[i].push(that._frequences[i]);</span><br><span class="line">    <span class="comment">// 无效代码</span></span><br><span class="line">    <span class="keyword">var</span> value = that._frequences[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 遍历页面中的所有需要跳动的元素</span></span><br><span class="line">  that.rythmMapping.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">mappingItem</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 根据type 选择跳动的类型  </span></span><br><span class="line">    <span class="keyword">switch</span> (mappingItem.type) &#123;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">// 应用到元素的CSS scale 属性值上</span></span><br><span class="line">        pulseSize(mappingItem.elementClass, getAverageRatio(mappingItem.startValue, mappingItem.nbValue));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 保持持续更新</span></span><br><span class="line">  requestAnimationFrame(renderRythm);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L151-L157" target="_blank" rel="noopener">getAverageRatio()</a> 获取平均比率。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAverageRatio</span>(<span class="params">startingValue, nbValue</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> total = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=startingValue; i&lt;nbValue+startingValue; i++)&#123;</span><br><span class="line">    total += getRatio(i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> total/nbValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L159-L174" target="_blank" rel="noopener">getRatio()</a> 获取当前比率。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRatio</span>(<span class="params">index</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> min = <span class="number">255</span>;</span><br><span class="line">  <span class="keyword">var</span> max = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 遍历_hzhHistory[index] 这个二维数组，获取最大值max 和最小值</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; that._hzHistory[index].length; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(that._hzHistory[index][i] &lt; min)&#123;</span><br><span class="line">      min = that._hzHistory[index][i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(that._hzHistory[index][i] &gt; max)&#123;</span><br><span class="line">      max = that._hzHistory[index][i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 返回值的计算方法(</span></span><br><span class="line">  <span class="keyword">var</span> scale = max - min;</span><br><span class="line">  <span class="keyword">var</span> actualValue = that._frequences[index] -min;</span><br><span class="line">  <span class="keyword">var</span> percentage = (actualValue/scale);</span><br><span class="line">  <span class="keyword">return</span> that.startingScale + (that.pulseRatio * percentage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/JobbyM/Rythm.js/blob/master/src/rythm.js#L176-L181" target="_blank" rel="noopener">pulseSize()</a>  设置元素的scale 值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pulseSize</span>(<span class="params">name, value</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> elements = <span class="built_in">document</span>.getElementsByClassName(name);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; elements.length; i++)&#123;</span><br><span class="line">    elements[i].style.transform = <span class="string">'scale('</span>+value+<span class="string">')'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1、对Web Audio API 有了初步了解<br>2、阅读源代码确实对自己有助于提升<br>3、参考文档比较多，主要是自己对音乐相关的概念不是很清楚</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.w3.org/TR/webaudio/" target="_blank" rel="noopener" title="Web Audio API">Web Audio API</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener" title="Web Audio API - Web API 接口|MDN">Web Audio API - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AudioContext" target="_blank" rel="noopener" title="AudioContext - Web API 接口|MDN">AudioContext - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AnalyserNode" target="_blank" rel="noopener" title="AnalyserNode - Web API 接口|MDN">AnalyserNode - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AnalyserNode/fftSize" target="_blank" rel="noopener" title="AnalyserNode.fftSize - Web API 接口|MDN">AnalyserNode.fftSize - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GainNode" target="_blank" rel="noopener" title="GainNode - Web API 接口|MDN">GainNode - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AudioContext/createGain" target="_blank" rel="noopener" title="AudioContext.createGain() - Web API 接口|MDN">AudioContext.createGain() - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AudioContext/createMediaElementSource" target="_blank" rel="noopener" title="AudioContext.createMediaElementSource() - Web API 接口|MDN">AudioContext.createMediaElementSource() - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaElementAudioSourceNode" target="_blank" rel="noopener" title="MediaElementAudioSourceNode - Web API 接口|MDN">MediaElementAudioSourceNode - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/AudioNode" target="_blank" rel="noopener" title="AudioNode - Web API 接口|MDN">AudioNode - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/AudioNode/connect" target="_blank" rel="noopener" title="AudioNode.connect() - Web API 接口|MDN">AudioNode.connect() - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AudioContext/createMediaStreamSource" target="_blank" rel="noopener" title="AudioContext.createMediaStreamSource() - Web API 接口|MDN">AudioContext.createMediaStreamSource() - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator/getUserMedia" target="_blank" rel="noopener" title="navigator.getUserMedia() - Web API 接口|MDN">navigator.getUserMedia() - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GainNode/gain" target="_blank" rel="noopener" title="GainNode.gain - Web API 接口|MDN">GainNode.gain - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MediaStream" target="_blank" rel="noopener" title="媒体流（MediaStream）- Web API 接口|MDN">媒体流（MediaStream）- Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack" target="_blank" rel="noopener" title="MediaStreamTrack - Web API 接口|MDN">MediaStreamTrack - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/AnalyserNode/getByteFrequencyData" target="_blank" rel="noopener" title="AnalyserNode.getByeFrequencyData - Web API 接口|MDN">AnalyserNode.getByeFrequencyData - Web API 接口|MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API" target="_blank" rel="noopener" title="网页音频接口基本概念 - Web API 接口|MDN">网页音频接口基本概念 - Web API 接口|MDN</a><br><a href="http://www.cnblogs.com/qieguo/p/5405303.html" target="_blank" rel="noopener" title="[HTML5] Web Audio API 打造超炫的音乐可视化效果">[HTML5] Web Audio API 打造超炫的音乐可视化效果</a><br><a href="http://www.cnblogs.com/Wayou/p/3543577.html" target="_blank" rel="noopener" title="开大你的音响，感受HTML5 Audio API 带来的视听盛宴">开大你的音响，感受HTML5 Audio API 带来的视听盛宴</a><br><a href="http://blog.jobbole.com/70549/" target="_blank" rel="noopener" title="如果看了此文你还不懂傅立叶变换，那就过来掐死我吧【完整版】- 文章 - 伯乐在线">如果看了此文你还不懂傅立叶变换，那就过来掐死我吧【完整版】- 文章 - 伯乐在线</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E9%AC%BC%E6%87%BFIT-%E5%B9%B2%E8%B4%A7%E5%88%86%E4%BA%AB/" rel="tag"># 鬼懿IT-干货分享</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/16/react-Higher-Order-Components/" rel="next" title="react Higher-Order Components">
+                <i class="fa fa-chevron-left"></i> react Higher-Order Components
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/03/CSS%E5%B8%83%E5%B1%80%E4%B9%8B%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/" rel="prev" title="CSS布局之圣杯布局">
+                CSS布局之圣杯布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rythm-js源文文档"><span class="nav-number">1.</span> <span class="nav-text">Rythm.js源文文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">3.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Use"><span class="nav-number">4.</span> <span class="nav-text">How to Use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Work"><span class="nav-number">5.</span> <span class="nav-text">How to Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Review-Code"><span class="nav-number">6.</span> <span class="nav-text">Review Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visualizations-with-Web-Audio-API"><span class="nav-number">7.</span> <span class="nav-text">Visualizations with Web Audio API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">9.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/02/28/阅读Rythm-js-了解Web-Audio-API-实现音频可视化/';
+
+      var disqus_title = "阅读Rythm.js,了解Web Audio API 实现音频可视化";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

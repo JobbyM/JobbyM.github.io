@@ -1,0 +1,1030 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,Hexo,Travis CI,CI," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="简介利用Travis CI 自动部署Hexo 到GitHub Pages 上  Travis CIBuild apps with confidence. Focus on writing code. Let Travis CI toake care of running your tests and deploying your apps.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Travis CI 自动部署Hexo">
+<meta property="og:url" content="https://jobbym.github.io/2016/10/25/continuous-deployment-to-github-with-travis/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="简介利用Travis CI 自动部署Hexo 到GitHub Pages 上  Travis CIBuild apps with confidence. Focus on writing code. Let Travis CI toake care of running your tests and deploying your apps.">
+<meta property="article:published_time" content="2016-10-25T09:12:17.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.321Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Travis CI">
+<meta property="article:tag" content="CI">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/10/25/continuous-deployment-to-github-with-travis/"/>
+
+
+
+
+
+  <title> 使用Travis CI 自动部署Hexo | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/10/25/continuous-deployment-to-github-with-travis/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Travis CI 自动部署Hexo
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-25T09:12:17+00:00">
+                2016-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/25/continuous-deployment-to-github-with-travis/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/10/25/continuous-deployment-to-github-with-travis/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/25/continuous-deployment-to-github-with-travis/" class="leancloud_visitors" data-flag-title="使用Travis CI 自动部署Hexo">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>利用Travis CI 自动部署Hexo 到GitHub Pages 上</p>
+<ol>
+<li>Travis CI<blockquote class="blockquote-center"><p>Build apps with confidence. Focus on writing code. Let Travis CI toake care of running your tests and deploying your apps. </p>
+</blockquote>
+
+</li>
+</ol>
+<a id="more"></a>
+
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="一、Deploy-Key（部署Key）"><a href="#一、Deploy-Key（部署Key）" class="headerlink" title="一、Deploy Key（部署Key）"></a>一、Deploy Key（部署Key）</h3><ol>
+<li>使用ssh-keygen 制作SSH Key，供GitHub 当作Deploy key 使用<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">ssh</span>-<span class="title">keygen</span> -<span class="title">t</span> <span class="title">rsa</span> -<span class="title">C</span> "<span class="title">songzhipengmune</span>@<span class="title">gmail.com</span>"</span></span><br><span class="line"><span class="function"><span class="title">Generating</span> <span class="title">public</span>/<span class="title">private</span> <span class="title">rsa</span> <span class="title">key</span> <span class="title">pair</span>.</span></span><br><span class="line"><span class="function"><span class="title">Enter</span> <span class="title">file</span> <span class="title">in</span> <span class="title">which</span> <span class="title">to</span> <span class="title">save</span> <span class="title">the</span> <span class="title">key</span> (/<span class="title">home</span>/<span class="title">jobbym</span>/.<span class="title">ssh</span>/<span class="title">id_rsa</span>):</span></span><br><span class="line"><span class="function">/<span class="title">home</span>/<span class="title">jobbym</span>/.<span class="title">ssh</span>/<span class="title">id_rsa</span> <span class="title">already</span> <span class="title">exists</span>.</span></span><br><span class="line"><span class="function"><span class="title">Overwrite</span> (<span class="title">y</span>/<span class="title">n</span>)? <span class="title">y</span></span></span><br><span class="line"><span class="function"><span class="title">Enter</span> <span class="title">passphrase</span> (<span class="title">empty</span> <span class="title">for</span> <span class="title">no</span> <span class="title">passphrase</span>):</span></span><br><span class="line"><span class="function"><span class="title">Enter</span> <span class="title">same</span> <span class="title">passphrase</span> <span class="title">again</span>:</span></span><br><span class="line"><span class="function"><span class="title">Your</span> <span class="title">identification</span> <span class="title">has</span> <span class="title">been</span> <span class="title">saved</span> <span class="title">in</span> /<span class="title">home</span>/<span class="title">jobbym</span>/.<span class="title">ssh</span>/<span class="title">id_rsa</span>.</span></span><br><span class="line"><span class="function"><span class="title">Your</span> <span class="title">public</span> <span class="title">key</span> <span class="title">has</span> <span class="title">been</span> <span class="title">saved</span> <span class="title">in</span> /<span class="title">home</span>/<span class="title">jobbym</span>/.<span class="title">ssh</span>/<span class="title">id_rsa.pub</span>.</span></span><br><span class="line"><span class="function"><span class="title">The</span> <span class="title">key</span> <span class="title">fingerprint</span> <span class="title">is</span>:</span></span><br><span class="line"><span class="function"><span class="title">ad</span>:3<span class="title">c</span>:0<span class="title">f:f0</span>:<span class="title">b4</span>:99:05:5<span class="title">c</span>:48:<span class="title">e0</span>:06:<span class="title">fb</span>:07:<span class="title">a1</span>:8<span class="title">a</span>:81 <span class="title">songzhipengmune</span>@<span class="title">gmail.com</span></span></span><br><span class="line"><span class="function"><span class="title">The</span> <span class="title">key</span>'<span class="title">s</span> <span class="title">randomart</span> <span class="title">image</span> <span class="title">is</span>:</span></span><br><span class="line"><span class="function">+--[ <span class="title">RSA</span> 2048]----+</span></span><br><span class="line"><span class="function">|    . <span class="title">oo</span>...      |</span></span><br><span class="line"><span class="function">|.    = <span class="title">o</span>..       |</span></span><br><span class="line"><span class="function">|<span class="title">E</span>   <span class="title">o</span> + <span class="title">o</span>        |</span></span><br><span class="line"><span class="function">| <span class="title">o</span> . <span class="title">o</span> . <span class="title">o</span>       |</span></span><br><span class="line"><span class="function">|. .   <span class="title">o</span> <span class="title">S</span> <span class="title">o</span>      |</span></span><br><span class="line"><span class="function">|       * *       |</span></span><br><span class="line"><span class="function">|        <span class="title">X</span>        |</span></span><br><span class="line"><span class="function">|         +       |</span></span><br><span class="line"><span class="function">|          .      |</span></span><br><span class="line"><span class="function">+-----------------+</span></span><br></pre></td></tr></table></figure>
+在制作SSH key 时，请把passphase 留空。当SSH key 制作完成后，复制Public key 到GitHub 上的Deploy key 位置</li>
+<li>注意：Window 7 下使用命令行复制内容到剪贴板<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ clip &lt; log.txt</span><br></pre></td></tr></table></figure>
+将log.txt 文件中的内容复制到剪贴板</li>
+</ol>
+<h3 id="二、加密-Private-Key-（私钥）"><a href="#二、加密-Private-Key-（私钥）" class="headerlink" title="二、加密 Private Key （私钥）"></a>二、加密 Private Key （私钥）</h3><ol>
+<li>Windows 环境下需要安装Ubuntu 虚拟机，以下操作都是在Ubuntu 虚拟机环境下进行操作</li>
+<li>首先是安装ruby ,安装成功过后查看ruby 和gem 版本<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">sudo</span> <span class="title">apt</span>-<span class="title">get</span> <span class="title">install</span> <span class="title">ruby</span></span></span><br><span class="line"><span class="function"><span class="title">jobbym</span>@<span class="title">ubuntu</span>:~$ <span class="title">ruby</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">ruby</span> 1.9.3<span class="title">p484</span> (2013-11-22 <span class="title">revision</span> 43786) [<span class="title">x86_64</span>-<span class="title">linux</span>]</span></span><br><span class="line"><span class="function"><span class="title">jobbym</span>@<span class="title">ubuntu</span>:~$ <span class="title">gem</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function">1.8.23</span></span><br></pre></td></tr></table></figure></li>
+<li>上述ruby 版本过低，需要重新安装<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$  <span class="title">sudo</span> <span class="title">apt</span>-<span class="title">get</span> <span class="title">remove</span> <span class="title">ruby</span> <span class="title">ruby</span>-<span class="title">dev</span></span></span><br></pre></td></tr></table></figure></li>
+<li>使用rvm 进行ruby 版本管理<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">curl</span> -<span class="title">L</span> <span class="title">get.rvm.io</span> | <span class="title">bash</span> -<span class="title">s</span> <span class="title">stable</span></span></span><br></pre></td></tr></table></figure>
+安装rvm 报错，参考 <a href="http://blog.csdn.net/caspiansea/article/details/47802331" target="_blank" rel="noopener">http://blog.csdn.net/caspiansea/article/details/47802331</a> 进行处理</li>
+<li>使用rvm 查看可用的ruby 版本安装<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">rvm</span> <span class="title">list</span> <span class="title">known</span></span></span><br></pre></td></tr></table></figure></li>
+<li>使用rvm 进行安装，发现速度很慢<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">rvm</span> <span class="title">install</span> 2.2-<span class="title">head</span></span></span><br></pre></td></tr></table></figure></li>
+<li>参考 <a href="https://ruby-china.org/wiki/rvm-guide" target="_blank" rel="noopener">https://ruby-china.org/wiki/rvm-guide</a> 修改rvm 的ruby 安装源<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">echo</span> "<span class="title">ruby_url</span>=<span class="title">https</span>://<span class="title">cache.ruby</span>-<span class="title">china.org</span>/<span class="title">pub</span>/<span class="title">ruby</span>" &gt; ~/.<span class="title">rvm</span>/<span class="title">user</span>/<span class="title">db</span></span></span><br></pre></td></tr></table></figure></li>
+<li>再次进行安装速度变快<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">rvm</span> <span class="title">install</span> 2.3</span></span><br></pre></td></tr></table></figure></li>
+<li>设置2.3 为默认ruby ，并进行查看<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">rvm</span> <span class="title">alias</span> <span class="title">create</span> <span class="title">default</span> <span class="title">ruby</span>-2.3.0</span></span><br><span class="line"><span class="function"><span class="title">Creating</span> <span class="title">alias</span> <span class="title">default</span> <span class="title">for</span> <span class="title">ruby</span>-2.3.0...</span></span><br><span class="line"><span class="function"><span class="title">jobbym</span>@<span class="title">ubuntu</span>:~$ <span class="title">rvm</span> <span class="title">list</span></span></span><br><span class="line"><span class="function"><span class="title">rvm</span> <span class="title">rubies</span></span></span><br><span class="line"><span class="function">=* <span class="title">ruby</span>-2.3.0 [ <span class="title">x86_64</span> ]</span></span><br><span class="line"><span class="function"># =&gt; - <span class="title">current</span></span></span><br><span class="line"><span class="function"># =* - <span class="title">current</span> &amp;&amp; <span class="title">default</span></span></span><br><span class="line"><span class="function">#  * - <span class="title">default</span></span></span><br></pre></td></tr></table></figure></li>
+<li>查看ruby gem 相关版本信息<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">ruby</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function"><span class="title">ruby</span> 2.3.0<span class="title">p0</span> (2015-12-25 <span class="title">revision</span> 53290) [<span class="title">x86_64</span>-<span class="title">linux</span>]</span></span><br><span class="line"><span class="function"><span class="title">jobbym</span>@<span class="title">ubuntu</span>:~$ <span class="title">gem</span> -<span class="title">v</span></span></span><br><span class="line"><span class="function">2.5.1</span></span><br></pre></td></tr></table></figure></li>
+<li>安装travis<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~$ <span class="title">gem</span> <span class="title">install</span> <span class="title">travis</span></span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">ffi</span>-1.9.14.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Building</span> <span class="title">native</span> <span class="title">extensions</span>.  <span class="title">This</span> <span class="title">could</span> <span class="title">take</span> <span class="title">a</span> <span class="title">while</span>...</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">ffi</span>-1.9.14</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">ethon</span>-0.9.1.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">ethon</span>-0.9.1</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">typhoeus</span>-0.8.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">typhoeus</span>-0.8.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">websocket</span>-1.2.3.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">websocket</span>-1.2.3</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">pusher</span>-<span class="title">client</span>-0.6.2.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">pusher</span>-<span class="title">client</span>-0.6.2</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">addressable</span>-2.4.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">addressable</span>-2.4.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">launchy</span>-2.4.3.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">launchy</span>-2.4.3</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">highline</span>-1.7.8.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">highline</span>-1.7.8</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">net</span>-<span class="title">http</span>-<span class="title">pipeline</span>-1.0.1.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">pipeline</span>-1.0.1</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">connection_pool</span>-2.2.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">connection_pool</span>-2.2.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">net</span>-<span class="title">http</span>-<span class="title">persistent</span>-3.0.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">persistent</span>-3.0.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">multi_json</span>-1.12.1.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">multi_json</span>-1.12.1</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">multipart</span>-<span class="title">post</span>-2.0.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">multipart</span>-<span class="title">post</span>-2.0.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">faraday</span>-0.9.2.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">faraday</span>-0.9.2</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">backports</span>-3.6.8.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">backports</span>-3.6.8</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">gh</span>-0.14.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">gh</span>-0.14.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">faraday_middleware</span>-0.10.0.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">faraday_middleware</span>-0.10.0</span></span><br><span class="line"><span class="function"><span class="title">Fetching</span>: <span class="title">travis</span>-1.8.2.<span class="title">gem</span> (100%)</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">installed</span> <span class="title">travis</span>-1.8.2</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">ffi</span>-1.9.14</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">ffi</span>-1.9.14</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">ethon</span>-0.9.1</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">ethon</span>-0.9.1</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">typhoeus</span>-0.8.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">typhoeus</span>-0.8.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">websocket</span>-1.2.3</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">websocket</span>-1.2.3</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">pusher</span>-<span class="title">client</span>-0.6.2</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">pusher</span>-<span class="title">client</span>-0.6.2</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">addressable</span>-2.4.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">addressable</span>-2.4.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">launchy</span>-2.4.3</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">launchy</span>-2.4.3</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">highline</span>-1.7.8</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">highline</span>-1.7.8</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">pipeline</span>-1.0.1</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">pipeline</span>-1.0.1</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">connection_pool</span>-2.2.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">connection_pool</span>-2.2.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">persistent</span>-3.0.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">net</span>-<span class="title">http</span>-<span class="title">persistent</span>-3.0.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">multi_json</span>-1.12.1</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">multi_json</span>-1.12.1</span></span><br><span class="line"><span class="function"><span class="title">invalid</span> <span class="title">options</span>: -<span class="title">SHN</span></span></span><br><span class="line"><span class="function">(<span class="title">invalid</span> <span class="title">options</span> <span class="title">are</span> <span class="title">ignored</span>)</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">multipart</span>-<span class="title">post</span>-2.0.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">multipart</span>-<span class="title">post</span>-2.0.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">faraday</span>-0.9.2</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">faraday</span>-0.9.2</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">backports</span>-3.6.8</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">backports</span>-3.6.8</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">gh</span>-0.14.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">gh</span>-0.14.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">faraday_middleware</span>-0.10.0</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">faraday_middleware</span>-0.10.0</span></span><br><span class="line"><span class="function"><span class="title">Parsing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">travis</span>-1.8.2</span></span><br><span class="line"><span class="function"><span class="title">Installing</span> <span class="title">ri</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">travis</span>-1.8.2</span></span><br><span class="line"><span class="function"><span class="title">Done</span> <span class="title">installing</span> <span class="title">documentation</span> <span class="title">for</span> <span class="title">ffi</span>, <span class="title">ethon</span>, <span class="title">typhoeus</span>, <span class="title">websocket</span>, <span class="title">pusher</span>-<span class="title">client</span>, <span class="title">addressable</span>, <span class="title">launchy</span>, <span class="title">highline</span>, <span class="title">net</span>-<span class="title">http</span>-<span class="title">pipeline</span>, <span class="title">connection_pool</span>, <span class="title">net</span>-<span class="title">http</span>-<span class="title">persistent</span>, <span class="title">multi_json</span>, <span class="title">multipart</span>-<span class="title">post</span>, <span class="title">faraday</span>, <span class="title">backports</span>, <span class="title">gh</span>, <span class="title">faraday_middleware</span>, <span class="title">travis</span> <span class="title">after</span> 37 <span class="title">seconds</span></span></span><br><span class="line"><span class="function">18 <span class="title">gems</span> <span class="title">installed</span></span></span><br></pre></td></tr></table></figure></li>
+<li>打开博客项目文件夹，在项目根目录新家.travis.yml 配置文件<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>$ <span class="title">touch</span> .<span class="title">travis.yml</span></span></span><br></pre></td></tr></table></figure></li>
+<li>新家文件夹.travis：确保已经开启travis 支持<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>$ <span class="title">mkdir</span> .<span class="title">travis</span></span></span><br><span class="line"><span class="function"><span class="title">jobbym</span>@<span class="title">ubuntu</span>:~/<span class="title">learn</span>/<span class="title">blog</span>$ <span class="title">cd</span> .<span class="title">travis</span></span></span><br></pre></td></tr></table></figure></li>
+<li>复制id_rsa 到.travis 目录下<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>/.<span class="title">travis</span>$ <span class="title">cp</span> ~/.<span class="title">ssh</span>/<span class="title">id_rsa</span> ./</span></span><br></pre></td></tr></table></figure></li>
+<li>在.travis 目录下创建ssh_config 文件<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>/.<span class="title">travis</span>$ <span class="title">sudo</span> <span class="title">vim</span> <span class="title">ssh_config</span></span></span><br><span class="line"><span class="function">[<span class="title">sudo</span>] <span class="title">password</span> <span class="title">for</span> <span class="title">jobbym</span>:</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Host</span> <span class="title">github.com</span></span></span><br><span class="line"><span class="function"><span class="title">User</span> <span class="title">git</span></span></span><br><span class="line"><span class="function"><span class="title">StrictHostKeyChecking</span> <span class="title">no</span></span></span><br><span class="line"><span class="function"><span class="title">IdentityFile</span> ~/.<span class="title">ssh</span>/<span class="title">id_rsa</span></span></span><br><span class="line"><span class="function"><span class="title">IdentitiesOnly</span> <span class="title">yes</span></span></span><br></pre></td></tr></table></figure></li>
+<li>使用命令工具登入Travis<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>/.<span class="title">travis</span>$ <span class="title">travis</span> <span class="title">login</span> --<span class="title">auto</span></span></span><br><span class="line"><span class="function"><span class="title">We</span> <span class="title">need</span> <span class="title">your</span> <span class="title">GitHub</span> <span class="title">login</span> <span class="title">to</span> <span class="title">identify</span> <span class="title">you</span>.</span></span><br><span class="line"><span class="function"><span class="title">This</span> <span class="title">information</span> <span class="title">will</span> <span class="title">not</span> <span class="title">be</span> <span class="title">sent</span> <span class="title">to</span> <span class="title">Travis</span> <span class="title">CI</span>, <span class="title">only</span> <span class="title">to</span> <span class="title">api.github.com</span>.</span></span><br><span class="line"><span class="function"><span class="title">The</span> <span class="title">password</span> <span class="title">will</span> <span class="title">not</span> <span class="title">be</span> <span class="title">displayed</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Try</span> <span class="title">running</span> <span class="title">with</span> --<span class="title">github</span>-<span class="title">token</span> <span class="title">or</span> --<span class="title">auto</span> <span class="title">if</span> <span class="title">you</span> <span class="title">don</span>'<span class="title">t</span> <span class="title">want</span> <span class="title">to</span> <span class="title">enter</span> <span class="title">your</span> <span class="title">password</span> <span class="title">anyway</span>.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Username</span>: <span class="title">JobbyM</span></span></span><br><span class="line"><span class="function"><span class="title">Password</span> <span class="title">for</span> <span class="title">JobbyM</span>: ***********</span></span><br><span class="line"><span class="function"><span class="title">Successfully</span> <span class="title">logged</span> <span class="title">in</span> <span class="title">as</span> <span class="title">JobbyM</span>!</span></span><br></pre></td></tr></table></figure>
+这样一来，我们就能够通过Travis 提供的命令行工具加密刚刚制作的Private key，并把它上传供日后使用。上面的Username 和Password 就是登录Travis 的Username 和Password</li>
+<li>前面生成的Private key 的文件名为id_rsa，Trivas 会加密生成id_rsa.enc,并自动在.travis.yml 的before_install 中，自动插入解密指令,-r 选项用来指定repos 名称<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jobbym@ubuntu:~/<span class="title">learn</span>/<span class="title">blog</span>/.<span class="title">travis</span>$ <span class="title">travis</span> <span class="title">encrypt</span>-<span class="title">file</span> <span class="title">id_rsa</span> --<span class="title">add</span> -<span class="title">r</span> <span class="title">JobbyM</span>/<span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">encrypting</span> <span class="title">id_rsa</span> <span class="title">for</span> <span class="title">JobbyM</span>/<span class="title">blog</span></span></span><br><span class="line"><span class="function"><span class="title">storing</span> <span class="title">result</span> <span class="title">as</span> <span class="title">id_rsa.enc</span></span></span><br><span class="line"><span class="function"><span class="title">storing</span> <span class="title">secure</span> <span class="title">env</span> <span class="title">variables</span> <span class="title">for</span> <span class="title">decryption</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">Make</span> <span class="title">sure</span> <span class="title">to</span> <span class="title">add</span> <span class="title">id_rsa.enc</span> <span class="title">to</span> <span class="title">the</span> <span class="title">git</span> <span class="title">repository</span>.</span></span><br><span class="line"><span class="function"><span class="title">Make</span> <span class="title">sure</span> <span class="title">not</span> <span class="title">to</span> <span class="title">add</span> <span class="title">id_rsa</span> <span class="title">to</span> <span class="title">the</span> <span class="title">git</span> <span class="title">repository</span>.</span></span><br><span class="line"><span class="function"><span class="title">Commit</span> <span class="title">all</span> <span class="title">changes</span> <span class="title">to</span> <span class="title">your</span> .<span class="title">travis.yml</span>.</span></span><br></pre></td></tr></table></figure>
+需要删除id_rsa 密钥文件（私钥不能随便透露）</li>
+<li>编写.travis.yml 文件<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="attr">node_js:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">"6"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Travis-CI Caching</span></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">directories:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># S: Buid Lifecycle</span></span><br><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="comment"># Decrypt the private key</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">openssl</span> <span class="string">aes-256-cbc</span> <span class="string">-K</span> <span class="string">$encrypted_b3c3b32c2fbe_key</span> <span class="string">-iv</span> <span class="string">$encrypted_b3c3b32c2fbe_iv</span> <span class="string">-in</span> <span class="string">.travis/id_rsa.enc</span> <span class="string">-out</span> <span class="string">~/.ssh/id_rsa</span> <span class="string">-d</span></span><br><span class="line">  <span class="comment"># Set the permission of the key:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.ssh/id_rsa</span></span><br><span class="line">  <span class="comment"># Start SSH agent</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eval</span> <span class="string">$(ssh-agent)</span></span><br><span class="line">  <span class="comment"># Add the private key to the system</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ssh-add</span> <span class="string">~/.ssh/id_rsa</span></span><br><span class="line">  <span class="comment"># Copy SSH config</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cp</span> <span class="string">.travis/ssh_config</span> <span class="string">~/.ssh/config</span></span><br><span class="line">  <span class="comment"># Set Git config</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">JobbyM</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="string">songzhipengmune@gmail.com</span></span><br><span class="line"></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-cli</span> <span class="string">-g</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-deployer-git</span> <span class="string">--save</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">clean</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">g</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">g</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">d</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># E: Build LifeCycle</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.<a href="http://notes.iissnan.com/2016/publishing-github-pages-with-travis-ci/" target="_blank" rel="noopener">publishing github pages with travis-ci</a><br>2.<a href="https://github.com/iissnan/theme-next-docs/blob/master/.travis.yml" target="_blank" rel="noopener">.travis.yml 文件</a><br>3.<a href="http://blog.acwong.org/2016/03/20/auto-deploy-hexo-with-travis-CI/" target="_blank" rel="noopener">使用Travis CI 自动部署hexo</a><br>4.<a href="https://github.com/acwong00/blog/blob/master/.travis.yml" target="_blank" rel="noopener">.travis.yml 文件</a><br>5.<a href="https://zespia.tw/blog/2015/01/21/continuous-deployment-to-github-with-travis/" target="_blank" rel="noopener">hexo 作者使用travis 部署blog</a><br>6.<a href="http://blog.csdn.net/lablenet/article/details/52509663" target="_blank" rel="noopener">windows 下需要在虚拟机中进行安装</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Travis-CI/" rel="tag"># Travis CI</a>
+          
+            <a href="/tags/CI/" rel="tag"># CI</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/21/GitHub-Pages-Hexo-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" rel="next" title="GitHub Pages + Hexo 搭建博客">
+                <i class="fa fa-chevron-left"></i> GitHub Pages + Hexo 搭建博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/26/Travis-CI-%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" rel="prev" title="Travis CI 基础入门">
+                Travis CI 基础入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Deploy-Key（部署Key）"><span class="nav-number">2.1.</span> <span class="nav-text">一、Deploy Key（部署Key）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、加密-Private-Key-（私钥）"><span class="nav-number">2.2.</span> <span class="nav-text">二、加密 Private Key （私钥）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/10/25/continuous-deployment-to-github-with-travis/';
+
+      var disqus_title = "使用Travis CI 自动部署Hexo";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

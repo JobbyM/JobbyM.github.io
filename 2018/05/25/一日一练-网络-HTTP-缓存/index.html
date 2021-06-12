@@ -1,0 +1,1080 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,一日一练,转载,HTTP,缓存," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="为了记录HTTP 缓存，本笔记转载自HTTP 缓存 Google 通过网络获取内容即速度缓慢又开销巨大。较大的响应需要在客户端和服务器之间进行多次往返通信，这回延迟浏览器获得和处理内容的时间，还会增加访问者的流量费用。因此，缓存并重复利用之前获取的资源的能力成为性能优化的一个关键方面。 好在每个浏览器都自带了HTTP 缓存实现功能。你只需要确保每个服务器响应都提供正确的HTTP 标头指令，以指示浏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-网络 HTTP 缓存">
+<meta property="og:url" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="为了记录HTTP 缓存，本笔记转载自HTTP 缓存 Google 通过网络获取内容即速度缓慢又开销巨大。较大的响应需要在客户端和服务器之间进行多次往返通信，这回延迟浏览器获得和处理内容的时间，还会增加访问者的流量费用。因此，缓存并重复利用之前获取的资源的能力成为性能优化的一个关键方面。 好在每个浏览器都自带了HTTP 缓存实现功能。你只需要确保每个服务器响应都提供正确的HTTP 标头指令，以指示浏">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-request.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-control.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-control-highlight.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-decision-tree.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/table_0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-hierarchy.png">
+<meta property="article:published_time" content="2018-05-25T03:21:43.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.601Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="缓存">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-request.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/05/25/一日一练-网络-HTTP-缓存/"/>
+
+
+
+
+
+  <title> 一日一练-网络 HTTP 缓存 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-网络 HTTP 缓存
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-25T03:21:43+00:00">
+                2018-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/25/一日一练-网络-HTTP-缓存/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/" class="leancloud_visitors" data-flag-title="一日一练-网络 HTTP 缓存">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了记录HTTP 缓存，本笔记转载自<a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching" target="_blank" rel="noopener">HTTP 缓存 Google</a></p>
+<p>通过网络获取内容即速度缓慢又开销巨大。较大的响应需要在客户端和服务器之间进行多次往返通信，这回延迟浏览器获得和处理内容的时间，还会增加访问者的流量费用。因此，缓存并重复利用之前获取的资源的能力成为性能优化的一个关键方面。</p>
+<p>好在每个浏览器都自带了HTTP 缓存实现功能。你只需要确保每个服务器响应都提供正确的HTTP 标头指令，以指示浏览器何时可以缓存响应以及可以缓存多久。</p>
+<blockquote>
+<p>Note:如果你在应用中使用WebView 来获取和显示网页内容，可能需要提供额外的配置标志，以确保HTTP 缓存得到启用、其大小根据用例进行了合理的设置并且缓存将持久保存。务必查看平台文档并确认你的设置。</p>
+</blockquote>
+<img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-request.png" class="">
+
+<a id="more"></a>
+
+<p>当服务器返回响应时，还会发出一组HTTP 标头，用于描述响应的内容类型、长度、缓存指令、验证令牌等。例如，在上图的交互中，服务器返回一个1024 字节的响应，指示客户端将其缓存最多120 秒，并提供一个验证令牌（”x234dff”）可在响应过期后用来检查资源是否被修改。</p>
+<h2 id="通过ETag-验证缓存的响应"><a href="#通过ETag-验证缓存的响应" class="headerlink" title="通过ETag 验证缓存的响应"></a>通过ETag 验证缓存的响应</h2><p><strong>TL;DR</strong></p>
+<ul>
+<li>服务器使用ETag HTTP 标头传递验证令牌。</li>
+<li>验证令牌可实现高效的资源更新检查：资源未发生变化时不会传输任何数据。</li>
+</ul>
+<p>假定在首次获取资源120 秒后，浏览器又对该资源发起了新的请求。首先，浏览器会检查本地缓存并找到之前的响应。遗憾的是，该响应已过期，浏览器无法使用。此时，浏览器可以直接发出新的请求并获取新的完整响应。不过，这样做的效率较低，因为如果资源未发生变化，那么下载与缓存中已有的完全相同的信息就毫无道理可言！</p>
+<p>这正是验证令牌（在ETag 标头中指定）旨在解决的问题。服务器生成并返回的随机令牌通常是文件内容的哈希值或某个其他指纹。客户端不需要了解指纹是如何生成的，只需在下一次请求时将其发送至服务器。如果指纹仍然相同，则表示资源未发生变化，你就可以跳过下载。</p>
+<img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-control.png" class="">
+
+<p>在上例中，客户端自动在“If-None-Math” HTTP 请求标头内提供ETag 令牌。服务器根据当前资源核对令牌。如果它未发生变化，服务器将返回“304 Not Modified” 响应，告知浏览器缓存中的响应未发生变化，可以再延用120 秒。请注意，你不必再次下载响应，这节约了时间和带宽。</p>
+<p>作为网络开发者，你如何利用高效的重新验证？浏览器会替我们完成所有工作：它自动检测之前是否指定了验证令牌，它会将验证令牌追加到发出的请求上，并且它会根据从服务器接收的响应在必要时更新缓存时间戳。<strong>我们唯一要做的就是确保服务器提供必要的ETag 令牌。检查你的服务器文档中有无必要的配置标志。</strong></p>
+<blockquote>
+<p>Note:提示：HTML5 Boilerplate 项目包含所有最流行服务器的<a href="https://github.com/h5bp/server-configs" target="_blank" rel="noopener">配置文件样例</a>，其中为每个配置标志和设置都提供了详细的注解。在列表中找到你喜欢的服务器，查找合适的设置，然后复制/确认你的服务器配置了推荐的设置。</p>
+</blockquote>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><p><strong>TL;DR</strong></p>
+<ul>
+<li>每个资源都可通过Cache-Control HTTP 标头定义其缓存策略。</li>
+<li>Cache-Control 指令控制谁在什么条件下可以缓存响应以及可以缓存多久。</li>
+</ul>
+<p>从性能优化的角度来说，最佳请求是无需与服务器同的请求：你可以通过响应的本地副本消除所有网络延迟，以及避免数据传送的流量费用。为实现此目的，HTTP 规范允许服务器返回<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9" target="_blank" rel="noopener">Cache-Control 指令</a>，这些指令控制浏览器和其他中间缓存如何缓存各个响应以及缓存多久。</p>
+<blockquote>
+<p>note:Cache-Control 标头是在HTTP/1.1 规范中定义的，取代了之前用来定义响应策略的标头（例如Expires）。所有现代浏览器都支持Cache-Control，因此，使用它就够了。</p>
+</blockquote>
+<img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-control-highlight.png" class="">
+
+<h3 id="“no-cache”-和”no-store”"><a href="#“no-cache”-和”no-store”" class="headerlink" title="“no-cache” 和”no-store”"></a>“no-cache” 和”no-store”</h3><p>“no-cache” 表示必须限于服务器确认返回的响应是否发生了变化，然后才能使用该响应来满足后续对同一网址的请求。因此，如果存在合适的验证令牌（ETag），no-cache 会发起往返通信来验证缓存的响应，但如果资源未发生变化，则可避免下载。</p>
+<p>相比之下，“no-store” 则要简单得多。它直接禁止浏览器以及所有中间缓存存储任何版本的响应返回，例如，包含个人隐私数据或银行业务数据的响应。每次用户请求该资产时，都会向服务器发送请求，并下载完整的响应。</p>
+<h3 id="“public”-和”private”"><a href="#“public”-和”private”" class="headerlink" title="“public” 和”private”"></a>“public” 和”private”</h3><p>如果响应被标记为“public”，则即使它有关联的HTTP 身份验证，甚至响应状态代码通常无法缓存，也可以缓存响应。大多数情况下，“public” 不是必需的，因为明确的缓存信息（例如“max-age”）已表示响应是可以缓存的。</p>
+<p>相比之下，浏览器可以缓存“private” 响应。不过，这些响应通常只为单个用户缓存，因此不允许任何中间件缓存对其进行缓存。例如，用户的浏览器可以缓存包含用户私人信息的HTML 页面，但CDN 却不能缓存。</p>
+<h3 id="“max-age”"><a href="#“max-age”" class="headerlink" title="“max-age”"></a>“max-age”</h3><p>指令指定从请求的时间开始，允许获取的响应被重用的最长时间（单位：秒）。例如，“max-age=60” 表示可在接下来的60 秒缓存和重用响应。</p>
+<h2 id="定义最佳Cache-Control-策略"><a href="#定义最佳Cache-Control-策略" class="headerlink" title="定义最佳Cache-Control 策略"></a>定义最佳Cache-Control 策略</h2><img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-decision-tree.png" class="">
+
+<p>按照以上的决策树为你的应用使用的特定资源或一组资源确定最佳缓存策略。在理想情况下，你的目标应该是在客户端上缓存尽可能多的响应，缓存尽可能长的时间，并且为每个响应提供验证令牌，以实现高效的重新验证。</p>
+<img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/table_0.png" class="">
+
+<p>根据HTTP Archive，在排名最高的300,000 个网站（按照Alexa 排名）中，<a href="http://httparchive.org/trends.php#maxage0" target="_blank" rel="noopener">所有下载的响应中几乎有半数</a> 可由浏览器缓存，这可以大量减少重复的网页浏览和访问。当然，这并不意味着你的特定应用有50% 的资源可以缓存。一些网站的资源90% 以上都可以缓存，而其他网站可能有许多私密或时效要求高的数据根本无法缓存。</p>
+<p><strong>请审核你的网页，确定那些资源可以缓存，并确保它们返回正确的Cache-Control 和ETag 标头。</strong></p>
+<h2 id="废弃和更新缓存的响应"><a href="#废弃和更新缓存的响应" class="headerlink" title="废弃和更新缓存的响应"></a>废弃和更新缓存的响应</h2><p><strong>TL;DR</strong></p>
+<ul>
+<li>在资源“过期”之前，将一直使用本地缓存的响应。</li>
+<li>你可以通过在网址中嵌入文件内容指纹，强制客户端更新到新版本的响应。</li>
+<li>为获得最佳性能，每个应用都需要定义自己的缓存层次结构。</li>
+</ul>
+<p>浏览器发出的所有HTTP 请求会首先路由到浏览器缓存，以确定是否缓存了可用于满足请求的有效响应。如果有匹配的响应，则从缓存中读取响应，这样就避免了网络延迟和传送产生的流量费用。</p>
+<p><strong>不过，如果你想要更新或废弃缓存的响应，该怎么办？</strong> 例如，假定你已告诉访问者将某个CSS 样式表缓存长达24 小时（max-age=86400），但设计人员刚刚提交了一个你希望所有用户都能使用的更新，你该如何通知拥有现在“已过时” 的CSS 缓存副本的所有访问者更新其缓存？在不更改资源网址的情况下，你做不到。</p>
+<p>浏览器缓存响应后，缓存的版本将一直使用到过期（由max-age 或expire 决定），或一直使用到由于某种其他原因从缓存中删除，例如用户清除了浏览器缓存。因此，构建网页时，不同的用户可能最终使用的是文件的不同版本；刚获取了资源的用户将使用新版本的响应，而缓存了早期（但仍有效）副本的用户将使用旧版本的响应。</p>
+<p><strong>所以，如果才能鱼和熊掌兼得：客户端缓存和快速更新？</strong> 你可以在资源内容发生变化时更改它的网址，强制用户下载新响应。通常情况下，可以通过在文件名中嵌入文件的指纹或版本号来实现 - 例如 style.<strong>x234dff</strong>.css。</p>
+<img src="/2018/05/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-HTTP-%E7%BC%93%E5%AD%98/http-cache-hierarchy.png" class="">
+
+<p>由于能够定义每个资源的缓存策略，所以你可以定义“缓存层次结构”，这样不但可以控制每个响应的缓存时间，还可以控制访问者看到新版本的速度。为了进行说明，我们一起分析一下上面的示例：</p>
+<ul>
+<li>HTML 被标记为“no-cache”，这意味着浏览器在每次请求时都始终会重新验证文档，并在内容变化时重新获取最新版本。此外，在HTML 标记内，你在CSS 和JavaScript 资源的网址中嵌入指纹：如果这些文件的内容发生变化，网页的HTML 也会随之改变，并会下载HTML 响应的新副本。</li>
+<li>允许浏览器和中间缓存（例如CDN ）缓存CSS，并将CSS 设置为1 年后到期。请注意，你可以放心地使用1 年的“远期过期”，因为你在文件名中嵌入了文件的指纹：CSS 跟新时网址也会随之变化。</li>
+<li>JavaScript 同样是设置为1 年后到期，但标志为private，这或许是因为它包含的某些用户私人数据是CDN 不应缓存的。</li>
+<li>图像缓存时不包含版本或唯一指纹，并设置为1 天后到期。</li>
+</ul>
+<p>你可以组合使用ETag、Cache-Control 和唯一网址来实现一举多得：较长的过期时间、控制可以缓存响应的位置以及随需更新。</p>
+<h2 id="缓存检查清单"><a href="#缓存检查清单" class="headerlink" title="缓存检查清单"></a>缓存检查清单</h2><p>不存在什么是最贱缓存策略。你需要根据通信模式、提供的数据类型以及应用特定的数据更新要求，为每个资源定义和配置合适的设置，以及整体的“缓存层次结构”。</p>
+<p>在定制缓存策略时，你需要牢记下面这些技巧和方法：</p>
+<ul>
+<li><strong>使用一直的网址：</strong> 如果你在不同的网址上提供相同的内容，将会多次获取和缓存这些内容。提示：请注意，<a href="http://www.w3.org/TR/WD-html40-970708/htmlweb.html" target="_blank" rel="noopener">网址区分大小写</a>。</li>
+<li><strong>确保服务器提供验证令牌（ETag）：</strong> 有了验证令牌，当服务器上的资源未发生变化时，就不需要传输相同的字节。</li>
+<li><strong>确定中间缓存可以缓存哪些资源：</strong> 对所有用户的响应完全相同的资源非常适合由CDN 以及其他中间缓存进行缓存。</li>
+<li><strong>为每个资源确定最佳缓存周期：</strong> 不同的资源可能有不同的更新要求。为每个资源审核并确定合适的max-age。</li>
+<li><strong>确定最适合你的网站的缓存层次结构：</strong> 你可以通过为HTML 文档组合使用包含内容指纹的资源网址和短时间或no-cache 周期，来控制客户端获取更新的速度。</li>
+<li><strong>最大限度减少搅动：</strong> 某些资源的更新比其他资源频繁。如果资源的特定部分（例如JavaScript 函数或CSS 样式集）会经常更新，可以考虑将其代码作为单独的文件提供。这样一来，每次获取更新时，其余内容（例如变化不是很频繁的内容库代码）可以从缓存获取，从而最大限度减少下载的内容大小。</li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching" target="_blank" rel="noopener">HTTP 缓存 Google</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+            <a href="/tags/%E7%BC%93%E5%AD%98/" rel="tag"># 缓存</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/19/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BA%86%E8%A7%A3Data-URIs/" rel="next" title="一日一练-CSS 了解Data URIs">
+                <i class="fa fa-chevron-left"></i> 一日一练-CSS 了解Data URIs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E4%BA%86%E8%A7%A3%E6%AD%A3%E5%88%99/" rel="prev" title="一日一练-JS 了解正则">
+                一日一练-JS 了解正则 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过ETag-验证缓存的响应"><span class="nav-number">1.</span> <span class="nav-text">通过ETag 验证缓存的响应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Control"><span class="nav-number">2.</span> <span class="nav-text">Cache-Control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“no-cache”-和”no-store”"><span class="nav-number">2.1.</span> <span class="nav-text">“no-cache” 和”no-store”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“public”-和”private”"><span class="nav-number">2.2.</span> <span class="nav-text">“public” 和”private”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“max-age”"><span class="nav-number">2.3.</span> <span class="nav-text">“max-age”</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义最佳Cache-Control-策略"><span class="nav-number">3.</span> <span class="nav-text">定义最佳Cache-Control 策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#废弃和更新缓存的响应"><span class="nav-number">4.</span> <span class="nav-text">废弃和更新缓存的响应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存检查清单"><span class="nav-number">5.</span> <span class="nav-text">缓存检查清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/05/25/一日一练-网络-HTTP-缓存/';
+
+      var disqus_title = "一日一练-网络 HTTP 缓存";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

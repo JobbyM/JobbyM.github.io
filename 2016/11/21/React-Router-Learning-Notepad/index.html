@@ -1,0 +1,1140 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,React,React Router," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="介绍 React Router 是完整的React 路由解决方案 React Router 保持UI 与URL 同步。它拥有简单的API 与强大的功能，例如：代码缓冲加载、动态路由匹配、以及建立正确的位置过渡处理。你第一个念头想到的应该是URL，而不是事后再想起。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Router Learning Notepad">
+<meta property="og:url" content="https://jobbym.github.io/2016/11/21/React-Router-Learning-Notepad/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="介绍 React Router 是完整的React 路由解决方案 React Router 保持UI 与URL 同步。它拥有简单的API 与强大的功能，例如：代码缓冲加载、动态路由匹配、以及建立正确的位置过渡处理。你第一个念头想到的应该是URL，而不是事后再想起。">
+<meta property="article:published_time" content="2016-11-21T06:23:31.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.309Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React Router">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/11/21/React-Router-Learning-Notepad/"/>
+
+
+
+
+
+  <title> React Router Learning Notepad | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/11/21/React-Router-Learning-Notepad/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Router Learning Notepad
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-21T06:23:31+00:00">
+                2016-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+
+          
+          
+             <span id="/2016/11/21/React-Router-Learning-Notepad/" class="leancloud_visitors" data-flag-title="React Router Learning Notepad">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ol>
+<li>React Router 是完整的React 路由解决方案</li>
+<li>React Router 保持UI 与URL 同步。它拥有简单的API 与强大的功能，例如：代码缓冲加载、动态路由匹配、以及建立正确的位置过渡处理。你第一个念头想到的应该是URL，而不是事后再想起。</li>
+</ol>
+<a id="more"></a>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ol>
+<li>React Router 是一个基于React 之上的强大路由库，它可以让你像应用快速地添加视图和数据流，同时保持页面与URL 间的同步。</li>
+</ol>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>首先，通过npm 安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save react-router</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="使用React-Router"><a href="#使用React-Router" class="headerlink" title="使用React Router"></a>使用React Router</h3><ol>
+<li>React Route 知道如何为我们搭建嵌套的UI，因此我们不用手动找出需要渲染哪些<code>&lt;Child&gt;</code> 组件。举个例子，对于一个完整的<code>/about</code> 路径，React Router 会搭建出 <code>&lt;App&gt;&lt;About /&gt;&lt;/App&gt;</code>。</li>
+<li>在内部，router 会将你树级嵌套格式的<code>&lt;Route&gt;</code> 转变为路由配置。</li>
+</ol>
+<h3 id="添加更多的UI"><a href="#添加更多的UI" class="headerlink" title="添加更多的UI"></a>添加更多的UI</h3><ol>
+<li>现在我们准备在inbox UI 内嵌套inbox messages<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Message</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;h3&gt;Message&lt;<span class="regexp">/h3&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render((</span></span><br><span class="line"><span class="regexp">  &lt;Router history=&#123;browserHistory&#125;&gt;</span></span><br><span class="line"><span class="regexp">    &lt;Route path="/</span><span class="string">" component=&#123;App&#125;&gt;</span></span><br><span class="line"><span class="string">      &lt;Route path="</span>about<span class="string">" component=&#123;About&#125; /&gt;</span></span><br><span class="line"><span class="string">      &lt;Route path="</span>inbox<span class="string">" component=&#123;Inbox&#125;&gt;</span></span><br><span class="line"><span class="string">        &#123;/* 添加一个路由，嵌套进我们想要嵌套的UI 里 */&#125;</span></span><br><span class="line"><span class="string">        &lt;Route path="</span>messages/:id<span class="string">" component=&#123;Message&#125; /&gt;</span></span><br><span class="line"><span class="string">      &lt;/Route&gt;</span></span><br><span class="line"><span class="string">    &lt;/Route&gt;</span></span><br><span class="line"><span class="string">  &lt;/Router&gt;</span></span><br><span class="line"><span class="string">), document.getElementById('app')</span></span><br><span class="line"><span class="string">)</span></span><br></pre></td></tr></table></figure></li>
+<li>现在访问URL <code>inbox/messages/Jkei3c32</code> 将会匹配到一个新的路由，并且它成功指向了<code>App -&gt; Inbox -&gt; Message</code> 这个UI 的分支</li>
+<li>你也可以通过query 字符串来访问参数。比如你访问<code>/foo?bar=baz</code>，你可以通过访问<code>this.props.localtion.query.bar</code> 从Route 组件中获得”baz” 的值。</li>
+<li>这就是React Router 的奥秘。应用的UI 以盒子中嵌套盒子的方式来表现；然后你可以让这些盒子与URL 始终保持同步，而且很容易地把它们链接起来。</li>
+</ol>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><ol>
+<li>路由配置是一组指令，用来告诉router 如何配置URL 以及配置后如何执行代码。</li>
+<li>通过上面的配置，这个应用知道如何渲染下面四个URL</li>
+</ol>
+<p>URL | 组件<br>—|—|—<br>/ | App<br>/about | App -&gt; About<br>/inbox | App -&gt; Inbox<br>/inbox/message/:id | App -&gt; Inbox -&gt; Message</p>
+<h4 id="添加首页"><a href="#添加首页" class="headerlink" title="添加首页"></a>添加首页</h4><ol>
+<li>想象一下当URL 为<code>/</code> 时，我们想要渲染一个在<code>App</code> 中的组件。不过在此时，<code>App</code> 的<code>render</code> 中的<code>this.props.children</code> 还是<code>undefined</code> 。这种情况我们可以使用<code>IndexRoute</code> 来设置一个默认页面<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Router, Route, Link, browserHistory, IndexRoute &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dashboard</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;Welcome to the App!&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render((</span></span><br><span class="line"><span class="regexp">  &lt;Router history=&#123;browserHistory&#125;&gt;</span></span><br><span class="line"><span class="regexp">    &lt;Route path="/</span><span class="string">" component=&#123;App&#125;&gt;</span></span><br><span class="line"><span class="string">      &#123;/* 当Url为/ 时渲染Dashboard */&#125;</span></span><br><span class="line"><span class="string">      &lt;IndexRoute component=&#123;Dashboard&#125;/&gt;</span></span><br><span class="line"><span class="string">      &lt;Route path="</span>about<span class="string">" component=&#123;About&#125; /&gt;</span></span><br><span class="line"><span class="string">      &lt;Route path="</span>inbox<span class="string">" component=&#123;Inbox&#125;&gt;</span></span><br><span class="line"><span class="string">        &#123;/* 添加一个路由，嵌套进我们想要嵌套的UI 里 */&#125;</span></span><br><span class="line"><span class="string">        &lt;Route path="</span>messages/:id<span class="string">" component=&#123;Message&#125; /&gt;</span></span><br><span class="line"><span class="string">      &lt;/Route&gt;</span></span><br><span class="line"><span class="string">    &lt;/Route&gt;</span></span><br><span class="line"><span class="string">  &lt;/Router&gt;</span></span><br><span class="line"><span class="string">), document.getElementById('app')</span></span><br></pre></td></tr></table></figure></li>
+<li>现在，<code>App</code> 的<code>render</code> 中的 <code>this.props.children</code> 将会是<code>&lt;Dashboard&gt;</code>这个元素。上述功能是在当请求的URL 匹配某个目录时，允许你指定一个类似<code>index.html</code>的人口文件</li>
+</ol>
+<p>URL | 组件<br>—|—|—<br>/ | App -&gt; Dashboard<br>/about | App -&gt; About<br>/inbox | App -&gt; Inbox<br>/inbox/message/:id | App -&gt; Inbox -&gt; Message</p>
+<h4 id="让UI-从URL-中解耦出来"><a href="#让UI-从URL-中解耦出来" class="headerlink" title="让UI 从URL 中解耦出来"></a>让UI 从URL 中解耦出来</h4><ol>
+<li>如果我们可以将<code>/inbox</code> 从<code>/inbox/messages/:id</code>中去除，并且还能够让 <code>Message</code>嵌套在 <code>App-&gt;Inbox</code> 中渲染，那会非常赞。绝对路径可以让我们做到这一点。</li>
+<li>在多从嵌套路由中使用绝对路径的能力让我们对URL 拥有绝对的掌控。我们无需在URL 中添加更多的层级，从而可以使用更简洁的URL。</li>
+</ol>
+<p>URL | 组件<br>—|—|—<br>/ | App -&gt; Dashboard<br>/about | App -&gt; About<br>/inbox | App -&gt; Inbox<br>/message/:id | App -&gt; Inbox -&gt; Message<br>3. 提醒：绝对路径可能在动态路由中无法使用</p>
+<h4 id="兼容旧的URL"><a href="#兼容旧的URL" class="headerlink" title="兼容旧的URL"></a>兼容旧的URL</h4><ol>
+<li>在上面，我们改变了一个URL。现在仍何人访问<code>/inbox/messages/5</code> 都会啊看一个错误。我们可以使用<code>&lt;Redirect&gt;</code> 是这个URL 重新正常工作。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Router, Route, Link, browserHistory, IndexRoute, Redirect &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</span><br><span class="line"></span><br><span class="line">ReactDOM.render((</span><br><span class="line">  &lt;Router history=&#123;browserHistory&#125;&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"/"</span> component=&#123;App&#125;&gt;</span><br><span class="line">      &#123;<span class="comment">/* 当Url为/ 时渲染Dashboard */</span>&#125;</span><br><span class="line">      &lt;IndexRoute component=&#123;Dashboard&#125;/&gt;</span><br><span class="line">      &lt;Route path=<span class="string">"about"</span> component=&#123;About&#125; /&gt;</span><br><span class="line">      &lt;Route path=<span class="string">"inbox"</span> component=&#123;Inbox&#125;&gt;</span><br><span class="line">        &#123;<span class="comment">/* 使用/messages/:id 替换 messages/:id */</span>&#125;</span><br><span class="line">        &lt;Route path=<span class="string">"/messages/:id"</span> component=&#123;Message&#125; /&gt;</span><br><span class="line"></span><br><span class="line">        &#123;<span class="comment">/* 跳转 messages/:id 到 /messages/:id */</span>&#125;</span><br><span class="line">        &lt;Redirect <span class="keyword">from</span>=<span class="string">"messages/:id"</span> to=<span class="string">"/messages/:id"</span>/&gt;</span><br><span class="line">      &lt;<span class="regexp">/Route&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>Route&gt;</span><br><span class="line">  &lt;<span class="regexp">/Router&gt;</span></span><br><span class="line"><span class="regexp">), document.getElementById('app')</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure></li>
+<li>现在当有人点击<code>/inbox/messages/5</code> 这个链接，他们会自动跳转到 <code>/messages/5</code>。</li>
+</ol>
+<h4 id="进入和离开的Hook"><a href="#进入和离开的Hook" class="headerlink" title="进入和离开的Hook"></a>进入和离开的Hook</h4><ol>
+<li>Route 可以定义<code>onEnter</code>和 <code>onLeave</code> 两个hook，这些hook 会在页面跳转确认时触发一次。这些hook 对于一些情况非常有用，例如权限验证或者在路由跳转前将一些数据持久化保存起来。</li>
+<li>在路由跳转过程中，<code>onLeave hook</code> 会在所有将离开的路由中触发，从最下层的子路由开始直到最外层父路由结束。然后<code>onEnter hook</code>会从最外层的父路由开始直到最下层子路由结束。</li>
+<li>继续我们上面的例子，如果一个用户点击链接，从<code>/messages/5</code> 跳转到<code>/about</code> ，下面这些hook 的执行顺序<ol>
+<li><code>/messages/:id</code> 的<code>onLeave</code></li>
+<li><code>/inbox</code> 的<code>onLeave</code></li>
+<li><code>/about</code> 的<code>onEnter</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="替换的配置方式"><a href="#替换的配置方式" class="headerlink" title="替换的配置方式"></a>替换的配置方式</h4><ol>
+<li>因为route 一般被嵌套使用，所以使用JSX 这种天然具有简介嵌套型语法的结构来描述它们的关系非常方便。然后，如果你不想使用JSX ，也可以直接使用原生route 数组对象。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routeConfig = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    component: App,</span><br><span class="line">    indexRoute: &#123; <span class="attr">component</span>: Dashboard &#125;,</span><br><span class="line">    childRoutes: [</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">'about'</span>, <span class="attr">component</span>: About &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">'inbox'</span>,</span><br><span class="line">        component: Inbox,</span><br><span class="line">        childRoutes: [</span><br><span class="line">          &#123; <span class="attr">path</span>: <span class="string">'messages/:id'</span>,</span><br><span class="line">            onEnter: <span class="function">(<span class="params">&#123; params &#125;, replace</span>)=&gt;</span>replace(<span class="string">`/messages/<span class="subst">$&#123;params.id&#125;</span>`</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        component: Inbox,</span><br><span class="line">        childRoutes: [</span><br><span class="line">          &#123; <span class="attr">path</span>: <span class="string">'messages/:id'</span>, <span class="attr">component</span>: Message&#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Router</span><br><span class="line">    history=&#123;browserHistory&#125;</span><br><span class="line">    routes=&#123;routeConfig&#125; /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="路由配置原理"><a href="#路由配置原理" class="headerlink" title="路由配置原理"></a>路由配置原理</h3><ol>
+<li>路由拥有三个属性来决定是否“匹配”一个URL：<ol>
+<li><strong>嵌套关系</strong> 和</li>
+<li>它的 <strong>路径语法</strong></li>
+<li>它的 <strong>优先级</strong></li>
+</ol>
+</li>
+</ol>
+<h4 id="嵌套关系"><a href="#嵌套关系" class="headerlink" title="嵌套关系"></a>嵌套关系</h4><ol>
+<li>React Router 使用路由嵌套的概念让你定义view 的嵌套集合，当一个给定的URL 被调用时，整个集合中（命中的部分）都会被渲染。嵌套路由被描述成一种树形结构。React Router 会深度优先遍历整个路由配置来寻找一个与给定的URL 相匹配的路由。</li>
+</ol>
+<h4 id="路径语法"><a href="#路径语法" class="headerlink" title="路径语法"></a>路径语法</h4><ol>
+<li>路由路径是匹配一个（或一部分）URL 的一个字符串模式。大部分的路由路径都可以直接按照字面量理解，除了以下结构特殊的符号：<ol>
+<li><code>:paramName</code>- 匹配一段位于<code>\</code>、<code>?</code>或者<code>#</code>之后的URL。命中的部分将被作为一个参数</li>
+<li><code>()</code> - 在它内部的内容被认为是可选的</li>
+<li><code>*</code> - 匹配任意字符（非贪婪模式）直到命中下一个字符或者整个URL 的末尾，并创建一个<code>splat</code>参数<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/hello/:name"</span> &gt;  <span class="comment">// 匹配 /hello/michael 和 /hello/ryan</span></span><br><span class="line">&lt;Route path=<span class="string">"/hello(/:name)"</span> &gt; <span class="comment">// 匹配 /hello, /hello/michael 和 /hello/ryan</span></span><br><span class="line">&lt;Route path=<span class="string">"/files/*.*"</span> &gt; <span class="comment">// 匹配 /files/hello.jpg 和 /files/path/to/hello.jpg</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><ol>
+<li>最后，路由算法会根据定义的顺序自顶向下匹配路由。因此，当你拥有两个兄弟路由节点配置时，你必须确认前一个路由不会匹配后一个路由中的路径。例如，千万不要这么做：<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/comments"</span> .../&gt;</span><br><span class="line">&lt;Redirect <span class="keyword">from</span>=<span class="string">"/comments"</span> .../&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="History"><a href="#History" class="headerlink" title="History"></a>History</h3><ol>
+<li>React Router 是建立在history 之上的。简而言之，一个history知道如何去监听浏览器地址栏的变化，并解析这个URL 转化为<code>location</code> 对象，然后router 使用它匹配到路由，最后正确地渲染对应的组件。</li>
+<li>常用的history 有三种形式，但是你也可以使用React Router 实现自定义的history。<ol>
+<li><code>historyHistory</code></li>
+<li><code>hashHistory</code></li>
+<li><code>createMemoryHistory</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="browserHistory"><a href="#browserHistory" class="headerlink" title="browserHistory"></a>browserHistory</h4><ol>
+<li>Browser history 是使用React Router 的应用推荐的history。它使用浏览器中的History API 用于处理URL，创建一个像<code>example.com/some/path</code> 这样真实的URL</li>
+</ol>
+<h5 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h5><ol>
+<li>服务器需要做好处理URL 的准备。处理应用启动最初的<code>/</code> 这样的请求应该没问题，但当用户来回跳转并在<code>/account/123</code> 刷新时，服务器就会收到来自<code>/account/123</code>的请求，这时你需要处理这个URL 并在响应中包含JavaScript 应用代码。</li>
+</ol>
+<h4 id="hashHistory"><a href="#hashHistory" class="headerlink" title="hashHistory"></a>hashHistory</h4><ol>
+<li>Hash histor 使用URL 中的hash（#）部分去创建形如<code>example.com/#/some/path</code> 的路由。</li>
+<li>我应该使用createHashHistory 吗？<ol>
+<li>Hash History 不行也要服务器任何配置就可以运行，如果你刚刚入门，那就使用它吧。但是我们不推荐在实际线上环境中用它，因为每一个web 应用都应该渴望使用<code>browserHistory</code></li>
+</ol>
+</li>
+</ol>
+<h4 id="createMemoryHistory"><a href="#createMemoryHistory" class="headerlink" title="createMemoryHistory"></a>createMemoryHistory</h4><ol>
+<li>Memory history 不会在地址栏被操作或读取。这就解释了我们是如何实现服务器渲染的。同时它也非常适合测试和其他的渲染环境（像React Native）</li>
+<li>和另外两种history 的一点不同是你必须创建它，这种方式便于测试。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cosnt history = createMemoryHistory(location)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="默认路由（IndexRoute）与IndexLink"><a href="#默认路由（IndexRoute）与IndexLink" class="headerlink" title="默认路由（IndexRoute）与IndexLink"></a>默认路由（IndexRoute）与IndexLink</h3><h4 id="默认路由（IndexRoute）"><a href="#默认路由（IndexRoute）" class="headerlink" title="默认路由（IndexRoute）"></a>默认路由（IndexRoute）</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Router&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"/"</span> component=&#123;App&#125; &gt;</span><br><span class="line">    &lt;IndexRoute component=&#123;Home&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"accouts"</span> component=&#123;Accounts&#125; /&gt;</span><br><span class="line">    &lt;Route path=<span class="string">"statements"</span> component=&#123;Statements&#125; /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Route&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>Router&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Index-Links"><a href="#Index-Links" class="headerlink" title="Index Links"></a>Index Links</h4><ol>
+<li>如果你在这个app 中使用<code>&lt;Link to=&quot;/&quot;&gt;Home&lt;/Link&gt;</code> ，它会一直处于激活状态，因为所有的URL 的开头都是<code>/</code> 。这确实是一个问题，因为我们仅仅希望在<code>Home</code> 被渲染后，激活并链接到它。</li>
+<li>如果需要在<code>Home</code> 路由被渲染后才激活的指向<code>/</code> 的链接，请使用<code>&lt;IndexLink to=&quot;/&quot;&gt;Home&lt;/IndexLink&gt;</code></li>
+</ol>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h3><ol>
+<li>React Route 即适用与小型网站也适用于大型网站</li>
+<li>对于大型应用来说，一个首当其冲的问题就是所需加载的JavaScript 的大小。程序应当只加载当前渲染页所需的JavaScript。有些开发者将这种方式称之为“代码分析”– 将所有的代码分拆成多个小包，在用户浏览过程中按需加载。</li>
+<li>对于底层细节的修改不应该需要它上面每一层都进行修改。举个例子，为一个照片浏览页添加一个路径不应该影响到首页加载的JavaScript 的大小。也不能因为多个团队共用一个大型的路由配置文件而造成合并时冲突。</li>
+<li>路由是个非常适于做代码分拆的地方：它的责任就是配置好每个view</li>
+<li>React Router 里的路径匹配以及组件加载都是异步完成的，不仅允许你延迟加载组件，并且可以延迟加载路由配置。在首次加载包中你只需要有一个路径定义，路由会自动解析剩下的路径。</li>
+<li>Route 可以定义<code>getChildRoutes</code>，<code>getIndexRoute</code>和<code>getComponents</code> 这几个函数。它们都是异步执行，并且只有在需要时才被调用。我们将这种方式称之为“逐渐匹配”。React Router 会逐渐的匹配URL 并只加载该URL 对应页面所需的路径配置和组件。</li>
+</ol>
+<h3 id="跳转前确认"><a href="#跳转前确认" class="headerlink" title="跳转前确认"></a>跳转前确认</h3><ol>
+<li>React Router 提供一个<code>routerWillLeave 生命周期钩子</code>，这使得React 组件可以拦截正在发生的跳转，或在离开<code>route</code>前提示用户。<code>routerWillLeave</code> 返回值有一下两种：<ol>
+<li><code>return false</code> 取消此次跳转</li>
+<li><code>return</code> 返回提示信息，在离开route 前提示用户进行确认</li>
+</ol>
+</li>
+</ol>
+<h3 id="服务端渲染"><a href="#服务端渲染" class="headerlink" title="服务端渲染"></a>服务端渲染</h3><ol>
+<li>服务端渲染与客户端渲染会有些许不同，因为你需要：<ol>
+<li>发生错误时发送一个<code>500</code> 的响应</li>
+<li>需要重定向时发送一个<code>30x</code> 的响应</li>
+<li>在渲染之前获得数据（用router 帮你完成这点）</li>
+</ol>
+</li>
+<li>为了迎合这一需求，你要在<code>&lt;Router&gt;</code> API 下一层使用：<ol>
+<li>使用<code>match</code> 在渲染之前根据location 匹配route</li>
+<li>使用<code>RoutingContext</code> 同步渲染route 组件</li>
+</ol>
+</li>
+<li>它看起像一个虚拟机的JavaScript 服务器<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; renderToString &#125; <span class="keyword">from</span> <span class="string">'react-dom/server'</span></span><br><span class="line"><span class="keyword">import</span> &#123; match, RoutingContext &#125; <span class="keyword">from</span> <span class="string">'react-router'</span></span><br><span class="line"><span class="keyword">import</span> routes <span class="keyword">from</span> <span class="string">'./routes'</span></span><br><span class="line"></span><br><span class="line">serve(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 注意！ 这里的req.url 应该是从初始请求中获得的</span></span><br><span class="line">  <span class="comment">// 完整的URL 路径，包括查询字符串</span></span><br><span class="line">  match(&#123; routes, <span class="attr">location</span>: req.url &#125;, (error, redirectLocation, renderProps) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(error)&#123;</span><br><span class="line">      res.send(<span class="number">500</span>, error.message)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(redirectLocation)&#123;</span><br><span class="line">      res.redirect(<span class="number">302</span>, redirectLocation.pathname + redirectLocation.search)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(renderProps) &#123;</span><br><span class="line">      res.send(<span class="number">200</span>, renderToString(<span class="xml"><span class="tag">&lt;<span class="name">RoutingContext&#123;...renderProps&#125;</span>/&gt;</span></span>))</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      res.send(<span class="number">404</span>, <span class="string">'Not found'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>至于加载数据，你可以用<code>renderProps</code> 去构建任何你想要的形式 – 例如在route 组件中添加一个静态<code>load</code> 方法，或如在<code>route</code> 中添加数据加载的方法。</li>
+</ol>
+<h3 id="组件生命周期"><a href="#组件生命周期" class="headerlink" title="组件生命周期"></a>组件生命周期</h3><ol>
+<li>在开发应用时，理解路由组件的声明周期是非常重要的。后面我们会以获取数据这个最常见的场景为例，介绍一下路由改变时，路由组件声明周期的变化情况。</li>
+<li>路由组件的声明周期和React 组件相比并没有什么不同。所以让我们先忽略路由部分，只考虑在不同URL 下，这些组件是如何被渲染的。</li>
+<li>路由配置如下：<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">"/"</span> conmponent=&#123;App&#125;&gt;</span><br><span class="line">  &lt;IndexRoute component=&#123;Home&#125; /&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"invoices/:invoiceId"</span> component=&#123;Invoice&#125; /&gt;</span><br><span class="line">  &lt;Route path=<span class="string">"accounts/:accountId"</span> component=&#123;Account&#125; /&gt;</span><br><span class="line">&lt;<span class="regexp">/Route&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="路由切换时，组件生命周期的变化情况"><a href="#路由切换时，组件生命周期的变化情况" class="headerlink" title="路由切换时，组件生命周期的变化情况"></a>路由切换时，组件生命周期的变化情况</h4><ol>
+<li>当用户打开应用的’/‘ 页面</li>
+</ol>
+<p>组件 | 生命周期<br>—|—|—<br>App | componentDidMount<br>Home | componentDidMount<br>Invoice | N/A<br>Account | N/A</p>
+<ol start="2">
+<li>当用户从<code>/</code> 跳转到<code>/invoice/123</code></li>
+</ol>
+<p>组件 | 生命周期<br>—|—|—<br>App | componentWillReceiveProps, componentDidUpdate<br>Home | componentWillUnmount<br>Invoice | componentDidmount<br>Account | N/A</p>
+<pre><code>* `App` 从router 中接到新的`props` （例如`children`、`params`、`location`等数据 ）所以`App`触发了`componentWillReceiveProps`和`componentDidUpdate`两个生命周期
+* `Home`不再被渲染，所以它将被移除
+* `Invoice`首次被挂载</code></pre>
+<ol start="3">
+<li>当用户从<code>/invoice/123</code>跳转到<code>/invoice/789</code></li>
+</ol>
+<p>组件 | 生命周期<br>—|—|—<br>App | componentWillReceiveProps, componentDidUpdate<br>Home | N/A<br>Invoice | componentWillReceiveProps, componentDidUpdate<br>Account | N/A</p>
+<p>  所有的组件之前都已经被挂载，所以只是从<code>router</code>更新了<code>props</code><br>4. 当从<code>/invoice/789</code>跳转到<code>/accounts/123</code></p>
+<p>组件 | 生命周期<br>—|—|—<br>App | componentWillReceiveProps, componentDidUpdate<br>Home | N/A<br>Invoice | componentWillUnmount<br>Account | componentDidMount</p>
+<h4 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h4><ol>
+<li>虽然还有其他通过router 获取数据的方法，但是最简单的方法是通过组件生命周期Hook 来实现。前面我们已经理解了当路由改变时组件声明周期的变化，我们可以在<code>Invoice</code> 组件里实现一个简单的数据获取功能。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Invoice</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      invoice: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount()&#123;</span><br><span class="line">    <span class="comment">// 上面的步骤2，在此进行初始化数据</span></span><br><span class="line">    <span class="keyword">this</span>.fetchInvoice()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidUpdate(preProps)&#123;</span><br><span class="line">    <span class="comment">// 上面的步骤3，通过参数更新数据</span></span><br><span class="line">    <span class="keyword">let</span> oldId = preProps.params.invoiceId</span><br><span class="line">    <span class="keyword">let</span> newId = <span class="keyword">this</span>.props.params.invoiceId</span><br><span class="line">    <span class="keyword">if</span>(newId !== oldId)&#123;</span><br><span class="line">      <span class="keyword">this</span>.fetchInvoice()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillUnmount()&#123;</span><br><span class="line">    <span class="comment">// 上面的步骤4，在组件移除前忽略掉正在进行中的请求</span></span><br><span class="line">    <span class="keyword">this</span>.ignoreLastFetch = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  fetchInvoice()&#123;</span><br><span class="line">    <span class="keyword">let</span> url = <span class="string">`/api/invoices/<span class="subst">$&#123;<span class="keyword">this</span>.props.params.invoiceId&#125;</span>`</span></span><br><span class="line">    <span class="keyword">this</span>.request = fetch(url, (err, data)=&gt;&#123;</span><br><span class="line">      <span class="keyword">if</span>(!<span class="keyword">this</span>.ignoreLastFetch)&#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123; <span class="attr">invoice</span>: data.invoice &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">InvoiceView</span> <span class="attr">invoice</span>=<span class="string">&#123;this.state.invoice&#125;</span> /&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="组件外部跳转"><a href="#组件外部跳转" class="headerlink" title="组件外部跳转"></a>组件外部跳转</h3><ol>
+<li>虽然在组件内部可以使用<code>this.context.router</code> 来实现导航，但许多应用想要在组件外部使用导航。使用Router 组件上被赋予的history 可以在组件外部实现导航。</li>
+</ol>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://react-guide.github.io/react-router-cn/" target="_blank" rel="noopener">react router 中文</a></li>
+<li><a href="https://github.com/ReactTraining/react-router/blob/master/docs/guides/RouteConfiguration.md" target="_blank" rel="noopener">react router 官网</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/React-Router/" rel="tag"># React Router</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="hexo 常用命令">
+                <i class="fa fa-chevron-left"></i> hexo 常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/24/Redux-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" rel="prev" title="Redux 入门教程">
+                Redux 入门教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用React-Router"><span class="nav-number">3.1.</span> <span class="nav-text">使用React Router</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加更多的UI"><span class="nav-number">3.2.</span> <span class="nav-text">添加更多的UI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">4.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由配置"><span class="nav-number">4.1.</span> <span class="nav-text">路由配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加首页"><span class="nav-number">4.1.1.</span> <span class="nav-text">添加首页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#让UI-从URL-中解耦出来"><span class="nav-number">4.1.2.</span> <span class="nav-text">让UI 从URL 中解耦出来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兼容旧的URL"><span class="nav-number">4.1.3.</span> <span class="nav-text">兼容旧的URL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入和离开的Hook"><span class="nav-number">4.1.4.</span> <span class="nav-text">进入和离开的Hook</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替换的配置方式"><span class="nav-number">4.1.5.</span> <span class="nav-text">替换的配置方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由配置原理"><span class="nav-number">4.2.</span> <span class="nav-text">路由配置原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#嵌套关系"><span class="nav-number">4.2.1.</span> <span class="nav-text">嵌套关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路径语法"><span class="nav-number">4.2.2.</span> <span class="nav-text">路径语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级"><span class="nav-number">4.2.3.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#History"><span class="nav-number">4.3.</span> <span class="nav-text">History</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#browserHistory"><span class="nav-number">4.3.1.</span> <span class="nav-text">browserHistory</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#服务器配置"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">服务器配置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hashHistory"><span class="nav-number">4.3.2.</span> <span class="nav-text">hashHistory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#createMemoryHistory"><span class="nav-number">4.3.3.</span> <span class="nav-text">createMemoryHistory</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认路由（IndexRoute）与IndexLink"><span class="nav-number">4.4.</span> <span class="nav-text">默认路由（IndexRoute）与IndexLink</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认路由（IndexRoute）"><span class="nav-number">4.4.1.</span> <span class="nav-text">默认路由（IndexRoute）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Index-Links"><span class="nav-number">4.4.2.</span> <span class="nav-text">Index Links</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级用法"><span class="nav-number">5.</span> <span class="nav-text">高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态路由"><span class="nav-number">5.1.</span> <span class="nav-text">动态路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转前确认"><span class="nav-number">5.2.</span> <span class="nav-text">跳转前确认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端渲染"><span class="nav-number">5.3.</span> <span class="nav-text">服务端渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件生命周期"><span class="nav-number">5.4.</span> <span class="nav-text">组件生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#路由切换时，组件生命周期的变化情况"><span class="nav-number">5.4.1.</span> <span class="nav-text">路由切换时，组件生命周期的变化情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取数据"><span class="nav-number">5.4.2.</span> <span class="nav-text">获取数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件外部跳转"><span class="nav-number">5.5.</span> <span class="nav-text">组件外部跳转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/11/21/React-Router-Learning-Notepad/';
+
+      var disqus_title = "React Router Learning Notepad";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

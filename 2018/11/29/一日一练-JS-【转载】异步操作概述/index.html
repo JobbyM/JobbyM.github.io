@@ -1,0 +1,1071 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JS,一日一练,转载,事件循环,Event Loop,异步操作," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文转载自异步操作概述 ruanyifeng，有部分删节，看原文请到原地址。 单线程模型单线程模型指的是，JavaScript 只是在一个线程上运行。也就说，JavaScript 同时只能执行一个任务，其他任务都必须在后面排队等待。 注意，JavaScript 只是在一个线程上运行，不代表JavaScript 引擎只有一个线程。事实上，JavaScript 引擎有多个线程，单个脚本只能在一个线程上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-JS 【转载】异步操作概述">
+<meta property="og:url" content="https://jobbym.github.io/2018/11/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="本文转载自异步操作概述 ruanyifeng，有部分删节，看原文请到原地址。 单线程模型单线程模型指的是，JavaScript 只是在一个线程上运行。也就说，JavaScript 同时只能执行一个任务，其他任务都必须在后面排队等待。 注意，JavaScript 只是在一个线程上运行，不代表JavaScript 引擎只有一个线程。事实上，JavaScript 引擎有多个线程，单个脚本只能在一个线程上">
+<meta property="article:published_time" content="2018-11-29T04:27:31.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.521Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="事件循环">
+<meta property="article:tag" content="Event Loop">
+<meta property="article:tag" content="异步操作">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/11/29/一日一练-JS-【转载】异步操作概述/"/>
+
+
+
+
+
+  <title> 一日一练-JS 【转载】异步操作概述 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/11/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%A6%82%E8%BF%B0/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-JS 【转载】异步操作概述
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-29T04:27:31+00:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%A6%82%E8%BF%B0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/29/一日一练-JS-【转载】异步操作概述/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/11/29/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%A6%82%E8%BF%B0/" class="leancloud_visitors" data-flag-title="一日一练-JS 【转载】异步操作概述">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文转载自<a href="https://wangdoc.com/javascript/async/general.html" target="_blank" rel="noopener">异步操作概述 ruanyifeng</a>，有部分删节，看原文请到原地址。</p>
+<h2 id="单线程模型"><a href="#单线程模型" class="headerlink" title="单线程模型"></a>单线程模型</h2><p>单线程模型指的是，JavaScript 只是在一个线程上运行。也就说，JavaScript 同时只能执行一个任务，其他任务都必须在后面排队等待。</p>
+<p>注意，JavaScript 只是在一个线程上运行，不代表JavaScript 引擎只有一个线程。事实上，JavaScript 引擎有多个线程，单个脚本只能在一个线程上运行（称为主线程），其他线程都是在后台配合。</p>
+<p>JavaScript 之所以采用单线程，而不是多线程，跟历史有关系。JavaScript 从诞生起就是单线程，原因是不想让浏览器变得太复杂，因为多线程需要共享资源、且有可能修改彼此的运行结果。如果JavaScript 同时有两个线程，一个线程是在网页DOM 节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？是不是还要有锁机制？所以，为了避免复杂性，JavaScript 一开始就是单线程，这已经是这门语言的核心特征，将来也不会改变。</p>
+<a id="more"></a>
+
+<p>这种模式的好处是实现起来比较简单，执行环境相对单纯；坏处是只要有一个任务耗时很长，后面的任务都必须排队等待，会拖延整个程序的执行。常见的浏览器无响应（假死），往往就是因为某一段JavaScript 代码长时间执行（比如死循环），导致整个页面卡在这个地方，其他任务无法执行。JavaScript 语言本身并不慢，慢的是读写外部数据，比如等待Ajax 请求返回结果。这个时候，如果对方服务器迟迟没有响应，或者网页不通畅，就会导致脚本的长时间停滞。</p>
+<p>如果排队是因为计算量大，CPU 忙不来，倒也算了，但是很多时候CPU 是闲着的，因为IO 操作很慢（比如Ajax 操作从网络读取数据），不得不等着结果出来，再往下执行。JavaScript 语言的设计者意识到，这时CPU 完全可以不管IO 操作，挂起处于等待中的任务，先运行排在后面的任务。等到IO 操作返回了结果，再回过头，把挂起的任务继续执行下去。这种机制就是JavaScript 内容采用的“事件循环”机制（Event Loop）。</p>
+<p>单线程模型虽然对JavaScript 构成了很大的限制，但也因此使它具备了其他语言不具备的优势。如果用得好，JavaScript 程序是不会出现阻塞的，这就是为什么Node 可以用很少的资源，应付大流量访问的原因。</p>
+<p>为了利用多核CPU 的计算能力，HTML5 提出了Web Worker 标准，允许JavaScript 脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM。所以，这个新标准并没有改变JavaScript 单线程的本质。</p>
+<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>程序里的所有任务，可以分为两类：同步任务（synchronous）和异步任务（asynchronous）。</p>
+<p>同步任务是那些没有被引擎挂起、在主线程上排队执行的任务。只有前一个任务执行完毕，才能执行后一个任务。</p>
+<p>异步任务是那些被引擎放在一边，不进入主线程、而进入任务队列的任务。只有引擎认为某个异步任务可以执行了（比如Ajax 操作从服务器得到了结果），该任务（采用回调函数的形式）才会进入主线程执行。排在异步任务后面的代码，不用等待异步任务结束会马上执行，也就是说，异步任务不具有“阻塞”效应。</p>
+<p>举例来说，Ajax 操作可以当作同步任务处理，也可以当作异步任务处理，由开发者决定。如果是同步任务，主线程就等着Ajax 操作返回结果，再往下执行；如果是异步任务，主线程在发出Ajax 请求以后，就直接往下执行，等到Ajax 操作有了结果，主线程再执行对应的回调函数。</p>
+<h2 id="任务队列和事件循环"><a href="#任务队列和事件循环" class="headerlink" title="任务队列和事件循环"></a>任务队列和事件循环</h2><p>JavaScript 运行时，除了一个正在运行的主线程，引擎还提供一个任务队列（task queue），里面是各种需要当前程序处理的异步任务。（实际上，根据异步任务的类型，存在多个任务队列。为了方便理解，这里假设只存在一个队列。）</p>
+<p>首先，主线程会去执行所有的同步任务。等到同步任务全部执行完，就会去看任务队列里面的异步任务。如果满足条件，那么异步任务就会重新进入主线程开始执行，这时它就变成同步任务了，等到执行完，下一个异步任务再进入主线程开始执行。一旦任务队列清空，程序就结束执行。</p>
+<p>异步任务的写法通常是回调函数。一旦异步任务重新进入主线程，就会执行对应的回调函数。如果一个异步任务没有回调函数，就不会进入任务队列，也就是说，不会重新进入主线程，因为没有用回调函数指定下一步的操作。</p>
+<p>JavaScript 引擎怎么知道异步任务有没有结果，能不能进入主线程呢？答案就是引擎在不停地检查，一遍又一遍，只要同步任务执行完了，引擎就会去检查那些挂起来的异步任务，是不是可以进入主线程了。这种循环检查的机制，就叫做事件循环（Event Loop）。<a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="noopener">维基百科</a>的定义是：“事件循环是一个程序结构，用于等待和发送消息和事件（a programming construct that wait for and dispatches events or messaegs in a program）”。</p>
+<h2 id="异步任务的操作模式"><a href="#异步任务的操作模式" class="headerlink" title="异步任务的操作模式"></a>异步任务的操作模式</h2><p>下面总结一下异步操作的几种模式。</p>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><p>回调函数是异步操作最基本的方法。</p>
+<p>下面是两个函数<code>f1</code> 和<code>f2</code>，编程的意图是<code>f2</code> 必须等待<code>f1</code> 执行完成，才能执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1()</span><br><span class="line">f2()</span><br></pre></td></tr></table></figure>
+
+<p>上面代码的问题在于，如果<code>f1</code> 是异步操作，<code>f2</code> 会立即执行，不会等到<code>f1</code> 结束再执行。</p>
+<p>这时，可以考虑改写<code>f1</code>，把<code>f2</code> 做<code>f1</code> 的回调函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  callback()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1(f2)</span><br></pre></td></tr></table></figure>
+
+<p>回调函数的优点是简单、容易理解和实现，缺点是不利于代码的阅读和维护，各个部分之间高度<a href="http://en.wikipedia.org/wiki/Coupling_(computer_programming)" target="_blank" rel="noopener">耦合</a>（coupling），使得程序结构混乱、流程难以追踪（尤其是多个回调函数嵌套的情况），而且每个任务只能指定一个回调函数。</p>
+<h3 id="事件监听"><a href="#事件监听" class="headerlink" title="事件监听"></a>事件监听</h3><p>另一种思路是采用事件驱动模式。异步任务的执行不取决于代码的顺序，而取决于某个事件是否发生。</p>
+<p>还是以<code>f1</code> 和<code>f2</code> 为例。首先，为<code>f1</code> 绑定一个事件（这里采用jQuery 的<a href="http://api.jquery.com/on/" target="_blank" rel="noopener">写法</a>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f1.on(<span class="string">'done'</span>, f2)</span><br></pre></td></tr></table></figure>
+
+<p>上面这行代码的意思是，当<code>f1</code> 发生<code>done</code> 事件，就执行<code>f2</code>。然后，对<code>f1</code> 进行改写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    f1.trigger(<span class="string">'done'</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中，<code>f1.trigger(&#39;done&#39;)</code> 表示，执行完成后，立即触发<code>done</code> 事件，从而开始执行<code>f2</code>。</p>
+<p>这种方法的有点是比较容易理解，可以绑定多个事件，每个事件可以指定多个回调函数，而且可以“<a href="http://en.wikipedia.org/wiki/Decoupling" target="_blank" rel="noopener">去耦合</a>”（decoupling），有利于实现模块化。缺点是整个程序都要变成事件驱动型，运行流程会变得很不清晰。阅读代码的时候，很难看出主流程。</p>
+<h3 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h3><p>事件完全可以理解成“信号”，如果存在一个“信号中心”，某个任务执行完成，向信号中心“发布”（publish）一个信号，其他任务可以向信号中心“订阅”（subscribe）这个信号，从而知道什么时候自己可以开始执行。这就叫做“<a href="http://en.wikipedia.org/wiki/Publish-subscribe_pattern" target="_blank" rel="noopener">发布/订阅模式</a>”（publish-subscribe pattern），又称“<a href="http://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="noopener">观察者模式</a>”(observer pattern)。</p>
+<p>这个模式有多种<a href="http://msdn.microsoft.com/en-us/magazine/hh201955.aspx" target="_blank" rel="noopener">实现</a>，下面采用的是Ben Alman 的<a href="https://gist.github.com/661855" target="_blank" rel="noopener">Tiny Pub/Sub</a>，这是jQuery 的一个插件。</p>
+<p>首先，<code>f2</code> 向信号中心<code>jQuery</code> 订阅<code>done</code> 信号。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jQuery.subscribe(<span class="string">'done'</span>, f2)</span><br></pre></td></tr></table></figure>
+
+<p>然后，<code>f1</code> 进行如下改写。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    jQuery.publish(<span class="string">'done'</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中，<code>jQuery.publish(&#39;done&#39;)</code> 表示，<code>f1</code>执行完成后，向信号中心<code>jQuery</code> 发布<code>done</code> 信号，从而引发<code>f2</code> 的执行。</p>
+<p><code>f2</code> 完成执行后，可以取消订阅（unsubscribe）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jQuery.unsubscribe(<span class="string">'done'</span>, f2)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法的性质与“事件监听”类似，但是明显优于后者。因为可以通过查看“消息中心”，了解存在多少信号、每个信号有多少订阅者，从而监控程序的运行。</p>
+<h2 id="异步操作的流程控制"><a href="#异步操作的流程控制" class="headerlink" title="异步操作的流程控制"></a>异步操作的流程控制</h2><p>如果有多个异步操作，就存在一个流程控制的问题：如何确定异步操作执行的顺序，以及如何保证遵守这种顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span> (<span class="params">arg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'参数为 '</span> + arg + <span class="string">', 1秒后返回结果'</span>)</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; callback(arg * <span class="number">2</span>)&#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码的<code>async</code> 函数是一个异步任务，非常耗时，每次执行需要1 秒才能完成，然后再调用回调函数。</p>
+<p>如果有六个这样的异步任务，需要全部完成后，才能执行最后的<code>final</code> 函数。请问应该如何安排操作流程？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">final</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'完成：'</span>, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span>(<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">async</span>(value, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">async</span>(value, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">async</span>(value, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">async</span>(value, <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">async</span>(value, final)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，六个回调函数的嵌套，不仅写起来麻烦，容易出错，而且难以维护。</p>
+<h3 id="串行执行"><a href="#串行执行" class="headerlink" title="串行执行"></a>串行执行</h3><p>我们可以编写一个流程控制函数，让它来控制异步任务，一个任务完成以后，再执行另一个。这就叫串行执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> items = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">var</span> results = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span> (<span class="params">arg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'参数为 '</span> + arg + <span class="string">', 1秒后返回结果'</span>)</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; callback(arg * <span class="number">2</span>)&#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">final</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'完成：'</span>, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">series</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (item) &#123;</span><br><span class="line">    <span class="keyword">async</span>(item, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">      results.push(result)</span><br><span class="line">      <span class="keyword">return</span> series(items.shift())</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> final(results[results.length - <span class="number">1</span> ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">series(items.shift())</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，函数<code>series</code> 就是串行函数，它会依次执行异步任务，所有任务都完成后，才会执行<code>final</code> 函数。<code>items</code> 数组保存每一个异步函数任务的餐，<code>results</code> 数组保存每一个异步任务的运行结果。</p>
+<p>注意，上面的写法需要六秒，才能完成整个脚本。</p>
+<h3 id="并行执行"><a href="#并行执行" class="headerlink" title="并行执行"></a>并行执行</h3><p>流程控制函数也可以是并行执行，即所有异步任务同时执行，等到全部完成以后，才执行<code>final</code> 函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> items = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">var</span> results = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span> (<span class="params">arg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'参数为 '</span> + arg + <span class="string">', 1秒后返回结果'</span>)</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; callback(arg * <span class="number">2</span>)&#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">final</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'完成：'</span>, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">items.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">async</span>(item, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    results.push(result)</span><br><span class="line">    <span class="keyword">if</span> (results.length === item.length ) &#123;</span><br><span class="line">      final(results[results.length - <span class="number">1</span>])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，<code>forEach</code> 方法会同时发起六个异步任务，等到它们都完成以后，才会执行<code>final</code> 函数。</p>
+<p>相比而言，上面的写法只要一秒，就能完成整个脚本。这就是说，并行执行的效率较高，比起串行执行一次只能执行一个任务，较为节约时间。但是问题在于如果并行的任务较多，很容易耗尽系统资源，拖慢运行速度。因此有了第三种流程控制方式。</p>
+<h3 id="并行和串行的结合"><a href="#并行和串行的结合" class="headerlink" title="并行和串行的结合"></a>并行和串行的结合</h3><p>所谓并行与串行的结合，就是设置一个门槛，每次最多只能并行执行<code>n</code> 个异步任务，这样就避免了过分占用系统资源。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> items = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">var</span> results = []</span><br><span class="line"><span class="keyword">var</span> running = <span class="number">0</span></span><br><span class="line"><span class="keyword">var</span> limit = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">async</span> (<span class="params">arg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'参数为 '</span> + arg + <span class="string">', 1秒后返回结果'</span>)</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; callback(arg * <span class="number">2</span>)&#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">final</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'完成：'</span>, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">launcher</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (running &lt; limit &amp;&amp; items.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = items.shift()</span><br><span class="line">    <span class="keyword">async</span>(item, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">      results.push(result)</span><br><span class="line">      running --</span><br><span class="line">      <span class="keyword">if</span> (items.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        launcher()</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (running == <span class="number">0</span>) &#123;</span><br><span class="line">        final(results)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    running ++</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">launcher()</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，最多只能同时运行两个异步任务。变量<code>running</code> 记录当前正在运行的任务数，只要低于门槛值，就能再启动一个新的任务，如果等于<code>0</code>，就表示所有任务等执行完了，这是就执行<code>final</code> 函数。</p>
+<p>这段代码需要三秒完成整个脚本，处在串行执行和并行执行之间。通过调节<code>limit</code> 变量，达到效率和资源的最佳平衡。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" rel="tag"># 事件循环</a>
+          
+            <a href="/tags/Event-Loop/" rel="tag"># Event Loop</a>
+          
+            <a href="/tags/%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/" rel="tag"># 异步操作</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91JavaScript-%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E8%AF%A6%E8%A7%A3%EF%BC%9A%E5%86%8D%E8%B0%88Event-Loop/" rel="next" title="一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop">
+                <i class="fa fa-chevron-left"></i> 一日一练-JS 【转载】JavaScript 运行机制详解：再谈Event Loop
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/30/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E5%AE%9A%E6%97%B6%E5%99%A8/" rel="prev" title="一日一练-JS 【转载】定时器">
+                一日一练-JS 【转载】定时器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单线程模型"><span class="nav-number">1.</span> <span class="nav-text">单线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步任务和异步任务"><span class="nav-number">2.</span> <span class="nav-text">同步任务和异步任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务队列和事件循环"><span class="nav-number">3.</span> <span class="nav-text">任务队列和事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步任务的操作模式"><span class="nav-number">4.</span> <span class="nav-text">异步任务的操作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回调函数"><span class="nav-number">4.1.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件监听"><span class="nav-number">4.2.</span> <span class="nav-text">事件监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布-订阅"><span class="nav-number">4.3.</span> <span class="nav-text">发布&#x2F;订阅</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步操作的流程控制"><span class="nav-number">5.</span> <span class="nav-text">异步操作的流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#串行执行"><span class="nav-number">5.1.</span> <span class="nav-text">串行执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行执行"><span class="nav-number">5.2.</span> <span class="nav-text">并行执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行和串行的结合"><span class="nav-number">5.3.</span> <span class="nav-text">并行和串行的结合</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/11/29/一日一练-JS-【转载】异步操作概述/';
+
+      var disqus_title = "一日一练-JS 【转载】异步操作概述";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

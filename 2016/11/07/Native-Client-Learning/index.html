@@ -1,0 +1,1066 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Native Client,NaCl," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Technical Overview（技术概要） Native Client Native Client  分为传统的Nacl （NaCl）和移动的NaCl（PNaCl）,传统的必须通过Chrome Web Store 进行下载，而PNaCl 只需要打开浏览器就能够进行加载运行了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Native Client Learning">
+<meta property="og:url" content="https://jobbym.github.io/2016/11/07/Native-Client-Learning/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="Technical Overview（技术概要） Native Client Native Client  分为传统的Nacl （NaCl）和移动的NaCl（PNaCl）,传统的必须通过Chrome Web Store 进行下载，而PNaCl 只需要打开浏览器就能够进行加载运行了">
+<meta property="og:image" content="https://jobbym.github.io/2016/11/07/Native-Client-Learning/web-app-with-nacl.png">
+<meta property="og:image" content="https://jobbym.github.io/2016/11/07/Native-Client-Learning/nacl-pnacl-component-diagram.png">
+<meta property="og:image" content="https://jobbym.github.io/2016/11/07/Native-Client-Learning/nacl-in-a-web-app.png">
+<meta property="article:published_time" content="2016-11-07T02:51:31.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.309Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="Native Client">
+<meta property="article:tag" content="NaCl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2016/11/07/Native-Client-Learning/web-app-with-nacl.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/11/07/Native-Client-Learning/"/>
+
+
+
+
+
+  <title> Native Client Learning | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/11/07/Native-Client-Learning/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Native Client Learning
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-07T02:51:31+00:00">
+                2016-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/07/Native-Client-Learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/07/Native-Client-Learning/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/07/Native-Client-Learning/" class="leancloud_visitors" data-flag-title="Native Client Learning">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Technical-Overview（技术概要）"><a href="#Technical-Overview（技术概要）" class="headerlink" title="Technical Overview（技术概要）"></a>Technical Overview（技术概要）</h2><ol>
+<li>Native Client<img src="/2016/11/07/Native-Client-Learning/web-app-with-nacl.png" class="" title="A web application with and without Native Client">
+Native Client  分为传统的Nacl （NaCl）和移动的NaCl（PNaCl）,传统的必须通过Chrome Web Store 进行下载，而PNaCl 只需要打开浏览器就能够进行加载运行了<a id="more"></a></li>
+<li>How Native Client works （Native Client 是如何进行工作的）<br>Native Client 作为开发C/C++ 应用程序在浏览器上安全运行的软件组件的名称，Native Client 包括如下：<br>2.1 Toolchains（工具链）：移植C/C++ 代码到Portable of Native Client modules 或者 Native Client modules的开发工具集合（编译、链接等）。<br>2.2 Runtime components（运行时组件）：能够安全高效的执行Native Client modules 的浏览器插件或者是其宿主平台<br>  下面这张图展示这些组件的交互  <img src="/2016/11/07/Native-Client-Learning/nacl-pnacl-component-diagram.png" class="" title="The Native Client toolchains and their outputs">
+2.3 Toolchains<br>   Native Client toolchains 包括一个编译器、链接器、汇编器 和其工具来将C/C++ 源码转化为可以在浏览器中加载的模块<br>   Native Client SDK 提供两个工具链<br>  2.3.1. Portable Native Client（PNaCl，pronounced“pinnacle”）。pexe<pre><code> * 将源代码编译成二进制可执行文件pexe
+ * 在加载进浏览器时，会将pexe 转为host-specific，也可以说是nexe</code></pre>
+  2.3.2.（non-portable）Native Client。 nexe<pre><code> PNaCl toolchains 适合大多数应用，NaCl-GCC toolchains 只被用作不在公开网络上分发的应用。</code></pre>
+</li>
+<li>Structure of a web application（Web 应用结构）<ul>
+<li>HTML and CSS： HTML文件告诉浏览器如何去这个manifest（nmf file）（清单文件）通过embed tag<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;embed name = 'mygame' src='mygame.nmf' <span class="built_in">type</span> = 'application/x-pnacl'/&gt;</span><br></pre></td></tr></table></figure></li>
+<li>Manifest： 指示模块去加载和配置选项<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">     ...</span><br><span class="line">     ...</span><br><span class="line">     'url':'mygame.pexe'</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>pexe（portable NaCl file）：一个编译过的Native Client 模块。使用pepper API 来提供JavaScript 和其他浏览器资源交互<img src="/2016/11/07/Native-Client-Learning/nacl-in-a-web-app.png" class="" title="Structure of a web application"></li>
+<li>Pepper plugin-in API<br>The Pepper plug-in API(PPAPI)，是一个做为一个开源的、跨平台C/C++ API 的web 浏览器插件程序。可以安全便捷的访问系统级别功能。包括<ol>
+<li>同应用中的JavaScript 交互</li>
+<li>操作文件读写</li>
+<li>播放音频</li>
+<li>渲染3D 图像</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h2><ol>
+<li>Python 2.7<br>首先需要在本地安装Python，需要安装2.7.x, 现在还不支持3.x ，同时需要将Python 目录添加到path 环境目录中<br>1.1.  <a href="https://www.python.org/download/" target="_blank" rel="noopener">https://www.python.org/download/</a>  下载最新的2.x Python ,资源目录1<br>1.2.  需要重启之后才生效</li>
+<li>Make<br>在Windows 系统上，Native Client SDK包含了一个GNU Make</li>
+<li>Platforms<br>Native Client 支持多个操作系统，包括Windows，Linux，OSX，和ChromeOS，也支持多个架构包括x86-32，x86-64，ARM 和MIPS<br>本机是windows7 ,x86-64 架构</li>
+<li>Versions<br>只要是最新的Chrome 就可以了，同时需要注意Chrome 的版本要大于下载的pepper_<version><br>查看Chrome 版本，在浏览器地址栏中输入<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">about:<span class="title">chrome</span></span></span><br></pre></td></tr></table></figure>
+或者<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">about:<span class="title">version</span></span></span><br></pre></td></tr></table></figure></li>
+<li>Installing the SDK（The Native Client Software Development Kit）<br>5.1. nacl_sdk.zip 下载安装，资源目录2<br>5.2. 将下载下来的nacl_sdk.zip 进行解压，获取如下文件目录<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nacl_sdk</span><br><span class="line"> naclsdk（naclsdk.bat 是为Windows 系统适配的）: 更新工具，用来进行下载和更新bundles</span><br><span class="line"><span class="function"> sdk_cache: 这个文件夹中包好一个<span class="title">manifest</span> 文件，其列出了你已经下载的<span class="title">bundles</span></span></span><br><span class="line"><span class="function"> <span class="title">sdk_tools</span>: 由<span class="title">naclsdk</span> 命令代码运行</span></span><br></pre></td></tr></table></figure>
+5.3. 安装稳定的bundle<br> 5.3.1. 首先是进入nacl_sdk 这个目录并运行naclsdk list 这个命令本地<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>&gt;<span class="title">naclsdk</span> <span class="title">list</span></span></span><br><span class="line"><span class="function"><span class="title">ERROR:Unable</span> <span class="title">to</span> <span class="title">read</span> <span class="title">remote</span> <span class="title">manifest</span> <span class="title">from</span> <span class="title">URL</span> "<span class="title">https</span>://<span class="title">storage.googleapis.com</span>/<span class="title">na</span></span></span><br><span class="line"><span class="function"><span class="title">tiveclient</span>-<span class="title">mirror</span>/<span class="title">nacl</span>/<span class="title">nacl_sdk</span>/<span class="title">naclsdk_manifest2.json</span>".</span></span><br><span class="line"><span class="function">&lt;<span class="title">urlopen</span> <span class="title">error</span> [<span class="title">Errno</span> 10060] &gt;</span></span><br></pre></td></tr></table></figure>
+这个由于是在墙外导致的问题产生，不过将<a href="https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/naclsdk_manifest2.json" target="_blank" rel="noopener">https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/naclsdk_manifest2.json</a> 这个文件下载了来，资源目录3<br> 5.3.2. 通过运行naclsdk update 来更新需要的bundles<br> 5.3.3. 通过运行 naclsdk list 来显示所有可用的bundles ，同时检测你已经安装的bundles<br> 5.3.4. 通过运行 naclsdk help 来获取帮助<br>5.4. 到目前位置，由于GFW 问题，不能够通过naclsdk update 来安装bundle，那么接下来就是需要通过其他的方式来进行安装测试<br>5.5. 将pepper_43.rar ，资源目录4 解压，放到nacl_sdk 这个目录下</li>
+</ol>
+<h2 id="Build-the-SDK-example（构建SDK-例子）"><a href="#Build-the-SDK-example（构建SDK-例子）" class="headerlink" title="Build the SDK example（构建SDK 例子）"></a>Build the SDK example（构建SDK 例子）</h2><ol>
+<li>Makefile 脚本可以构建通过配置release 和debug 参数使用三种SDK 工具链（newlib，glibc，和PNaCl）可以构建不同的例子在每一个例子中，可以通过查看在Makefile 文件中的VALID_TOOLCHAINS 变量的一个值,在<code>pepper_43/example/api/core</code>中的Makefile 文件<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VALID_TOOLCHAINS := pnacl newlib glibc clang-newlib win</span><br></pre></td></tr></table></figure>
+，就是当你进行构建时默认的构建方法<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>&gt;<span class="title">cd</span> <span class="title">pepper_43</span>/<span class="title">examples</span>/<span class="title">api</span>/<span class="title">core</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>\<span class="title">pepper_43</span>\<span class="title">examples</span>\<span class="title">api</span>\<span class="title">core</span>&gt;<span class="title">make</span></span></span><br><span class="line"><span class="function"><span class="title">CXX</span>  <span class="title">pnacl</span>/<span class="title">Release</span>/<span class="title">core.o</span></span></span><br><span class="line"><span class="function"><span class="title">LINK</span> <span class="title">pnacl</span>/<span class="title">Release</span>/<span class="title">core_unstripped.bc</span></span></span><br><span class="line"><span class="function"><span class="title">FINALIZE</span> <span class="title">pnacl</span>/<span class="title">Release</span>/<span class="title">core_unstripped.pexe</span></span></span><br><span class="line"><span class="function"><span class="title">STRIP</span> <span class="title">pnacl</span>/<span class="title">Release</span>/<span class="title">core.pexe</span></span></span><br><span class="line"><span class="function"><span class="title">CREATE_NMF</span> <span class="title">pnacl</span>/<span class="title">Release</span>/<span class="title">core.nmf</span></span></span><br><span class="line"><span class="function">```<span class="title">cmd</span></span></span><br><span class="line"><span class="function">  在&lt;<span class="title">code</span>&gt;<span class="title">pepper_43</span>/<span class="title">examples</span>/<span class="title">api</span>/<span class="title">core</span>/<span class="title">pnacle</span>/<span class="title">Release</span>&lt;/<span class="title">code</span>&gt;目录中有许多<span class="title">pexe</span> 文件，还可以通过配置命令来运行不同的方式</span></span><br><span class="line"><span class="function">```<span class="title">cmd</span></span></span><br><span class="line"><span class="function">  <span class="title">make</span> <span class="title">TOOLCHAIN</span>=<span class="title">newlib</span> <span class="title">CONFIG</span>=<span class="title">Release</span></span></span><br></pre></td></tr></table></figure>
+通过运行不同的make，可以如下结果<ul>
+<li>newlib 下有Debug 和Release 子目录</li>
+<li>glibc 下有Debug 和Release 子目录</li>
+<li>pnacl 下有Debug 和Release 子目录</li>
+</ul>
+</li>
+</ol>
+<h2 id="Run-the-SDK-examples（运行SDK-例子）"><a href="#Run-the-SDK-examples（运行SDK-例子）" class="headerlink" title="Run the SDK examples（运行SDK 例子）"></a>Run the SDK examples（运行SDK 例子）</h2><ol>
+<li>Disable the Chrome cache （禁用Chrome 缓存）这是为了加载最新版本，同时许愿哦开启Developer Tools<ul>
+<li>F12 开启Developer tools</li>
+<li>点击右下角的gear icon</li>
+<li>在“General”设置下，续租“Disable cache”</li>
+</ul>
+</li>
+<li>Run the examples （运行例子）<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>&gt;<span class="title">cd</span> <span class="title">pepper_43</span>/<span class="title">examples</span>/<span class="title">api</span>/<span class="title">core</span></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>\<span class="title">pepper_43</span>\<span class="title">examples</span>\<span class="title">api</span>\<span class="title">core</span>&gt;<span class="title">make</span> <span class="title">run</span></span></span><br><span class="line"><span class="function">```<span class="title">cmd</span></span></span><br><span class="line"><span class="function">   需要注意的是，需要设置<span class="title">Chrome</span> 的环境变量<span class="title">CHROME_PATH</span></span></span><br><span class="line"><span class="function">3. <span class="title">Run</span> <span class="title">the</span> <span class="title">SDK</span> <span class="title">examples</span> <span class="title">as</span> <span class="title">Chrome</span> <span class="title">apps</span></span></span><br><span class="line"><span class="function">   可以使用</span></span><br><span class="line"><span class="function">```<span class="title">cmd</span></span></span><br><span class="line"><span class="function">   <span class="title">make</span> <span class="title">run_package</span></span></span><br></pre></td></tr></table></figure>
+来产生一个.crx 后缀的包，使用Chrome apps 来运行</li>
+<li>Debugging the SDK examples（调试SDK 例子）<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">   make debug</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">## Simple PNaCl Web App（简单的PNaCl Web 应用）</span><br><span class="line"><span class="number">1</span>. 介绍了如何构建并运行一个PNaCl web 应用。这个客户端应用使用HTML、JavaScript 以及C++ 写的Native Client Module。PNaCl 工具链使这个Native Client module 直接在网页上运行</span><br><span class="line"><span class="number">2</span>. 在一个Web 页面如何加载Native Client module ，以及如何在JavaScript 和Native Client Module 之间进行通信</span><br><span class="line">  <span class="number">2</span>.<span class="number">1</span>. 第一步: 下载并安装Native Client SDK</span><br><span class="line">  <span class="number">2</span>.<span class="number">2</span>. 第二步：启动一个本地服务</span><br><span class="line">  ```<span class="built_in">cmd</span></span><br><span class="line">     <span class="built_in">cd</span> pepper_$(VERSION)/getting_started</span><br><span class="line">     make serve</span><br></pre></td></tr></table></figure>
+ 默认的端口号是5103，一个本地服务只是为了开发，而SDK 中的只是比较方便并不是必须的<br>2.3. 第三步：设置Chrome 浏览器<br>  浏览器的版本至少和Natvie Client modules 的bundle 版本相同<ul>
+<li>F12 开启Developer tools ，不关闭</li>
+<li>点击右下角的gear icon</li>
+<li>在“General”设置下，选中“Disable cache”<br>2.4. 第四步：教程实例代码</li>
+<li>index.html  HTML 页面布局以及同Native Client Module 进行通信的JavaScript 代码Native Client Module 是一个在<embed> 标签中指向manifest file</li>
+<li>hello_tutorial.nmf 一个manifest file，</li>
+<li>hello_tutorail.cc C++ 代码的Native Client module</li>
+<li>Makefile 编译命令将hello_tutorail.cc C++ 代码编译为pexe（portable executable）<br>2.5. 第五步：编译Native Client module 并且运行这个应用<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> pepper_$(VERSION)/getting_started/part1</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+需要设置NACL_SDK_ROOT 环境变量，是为了不需要在nacl_sdk 目录下进行编译。<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NACL_SDK_ROOTpa</span><br><span class="line"><span class="function">D:\<span class="title">workspace</span>\<span class="title">samsung</span>-<span class="title">Project</span>\<span class="title">Tizen</span>\<span class="title">NACL</span>\<span class="title">nacl_sdk</span>\<span class="title">pepper_43</span></span></span><br></pre></td></tr></table></figure>
+2.6. 第六步：修改JavaScript 代码发送一条消息给Native Client module<br>在index.html 中的moduleDidLoad 方法中，最后调用一个方法<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HelloTutorialModule.postMessage('hello');</span><br></pre></td></tr></table></figure>
+2.7. 第七步：在Native Client module 中实现一个消息处理handler<br>需要修改Native Client module (hello_tutorail.cc) 去相应来自JavaScript 代码的消息。<br>2.7.1.  在module instance 中实现HandleMessage() 方法<br>2.7.2. 调用PostMessage() 成员方法给JavaScript 发消息<br>2.8. 第八步：编译Native Client module 并再次运行应用<br>2.8.1. 编译Native Client module，<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+2.8.2. 启动SDK web 服务<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          make serve</span><br><span class="line">```          </span><br><span class="line">    <span class="number">2</span>.<span class="number">8</span>.<span class="number">3</span>. 在Chrome 浏览器中重新加载</span><br><span class="line">```<span class="built_in">cmd</span></span><br><span class="line"><span class="function">          http://<span class="title">localhost</span>:5130/<span class="title">part1</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://developer.chrome.com/native-client/overview" target="_blank" rel="noopener">Native Client 官网</a></li>
+<li><a href="http://www.sjsjw.com/kf_code/article/106_15218_13789.asp" target="_blank" rel="noopener">从Native到Web，NaCl学习笔记（一）</a></li>
+</ol>
+<h2 id="资源目录"><a href="#资源目录" class="headerlink" title="资源目录"></a>资源目录</h2><ol>
+<li>资源目录1<br>链接：<a href="http://pan.baidu.com/s/1hqCSZHE" target="_blank" rel="noopener">http://pan.baidu.com/s/1hqCSZHE</a> 密码：jmgh</li>
+<li>资源目录2<br>链接：<a href="http://pan.baidu.com/s/1dDHIOOL" target="_blank" rel="noopener">http://pan.baidu.com/s/1dDHIOOL</a> 密码：h4yw</li>
+<li>资源目录3<br>链接：<a href="http://pan.baidu.com/s/1eQ8Trvc" target="_blank" rel="noopener">http://pan.baidu.com/s/1eQ8Trvc</a> 密码：sy0z</li>
+<li>资源目录4<br>链接: <a href="http://pan.baidu.com/s/1kT0BGUF" target="_blank" rel="noopener">http://pan.baidu.com/s/1kT0BGUF</a> 密码: qh3e</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Native-Client/" rel="tag"># Native Client</a>
+          
+            <a href="/tags/NaCl/" rel="tag"># NaCl</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/wechat-webapp-notepad/" rel="next" title="微信HTML5应用笔记">
+                <i class="fa fa-chevron-left"></i> 微信HTML5应用笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/08/Git-Learning-Notepad/" rel="prev" title="Git 学习笔记">
+                Git 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Technical-Overview（技术概要）"><span class="nav-number">1.</span> <span class="nav-text">Technical Overview（技术概要）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置环境"><span class="nav-number">2.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-the-SDK-example（构建SDK-例子）"><span class="nav-number">3.</span> <span class="nav-text">Build the SDK example（构建SDK 例子）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-the-SDK-examples（运行SDK-例子）"><span class="nav-number">4.</span> <span class="nav-text">Run the SDK examples（运行SDK 例子）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源目录"><span class="nav-number">6.</span> <span class="nav-text">资源目录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/11/07/Native-Client-Learning/';
+
+      var disqus_title = "Native Client Learning";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

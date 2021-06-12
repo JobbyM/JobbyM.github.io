@@ -1,0 +1,1066 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,鬼懿IT-干货分享," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="简介A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是使WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。 此雪碧图组件（源码）就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到&lt;a-frame&gt; 元素，从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阅读aframe-spritesheet-component，了解A-Frame创建组件">
+<meta property="og:url" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="简介A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是使WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。 此雪碧图组件（源码）就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到&lt;a-frame&gt; 元素，从">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/create-a-component.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/A-Frame-demo-1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/npc_piggy_explorer__x1_walk_png_1354837301.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/righthand.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/A-Frame-demo-2.gif">
+<meta property="og:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/toaster.png">
+<meta property="article:published_time" content="2017-03-13T02:51:15.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.701Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="鬼懿IT-干货分享">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/create-a-component.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/03/13/阅读aframe-spritesheet-component,了解A-Frame创建组件/"/>
+
+
+
+
+
+  <title> 阅读aframe-spritesheet-component，了解A-Frame创建组件 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                阅读aframe-spritesheet-component，了解A-Frame创建组件
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T02:51:15+00:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/13/阅读aframe-spritesheet-component,了解A-Frame创建组件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/" class="leancloud_visitors" data-flag-title="阅读aframe-spritesheet-component，了解A-Frame创建组件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>A-Frame 是构建虚拟现实体验的web 框架。此框架由Mozilla VR 发起，目的是使WebVR 内容的创建更容易、更快速、更易于访问。A-Frame 是自由开源的同时拥有一个深受欢迎的社区以及蓬勃发展的工具和组件生态系统。</p>
+<p>此雪碧图组件（<a href="https://github.com/EkoLabs/aframe-spritesheet-component" target="_blank" rel="noopener">源码</a>）就是A-Frame 生态中实现的一个组件，雪碧图是制作预渲染动画的常用方法，而该组件可以将雪碧图加载到<code>&lt;a-frame&gt;</code> 元素，从而在A-Frame 中来进行动画控制。</p>
+<p>首先我们了解一下雪碧图组件在A-Frame 中的安装以及使用，最后就再根据源码来对此流程图进行分析</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/create-a-component.jpg" class="">
+
+<a id="more"></a>
+
+<h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><p>使用雪碧图组件的两种方式</p>
+<h3 id="行列式DEMO"><a href="#行列式DEMO" class="headerlink" title="行列式DEMO"></a>行列式DEMO</h3><p>这是使用<a href="https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/" target="_blank" rel="noopener">行列形式</a>，实现的一个散步的小猪，效果如图</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/A-Frame-demo-1.gif" class="">
+
+<p>所谓的行列式就是需要提供一个雪碧图，这个雪碧图是由大小相等图片组成，像这样</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/npc_piggy_explorer__x1_walk_png_1354837301.png" class="">
+
+<p>这样我们在使用的时候，直接声明为几行几列就可以了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a-image src=<span class="string">"npc_piggy_explorer__x1_walk_png_1354837301.png"</span></span><br><span class="line">         sprite-sheet=<span class="string">"cols:8; rows: 3; progress: 0;"</span></span><br><span class="line">         position=<span class="string">"0 1.5 -4"</span>&gt;&lt;<span class="regexp">/a-image&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中的<code>src</code> 为雪碧图地址；<br><code>sprite-sheet</code> 就是雪碧图组件，其中的<code>cols:8; rows: 3; progress: 0;</code> 就是雪碧图组件的所需要的参数，为3行8列；<br><code>position</code> 为在3D空间中的位置，使用右手坐标系，三个值分别代表x 轴、y 轴、z 轴。</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/righthand.jpg" class="">
+
+<h3 id="JOSN-格式DEMO"><a href="#JOSN-格式DEMO" class="headerlink" title="JOSN 格式DEMO"></a>JOSN 格式DEMO</h3><p>另一种是<a href="https://ekolabs.github.io/aframe-spritesheet-component/examples/json/" target="_blank" rel="noopener">JSON 数据格式</a>, 实现的一个冒气的烤面包机，效果如图</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/A-Frame-demo-2.gif" class="">
+
+<p>所谓的JSON 格式就是由于雪碧图并不是由多个大小相等的图片组成，像这样</p>
+<img src="/2017/03/13/%E9%98%85%E8%AF%BBaframe-spritesheet-component,%E4%BA%86%E8%A7%A3A-Frame%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/toaster.png" class="">
+
+<p>所以我们需要以json 的格式对图片进行描述，</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"frames"</span>: &#123;</span><br><span class="line">    <span class="attr">"0.png"</span>:</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="attr">"frame"</span>: &#123;<span class="attr">"x"</span>:<span class="number">191</span>,<span class="attr">"y"</span>:<span class="number">105</span>,<span class="attr">"w"</span>:<span class="number">75</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"rotated"</span>: <span class="literal">false</span>,</span><br><span class="line">    	<span class="attr">"trimmed"</span>: <span class="literal">true</span>,</span><br><span class="line">    	<span class="attr">"spriteSourceSize"</span>: &#123;<span class="attr">"x"</span>:<span class="number">22</span>,<span class="attr">"y"</span>:<span class="number">0</span>,<span class="attr">"w"</span>:<span class="number">75</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"sourceSize"</span>: &#123;<span class="attr">"w"</span>:<span class="number">115</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"pivot"</span>: &#123;<span class="attr">"x"</span>:<span class="number">0.5</span>,<span class="attr">"y"</span>:<span class="number">0.5</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"1.png"</span>:</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="attr">"frame"</span>: &#123;<span class="attr">"x"</span>:<span class="number">191</span>,<span class="attr">"y"</span>:<span class="number">105</span>,<span class="attr">"w"</span>:<span class="number">75</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"rotated"</span>: <span class="literal">false</span>,</span><br><span class="line">    	<span class="attr">"trimmed"</span>: <span class="literal">true</span>,</span><br><span class="line">    	<span class="attr">"spriteSourceSize"</span>: &#123;<span class="attr">"x"</span>:<span class="number">22</span>,<span class="attr">"y"</span>:<span class="number">0</span>,<span class="attr">"w"</span>:<span class="number">75</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"sourceSize"</span>: &#123;<span class="attr">"w"</span>:<span class="number">115</span>,<span class="attr">"h"</span>:<span class="number">73</span>&#125;,</span><br><span class="line">    	<span class="attr">"pivot"</span>: &#123;<span class="attr">"x"</span>:<span class="number">0.5</span>,<span class="attr">"y"</span>:<span class="number">0.5</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用的时候，需要通过<code>dataUrl: toaster.json</code> 来指明数据位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;a-image src&#x3D;&quot;toaster.png&quot;</span><br><span class="line">         sprite-sheet&#x3D;&quot;dataUrl: toaster.json; progress: 0;&quot;</span><br><span class="line">         width&#x3D;&quot;1&quot;</span><br><span class="line">         height&#x3D;&quot;1&quot;</span><br><span class="line">         position&#x3D;&quot;0 0 -4&quot;&gt;&lt;&#x2F;a-image&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>顺便推荐一个录屏存为gif的工具<a href="http://screentogif.codeplex.com/" target="_blank" rel="noopener">ScreenToGif</a></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>使用方法也分为两种，一种是直接在浏览器中通过<code>&lt;script&gt;</code> 标签引入</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>My A-Frame Scene<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://aframe.io/releases/0.5.0/aframe.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/aframe-spritesheet-component/dist/aframe-spritesheet-component.min.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a-scene</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- rows/cols format--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a-image</span> <span class="attr">src</span>=<span class="string">"spritesheet.png"</span> <span class="attr">sprite-sheet</span>=<span class="string">"cols:8; rows: 3; progress: 0;"</span>&gt;</span><span class="tag">&lt;/<span class="name">a-image</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- json format --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a-image</span> <span class="attr">src</span>=<span class="string">"spritesheet.png"</span> <span class="attr">sprite-sheet</span>=<span class="string">"dataUrl: spritesheet.json; progress: 0;"</span> &gt;</span><span class="tag">&lt;/<span class="name">a-image</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">a-scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>另一种就是通过npm 进行安装</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install aframe-spritesheet-component</span><br></pre></td></tr></table></figure>
+<p>然后通过<code>require</code> 引入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'aframe'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'aframe-spritesheet-component'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>在这里主要根据代码进行介绍一下A-Frame 中实现一个组件。</p>
+<p>更多详细信息，请参考这里，<a href="https://aframe.io/docs/0.5.0/introduction/" target="_blank" rel="noopener">A-FRAME 介绍</a>，和<a href="https://aframe.io/docs/0.5.0/guides/writing-a-component.html" target="_blank" rel="noopener">实现一个组件介绍</a></p>
+<h3 id="第一步：注册组件"><a href="#第一步：注册组件" class="headerlink" title="第一步：注册组件"></a>第一步：注册组件</h3><p>使用AFRAME.registerComponent 注册一个<code>sprite-sheet</code> 组件，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L6" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> SpriteSheet = AFRAME.registerComponent(<span class="string">'sprite-sheet'</span>, &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：定义属性"><a href="#第二步：定义属性" class="headerlink" title="第二步：定义属性"></a>第二步：定义属性</h3><p>使用<code>schema</code> 定义组件的属性，<code>type</code> 定义属性类型，<code>default</code> 定义属性的默认值，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L7-L15" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">schema: &#123;</span><br><span class="line">    progress: &#123; <span class="attr">type</span>: <span class="string">'number'</span>, <span class="attr">default</span>: <span class="number">0</span> &#125;,</span><br><span class="line">    cols: &#123; <span class="attr">type</span>: <span class="string">'number'</span>, <span class="attr">default</span>: <span class="number">1</span> &#125;,</span><br><span class="line">    rows: &#123; <span class="attr">type</span>: <span class="string">'number'</span>, <span class="attr">default</span>: <span class="number">1</span> &#125;,</span><br><span class="line">    firstFrame: &#123; <span class="attr">type</span>: <span class="string">'number'</span>, <span class="attr">default</span>: <span class="number">0</span> &#125;,</span><br><span class="line">    lastFrame: &#123; <span class="attr">type</span>: <span class="string">'number'</span>, <span class="attr">default</span>: <span class="literal">null</span> &#125;,</span><br><span class="line">    cloneTexture: &#123; <span class="attr">default</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">    dataUrl: &#123; <span class="attr">type</span>: <span class="string">'string'</span>, <span class="attr">default</span>: <span class="literal">null</span> &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>这里定义了<code>progress</code> 、<code>cols</code>、<code>rows</code> 等等相关属性，并分别赋予了默认值。</p>
+<p><code>sprite-sheet </code> 在页面中直接作为HTML 特性进行声明，同时可以将相关属性值以行内CSS 样式的形式进行传入（name/value 键值对以冒号（：）分割，键值对之间以分号（；）分割），<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/examples/rowscols/index.html#L10-L12" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a-image</span> <span class="attr">src</span>=<span class="string">"npc_piggy_explorer__x1_walk_png_1354837301.png"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">sprite-sheet</span>=<span class="string">"cols:8; rows: 3; progress: 0;"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">position</span>=<span class="string">"0 1.5 -4"</span>&gt;</span><span class="tag">&lt;/<span class="name">a-image</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="第三步：初始化"><a href="#第三步：初始化" class="headerlink" title="第三步：初始化"></a>第三步：初始化</h3><blockquote>
+<p>在生命周期处理函数方法（lifecycle handler method）中对组件进行初始化、更新属性以及销毁。</p>
+</blockquote>
+<p><code>.init()</code> 初始化方法，仅在组件第一次被插入实体时调用，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L18-L67" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if specified load spritesheet json data</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.data.dataUrl) &#123;</span><br><span class="line">            <span class="keyword">this</span>.mapCanvas = <span class="built_in">document</span>.createElement( <span class="string">'canvas'</span> );</span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            <span class="comment">// callback for when the image has loaded</span></span><br><span class="line">            <span class="keyword">this</span>.el.addEventListener(<span class="string">'materialtextureloaded'</span>, () =&gt; &#123;</span><br><span class="line">                <span class="keyword">this</span>.imageLoaded = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// use rows and cols</span></span><br><span class="line">            <span class="keyword">this</span>.numFrames = <span class="keyword">this</span>.data.rows * <span class="keyword">this</span>.data.cols;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// callback for when the image has loaded</span></span><br><span class="line">            <span class="keyword">this</span>.el.addEventListener(<span class="string">'materialtextureloaded'</span>, () =&gt; &#123;</span><br><span class="line">                <span class="keyword">this</span>.imageLoaded = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">                ...</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.currentFrame = <span class="number">0</span>;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>在这里根据<code>this.data.dataUrl</code> 的值，来进行区分是使用Demo 中的<a href="https://ekolabs.github.io/aframe-spritesheet-component/examples/rowscols/" target="_blank" rel="noopener">行列形式</a>，还是<a href="https://ekolabs.github.io/aframe-spritesheet-component/examples/json/" target="_blank" rel="noopener">JSON 数据格式</a> 进行初始化相关属性。</p>
+<p><strong>注意</strong>：组件的属性类型值可以通过<code>this.data</code> 获取，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L24" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.data.dataUrl)&#123;</span><br></pre></td></tr></table></figure>
+<p>通过<code>this.el</code> 引用组件的实体，可以在上面添加事件监听函数，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L31" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.el.addEventListener(<span class="string">'materialtextureloaded'</span>, () =&gt; &#123;</span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：更新"><a href="#第四步：更新" class="headerlink" title="第四步：更新"></a>第四步：更新</h3><p><code>.update()</code> 更新处理函数去处理属性的更新，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L69-L81" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">update: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// no actual animation</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.framesData &amp;&amp; <span class="keyword">this</span>.data.firstFrame == <span class="keyword">this</span>.data.lastFrame) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if no last frame is specified use the number of available frames</span></span><br><span class="line">    <span class="keyword">let</span> lastFrame = <span class="keyword">this</span>.data.lastFrame ? <span class="keyword">this</span>.data.lastFrame : <span class="keyword">this</span>.numFrames - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.currentFrame = <span class="built_in">Math</span>.round(<span class="keyword">this</span>.data.progress * (lastFrame - <span class="keyword">this</span>.data.firstFrame)) + <span class="keyword">this</span>.data.firstFrame;</span><br><span class="line">    <span class="keyword">this</span>.adjustTexture(<span class="keyword">this</span>.currentFrame);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：销毁"><a href="#第五步：销毁" class="headerlink" title="第五步：销毁"></a>第五步：销毁</h3><p><code>.remove()</code> 销毁处理函数在组件被移除时调用，<a href="https://github.com/EkoLabs/aframe-spritesheet-component/blob/master/index.js#L83-L94" target="_blank" rel="noopener">线上代码</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">remove: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Cleanup</span></span><br><span class="line">    <span class="keyword">this</span>.mapCanvas = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.textureCtx = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.texture = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.spriteSheetImage = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.spriteSheetData = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.framesData = <span class="literal">null</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>这里主要是清理相关属性，将其赋值为null。</p>
+<p>上述相关代码就是如何实现一个A-Frame 组件流程。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>主要是对A-Frame 这个虚拟现实体验 web 框架进行了初步的熟悉了解</li>
+<li>A-Frame 组件创建同Vue.js 构建组件在形式上类似，都会封装数据、方法，同时提供一系列的生命周期方法来对组件进行管理。在使用上有所区别一个是作为HTML 特性，一个是作为HTML Tag 来使用。</li>
+<li>本文中的名词翻译、名词解释、组件创建流程等都是基于自己的理解，如有问题请多多交流。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E9%AC%BC%E6%87%BFIT-%E5%B9%B2%E8%B4%A7%E5%88%86%E4%BA%AB/" rel="tag"># 鬼懿IT-干货分享</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/React-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%E5%8F%91%E5%B8%83%E4%BA%86/" rel="next" title="React 中文文档发布了">
+                <i class="fa fa-chevron-left"></i> React 中文文档发布了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/26/react-Storybook-%E5%85%A5%E5%9D%91%E6%8C%87%E5%8D%97/" rel="prev" title="react Storybook 入坑指南">
+                react Storybook 入坑指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEMO"><span class="nav-number">2.</span> <span class="nav-text">DEMO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行列式DEMO"><span class="nav-number">2.1.</span> <span class="nav-text">行列式DEMO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JOSN-格式DEMO"><span class="nav-number">2.2.</span> <span class="nav-text">JOSN 格式DEMO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">3.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">4.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：注册组件"><span class="nav-number">4.1.</span> <span class="nav-text">第一步：注册组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步：定义属性"><span class="nav-number">4.2.</span> <span class="nav-text">第二步：定义属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：初始化"><span class="nav-number">4.3.</span> <span class="nav-text">第三步：初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四步：更新"><span class="nav-number">4.4.</span> <span class="nav-text">第四步：更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第五步：销毁"><span class="nav-number">4.5.</span> <span class="nav-text">第五步：销毁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/03/13/阅读aframe-spritesheet-component,了解A-Frame创建组件/';
+
+      var disqus_title = "阅读aframe-spritesheet-component，了解A-Frame创建组件";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

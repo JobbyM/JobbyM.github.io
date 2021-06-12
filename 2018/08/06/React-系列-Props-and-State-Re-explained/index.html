@@ -1,0 +1,1122 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React 系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：[React 系列] Props and State Re-explained  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2018&#x2F;01&#x2F;15&#x2F;props-and-state-re-explained作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React  什么是React Native Components，Prop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[React 系列] Props and State Re-explained">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：[React 系列] Props and State Re-explained  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2018&#x2F;01&#x2F;15&#x2F;props-and-state-re-explained作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React  什么是React Native Components，Prop">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_0.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_2.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_3.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_4.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_5.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_6.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_7.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/elevate-state-24fecc1c464202b8db2d448ceebcd09a.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_8.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_9.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_10.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/remote-control-e5b10f3429b5cb896cfef52579c2c46a.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/flipbook-0d8eaaae5b49719d95feb33b3a586da5-f8fb9.jpg">
+<meta property="article:published_time" content="2018-08-06T08:23:13.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.313Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React 系列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/06/React-系列-Props-and-State-Re-explained/"/>
+
+
+
+
+
+  <title> [React 系列] Props and State Re-explained | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [React 系列] Props and State Re-explained
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-06T08:23:13+00:00">
+                2018-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/06/React-系列-Props-and-State-Re-explained/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/" class="leancloud_visitors" data-flag-title="[React 系列] Props and State Re-explained">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：[React 系列] Props and State Re-explained</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://learnreact.design/2018/01/15/props-and-state-re-explained" target="_blank" rel="noopener">https://learnreact.design/2018/01/15/props-and-state-re-explained</a><br>作者：@<a href="https://twitter.com/lintonye" target="_blank" rel="noopener">Linton Ye</a></p>
+<p>博客系列：用简单的英语和涂鸦解释的React 术语</p>
+<ul>
+<li><a href="https://learnreact.design/2017/06/08/what-is-react/" target="_blank" rel="noopener">什么是React </a></li>
+<li><a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">什么是React Native</a></li>
+<li><a href="https://learnreact.design/2017/08/16/components-props-and-state" target="_blank" rel="noopener">Components，Props and State</a></li>
+<li><a href="https://learnreact.design/2018/01/15/props-and-state-re-explained" target="_blank" rel="noopener">重新阐释Props 和State（本文）</a></li>
+<li><a href="https://learnreact.design/2018/02/14/react-native-vs-cordova-phone-gap-ionic-etc" target="_blank" rel="noopener">React Native 同Cordova、PhoneGap、Ionic 等对比</a></li>
+</ul>
+<p>在<a href="https://learnreact.design/2017/08/16/components-props-state/" target="_blank" rel="noopener">上一篇文章</a>中，我们介绍了组件，属性和状态。</p>
+<p>属性和状态之间的差异非常明显，直接确定何时使用属性或状态。例如，屋顶的颜色是属性，因为它是屋顶的内在配置。另一方面，门的状态显然是状态的候选人，因为在建造门之后很容易看到门被打开或关闭。但是，在这篇文章中，让我们挑战这一思路！</p>
+<p>你会发现事情可以是属性或状态。没有固定的规则。我将向你展示一种更有用，更实用的思考属性和状态的方法。</p>
+<a id="more"></a>
+
+<h2 id="学习目标（Learning-Goals）"><a href="#学习目标（Learning-Goals）" class="headerlink" title="学习目标（Learning Goals）"></a>学习目标（Learning Goals）</h2><p>看完这篇文章后，希望你能够轻松回答这些问题：</p>
+<ul>
+<li>属性、状态各自的主要用例是什么？</li>
+<li>“状态提升（lifting up the state）”是什么意思？ 在什么情况下我们需要状态提升？</li>
+</ul>
+<h2 id="新客人（New-Guest）"><a href="#新客人（New-Guest）" class="headerlink" title="新客人（New Guest）"></a>新客人（New Guest）</h2><p>注意到我们家附近的新客人了吗？ 点击下面的门！</p>
+<p>focuser（<a href="https://codepen.io/focuser" target="_blank" rel="noopener">@focuser</a>）在<a href="https://codepen.io/" target="_blank" rel="noopener">CodePen</a>上实现的<a href="https://codepen.io/focuser/pen/VydPEJ/" target="_blank" rel="noopener">带有猫的React 房子</a>。</p>
+<p>这是一只睡着的猫–只要门关闭，她就会睡觉，只有在门打开时才能站起来。如果你关上门，她就会马上睡觉。</p>
+<h2 id="实现这个猫（Implementing-the-Cat）"><a href="#实现这个猫（Implementing-the-Cat）" class="headerlink" title="实现这个猫（Implementing the Cat）"></a>实现这个猫（Implementing the Cat）</h2><p>让我们试试如何实现这种行为。</p>
+<p>花点时间阅读下面的“代码”。（同样，这不是真正的JavaScript 代码，而是一种简化的符号，可帮助你理解概念）</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_0.jpg" class="">
+
+<p>House 组件中多了一个Cat 标签。我们来定义Cat 组件的外观。</p>
+<p>猫可以睡觉或醒着。这似乎与门的状态非常相似。也许我们也可以用状态来表示猫的状态：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_1.jpg" class="">
+
+<p>根据Cat 的定义，上述行为的实现完全是为了同步门的状态和猫的状态。你知道，当门的状态是“打开”时，我们希望猫的状态是“清醒”，否则，猫的状态应该是“睡觉”。</p>
+<p>十分简单？ 让我们来看看…</p>
+<h3 id="尝试一（Attempt-1）"><a href="#尝试一（Attempt-1）" class="headerlink" title="尝试一（Attempt 1）"></a>尝试一（Attempt 1）</h3><p>由于我们已经有根据当前状态切换门状态的代码，我们也可以在那里改变的猫状态。</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_2.jpg" class="">
+
+<p>这不起作用！请记住，状态是组件的私有数据，只能从组件自身访问，无论是父组件还是兄弟组件，都不可以访问组件的状态。</p>
+<p>这里我们试图在Door 组件中改变Cat 的状态。它将失败（当然转换为真正的JavaScript代码后）。</p>
+<h3 id="尝试二（Attempt-2）"><a href="#尝试二（Attempt-2）" class="headerlink" title="尝试二（Attempt 2）"></a>尝试二（Attempt 2）</h3><p>在Cat 组件中改变Cat 状态。</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_3.jpg" class="">
+
+<p>从Cat 组件中更改Cat 状态绝对没问题。但我们需要获取门的状态，来确定猫的状态应该是什么。门的状态是门组件的状态，因此无法从Cat 组件中访问！</p>
+<h3 id="解决（The-Solution）"><a href="#解决（The-Solution）" class="headerlink" title="解决（The Solution）"></a>解决（The Solution）</h3><p>为了保持门状态和猫状态同步，我们肯定需要在某处访问它们。</p>
+<p>解决方案需要我们灵活地理解状态和属性的用例。</p>
+<h3 id="提升门状态（Elevating-Door-State）"><a href="#提升门状态（Elevating-Door-State）" class="headerlink" title="提升门状态（Elevating Door State）"></a>提升门状态（Elevating Door State）</h3><p>看看House 组件：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_4.jpg" class="">
+
+<p>在这里，门和猫是并排的。也许这就是我们可以轻松同步它们的地方？</p>
+<p>但是，我们现在House 组件内部。 同我们上次尝试原因一样，无法读取门的状态或在此处更改Cat 的状态。</p>
+<p>但是如果我们使用属性而不是状态呢？</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_5.jpg" class="">
+
+<p>当门是关闭时，它会这样：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_6.jpg" class="">
+
+<p>当然门的状态不能是固定值。它会不时变化。我们用“doorStatus”来表示它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">House:</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;Door status&#x3D;&#123;doorStatus&#125; &#x2F;&gt;</span><br><span class="line">    &lt;Cat status&#x3D;&#123;if doorStatus is &#39;open&#39; then &#39;awake&#39; otherwise &#39;sleeping&#39;&#125; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>这解决同步问题吗？什么改变了“doorStatus” 的值？组件的什么是可以改变的？是状态，对吗？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">House:</span><br><span class="line">  State: doorStatus &lt;!-- &#39;open&#39; or &#39;closed&#39; --&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;Door status&#x3D;&#123;state.doorStatus&#125; &#x2F;&gt;</span><br><span class="line">    &lt;Cat status&#x3D;&#123;if state.doorStatus is &#39;open&#39; then &#39;awake&#39; otherwise &#39;sleeping&#39;&#125; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>OK！这个House 组件看起来相当明确，门和猫的状态现在完全同步。</p>
+<p>我们还需要使用props 而不是state 更改Door 和Cat 的定义：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_7.jpg" class="">
+
+<p>如你所见，因为我们想要使用其父组件的状态，在这种情况下，使用House 内的Door 状态来设置Cat的状态，我们可以表示与父组件状态相同的数据，并将数据作为属性传递给子级。这常被称为 <strong>提升状态（lifting up the state）</strong>。 我们在层次结构中向上移动状态。</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/elevate-state-24fecc1c464202b8db2d448ceebcd09a.gif" class="">
+
+<h3 id="改变房子状态（Changing-House-State）"><a href="#改变房子状态（Changing-House-State）" class="headerlink" title="改变房子状态（Changing House State）"></a>改变房子状态（Changing House State）</h3><p>现在，门和猫的状态都与房子的状态有关。如果我们想打开门或唤醒猫，我们需要改变House的状态。</p>
+<p>问题，我们可以更新房子状态的唯一地方是什么？在House内，对吗？</p>
+<p>但是，我们仍然希望在Door 你触发此更改。也就是说，我们希望门只在门被点击时打开，而不是整个房子或窗户等。</p>
+<p>所以Door 组件需要是这样的：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_8.jpg" class="">
+
+<p>但等一下，我们不是说不可能从Door 组件内改变House 的状态吗？</p>
+<p>那是对的。我们不能在这里直接改变House 的状态。然而，没有什么能阻止我们间接地这样做。看到这个……</p>
+<p>在House 组件中，让我们编写一些代码来实际更改自己的状态：</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_9.jpg" class="">
+
+<p>此时，我们还没有指定何时运行这段代码。我们只为它指定一个名称（“toggleDoorStatus”），以便我们可以按名称选择并在稍后运行。</p>
+<p>然后我们把这个名字作为属性传给Door</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/code_10.jpg" class="">
+
+<p>在Door 组件中，我们只运行此操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Door:</span><br><span class="line">  &lt;div&gt;&#123;props.status&#125; door&lt;&#x2F;div&gt;</span><br><span class="line">  when door is clicked</span><br><span class="line">    run props.onClickAction &lt;!-- this runs the code named &quot;toggleDoorStatus&quot; --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这就像将电视遥控器传递给其他人一样。那个人按下Door 组件中的按钮。House 组件中的电视改变频道或增加音量。</p>
+<p>将要执行的操作取决于将什么类型的遥控器传递到Door。它可以控制House 中的电视，空调或HiFi 音频系统。在Door 组件中，该人所做的就是按下按钮。</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/remote-control-e5b10f3429b5cb896cfef52579c2c46a.gif" class="">
+
+<p>这就是我们所需要的！这是完整的“代码”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">House:</span><br><span class="line">  State: doorStatus &lt;!-- &#39;open&#39; or &#39;closed&#39; --&gt;</span><br><span class="line">  toggleDoorStatus:</span><br><span class="line">    if state.doorStatus is &#39;open&#39;</span><br><span class="line">      change state.doorStatus to &#39;closed&#39;</span><br><span class="line">    otherwise</span><br><span class="line">      change state.doorStatus to &#39;open&#39;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;Door status&#x3D;&#123;state.doorStatus&#125; onClickAction&#x3D;&#123;toggleDoorStatus&#125; &#x2F;&gt;</span><br><span class="line">    &lt;Cat status&#x3D;&#123;if state.doorStatus is &#39;open&#39; then &#39;awake&#39; otherwise &#39;sleeping&#39;&#125; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">Door:</span><br><span class="line">  &lt;div&gt;&#123;props.status&#125; door&lt;&#x2F;div&gt;</span><br><span class="line">  when door is clicked</span><br><span class="line">    run props.onClickAction</span><br><span class="line">Cat:</span><br><span class="line">  &lt;div&gt;&#123;props.status&#125; cat&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="再次对比Props-和State"><a href="#再次对比Props-和State" class="headerlink" title="再次对比Props 和State"></a>再次对比Props 和State</h2><p>现在让我们重新回顾几个问题，props 和state 之间的区别是什么？什么时候应该使用state ，什么时候应该使用props？</p>
+<h3 id="什么时候使用state-，什么时候使用props？（When-to-use-state-when-to-use-props-）"><a href="#什么时候使用state-，什么时候使用props？（When-to-use-state-when-to-use-props-）" class="headerlink" title="什么时候使用state ，什么时候使用props？（When to use state, when to use props?）"></a>什么时候使用state ，什么时候使用props？（When to use state, when to use props?）</h3><p>如果你还记得，我说属性是一个不会改变的组件的内在属性，而状态是在构建组件后可以改变的。在你第一次了解这些概念时会有所帮助。</p>
+<p>但是，我们刚刚构建的示例让人感到困惑。门是否打开或猫是否正在睡觉似乎肯定是状态的候选项，但我们用属性表示他们。怎么会这样？</p>
+<p>事实证明，在状态和尚属性之间进行选择有很大的灵活性。根据你的看法，你可以找到不同的组件建模方法。例如，你可以说门的状态是打开的，或者房子的状态是门是打开的。</p>
+<h3 id="一种更有用的理解方式（A-more-useful-way-to-understand）"><a href="#一种更有用的理解方式（A-more-useful-way-to-understand）" class="headerlink" title="一种更有用的理解方式（A more useful way to understand）"></a>一种更有用的理解方式（A more useful way to understand）</h3><p>困惑？ 这是一个更有用的思考问题的方法：</p>
+<ul>
+<li>状态：UI 需要改变=&gt;某处应该有一个状态。</li>
+<li>属性：使用它们传递数据和传递控制</li>
+</ul>
+<p>如果在应用程序运行时UI 发生了某些变化，则必须是状态。如果你在单击时看到门打开和关闭。某个地方必须有一个状态。</p>
+<p>但是，状态不一定需要位于在更新的组件上。它可能在某个上游。 这一切都取决于我们需要在何处以及如何使用这些信息。例如，我们决定将门的状态从Door 组件提升到House 组件，因为我们需要在House 组件中使用它。</p>
+<p>另一方面，属性只是用于在层次结构中向下传递数据的东西。就像我们将状态isDoorOpen 的值传递给Door 组件所做的那样。</p>
+<p>属性也可用于传递控制权。例如，我们从House 到Door 传递了事件处理程序。</p>
+<h3 id="但在这种情况下，属性会改变值吗？（But-do-the-props-change-value-in-this-case-）"><a href="#但在这种情况下，属性会改变值吗？（But-do-the-props-change-value-in-this-case-）" class="headerlink" title="但在这种情况下，属性会改变值吗？（But do the props change value in this case?）"></a>但在这种情况下，属性会改变值吗？（But do the props change value in this case?）</h3><p>不，他们现在不会，将来也不会。我知道，门打开和关闭，猫睡觉醒来。因为我们现在使用属性来表示这些，所以很容易认为属性的行为就像状态一样–它们的值会发生变化，对吗？</p>
+<p>这只是一种幻觉，我发现它与flipbook 动画相似。</p>
+<img src="/2018/08/06/React-%E7%B3%BB%E5%88%97-Props-and-State-Re-explained/flipbook-0d8eaaae5b49719d95feb33b3a586da5-f8fb9.jpg" class="">
+
+<p>每当House 的状态发生变化时，旧猫就会被移除，并且从头开始创建一个具有新状态的全新猫。但是这个过程发生得非常快，这让我们产生了一种错觉，即只有一只猫睡着了醒来。</p>
+<p>翻书中任何页面上的草图都不会移动。同样，猫在其短暂的生命周期内保持清醒/睡眠状态。</p>
+<h2 id="总结（Conclusion）"><a href="#总结（Conclusion）" class="headerlink" title="总结（Conclusion）"></a>总结（Conclusion）</h2><p>好吧，我们用一个更复杂的例子研究了属性和状态。在这个例子中，我们必须保持门和猫的状态同步，而且门在点击时仍然应该打开或关闭。</p>
+<p>因为状态是私有的，所以我们决定将门的状态从门组件的状态提升到House 组件的状态。这样，我们就可以在House 组件中使用这些数据来设置门和猫的状态。我们将此数据作为属性传递给Door 和Cat，所以他们可以根据门状态显示正确的图像。</p>
+<p>另一个要求是在单击门时触发状态更改。因为门的状态现在是House 私有的状态，所以从Door 内部我们只能间接地进行更改。在House 中，我们编写实际更改状态的代码，并将其名称传递给Door。</p>
+<p>这篇文章中的例子可能会让事情有点混乱。 这是一种思考状态和属性的实用方法：</p>
+<ul>
+<li>状态：UI 需要改变=&gt;某处应该有一个状态。</li>
+<li>属性：使用它们传递数据和传递控制</li>
+</ul>
+<p>目前感觉如何？请随时留下你的意见和问题！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React-%E7%B3%BB%E5%88%97/" rel="tag"># React 系列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/03/React-%E7%B3%BB%E5%88%97-components-props-and-state/" rel="next" title="[React 系列] components props and state">
+                <i class="fa fa-chevron-left"></i> [React 系列] components props and state
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/" rel="prev" title="[React 系列] What Is React">
+                [React 系列] What Is React <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习目标（Learning-Goals）"><span class="nav-number">1.</span> <span class="nav-text">学习目标（Learning Goals）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新客人（New-Guest）"><span class="nav-number">2.</span> <span class="nav-text">新客人（New Guest）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现这个猫（Implementing-the-Cat）"><span class="nav-number">3.</span> <span class="nav-text">实现这个猫（Implementing the Cat）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试一（Attempt-1）"><span class="nav-number">3.1.</span> <span class="nav-text">尝试一（Attempt 1）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试二（Attempt-2）"><span class="nav-number">3.2.</span> <span class="nav-text">尝试二（Attempt 2）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决（The-Solution）"><span class="nav-number">3.3.</span> <span class="nav-text">解决（The Solution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提升门状态（Elevating-Door-State）"><span class="nav-number">3.4.</span> <span class="nav-text">提升门状态（Elevating Door State）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改变房子状态（Changing-House-State）"><span class="nav-number">3.5.</span> <span class="nav-text">改变房子状态（Changing House State）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再次对比Props-和State"><span class="nav-number">4.</span> <span class="nav-text">再次对比Props 和State</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候使用state-，什么时候使用props？（When-to-use-state-when-to-use-props-）"><span class="nav-number">4.1.</span> <span class="nav-text">什么时候使用state ，什么时候使用props？（When to use state, when to use props?）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一种更有用的理解方式（A-more-useful-way-to-understand）"><span class="nav-number">4.2.</span> <span class="nav-text">一种更有用的理解方式（A more useful way to understand）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#但在这种情况下，属性会改变值吗？（But-do-the-props-change-value-in-this-case-）"><span class="nav-number">4.3.</span> <span class="nav-text">但在这种情况下，属性会改变值吗？（But do the props change value in this case?）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结（Conclusion）"><span class="nav-number">5.</span> <span class="nav-text">总结（Conclusion）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/06/React-系列-Props-and-State-Re-explained/';
+
+      var disqus_title = "[React 系列] Props and State Re-explained";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

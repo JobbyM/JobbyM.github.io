@@ -1,0 +1,1039 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,npm,npx," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：介绍npx：npm 包运行器  关于本文：原文：https:&#x2F;&#x2F;medium.com&#x2F;@maybekatz&#x2F;introducing-npx-an-npm-package-runner-55f7d4bd282b 俄语版作者：@Kat Marchán 将npm 升级到最新版本npm@5.2.0 的人可能会注意到它会在通常的npm 旁边安装了一个新的二进制文件：npx。 npx 是一个工具，旨在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="介绍npx：npm 包运行器">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：介绍npx：npm 包运行器  关于本文：原文：https:&#x2F;&#x2F;medium.com&#x2F;@maybekatz&#x2F;introducing-npx-an-npm-package-runner-55f7d4bd282b 俄语版作者：@Kat Marchán 将npm 升级到最新版本npm@5.2.0 的人可能会注意到它会在通常的npm 旁边安装了一个新的二进制文件：npx。 npx 是一个工具，旨在">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_0.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_3.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_4.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_5.png">
+<meta property="article:published_time" content="2018-08-26T05:32:52.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.669Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="npm">
+<meta property="article:tag" content="npx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_0.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/26/介绍npx：npm-包运行器/"/>
+
+
+
+
+
+  <title> 介绍npx：npm 包运行器 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                介绍npx：npm 包运行器
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-26T05:32:52+00:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/26/介绍npx：npm-包运行器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/" class="leancloud_visitors" data-flag-title="介绍npx：npm 包运行器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：介绍npx：npm 包运行器</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b" target="_blank" rel="noopener">https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b</a> <a href="https://medium.com/devschacht/introducing-npx-an-npm-package-runner-a72a658cd9e6" target="_blank" rel="noopener">俄语版</a><br>作者：@<a href="https://medium.com/@maybekatz?source=post_header_lockup" target="_blank" rel="noopener">Kat Marchán</a></p>
+<p>将npm 升级到最新版本<a href="https://github.com/npm/npm/releases/tag/v5.2.0" target="_blank" rel="noopener">npm@5.2.0</a> 的人可能会注意到它会在通常的<code>npm</code> 旁边安装了一个新的二进制文件：<a href="https://npm.im/npx" target="_blank" rel="noopener">npx</a>。</p>
+<p>npx 是一个工具，旨在帮助完善使用npm 注册表中的包的体验 – 同样地，npm 使得安装和管理托管在注册表上的依赖项变得非常容易，npx 使得使用CLI 工具和托管在注册表上的其他可执行文件变得容易。它大大简化了许多事情，直到现在，还需要一些普通npm 的仪式：</p>
+<a id="more"></a>
+
+<h2 id="使用本地安装的工具而不需要使用npm-run-script（Using-locally-installed-tools-without-npm-run-script）"><a href="#使用本地安装的工具而不需要使用npm-run-script（Using-locally-installed-tools-without-npm-run-script）" class="headerlink" title="使用本地安装的工具而不需要使用npm run-script（Using locally-installed tools without npm run-script）"></a>使用本地安装的工具而不需要使用npm run-script（Using locally-installed tools without npm run-script）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_0.gif" class="">
+<p>将cowsay 安装为本地devDependency 并使用<code>$ npx cowsay</code>运行它</p>
+<p>在过去的几年中，npm 生态系统越来越倾向于将工具安装为项目本地<code>devDependencies</code>，而不是要求用户在全局范围内安装它们。这意味着像<a href="https://npm.im/mocha" target="_blank" rel="noopener">mocha</a>，<a href="https://npm.im/grunt-cli" target="_blank" rel="noopener">grunt</a> 和<a href="https://npm.im/bower" target="_blank" rel="noopener">bower</a> 这样曾经主要全局安装在系统上的工具现在可以在每个项目的基础上管理它们的版本。这也意味着，要使基于npm 的项目启动并运行，你需要做的就是确保在系统上有node+npm，克隆git repo，然后执行<code>npm it</code> 去运行<code>npm install</code> 和<code>npm test</code>。由于<code>npm run-script</code> 将本地二进制文件添加到路径，这样就可以了！</p>
+<p>缺点是，这使你无法以交互方式快速、方便地调用本地二进制文件。有几种方法可以做到这一点，他们都对他们有一些烦恼：你可以将这些工具添加到你的<code>scripts</code>，但是你需要记住通过使用<code>--</code> 来传递参数，你可以做使用shell 脚本技巧<code>alias npmx=PATH=$(npm bin):$PATH</code>，或者你可以使用<code>./node_modules/.bin/mocha</code> 手动路径到它们。这些都有效，但没有一个是理想的。</p>
+<p>npx 为你提供了我认为最好的解决方案：<code>$ npx mocha</code> 是你使用本地安装所需的全部工作。如果你采取额外的步骤并配置<a href="https://www.npmjs.com/package/npx#shell-auto-fallback" target="_blank" rel="noopener">shell自动回退</a>（下面有更多内容），那么项目目录中的<code>$ mocha</code> 将为你提供帮助！</p>
+<p>好处是，如果调用已经安装的二进制文件，<a href="https://twitter.com/maybekatz/status/877444832494596096" target="_blank" rel="noopener">npx 基本上没有开销</a> – 它足够聪明，可以将工具的代码直接加载到当前运行的<code>node</code> 进程中！这与此类事情的速度差不多，并使其成为完全可以接受的脚本编写工具。</p>
+<h2 id="执行一次性命令（Executing-one-off-commands）"><a href="#执行一次性命令（Executing-one-off-commands）" class="headerlink" title="执行一次性命令（Executing one-off commands）"></a>执行一次性命令（Executing one-off commands）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_1.gif" class="">
+<p><code>$ npx create-react-app my-cool-new-app</code> 安装一个临时的<code>create-react-app</code> 并调用它，不会污染全局安装或需要多个步骤！</p>
+<p>你是否曾经遇到过想要尝试某种CLI 工具的情况，但是为了运行它必需全局安装，这很烦人吗？ npx 能很好处理这个问题。当<code>&lt;command&gt;</code> 不在<code>$PATH</code> 中时调用<code>npx &lt;command&gt;</code> 将自动从npm 注册表中安装具有该名称的包，并调用它。完成后，安装的软件包将不会出现在全局文件中的任何位置，因此不必长期担心污染问题。</p>
+<p>此功能也适用于生成器等。像<a href="https://npm.im/yo" target="_blank" rel="noopener">yeoman</a> 或<a href="https://npm.im/create-react-app" target="_blank" rel="noopener">create-react-app</a> 这样的工具只调用一次。 <strong>当你再次运行它们时，它们已经已经过时了，所以每次你想要使用它们时最终都要运行安装</strong>。</p>
+<p>作为一个工具维护者，我非常喜欢这个功能，因为这意味着我可以将<code>$ npx my-tool</code> 放入<code>README.md</code> 介绍中，而不是试图让人们处理实际安装它的障碍。坦率地说，“哦，只是复制粘贴这一个命令，它是零承诺”对于不确定是否使用工具的用户来说更加可口。</p>
+<p>这里有一些其他有趣的软件包，你可能想尝试使用npx：<a href="https://npm.im/happy-birthday" target="_blank" rel="noopener">happy-birthday</a>，<a href="https://npm.im/benny-hill" target="_blank" rel="noopener">benny-hill</a>，<a href="https://npm.im/workin-hard" target="_blank" rel="noopener">workin-hard</a>，<a href="https://npm.im/cowsay" target="_blank" rel="noopener">cowsay</a>，<a href="https://npm.im/yo" target="_blank" rel="noopener">yo</a>，<a href="https://npm.im/create-react-app" target="_blank" rel="noopener">create-react-app</a>，<a href="https://npm.im/npm-check" target="_blank" rel="noopener">npm-check</a>。甚至还有一个<a href="https://github.com/js-n/awesome-npx" target="_blank" rel="noopener">完整的awesome-npx 仓库</a>！前进！<a href="https://twitter.com/maybekatz/status/878926190064668672" target="_blank" rel="noopener">一个完整的本地REST服务器运行的</a>命令足够小，可以放在推文中。</p>
+<h2 id="运行不同Node-js版本的命令（Run-commands-with-different-Node-js-versions）"><a href="#运行不同Node-js版本的命令（Run-commands-with-different-Node-js-versions）" class="headerlink" title="运行不同Node.js版本的命令（Run commands with different Node.js versions）"></a>运行不同Node.js版本的命令（Run commands with different Node.js versions）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_2.png" class="">
+<p><code>npx -p node @ &lt;version&gt; node -v</code>可用于执行Node 版本的一次性运行。</p>
+<p>事实证明，<a href="https://medium.com/@aredridel" target="_blank" rel="noopener">Aria Stewart</a> 的这个很酷的软件包在npm 注册表中称为<a href="https://npm.im/node" target="_blank" rel="noopener">node</a>。 这意味着你可以非常轻松地使用不同的node 版本尝试node 命令，而无需使用像<a href="http://nvm.sh/" target="_blank" rel="noopener">nvm</a>，<a href="https://npm.im/nave" target="_blank" rel="noopener">nave</a> 或<a href="https://npm.im/n" target="_blank" rel="noopener">n</a> 这样的版本管理器。你只需要一个<code>npm@5.2.0</code> 安装！</p>
+<p>npx 的<code>-p</code> 选项允许你指定要安装的软件包并添加到正在运行的<code>$PATH</code> 中，这意味着你可以执行有趣的操作，例如：<code>$ npx -p node@6 npm it</code> 可以安装并测试当前的npm 软件包就像你在全局运行<code>node@6</code>。我自己一直使用它–甚至最近不得不在一个项目中使用它，因为我的一个测试库在<code>node@8</code> 下执行。这是一个真正的生命保护程序，我发现这种用例比版本管理器更容易使用，我总是以某种方式找到破解或错误配置的方法。</p>
+<h2 id="以交互方式开发npm-run-scripts（Developing-npm-run-scripts-interactively）"><a href="#以交互方式开发npm-run-scripts（Developing-npm-run-scripts-interactively）" class="headerlink" title="以交互方式开发npm run-scripts（Developing npm run-scripts interactively）"></a>以交互方式开发npm run-scripts（Developing npm run-scripts interactively）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_3.gif" class="">
+<p><code>$ npx -p cowsay -p lolcatjs -c&#39;echo“$ npm_package_name @ $ npm_package_version”| cowsay | lolcatjs&#39;</code>安装cowsay 和lolcatjs，并使脚本可以从运行脚本访问<code>$ npm_</code>变量池。</p>
+<p>现在很多npm 用户都利用了非常酷的<a href="https://docs.npmjs.com/misc/scripts" target="_blank" rel="noopener"><code>run-script</code>功能</a>。他们不仅赋值你的<code>$PATH</code>，以便可以访问本地二进制文件，而且还添加了一大堆你可以在这些脚本中访问的环境变量！你可以使用<code>$ npm run env | grep npm_</code> 查看这些额外变量 。</p>
+<p>这可能会使开发和测试运行脚本变得棘手–这意味着即使使用<code>$ (npm bin)/some-bin</code> 等技巧，你仍然无法在交互式工作时访问这些神奇的环境变量。</p>
+<p>可是等等！npx 还有另一个技巧：当你使用<code>-c</code> 选项时，在字符串参数内写的脚本将具有与常规运行脚本相同的env 变量的完全访问权限！你甚至可以通过单个npx 调用使用管道和多个命令！</p>
+<h2 id="与亲人朋友分享基于gist-的脚本！（Share-gits-based-scripts-with-friends-and-loved-ones-）"><a href="#与亲人朋友分享基于gist-的脚本！（Share-gits-based-scripts-with-friends-and-loved-ones-）" class="headerlink" title="与亲人朋友分享基于gist 的脚本！（Share gits-based scripts with friends and loved ones!）"></a>与亲人朋友分享基于gist 的脚本！（Share gits-based scripts with friends and loved ones!）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_4.gif" class="">
+
+<p>使用<a href="https://gist.github.com/" target="_blank" rel="noopener">gist.github.com</a> 分享各种实用程序脚本，而不是设置整个git repos，发布新工具等，这已经变得非常普遍。</p>
+<p>使用npx，你可以更进一步：因为npx 接受npm 本身所做的任何说明，你可以创建一个人们可以用一个命令直接调用的gist！</p>
+<p>请自行试用<a href="https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32" target="_blank" rel="noopener">https://gist.github.com/zkat/4bc19503fe9e9309e2bfaa2c58074d32</a>！</p>
+<p>注意：保持安全！在执行这些时，请务必仔细阅读gists，就像运行<code>.sh</code> 脚本时一样！</p>
+<h2 id="奖金环节：shell自动回退（Bonus-Round-shell-auto-fallback）"><a href="#奖金环节：shell自动回退（Bonus-Round-shell-auto-fallback）" class="headerlink" title="奖金环节：shell自动回退（Bonus Round: shell auto-fallback）"></a>奖金环节：shell自动回退（Bonus Round: shell auto-fallback）</h2><img src="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/npx_5.png" class="">
+<p>将npx 自动回退放在.zshrc 中意味着你可以在不引用npx 的情况下执行<code>$ ember-cli @ latest ...</code>！</p>
+<p>由<a href="https://medium.com/@passcod" target="_blank" rel="noopener">FélixSaparelli</a> 添加的这个非常棒的功能意味着对于许多类似用例，你甚至不需要直接调用<code>npx</code>！常规npx 使用和回退之间的主要区别在于，除非使用<code>pkg@version</code> 语法，否则回退不会安装新软件包：防止潜在危险的错误输入的安全网。</p>
+<p>设置自动回退非常简单：在npx 文档中查找<a href="https://www.npmjs.com/package/npx#for-bash" target="_blank" rel="noopener">用于当前shell 的命令</a>，将其添加到<code>.bashrc</code>/<code>.zshrc</code>/<code>.fishrc</code>，然后重新启动shell（或使用<code>source</code> 或其他一些机制进行刷新shell）。</p>
+<p>现在，你可以尝试执行<code>$ standard@8 --version</code> 之类的不同版本的东西，如果你在npm 项目中，<code>$ mocha</code> 将自动回退到本地安装的mocha 版本，前提是它不是已在全局安装。</p>
+<h2 id="使用它！（Do-It-Live-）"><a href="#使用它！（Do-It-Live-）" class="headerlink" title="使用它！（Do It Live!）"></a>使用它！（Do It Live!）</h2><p>你现在可以通过安装<code>npm@5.2.0</code> 或更高版本来获得npx –或者，如果你不想使用npm，你可以安装<a href="https://npm.im/npx" target="_blank" rel="noopener">独立版本的npx</a>！它与其他软件包管理器完全兼容，因为任何npm 使用仅用于内部操作。哦，它有<a href="https://github.com/zkat/npx/tree/latest/locales" target="_blank" rel="noopener">10 种不同的语言版本</a>，这得益于<a href="https://github.com/zkat/npx/pulls?q=is%253Apr+is%253Aclosed+label%253Ai18n" target="_blank" rel="noopener">来自世界各地的一群早期使用者的贡献</a>，其中<code>--help</code> 和所有系统消息都已翻译并根据系统区域自动提供！还有<a href="https://github.com/js-n/awesome-npx" target="_blank" rel="noopener">一个很棒的npx repo</a>，里面有一些与npx 配合使用的例子！</p>
+<p>你有喜欢的功能吗？你有没有用过它？如果你有一些很酷的东西要炫耀但我没有在这里列出，请在评论中分享！我很想听听其他人的意见！</p>
+<p>附：人们不断问这个问题所以我只能贴在这里：在这些GIF 中，我使用<a href="https://hyper.is/" target="_blank" rel="noopener">Hyper</a> 和<a href="https://www.npmjs.com/package/hyperterm-monokai" target="_blank" rel="noopener">monokai 主题</a> 运行<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a> 的<a href="https://www.npmjs.com/package/hyperterm-monokai" target="_blank" rel="noopener">太空船主题</a>，加上<a href="https://github.com/tonsky/FiraCode" target="_blank" rel="noopener">FiraCode字体</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
+          
+            <a href="/tags/npx/" rel="tag"># npx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="next" title="一日一练-网络 缓存最佳实践">
+                <i class="fa fa-chevron-left"></i> 一日一练-网络 缓存最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/06/%E8%BD%AC%E8%BD%BD-%E6%B7%B1%E5%85%A5%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/" rel="prev" title="[转载]深入响应式原理">
+                [转载]深入响应式原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用本地安装的工具而不需要使用npm-run-script（Using-locally-installed-tools-without-npm-run-script）"><span class="nav-number">1.</span> <span class="nav-text">使用本地安装的工具而不需要使用npm run-script（Using locally-installed tools without npm run-script）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行一次性命令（Executing-one-off-commands）"><span class="nav-number">2.</span> <span class="nav-text">执行一次性命令（Executing one-off commands）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行不同Node-js版本的命令（Run-commands-with-different-Node-js-versions）"><span class="nav-number">3.</span> <span class="nav-text">运行不同Node.js版本的命令（Run commands with different Node.js versions）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以交互方式开发npm-run-scripts（Developing-npm-run-scripts-interactively）"><span class="nav-number">4.</span> <span class="nav-text">以交互方式开发npm run-scripts（Developing npm run-scripts interactively）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与亲人朋友分享基于gist-的脚本！（Share-gits-based-scripts-with-friends-and-loved-ones-）"><span class="nav-number">5.</span> <span class="nav-text">与亲人朋友分享基于gist 的脚本！（Share gits-based scripts with friends and loved ones!）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#奖金环节：shell自动回退（Bonus-Round-shell-auto-fallback）"><span class="nav-number">6.</span> <span class="nav-text">奖金环节：shell自动回退（Bonus Round: shell auto-fallback）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用它！（Do-It-Live-）"><span class="nav-number">7.</span> <span class="nav-text">使用它！（Do It Live!）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/26/介绍npx：npm-包运行器/';
+
+      var disqus_title = "介绍npx：npm 包运行器";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

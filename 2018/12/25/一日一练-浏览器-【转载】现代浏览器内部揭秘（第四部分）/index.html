@@ -1,0 +1,1078 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,一日一练,转载,浏览器," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文地址：Inside look at modern web browser (part 4) 原文作者：Mariko Kosaka 译文出自：掘金翻译计划 本文永久链接：https:&#x2F;&#x2F;github.com&#x2F;xitu&#x2F;gold-miner&#x2F;blob&#x2F;master&#x2F;TODO1&#x2F;inside-browser-part4.md 译者：ThomasWhyne 校对者：llp0574 CoolRice">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-浏览器 【转载】现代浏览器内部揭秘（第四部分）">
+<meta property="og:url" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文地址：Inside look at modern web browser (part 4) 原文作者：Mariko Kosaka 译文出自：掘金翻译计划 本文永久链接：https:&#x2F;&#x2F;github.com&#x2F;xitu&#x2F;gold-miner&#x2F;blob&#x2F;master&#x2F;TODO1&#x2F;inside-browser-part4.md 译者：ThomasWhyne 校对者：llp0574 CoolRice">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/1.gif">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/3.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_1.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/4.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_2.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_3.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/5.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/6.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/7.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/8.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_4.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/9.png">
+<meta property="article:published_time" content="2018-12-25T00:56:17.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.581Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/12/25/一日一练-浏览器-【转载】现代浏览器内部揭秘（第四部分）/"/>
+
+
+
+
+
+  <title> 一日一练-浏览器 【转载】现代浏览器内部揭秘（第四部分） | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-浏览器 【转载】现代浏览器内部揭秘（第四部分）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-25T00:56:17+00:00">
+                2018-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/25/一日一练-浏览器-【转载】现代浏览器内部揭秘（第四部分）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/" class="leancloud_visitors" data-flag-title="一日一练-浏览器 【转载】现代浏览器内部揭秘（第四部分）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<ul>
+<li>原文地址：<a href="https://developers.google.com/web/updates/2018/09/inside-browser-part4" target="_blank" rel="noopener">Inside look at modern web browser (part 4)</a></li>
+<li>原文作者：<a href="https://developers.google.com/web/resources/contributors/kosamari" target="_blank" rel="noopener">Mariko Kosaka</a></li>
+<li>译文出自：<a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a></li>
+<li>本文永久链接：<a href="https://github.com/xitu/gold-miner/blob/master/TODO1/inside-browser-part4.md" target="_blank" rel="noopener">https://github.com/xitu/gold-miner/blob/master/TODO1/inside-browser-part4.md</a></li>
+<li>译者：<a href="https://github.com/ThomasWhyne" target="_blank" rel="noopener">ThomasWhyne</a></li>
+<li>校对者：<a href="https://github.com/llp0574" target="_blank" rel="noopener">llp0574</a> <a href="https://github.com/CoolRice" target="_blank" rel="noopener">CoolRice</a></li>
+</ul>
+</blockquote>
+<h1 id="现代浏览器内部揭秘（第四部分）"><a href="#现代浏览器内部揭秘（第四部分）" class="headerlink" title="现代浏览器内部揭秘（第四部分）"></a>现代浏览器内部揭秘（第四部分）</h1><h2 id="用户输入行为与合成器"><a href="#用户输入行为与合成器" class="headerlink" title="用户输入行为与合成器"></a>用户输入行为与合成器</h2><p>内部揭秘系列博客对现代浏览器如何处理代码、显示页面展开探讨。该系列博客共四篇，这是最后一篇。在上篇博客里，我们了解了 <a href="https://developers.google.com/web/updates/2018/09/inside-browser-part3" target="_blank" rel="noopener">渲染进程与合成器</a>。这里我们将一窥当用户输入行为发生时，合成器如何继续保障交互流畅。</p>
+<a id="more"></a>
+
+<h2 id="浏览器视角下的输入事件"><a href="#浏览器视角下的输入事件" class="headerlink" title="浏览器视角下的输入事件"></a>浏览器视角下的输入事件</h2><p>听到“输入事件”这个字眼，你脑海里闪现的恐怕只是输入文本或点击鼠标。但在浏览器眼中，输入意味着一切用户行为。不单滚动鼠标滑轮是输入事件，触摸屏幕、滑动鼠标同样也是用户输入事件。</p>
+<p>诸如触摸屏幕之类用户手势产生时，浏览器进程会率先将其捕获。然而浏览器进程所掌握的信息仅限于行为发生的区域，因为标签页里的内容都由渲染进程负责处理，所以浏览器进程会将事件类型（如 <code>touchstart</code>）及其坐标发送给渲染进程。渲染进程会寻至事件目标，运行其事件监听器，妥善地处理事件。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/0.png" class="">
+<p>图 1：输入事件由浏览器进程发往渲染进程</p>
+<h2 id="合成器接收输入事件"><a href="#合成器接收输入事件" class="headerlink" title="合成器接收输入事件"></a>合成器接收输入事件</h2><img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/1.gif" class="">
+<p>图 2：悬于页面图层的视图窗口</p>
+<p>在上篇文章里，我们探讨了合成器如何通过合成栅格化图层，实现流畅的页面滚动。如果页面上没有添加任何事件监听，合成器线程会创建独立于主线程的新合成帧。但要是页面上添加了事件监听呢？合成器线程又是如何得知事件是否需要处理的？</p>
+<h2 id="理解非立即可滚动区"><a href="#理解非立即可滚动区" class="headerlink" title="理解非立即可滚动区"></a>理解非立即可滚动区</h2><p>因为运行 JavaScript 脚本是主线程的工作，所以页面合成后，合成进程会将页面里添加了事件监听的区域标记为“非立即可滚动区”。有了这个信息，如果输入事件发生在这一区域，合成进程可以确定应将其发往主线程处理。如输入事件发生在这一区域之外，合成进程则确定无需等待主线程，而继续合成新帧。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/2.png" class="">
+<p>图 3：非立即可滚动区输入描述示意图</p>
+<h3 id="设置事件处理器时须注意"><a href="#设置事件处理器时须注意" class="headerlink" title="设置事件处理器时须注意"></a>设置事件处理器时须注意</h3><p>web 开发中常用的事件处理模式是事件代理。因为事件会冒泡，所以你可以在最顶层的元素中添加一个事件处理器，用来代理事件目标产生的任务。下面这样的代码，你可能见过，或许也写过。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_0.png" class="">
+
+
+<p>这样只需添加一个事件处理器，即可监听所有元素，的确十分省事。然而，如果站在浏览器的角度去考量，这等于把整个页面都标记成了“非立即可滚动区”，意味着即便你设计的应用本不必理会页面上一些区域的输入行为，合成线程也必须在每次输入事件产生后与主线程通信并等待返回。如此则得不偿失，使原本能保障页面滚动流畅的合成器没了用武之地。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/3.png" class="">
+<p>图 4：非立即可滚动区覆盖整个页面下的输入描述示意图</p>
+<p>你可以给事件监听添加一个 <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Improving_scrolling_performance_with_passive_listeners" target="_blank" rel="noopener"><code>passive:true</code></a> 选项 ，将这种负面效果最小化。这会提示浏览器你想继续在主线程中监听事件，但合成器不必停滞等候，可接着创建新的合成帧。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_1.png" class="">
+
+<h2 id="检查事件是否可撤销"><a href="#检查事件是否可撤销" class="headerlink" title="检查事件是否可撤销"></a>检查事件是否可撤销</h2><img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/4.png" class="">
+<p>图 5：部分区域仅可水平方向滚动的网页</p>
+<p>设想一下这种情形：页面上有一个盒子，你要将其滚动方向限制为水平滚动。</p>
+<p>为目标事件设置 <code>passive:true</code> 选项可让页面滚动平滑，但在你使用 <code>preventDefault</code> 以限制滚动方向时，垂直方向滚动可能已经触发。使用 <code>event.cancelable</code> 方法可以检查并阻止这种情况发生。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_2.png" class="">
+
+<p>或者，你也可以应用 <code>touch-action</code> 这类 CSS 规则，完全地将事件处理器屏蔽掉。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_3.png" class="">
+
+<h2 id="定位事件目标"><a href="#定位事件目标" class="headerlink" title="定位事件目标"></a>定位事件目标</h2><img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/5.png" class="">
+<p>图 6：主线程检查绘制记录查询坐标 x、y 处绘制内容</p>
+<p>合成器将输入事件发送至主线程后，首先运行的是命中检测。命中检测会使用渲染进程中产生的绘制记录数据，找出事件发生坐标下的内容。</p>
+<h2 id="降低往主线程发送事件的频率"><a href="#降低往主线程发送事件的频率" class="headerlink" title="降低往主线程发送事件的频率"></a>降低往主线程发送事件的频率</h2><p>之前的文章里，我们探讨了常见显示屏如何以每秒 60 帧的频率刷新，以及我们要怎样与其刷新频率保持步调一致，以营造出流畅的动画效果。而对于用户的输入行为，常见触摸屏设备的事件传输频率为每秒 60~120 次，常见鼠标设备的事件传输频率为每秒 100 次。可见，输入事件有着比显示屏幕更高的保真度。</p>
+<p>如果一连串 <code>touchmove</code> 这样的事件以每秒 120 次的频率发送往主线程，那么可能会触发过量的命中检测及 JavaScript 脚本执行。相形而言，我们的屏幕刷新率则更为低下。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/6.png" class="">
+<p>图 7：大量事件涌入合成帧时间轴会造成页面闪烁</p>
+<p>为了降低往主线程中传递过量调用，Chrome 会合并这些连续事件（如：<code>wheel</code>, <code>mousewheel</code>, <code>mousemove</code>, <code>pointermove</code>, <code>touchmove</code> 等），并将其延迟至下一次 <code>requestAnimationFrame</code> 前发送。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/7.png" class="">
+<p>图 8：相同的时间轴下事件被合并且延迟发送</p>
+<p>所有独立的事件，如: <code>keydown</code>, <code>keyup</code>, <code>mouseup</code>, <code>mousedown</code>, <code>touchstart</code>, 及  <code>touchend</code> 则会立即发往主线程。</p>
+<h2 id="使用getCoalescedEvents-获取帧内事件"><a href="#使用getCoalescedEvents-获取帧内事件" class="headerlink" title="使用getCoalescedEvents 获取帧内事件"></a>使用<code>getCoalescedEvents</code> 获取帧内事件</h2><p>事件合并可帮助大多数 web 应用构建良好的用户体验。然而，如果你开发的是一个绘图类应用，需要基于 <code>touchmove</code> 事件的坐标绘制线路，那么在你试图画下一根光滑的线条时，区间内的一些坐标点也可能会因事件合并而丢失。这时，你可以使用目标事件的  <code>getCoalescedEvents</code> 方法获取事件合并后的信息。</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/8.png" class="">
+<p>图 9：左为流畅的触摸手势路径、右为事件合并后的有限路径</p>
+<img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/code_4.png" class="">
+
+<h2 id="后续步骤"><a href="#后续步骤" class="headerlink" title="后续步骤"></a>后续步骤</h2><p>本系列文章里，我们探讨了很多关于 web 浏览器内部的工作原理。如果之前你从来没想过：为什么 Devtools 推荐在事件处理器上添加 <code>{passive:true}</code> 选项、为什么有时须在 script 标签里添加 <code>async</code> 属性？那么我希望这一系列文章能帮助你了解，为什么传递这些信息给浏览器能让其提供更为迅捷流畅的 web 体验。</p>
+<h3 id="使用-Lighthouse"><a href="#使用-Lighthouse" class="headerlink" title="使用 Lighthouse"></a>使用 Lighthouse</h3><p>如果你想构建出对浏览器更为友好的代码，却一直毫无头绪，那么不妨先从使用 <a href="https://developers.google.com/web/tools/lighthouse/" target="_blank" rel="noopener">Lighthouse</a> 开始。Lighthouse 是个可以帮助你审查网站工具，并且能提供页面性能报告。性能报告会告诉你什么地方处理得当，什么地方有待提升。浏览审查列表也能让你了解浏览器着力关注的重点所在。</p>
+<h3 id="学习如何评测性能"><a href="#学习如何评测性能" class="headerlink" title="学习如何评测性能"></a>学习如何评测性能</h3><p>对于不同的站点，桎梏其性能之处可能不尽相同，所以专门为你自己的站点定制化一套性能评测方案，并择优选取技术应用，是重中之重。Chrome 的 Devtools 团队就 <a href="https://developers.google.com/web/tools/chrome-devtools/speed/get-started" target="_blank" rel="noopener">如何测试你的站点性能</a> 撰有相关教程可供参阅。</p>
+<h3 id="为你的站点添加-Feature-Policy"><a href="#为你的站点添加-Feature-Policy" class="headerlink" title="为你的站点添加 Feature Policy"></a>为你的站点添加 Feature Policy</h3><p>如果你想进一步采用更多方案，<a href="https://developers.google.com/web/updates/2018/06/feature-policy" target="_blank" rel="noopener">Feature Policy</a> 是一个新的 web 平台，可在开发时为你保驾护航。开启 feature policy 可以限制应用行为，并使你远离诸多技术弊端。举个例子，如果你想确保应用不会阻塞解析，那么可以采用同步脚本方案运行应用。开启 <code>sync-script:&#39;none&#39;</code> 后，导致解析阻塞的 JavaScript 脚本会被阻止运行。这就确保了你的代码不会阻塞解析，浏览器也无须考虑暂停运行解析器。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="/2018/12/25/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E5%9B%9B%E9%83%A8%E5%88%86%EF%BC%89/9.png" class="">
+<p>刚踏上开发之路时，我几乎只关注怎样去写代码、怎样提升自己的生产效率。诚然，这些事情很重要，但与此同时我们也应当思考浏览器会怎么去处理我们书写的代码。现代浏览器一直致力探索如何提供更好的用户体验。书写对浏览器友好的代码，反过来也能提供友好的用户体验。路漫漫其修远兮，希望我们能携手共进，构建出对浏览器更为友好的代码。</p>
+<p>在此笔者诚挚感谢 <a href="https://twitter.com/slightlylate" target="_blank" rel="noopener">Alex Russell</a>、<a href="https://twitter.com/paul_irish" target="_blank" rel="noopener">Paul Irish</a>、<a href="https://twitter.com/MegginKearney" target="_blank" rel="noopener">Meggin Kearney</a>、<a href="https://twitter.com/ebidel" target="_blank" rel="noopener">Eric Bidelman</a>、<a href="https://twitter.com/mathias" target="_blank" rel="noopener">Mathias Bynenes</a>、<a href="https://twitter.com/addyosmani" target="_blank" rel="noopener">Addy Osmani</a>、<a href="https://twitter.com/kinu" target="_blank" rel="noopener">Kinuko Yasuda</a>、<a href="https://twitter.com/nasko" target="_blank" rel="noopener">Nasko Oskov</a> 和 Charlie Reis 等人对本系列文章初稿的校对。</p>
+<p>你喜欢这一系列的文章吗？对之后文章如有任何意见或建议，欢迎在下面评论区或是推特 <a href="https://twitter.com/kosamari" target="_blank" rel="noopener">@kosamari</a> 里留下您的宝贵意见。</p>
+<blockquote>
+<p>如果发现译文存在错误或其他需要改进的地方，欢迎到 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 对译文进行修改并 PR，也可获得相应奖励积分。文章开头的 <strong>本文永久链接</strong> 即为本文在 GitHub 上的 MarkDown 链接。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a> 是一个翻译优质互联网技术文章的社区，文章来源为 <a href="https://juejin.im/" target="_blank" rel="noopener">掘金</a> 上的英文分享文章。内容覆盖 <a href="https://github.com/xitu/gold-miner#android" target="_blank" rel="noopener">Android</a>、<a href="https://github.com/xitu/gold-miner#ios" target="_blank" rel="noopener">iOS</a>、<a href="https://github.com/xitu/gold-miner#%E5%89%8D%E7%AB%AF" target="_blank" rel="noopener">前端</a>、<a href="https://github.com/xitu/gold-miner#%E5%90%8E%E7%AB%AF" target="_blank" rel="noopener">后端</a>、<a href="https://github.com/xitu/gold-miner#%E5%8C%BA%E5%9D%97%E9%93%BE" target="_blank" rel="noopener">区块链</a>、<a href="https://github.com/xitu/gold-miner#%E4%BA%A7%E5%93%81" target="_blank" rel="noopener">产品</a>、<a href="https://github.com/xitu/gold-miner#%E8%AE%BE%E8%AE%A1" target="_blank" rel="noopener">设计</a>、<a href="https://github.com/xitu/gold-miner#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD" target="_blank" rel="noopener">人工智能</a>等领域，想要查看更多优质译文请持续关注 <a href="https://github.com/xitu/gold-miner" target="_blank" rel="noopener">掘金翻译计划</a>、<a href="http://weibo.com/juejinfanyi" target="_blank" rel="noopener">官方微博</a>、<a href="https://zhuanlan.zhihu.com/juejinfanyi" target="_blank" rel="noopener">知乎专栏</a>。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag"># 浏览器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/24/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E6%B5%8F%E8%A7%88%E5%99%A8-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E6%8F%AD%E7%A7%98%EF%BC%88%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%89/" rel="next" title="一日一练-浏览器 【转载】现代浏览器内部揭秘（第三部分）">
+                <i class="fa fa-chevron-left"></i> 一日一练-浏览器 【转载】现代浏览器内部揭秘（第三部分）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/12/css-animation-101-1-why-animate/" rel="prev" title="[css-animation-101] 1 why animate">
+                [css-animation-101] 1 why animate <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#现代浏览器内部揭秘（第四部分）"><span class="nav-number">1.</span> <span class="nav-text">现代浏览器内部揭秘（第四部分）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户输入行为与合成器"><span class="nav-number">1.1.</span> <span class="nav-text">用户输入行为与合成器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器视角下的输入事件"><span class="nav-number">1.2.</span> <span class="nav-text">浏览器视角下的输入事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合成器接收输入事件"><span class="nav-number">1.3.</span> <span class="nav-text">合成器接收输入事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解非立即可滚动区"><span class="nav-number">1.4.</span> <span class="nav-text">理解非立即可滚动区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置事件处理器时须注意"><span class="nav-number">1.4.1.</span> <span class="nav-text">设置事件处理器时须注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查事件是否可撤销"><span class="nav-number">1.5.</span> <span class="nav-text">检查事件是否可撤销</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位事件目标"><span class="nav-number">1.6.</span> <span class="nav-text">定位事件目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降低往主线程发送事件的频率"><span class="nav-number">1.7.</span> <span class="nav-text">降低往主线程发送事件的频率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用getCoalescedEvents-获取帧内事件"><span class="nav-number">1.8.</span> <span class="nav-text">使用getCoalescedEvents 获取帧内事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续步骤"><span class="nav-number">1.9.</span> <span class="nav-text">后续步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Lighthouse"><span class="nav-number">1.9.1.</span> <span class="nav-text">使用 Lighthouse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习如何评测性能"><span class="nav-number">1.9.2.</span> <span class="nav-text">学习如何评测性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为你的站点添加-Feature-Policy"><span class="nav-number">1.9.3.</span> <span class="nav-text">为你的站点添加 Feature Policy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.10.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/12/25/一日一练-浏览器-【转载】现代浏览器内部揭秘（第四部分）/';
+
+      var disqus_title = "一日一练-浏览器 【转载】现代浏览器内部揭秘（第四部分）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

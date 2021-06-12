@@ -1,0 +1,1120 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JS,一日一练,转载,深拷贝," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文1.手机推送原理剖析指南 导读本文旨在对手机推送原理进行剖析和阐述，对业务开发做一些方向性的解惑。 一、基本概念什么是手机推送？ 手机推送服务是指服务器定向将信息实时送达手机的服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-JS 手机推送原理剖析">
+<meta property="og:url" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文1.手机推送原理剖析指南 导读本文旨在对手机推送原理进行剖析和阐述，对业务开发做一些方向性的解惑。 一、基本概念什么是手机推送？ 手机推送服务是指服务器定向将信息实时送达手机的服务">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/1.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/2.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/3.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/4.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/5.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/6.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/7.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/8.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/9.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/10.webp">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/11.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/12.png">
+<meta property="og:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/13.webp">
+<meta property="article:published_time" content="2021-06-07T03:34:09.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.529Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="JS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="深拷贝">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2021/06/07/一日一练-JS-手机推送原理剖析/"/>
+
+
+
+
+
+  <title> 一日一练-JS 手机推送原理剖析 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-JS 手机推送原理剖析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-06-07T03:34:09+00:00">
+                2021-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/07/一日一练-JS-手机推送原理剖析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/" class="leancloud_visitors" data-flag-title="一日一练-JS 手机推送原理剖析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h2><p>1.<a href="https://mp.weixin.qq.com/s/pjl1YH-7gEEORxdVQuiQfg" target="_blank" rel="noopener">手机推送原理剖析指南</a></p>
+<h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>本文旨在对手机推送原理进行剖析和阐述，对业务开发做一些方向性的解惑。</p>
+<h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>什么是手机推送？</p>
+<p>手机推送服务是指服务器定向将信息实时送达手机的服务</p>
+<a id="more"></a>
+
+<p>这里有两组概念：</p>
+<ol>
+<li>第一组是 “服务器” 和 “手机”，说明了一条推送消息是从哪里启动（服务器），到哪里是终点（手机）；</li>
+<li>第二组是 “定向” 和 “实时”，说明推送是可以指定接受者的，并且到达的速度非常快！</li>
+</ol>
+<p>我们平时所说的 “推送”， “通知”， “app 推送”， “推送服务”，“通知消息”，“通知栏消息” 等等，指的都是同一个。</p>
+<p>样式在苹果和安卓手机的不同<br><strong>1.苹果手机中的样式</strong></p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/1.png" class="">
+
+<p><strong>2.安卓手机中的样式</strong></p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/2.png" class="">
+
+<h2 id="二、推送原理"><a href="#二、推送原理" class="headerlink" title="二、推送原理"></a>二、推送原理</h2><p>由于移动网络的限制，服务器并不能在没有连接的情况下主动发送信息到移动端。所以推送本质上都是由手机设备发起，与推送服务器建立起连接通道（TCP长连接），通道就是保障推送到达的关键。</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/3.png" class="">
+
+<p>在iOS系统中，推送服务器是由苹果公司维护，所有的应用均使用Apple 推送通知服务 (APNs) 来实现。</p>
+<p>在android系统中，海外有谷歌的GMS，用于推送。GMS全称为GoogleMobile Service，即谷歌移动服务。当然由于众所周知的原因，国内是使用不上的。</p>
+<p>APNs和GMS的推送原理基本一致，通过系统建立推送通道，所有应用均使用该通道，推送信息由该通道进行分发：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/4.png" class="">
+
+<p>其中系统接受到推送消息有两种可做的行为，一种是通知，一种是透传。</p>
+<p><strong>通知</strong>：系统<strong>只负责弹出下拉栏列表</strong>，需要<strong>用户点击</strong>才能唤醒应用。<br><strong>透传</strong>：系统将信息投递给相关的应用，应用实时收到信息，可以进行业务逻辑，<strong>前提是应用未被杀死</strong>。</p>
+<p>他们的关系如下：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/5.png" class="">
+
+<p>iOS 系统由于国内可用 APNs 服务，所以到达率相当稳定。而 android 系统没有统一的推送，导致发展较为缓慢，大致可以分为三个阶段：</p>
+<h3 id="国内安卓推送的三个阶段"><a href="#国内安卓推送的三个阶段" class="headerlink" title="国内安卓推送的三个阶段"></a>国内安卓推送的三个阶段</h3><h4 id="1-混沌期"><a href="#1-混沌期" class="headerlink" title="1.混沌期"></a>1.混沌期</h4><p>Android早期版本对于app限制极少，app可以在后台一直活着，甚至被杀还能被自动拉起。这时候很多app建立了自己的长连接推送：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/6.png" class="">
+
+<p>这时候自建推送的技术门槛还是挺高的，维护成本也高，用户体验也不好，经常出现性发热卡顿等情况，还会偷偷的上传用户行为，毕竟这和植入一个木马区别也不大。</p>
+<h4 id="2-门派林立期"><a href="#2-门派林立期" class="headerlink" title="2.门派林立期"></a>2.门派林立期</h4><p>随着 android 系统权限的收缩，很少有应用可以在后台活着了，很多应用根本就活不久。加上这时候各大厂已经形成了自己的体系，比如企鹅系，阿里系等等，大厂间的基础设施逐渐完善，应用活不久没关系，只要用户用了派系中的一个还是可以相互唤醒的。</p>
+<p>而其他应用则可以抱团使用第三方的推送，第三方也可以实现使用同一推送来相互唤醒：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/7.png" class="">
+
+<h4 id="3-厂商掌权期"><a href="#3-厂商掌权期" class="headerlink" title="3.厂商掌权期"></a>3.厂商掌权期</h4><p>随着 android 版本的进一步提升，厂商们开始考虑各种用户体验问题，唤醒链也不好使了。为了电量和性能，app 的生存现状堪忧。</p>
+<p>第三方的如极光百度推送自建的推送越来越难到达了。各大手机厂商推出了自己的系统推送服务，扮演起了如苹果般的角色。</p>
+<p>到了这个时候，推送的原理已经APNs基本一致了。</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/8.png" class="">
+
+<p>有些厂商比较有野心，像小米除了自家的系统推送外，也支持别的手机，但是此时它的工作原理就和极光一样，实现的是第三方推送了，所以到达率也和薛定谔的猫差不多，时灵时不灵。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>到现在为止，国内拥有自主厂商通道主要有华为、小米、oppo、vivo、魅族，这几家合计占据85%以上的android市场份额，接入这几家厂商推送，可以保障大部分的机型推送能到达，至于其他小众品牌，只能依赖第三方推送，第三方推送大家起点都一样，能否到达就有点看缘分了。</p>
+<p>推送能到达，不一定就能满足业务场景，像网络电话直接唤起应用的场景，在应用死亡的情况下，还是做不到的。</p>
+<p>当然也有<strong>例外，比如微信支付宝等：</strong></p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/9.png" class="">
+
+<p>加油把自己 app 做到亿级用户，你也能有这样的特权！</p>
+<h2 id="三、业务实践"><a href="#三、业务实践" class="headerlink" title="三、业务实践"></a>三、业务实践</h2><p>那么一个业务如何实现接入自己的推送呢？</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/10.webp" class="">
+
+<p><strong>简单描述一下大致的流程：</strong></p>
+<p>1、推送都会生成一个设备 ID，这个<strong>设备 ID 在一段时间内维持不变</strong>。在 app 启动的时候应该就可以获取到。</p>
+<p>2、将这个设备 ID 和用户绑定起来，做映射关系。</p>
+<p>3、业务推送到用户的时候，就转换成设备 ID 访问厂商推送接口。</p>
+<p>4、厂商推送将信息送达用户。</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/11.png" class="">
+
+<p><strong>注意点：</strong><br>1、厂商推送接口一般为 http 接口，每次访问有设备数量限制，而且有些还有调用频率限制，一个好的实践是异步批量调用，队列+切片是常用的做法。</p>
+<p>2、有些厂商会提供回调接口，用来反馈到达的情况，可以看情况使用。</p>
+<p><strong>准备工作：</strong><br>iOS：需要推送证书，在苹果的开发者平台向苹果公司申请，使用时候证书和代码实现要在一起。</p>
+<p>Android：各个平台要求不一样，大致如下：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/12.png" class="">
+
+<p><strong>可能遇到的问题：</strong><br>推送收不到！</p>
+<p><strong>推送收不到分为2种情况，一种是从来没有收到过推送；一种是原本推送服务使用正常，突然收不到推送了！</strong></p>
+<p>对于前者，一般在程序开发阶段就能解决问题，相对比较简单; 对于后者，情况就复杂一些了。针对后者出现的情况，需要做如下方向上的排查：</p>
+<ul>
+<li><p>手机能否联网，网络是否通畅？无网时是不能收到推送的。</p>
+</li>
+<li><p>手机系统近期是否有发布新的版本，用户更新到了新的版本？如果是，则可能需要对新版本做适应性的配置。</p>
+</li>
+<li><p>APP 的代码，和服务端的代码，近期是否有与推送功能相关的改动？如果有，请排查代码影响。</p>
+</li>
+</ul>
+<p>iOS 推送证书的有效期长度一般为1年，在申请时即可看到过期时间！如果使用了第三方服务，第三方仅可以保管证书，不能更新证书。因此推送证书过期后需要重新申请新的证书，并上传到第三方。</p>
+<p>部分第三方服务提供者，在证书过期时未能给到明显的提示。该问题的在排查时也比较隐蔽，不易发现，因此需要多加注意。</p>
+<p>若使用了三方的付费服务，也应该检查余额是否充足，欠费时推送服务会被停止。不过相对于证书过期问题的提示，欠费的催缴提示会格外明显，基本不可能被忽略！比如发送多份提醒邮件，或第三方客服直接给相关的负责人打电话提醒需要充值续费 。</p>
+<p>如果以上情况经过排查后均没有问题，则需要考虑一些不常见的场景和偶发性的情况，包括但不限于如下所述：</p>
+<ul>
+<li><p>用户对手机进行了恢复出厂设置，之后尚未允许授予 APP 推送功能权限</p>
+</li>
+<li><p>用户对 APP 的推送权限进行了手动关闭</p>
+</li>
+<li><p>信号差、网络波动导致推送明显延迟或丢失</p>
+</li>
+<li><p>手机系统偶尔出现的 bug 导致推送接收失败</p>
+</li>
+<li><p>手机系统提供商的推送服务器问题</p>
+</li>
+<li><p>其他未知原因</p>
+</li>
+</ul>
+<p><strong>解决问题三部曲：</strong><br><strong>第一步：</strong>删除 APP，重新下载安装后打开，在询问是否允许授予推送权限时，点击“允许” ，然后进行推送测试！</p>
+<p><strong>第二步：</strong>若第一步未能奏效，请重启手机，然后进行推送测试！</p>
+<p><strong>第三步：</strong>说出来你可能不信，如果第二步仍未奏效，请删除 APP 后重启手机，重启后下载新的 APP，打开并允许接收推送，然后进行推送测试！</p>
+<p>除此之外根据推送的原理，如果不在厂商推送的机型，是极有可能收不到的。</p>
+<p><strong>解决的办法：</strong><br><strong>1、社会工程学</strong>。引导客户设置通知权限，<strong>开启白名单</strong>。可以提高到达率，主要机制是让应用不死那么快，第三方（如小米）可以活着接受到推送。</p>
+<p>Android 可以参考云助手的推送设置方式：<a href="https://tenants.fdccloud.com/wzsversion/pub-view/wzshelper-for-phone-list" target="_blank" rel="noopener">https://tenants.fdccloud.com/wzsversion/pub-view/wzshelper-for-phone-list</a></p>
+<p>iOS记得给权限：</p>
+<img src="/2021/06/07/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E6%89%8B%E6%9C%BA%E6%8E%A8%E9%80%81%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90/13.webp" class="">
+
+<p><strong>2、钞能力</strong>。如果是强时效性的业务，建议增加短信、电话等通知。</p>
+<p><strong>3、努力把自己变成强势的一方</strong>，比如每天都亿级活跃用户。</p>
+<p>其他的问题：</p>
+<p>特殊场景：如网络电话等，可以和厂商谈合作，但都有极高的门槛。</p>
+<p>其他的需求欢迎咨询移动超级app一组。</p>
+<p>最后欢迎使用移动appcloud提供的mpush插件和对各厂商封装的PHP-SDK</p>
+<p>PHP-SDK：<a href="https://packagist.org/packages/yunchuang/push" target="_blank" rel="noopener">https://packagist.org/packages/yunchuang/push</a></p>
+<p>mpush文档地址：<a href="https://appcloud-static.mypaas.com.cn/plugin/readme/mpush/1.2.4/index.html" target="_blank" rel="noopener">https://appcloud-static.mypaas.com.cn/plugin/readme/mpush/1.2.4/index.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag"># 转载</a>
+          
+            <a href="/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/" rel="tag"># 深拷贝</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/06/04/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-JS-%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF/" rel="next" title="一日一练-JS 实现继承">
+                <i class="fa fa-chevron-left"></i> 一日一练-JS 实现继承
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/06/08/%E4%BA%86%E8%A7%A3-Webpack-%E5%8E%9F%E7%90%86/" rel="prev" title="了解 Webpack 原理">
+                了解 Webpack 原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">2.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、基本概念"><span class="nav-number">3.</span> <span class="nav-text">一、基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、推送原理"><span class="nav-number">4.</span> <span class="nav-text">二、推送原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#国内安卓推送的三个阶段"><span class="nav-number">4.1.</span> <span class="nav-text">国内安卓推送的三个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-混沌期"><span class="nav-number">4.1.1.</span> <span class="nav-text">1.混沌期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-门派林立期"><span class="nav-number">4.1.2.</span> <span class="nav-text">2.门派林立期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-厂商掌权期"><span class="nav-number">4.1.3.</span> <span class="nav-text">3.厂商掌权期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">4.1.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、业务实践"><span class="nav-number">5.</span> <span class="nav-text">三、业务实践</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2021/06/07/一日一练-JS-手机推送原理剖析/';
+
+      var disqus_title = "一日一练-JS 手机推送原理剖析";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

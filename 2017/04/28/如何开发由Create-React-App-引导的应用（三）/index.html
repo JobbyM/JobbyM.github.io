@@ -1,0 +1,1314 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,Create React App," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译How to develop apps bootstrapped with Create React App 官方文档  系列文章 如何开发由Create-React-App 引导的应用 如何开发由Create-React-App 引导的应用（一） 如何开发由Create-React-App 引导的应用（二） 如何开发由Create-React-App 引导的应用（四）    Int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何开发由Create-React-App 引导的应用（三）">
+<meta property="og:url" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译How to develop apps bootstrapped with Create React App 官方文档  系列文章 如何开发由Create-React-App 引导的应用 如何开发由Create-React-App 引导的应用（一） 如何开发由Create-React-App 引导的应用（二） 如何开发由Create-React-App 引导的应用（四）    Int">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Command-Line-Interface.gif">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Coverage-Reporting.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Editor-Integration.png">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Developing-Components-in-Isolation.gif">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/GitHub-Pages.png">
+<meta property="article:published_time" content="2017-04-28T02:03:58.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.689Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="Create React App">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Command-Line-Interface.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/04/28/如何开发由Create-React-App-引导的应用（三）/"/>
+
+
+
+
+
+  <title> 如何开发由Create-React-App 引导的应用（三） | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何开发由Create-React-App 引导的应用（三）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-28T02:03:58+00:00">
+                2017-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/28/如何开发由Create-React-App-引导的应用（三）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/" class="leancloud_visitors" data-flag-title="如何开发由Create-React-App 引导的应用（三）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md" target="_blank" rel="noopener">How to develop apps bootstrapped with Create React App</a> 官方文档</p>
+</blockquote>
+<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ol>
+<li><a href="/2017/03/30/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8/" title="如何开发由Create-React-App 引导的应用">如何开发由Create-React-App 引导的应用</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（一）">如何开发由Create-React-App 引导的应用（一）</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（二）">如何开发由Create-React-App 引导的应用（二）</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E5%9B%9B%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（四）">如何开发由Create-React-App 引导的应用（四）</a>
+
+</li>
+</ol>
+<h2 id="Integrating-with-an-API-Backend"><a href="#Integrating-with-an-API-Backend" class="headerlink" title="Integrating with an API Backend"></a>Integrating with an API Backend</h2><p>这些教程将帮助您将应用程序与在另一个端口上运行的API后端集成，使用<code>fetch()</code>来访问它。</p>
+<h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>看看<a href="https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/" target="_blank" rel="noopener">这个教程</a>。 您可以在这里找到配套的<a href="https://github.com/fullstackreact/food-lookup-demo" target="_blank" rel="noopener">GitHub存储库</a>。</p>
+<h3 id="Ruby-on-Rails"><a href="#Ruby-on-Rails" class="headerlink" title="Ruby on Rails"></a>Ruby on Rails</h3><p>看看<a href="https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/" target="_blank" rel="noopener">这个教程</a>。 您可以在这里找到配套的<a href="https://github.com/fullstackreact/food-lookup-demo-rails" target="_blank" rel="noopener">GitHub存储库</a>。</p>
+<a id="more"></a>
+
+<h2 id="Proxying-API-Requests-in-Development"><a href="#Proxying-API-Requests-in-Development" class="headerlink" title="Proxying API Requests in Development"></a>Proxying API Requests in Development</h2><blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.2.3</code> 版本以上。</p>
+</blockquote>
+<p>人们通过提供与前端React 应用相同的主机和端口作为后端实现。<br>例如，应用部署后，生产设置可能看上去像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/             - <span class="keyword">static</span> server returns index.html <span class="keyword">with</span> React app</span><br><span class="line">/todos        - <span class="keyword">static</span> server returns index.html <span class="keyword">with</span> React app</span><br><span class="line">/api/todos    - server handles any <span class="string">`/api/*`</span> requests using the backend implementation</span><br></pre></td></tr></table></figure>
+
+<p>像这样的设置不是必须的。但是，如果你已经有了一个这样的设置，很方便写<code>fetch(&#39;api/todos&#39;)</code> 这样的请求而不必担心在开发过程中将它们重定向到另一个主机或端口。</p>
+<p>在开发中，让开发服务器代理任何未知API 服务请求，添加一个<code>proxy</code> 域到你的<code>package.json</code>，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"proxy"</span>: <span class="string">"http://localhost:4000"</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，当您在开发中<code>fetch(&#39;/api/todos&#39;)</code>时，开发服务器将会认识到它不是一个静态资产，并会将您的请求代理到<code>http://localhost:4000/api/todos</code>作为后备。 开发服务器将仅尝试发送没有<code>text/html</code> accept header 的请求到代理。</p>
+<p>方便的，这样可以避免在开发过程中发生<a href="">CORS问题</a>和像下面的错误消息：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.</span><br></pre></td></tr></table></figure>
+
+<p>请记住，<code>proxy</code>仅在开发中有效（使用<code>npm start</code>），由你确保像<code>/api/todos</code> 这样的URL指向正确的生产环境。 你不必使用<code>/api</code> 前缀。 任何无法识别没有<code>text/html</code> accept header 的请求，将被重定向到指定的<code>proxy</code>。</p>
+<p><code>proxy</code> 选项支持HTTP，HTTPS和WebSocket连接。<br>如果<code>proxy</code> 选项对你不够灵活，或者你可以：</p>
+<ul>
+<li>在您的服务器上启用CORS（<a href="http://enable-cors.org/server_expressjs.html" target="_blank" rel="noopener">这是在Express 中的操作方法</a>）。</li>
+<li>使用<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables" target="_blank" rel="noopener">环境变量</a>将正确的服务器主机和端口注入到应用程序中。</li>
+</ul>
+<h2 id="Using-HTTPS-in-Development"><a href="#Using-HTTPS-in-Development" class="headerlink" title="Using HTTPS in Development"></a>Using HTTPS in Development</h2><blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.4.0</code> 版本以上。</p>
+</blockquote>
+<p>您可能需要开发服务器通过HTTPS提供页面。 一个特别的情况可能是有用的，当API服务器本身服务本身用于HTTPS时，使用<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development" target="_blank" rel="noopener">the “proxy” feature</a>来代理对API服务器的请求。</p>
+<p>为此，请将<code>HTTPS</code> 环境变量设置为<code>true</code>，然后像以往那样以<code>npm start</code>启动开发服务器：</p>
+<p><strong>Windows(cmd.exe)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> HTTPS=<span class="literal">true</span>&amp;&amp;npm start</span><br></pre></td></tr></table></figure>
+<p>（注意：空格的缺失是有意的）</p>
+<p><strong>Linux, macOS(Bash)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTPS=<span class="literal">true</span> npm start</span><br></pre></td></tr></table></figure>
+
+<p>请注意，服务器将使用自签名证书，因此你的Web浏览器几乎肯定会在访问页面时显示警告。</p>
+<h2 id="Generating-Dynamic-lt-meta-gt-Tags-on-the-Server"><a href="#Generating-Dynamic-lt-meta-gt-Tags-on-the-Server" class="headerlink" title="Generating Dynamic &lt;meta&gt; Tags on the Server"></a>Generating Dynamic <code>&lt;meta&gt;</code> Tags on the Server</h2><p>由于Create React App 不支持服务器渲染，你可能想知道如何使<code>&lt;meta&gt;</code>标签动态化并反映当前URL。 为了解决这个问题，我们建议在HTML中添加占位符，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta property&#x3D;&quot;og:title&quot; content&#x3D;&quot;__OG_TITLE__&quot;&gt;</span><br><span class="line">    &lt;meta property&#x3D;&quot;og:description&quot; content&#x3D;&quot;__OG_DESCRIPTION__&quot;&gt;&#96;</span><br></pre></td></tr></table></figure>
+
+<p>然后，在服务器上，不管你使用的后端，你都可以将<code>index.html</code>读入内存，并根据当前URL替换<code>__OG_TITLE__</code>、<code>__OG_DESCRIPTION__</code>以及任何其他具有值的占位符。 只需确保清理和转义内插的值，以便它们可以安全地嵌入到HTML中！</p>
+<p>如果使用Node服务器，你甚至可以在客户端和服务器之间共享路由匹配逻辑。 但是在简单的情况下，复制它也可以正常工作。</p>
+<h2 id="Pre-Rendering-into-Static-HTML-Files"><a href="#Pre-Rendering-into-Static-HTML-Files" class="headerlink" title="Pre-Rendering into Static HTML Files"></a>Pre-Rendering into Static HTML Files</h2><p>如果您使用静态主机提供商托管您的构建程序，则可以使用反应快照为应用程序中的每个路由或相对链接生成HTML页面。 然后，这些页面将在JavaScript软件包加载时无缝地变为活动状态或“水合”。</p>
+<p>还有机会在静态托管之外使用它，在生成和缓存路由时将压力从服务器上取下。</p>
+<p>预渲染的主要优点是，你可以使用HTML有效内容获取每个页面的核心内容，而不管你的JavaScript软件包是否成功下载。 这也增加了你的应用程序的每个路由将被搜索引擎抓取的可能性。</p>
+<p>你可以阅读<a href="https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319" target="_blank" rel="noopener">零配置预渲染（也成为snapshotting）</a>。</p>
+<h2 id="Injecting-Data-from-the-Server-into-the-Page"><a href="#Injecting-Data-from-the-Server-into-the-Page" class="headerlink" title="Injecting Data from the Server into the Page"></a>Injecting Data from the Server into the Page</h2><p>同上一节相似，你可以在HTML 中留一些插入全局变量的占位符，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!document html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">      window.SERVER_DATA &#x3D; __SERVER_DATA__</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<p>然后，在服务器上，您可以在发送响应之前将<code>__SERVER_DATA__</code>替换为真实的JSON数据。 客户端代码可以读取<code>window.SERVER_DATA</code>来使用它。 <strong>确保在<a href="https://medium.com/node-security/the-most-common-xss-vulnerability-in-react-js-applications-2bdffbcc1fa0" target="_blank" rel="noopener">清理JSON之后再发送到客户端</a>，因为它使你的应用程序易受XSS攻击。</strong></p>
+<h2 id="Running-Test"><a href="#Running-Test" class="headerlink" title="Running Test"></a>Running Test</h2><blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.3.0</code> 版本以上。<br><a href="https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030" target="_blank" rel="noopener">阅读迁移指导如果在旧项目中使用</a></p>
+</blockquote>
+<p>Create React App 使用Jest作为其测试运行器。 为了做好这个整合的准备，我们为Jest做了一个重大变革，所以如果你听到很多年前的坏事，请再试一次。</p>
+<p>Jest是一个基于Node的运行器。 这意味着测试总是在Node环境中运行，而不是在真实的浏览器中运行。 这使我们能够实现加快迭代速度并防止怪异的行为。</p>
+<p>虽然Jest提供像<code>window</code>的浏览器全局变量，这多亏了<a href="https://github.com/tmpvar/jsdom" target="_blank" rel="noopener">jsdom</a>，但它们只是同真正的浏览器行为相似。 Jest旨在用于你的逻辑和组件的单元测试，而不是DOM怪异。</p>
+<p>如果需要，我们建议你使用单独的浏览器端到端的测试工具。 它们超出了Create React App的范围。</p>
+<h3 id="Filename-Coventions"><a href="#Filename-Coventions" class="headerlink" title="Filename Coventions"></a>Filename Coventions</h3><p>Jest将使用以下任何常见的命名规则来查找测试文件：</p>
+<ul>
+<li><code>__tests__</code>文件夹中带有<code>.js</code>后缀的文件。</li>
+<li>带有<code>.test.js</code>后缀的文件。</li>
+<li>带有<code>.spec.js</code>后缀的文件。</li>
+</ul>
+<p><code>.test.js</code> 或<code>.spec.js</code> 文件（或<code>__tests__</code>文件夹）可以位于<code>src</code>顶级文件夹下的任意深度。</p>
+<p>我们建议将测试文件（或<code>__tests__</code>文件夹）放在正在测试的代码旁边，以使相对导入路径更短。 例如，如果<code>App.test.js</code>和<code>App.js</code>在同一个文件夹中，测试只需要从<code>import App from &#39;./App&#39;</code>，而不是长的相对路径。 Colocation还有助于在更大的项目中更快地找到测试。</p>
+<h3 id="Command-Line-Interface"><a href="#Command-Line-Interface" class="headerlink" title="Command Line Interface"></a>Command Line Interface</h3><p>当你运行<code>npm test</code>时，Jest将以观察者模式启动。 每次保存文件时，都会重新运行测试，就像<code>npm start</code>重新编译代码一样。</p>
+<p>观察者包括交互式命令行界面，具有运行所有测试的能力，或专注于搜索模式。 它是这样设计的，以便你可以保持它开启并享受快速重新运行。 你可以从“Watch Usage” 笔记中了解每次运行后观察者打印的命令：</p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Command-Line-Interface.gif" class="">
+
+<h3 id="Version-Control-Integration"><a href="#Version-Control-Integration" class="headerlink" title="Version Control Integration"></a>Version Control Integration</h3><p>默认情况下，当您运行<code>npm test</code>时，Jest将仅运行与上次提交后更改的文件相关的测试。 这是一个优化，旨在使你的测试运行快速，无论您有多少测试。 但是，它假定你不经常提交不通过测试的代码。</p>
+<p>Jest将始终明确提到，它只运行与上次提交后更改的文件相关的测试。 你也可以在观察者模式按<code>a</code> 强制Jest运行所有测试。</p>
+<p>Jest将始终在<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#continuous-integration" target="_blank" rel="noopener">持续集成</a>服务器上运行所有测试，或者该项目不在Git或Mercurial资源库中。</p>
+<h3 id="Writing-Tests"><a href="#Writing-Tests" class="headerlink" title="Writing Tests"></a>Writing Tests</h3><p>要创建测试，请使用测试名称及其代码添加在<code>it()</code>（或<code>test()</code>）块。 你可以选择将它们包装在<code>describe()</code>块中进行逻辑分组，但这不是必需的，也不是推荐的。</p>
+<p>Jest提供了一个内置的<code>expec()</code>全局函数来进行断言。 基本测试可能如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sum <span class="keyword">from</span> <span class="string">'./sum'</span>;</span><br><span class="line"></span><br><span class="line">it(<span class="string">'sums numbers'</span>, () =&gt; &#123;</span><br><span class="line">  expect(sum(<span class="number">1</span>, <span class="number">2</span>)).toEqual(<span class="number">3</span>);</span><br><span class="line">  expect(sum(<span class="number">2</span>, <span class="number">2</span>)).toEqual(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Jest支持的所有<code>expect()</code> 匹配器都在<a href="http://facebook.github.io/jest/docs/expect.html" target="_blank" rel="noopener">这里进行了广泛的记录</a>。<br>你也可以使用[<code>jest.fn()</code>和<code>expect(fn).toBeCalled()</code>]创建“spies”或模拟函数。</p>
+<h3 id="Testing-Components"><a href="#Testing-Components" class="headerlink" title="Testing Components"></a>Testing Components</h3><p>有广泛的组件测试技术。 它们的范围从“冒烟测试（smoke test）”来验证组件渲染器没有错误抛出，到浅渲染来测试某些输出，到完全渲染来测试组件生命周期和状态更改。</p>
+<p>不同的项目根据组件变化的频率及其包含的逻辑选择不同的测试权衡。 如果你尚未决定测试策略，我们建议你首先为组件创建简单的冒烟测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"></span><br><span class="line">it(<span class="string">'renders without crashing'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">  ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, div)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>该测试加载一个组件，并确保它在渲染过程中没有抛出错误。 这样的测试用很少的影响提供了很多价值，所以他们是伟大的起点，这个测试你可以在<code>src/App.test.js</code>中找到。</p>
+<p>当你遇到由更改组件导致的错误时，你将深入了解其中哪些部分在你的应用程序中值得测试。 这可能是引入更具体的测试来判断具体的预期输出或行为的好时机。</p>
+<p>如果你想要脱离他们渲染的子组件来测试组件，我们建议使用Enzyme中的<code>shallow() rendering API</code>。 你也可以写冒烟测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev enzyme react-addons-test-utils</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; shallow &#125; <span class="keyword">from</span> <span class="string">'enzyme'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"></span><br><span class="line">it(<span class="string">'renders without crashing'</span>, () =&gt; &#123;</span><br><span class="line">  shallow(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>与以前使用<code>ReactDOM.render()</code> 的冒烟测试不同，此测试仅渲染<code>&lt;App&gt;</code>，而不会更深入。 例如，即使<code>&lt;App&gt;</code>本身渲染的<code>&lt;Button&gt;</code> 抛出了错误，此测试也将通过。 浅渲染非常适合独立的单元测试，但你仍然可能需要创建一些完整的渲染测试，以确保组件正确集成。 Enzyme支持<a href="http://airbnb.io/enzyme/docs/api/mount.html" target="_blank" rel="noopener">使用<code>mount()</code> 全渲染</a>，还可以使用它来测试状态更改和组件生命周期。</p>
+<p>你可以阅读<a href="http://airbnb.io/enzyme/" target="_blank" rel="noopener">Enzyme文档</a>了解更多测试技术。 Enzyme文档使用Chai和Sinon作为断言，但你不必使用它们，因为Jest为spies提供了内置的<code>expect()</code> 和<code>jest.fn()</code>。</p>
+<p>以下是Enzyme文档中的一个例子，该文档声明了特定输出，使用Jest匹配器重写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; shallow &#125; <span class="keyword">from</span> <span class="string">'enzyme'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span>;</span><br><span class="line"></span><br><span class="line">it(<span class="string">'renders welcome message'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = shallow(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>);</span><br><span class="line">  <span class="keyword">const</span> welcome = <span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Welcome to React<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line">  <span class="comment">// expect(wrapper.contains(welcome)).to.equal(true)</span></span><br><span class="line">  expect(wrapper.contains(welcome)).toEqual(<span class="literal">true</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>所有Jest匹配器<a href="http://facebook.github.io/jest/docs/expect.html" target="_blank" rel="noopener">在这里被广泛记录</a>。<br>不过，如下所述，你可以使用像<a href="http://chaijs.com/" target="_blank" rel="noopener">Chai</a>这样的第三方断言库。</p>
+<p>此外，你可能会发现<a href="https://github.com/blainekasten/enzyme-matchers" target="_blank" rel="noopener">jest-enzyme</a>有助于使用可读的匹配器简化你的测试。 以上<code>contains</code>代码用jest-enzyme更简单。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expect(wrapper).toContainReact(welcome)</span><br></pre></td></tr></table></figure>
+
+<p>要使用Create React App设置jest-enzyme，请按照<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#initializing-test-environment" target="_blank" rel="noopener">初始化测试环境</a>的说明导入<code>jest-enzyme</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev jest-enzyme</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/setupTests.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'jest-enzyme'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Using-Third-Party-Assertino-Libraries"><a href="#Using-Third-Party-Assertino-Libraries" class="headerlink" title="Using Third Party Assertino Libraries"></a>Using Third Party Assertino Libraries</h3><p>我们建议你用<code>expect()</code> 的断言和<code>jest.fn()</code>作为spies。 如果你遇到问题，<a href="https://github.com/facebook/jest/issues/new" target="_blank" rel="noopener">请提交给Jest</a>，我们会解决这些问题。 我们打算继续使他们更好的React，例如，<a href="https://github.com/facebook/jest/pull/1566" target="_blank" rel="noopener">美丽打印React元素作为JSX</a>。</p>
+<p>但是，如果你习惯于其他库，例如<a href="http://chaijs.com/" target="_blank" rel="noopener">Chai</a>和<a href="http://sinonjs.org/" target="_blank" rel="noopener">Sinon</a>，或者如果你现有的代码使用了你想要移植的代码，那么你可以正常导入它们：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sinon <span class="keyword">from</span> <span class="string">'sinon'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; expect &#125; <span class="keyword">from</span> <span class="string">'chat'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后在你的测试中像你通常那样使用它们。</p>
+<h3 id="Initializing-Test-Environment"><a href="#Initializing-Test-Environment" class="headerlink" title="Initializing Test Environment"></a>Initializing Test Environment</h3><blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.4.0</code> 版本以上。</p>
+</blockquote>
+<p>在测试中，如果你的应用程序需要模拟浏览器API，或者在运行测试之前需要全局设置，请将<code>src/setupTests.js</code>添加到你的项目中。 它将在运行测试之前自动执行。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src/setupTests.js</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> localStorageMoke = &#123;</span><br><span class="line">  getItem: jest.fn(),</span><br><span class="line">  setItem: jest.fn(),</span><br><span class="line">  clear: jest.fn()</span><br><span class="line">&#125;;</span><br><span class="line">global.localStorage = localStorageMoke</span><br></pre></td></tr></table></figure>
+
+<h3 id="Focusing-and-Excluding-Tests"><a href="#Focusing-and-Excluding-Tests" class="headerlink" title="Focusing and Excluding Tests"></a>Focusing and Excluding Tests</h3><p>你可以用<code>xit()</code> 替换<code>it()</code> 以临时排除将要执行的测试。<br>同样，<code>fit()</code> 可以让你专注于特定的测试，而无需运行任何其他测试。</p>
+<h3 id="Coverage-Reporting"><a href="#Coverage-Reporting" class="headerlink" title="Coverage Reporting"></a>Coverage Reporting</h3><p>Jest有一个集成的覆盖报告，与ES6工作良好，不需要配置。<br>运行<code>npm test -- --coverage</code>（注意在中间的额外的<code>--</code> ）包括覆盖报告如下所示：</p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Coverage-Reporting.png" class="">
+
+<p>请注意，测试的运行速度要慢得多，因此建议你从正常的工作流程中分离运行它。</p>
+<h3 id="Continuous-Integration"><a href="#Continuous-Integration" class="headerlink" title="Continuous Integration"></a>Continuous Integration</h3><p>默认情况下，<code>npm test</code>使用交互式CLI运行观察器。 但是，您可以强制运行测试一次，并通过设置一个名为<code>CI</code>的环境变量来完成该过程。</p>
+<p>当使用<code>npm run build</code> 创建应用程序的构建时，默认情况下不会检查linter警告。 像<code>npm test</code> 一样，你可以通过设置环境变量<code>CI</code>来强制构建执行linter警告检查。 如果遇到任何警告，则构建失败。</p>
+<p>流行的CI服务器默认已经设置了环境变量CI，但你也可以自己做这个：</p>
+<h3 id="On-CI-servers"><a href="#On-CI-servers" class="headerlink" title="On CI servers"></a>On CI servers</h3><p><strong>Travis CI</strong></p>
+<ol>
+<li>按照<a href="https://docs.travis-ci.com/user/getting-started/" target="_blank" rel="noopener">Travis Getting started</a>指南，将你的GitHub 仓库与Travis 同步。你可以需要在个人<a href="https://travis-ci.org/profile" target="_blank" rel="noopener">资料</a>页面手动初始化某些设置。</li>
+<li>在你的git 仓库中添加<code>.travis.yml</code> 文件。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">  - <span class="number">4</span></span><br><span class="line">  - <span class="number">6</span></span><br><span class="line">cache:</span><br><span class="line">  directories:</span><br><span class="line">    - node_modules</span><br><span class="line">scripts:</span><br><span class="line">  - npm test</span><br><span class="line">  - npm run build</span><br></pre></td></tr></table></figure></li>
+<li>通过git push 触发第一次构建。</li>
+<li><a href="https://docs.travis-ci.com/user/customizing-the-build/" target="_blank" rel="noopener">配置你的Travis CI 构建</a>，如果需要。</li>
+</ol>
+<h3 id="On-your-own-environment"><a href="#On-your-own-environment" class="headerlink" title="On your own environment"></a>On your own environment</h3><p><strong>Windows(cmd.exe)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> CI=<span class="literal">true</span>&amp;&amp;npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> CI=<span class="literal">true</span>&amp;&amp;npm run build</span><br></pre></td></tr></table></figure>
+<p>（注意：空格的缺失是有意的）</p>
+<p><strong>Linux, macOS(Bash)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CI=<span class="literal">true</span> npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CI=<span class="literal">true</span> npm run build</span><br></pre></td></tr></table></figure>
+
+<p>测试命令将强制Jest运行测试一次，而不启动观察器。</p>
+<blockquote>
+<p>如果你发现自己在开发中经常遇到这种情况，请<a href="https://github.com/facebookincubator/create-react-app/issues/new" target="_blank" rel="noopener">提出一个问题</a>来告诉我们你的用例，因为我们希望让观察者有最佳体验，并且可以随时更改工作流程以适应更多的工作流程。</p>
+</blockquote>
+<p>构建命令将检查linter警告，如果找到任何警告，则会失败。</p>
+<h3 id="Disabling-jsdom"><a href="#Disabling-jsdom" class="headerlink" title="Disabling jsdom"></a>Disabling jsdom</h3><p>默认的，生成项目的<code>package.json</code> 像这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="string">"test"</span>: <span class="string">"react-scripts test --env=jsdom"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你知道没有一个测试依赖于<a href="">jsdom</a>，你可以安全地删除<code>--env=jsdom</code>，你的测试运行得更快。</p>
+<p>为了帮助您解决问题，以下是<strong>需要jsdom</strong>的API列表：</p>
+<ul>
+<li>任何像<code>window</code> 和<code>document</code> 的浏览器全局变量</li>
+<li><a href="https://facebook.github.io/react/docs/top-level-api.html#reactdom.render" target="_blank" rel="noopener"><code>ReactDOM.render()</code></a></li>
+<li><a href="https://facebook.github.io/react/docs/test-utils.html#renderintodocument" target="_blank" rel="noopener"><code>TestUtils.renderIntoDocument()</code></a>（上述的一个<a href="https://github.com/facebook/react/blob/34761cf9a252964abfaab6faf74d473ad95d1f21/src/test/ReactTestUtils.js#L83-L91" target="_blank" rel="noopener">简写</a>）</li>
+<li><a href="http://airbnb.io/enzyme/index.html" target="_blank" rel="noopener">Enzyme</a> 中的<a href="http://airbnb.io/enzyme/docs/api/shallow.html" target="_blank" rel="noopener"><code>mount()</code></a></li>
+</ul>
+<p>相反，下面API<strong>jsdom 不是必须的</strong></p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/test-utils.html#shallow-rendering" target="_blank" rel="noopener">‘TestUitls.createRenderer()’</a>（浅渲染）</li>
+<li><a href="http://airbnb.io/enzyme/index.html" target="_blank" rel="noopener">Enzyme</a> 中的<a href="http://airbnb.io/enzyme/docs/api/shallow.html" target="_blank" rel="noopener"><code>shallow()</code></a></li>
+</ul>
+<p>最后，对于<a href="http://facebook.github.io/jest/blog/2016/07/27/jest-14.html" target="_blank" rel="noopener">snapshot testing</a> jsdom 也不是必须的。</p>
+<h3 id="Snapshot-Testing"><a href="#Snapshot-Testing" class="headerlink" title="Snapshot Testing"></a>Snapshot Testing</h3><p>Snapshot testing是Jest的一个功能，可自动生成组件的文本快照并将其保存在磁盘上，以便在UI输出更改时，你可以在不在组件输出上手动写入任何断言的情况下获得通知。 <a href="http://facebook.github.io/jest/blog/2016/07/27/jest-14.html" target="_blank" rel="noopener">详细了解snapshot testing</a>。</p>
+<h3 id="Editor-Integration"><a href="#Editor-Integration" class="headerlink" title="Editor Integration"></a>Editor Integration</h3><p>如果你使用<a href="">Visual Studio Code</a>，则有一个<a href="">Jest扩展</a>可以与Create React App开箱即用。 这在使用文本编辑器时提供了很多类似IDE的功能：使用潜在的故障消息内联显示测试运行的状态，自动启动和停止观察器，并提供一键式快照更新。</p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Editor-Integration.png" class="">
+
+<h2 id="Developing-Components-in-Isolation"><a href="#Developing-Components-in-Isolation" class="headerlink" title="Developing Components in Isolation"></a>Developing Components in Isolation</h2><p>通常，在应用程序中，你有很多UI组件，并且它们每个都有许多不同的状态。 例如，一个简单的按钮组件可以具有以下状态：</p>
+<ul>
+<li>带有文本标签。</li>
+<li>用表情符号。</li>
+<li>禁用模式。</li>
+</ul>
+<p>通常，如果不运行示例应用程序或一些示例，很难看到这些状态，。</p>
+<p>默认情况下，Create React App不包含这些工具，但你可以轻松地将<a href="https://github.com/kadirahq/react-storybook" target="_blank" rel="noopener">React Storybook</a>添加到你的项目中。 <strong>它是一个第三方工具，可让你开发组件，并与你的应用程序隔离，查看所有状态。</strong></p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/Developing-Components-in-Isolation.gif" class="">
+
+<p>你也可以将Storybook部署为静态应用。 这样，你的团队中的每个人都可以查看和查看UI组件的不同状态，而无需启动后端服务器或在应用程序中创建一个帐户。</p>
+<p><strong>如何在你的应用中设置Storybook</strong></p>
+<p>首先，全局安装下面npm 包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g getstorybook</span><br></pre></td></tr></table></figure>
+
+<p>然后，在你的应用目录中运行下面命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getstorybook</span><br></pre></td></tr></table></figure>
+
+<p>之后，按照屏幕上的说明。</p>
+<p>了解更多React Storybook：</p>
+<ul>
+<li>屏幕录像：<a href="https://egghead.io/lessons/react-getting-started-with-react-storybook" target="_blank" rel="noopener">Getting Started with React Storybook</a></li>
+<li><a href="https://github.com/kadirahq/react-storybook" target="_blank" rel="noopener">GitHub Repo</a></li>
+<li><a href="https://getstorybook.io/docs" target="_blank" rel="noopener">文档</a></li>
+<li>React Storybook 的<a href="https://github.com/kadirahq/storyshots" target="_blank" rel="noopener">Snapshot Testing</a></li>
+</ul>
+<h2 id="Making-a-Progressive-Web-App"><a href="#Making-a-Progressive-Web-App" class="headerlink" title="Making a Progressive Web App"></a>Making a Progressive Web App</h2><p>你可以按照<a href="https://github.com/jeffposnick/create-react-pwa" target="_blank" rel="noopener">此仓库</a>中的步骤将你的React应用程序转换为<a href="https://developers.google.com/web/progressive-web-apps/" target="_blank" rel="noopener">Progressive Web App</a>。</p>
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><p><code>npm run build</code> 为你应用程序的生产构建创建一个<code>build</code>目录。 设置你最喜欢的HTTP服务器，以便为你的站点的访问者提供<code>index.html</code>，并且请求静态路径像<code>/static/js/main.&lt;hash&gt;.js</code>获取<code>/static/js/main.&lt;hash&gt;.js</code> 文件的内容。</p>
+<h3 id="Static-Server"><a href="#Static-Server" class="headerlink" title="Static Server"></a>Static Server</h3><p>对于使用<a href="https://nodejs.org/" target="_blank" rel="noopener">Node</a>的环境，处理这种情况的最简单的方法是安装<a href="https://github.com/zeit/serve" target="_blank" rel="noopener">serve</a>并让其处理rest：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g serve</span><br><span class="line">serve -s build</span><br></pre></td></tr></table></figure>
+<p>上面显示的最后一个命令将在端口<strong>5000</strong>上为你的静态站点提供服务。像许多<a href="https://github.com/zeit/serve" target="_blank" rel="noopener">serve</a>的内部设置一样，端口可以使用<code>-p</code>或<code>--port</code>标志进行调整。</p>
+<p>运行此命令以获取可用选项的完整列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serve -h</span><br></pre></td></tr></table></figure>
+
+<h3 id="Other-Solutions"><a href="#Other-Solutions" class="headerlink" title="Other Solutions"></a>Other Solutions</h3><p>你不一定需要静态服务器才能在生产中运行Create React App 项目。 它的工作也能很好集成到一个现有的动态项目中。</p>
+<p>以下是使用Node和Express的编程示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(<span class="string">'./build'</span>));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">  res.sendFile(path.join(__dirname, <span class="string">'./build'</span>, <span class="string">'index.html'</span>))</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">5000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>你的服务器软件的选择也不重要。 由于Create React App完全与平台无关，因此无需明确使用Node。</p>
+<p>具有静态资源的<code>build</code>文件夹是Create React App生成的唯一输出。</p>
+<p>但是，如果你使用客户端路由，这还不够。 如果你希望在单页应用程序中支持像<code>/todos/42</code> 这样的URL，请阅读下一节。</p>
+<h3 id="Serving-Apps-with-Client-Side-Routing"><a href="#Serving-Apps-with-Client-Side-Routing" class="headerlink" title="Serving Apps with Client-Side Routing"></a>Serving Apps with Client-Side Routing</h3><p>如果在底层，你使用了HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries" target="_blank" rel="noopener"><code>pushState</code> history API</a>的路由器（例如，使用<code>browserHistory</code>的<a href="https://github.com/ReactTraining/react-router" target="_blank" rel="noopener">React Router</a>），则许多静态文件服务器将失败。 例如，如果你的React Router 中的route 使用<code>/todos/42</code>，则开发服务器将正确响应<code>localhost：3000/todos/42</code>，但是Express 服务器的生产版本将失败。</p>
+<p>这是因为当<code>/todos/42</code> 作为新的页面加载时，服务器会查找<code>build/todos/42</code>文件，但是找不到。 服务器需要配置为通过<code>index.html</code>来响应<code>/todos/42</code>的请求。 例如，我们可以修改我们上面的Express示例，为任何未知路径提供<code>index.html</code>：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> app.use(express.static('./build'));</span><br><span class="line"></span><br><span class="line"><span class="deletion">-app.get('/', function(req, res))</span></span><br><span class="line"><span class="addition">+app.get('/*', function(req, res))&#123;</span></span><br><span class="line">  res.sendFile(path.join(__dirname, './build', 'index.html'));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你使用<a href="">Apache</a>，则需要在<code>public</code>文件夹中创建一个<code>.htaccess</code>文件，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Options -MultiViews</span><br><span class="line">RewriteEngine On</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line">RewriteRule ^ index.html [QSA,L]</span><br></pre></td></tr></table></figure>
+
+<p>运行<code>npm run build</code>时，它将被复制到<code>build</code>文件夹。</p>
+<p>现在，对<code>/todos/42</code> 的请求将在开发和生产中都被正确处理。</p>
+<h3 id="Building-for-Relative-Paths"><a href="#Building-for-Relative-Paths" class="headerlink" title="Building for Relative Paths"></a>Building for Relative Paths</h3><p>默认情况下，Create React App会生成一个构建，假设你的应用程序是托管在服务器根目录。<br>要覆盖它，请指定<code>package.json</code>中的<code>homepage</code>，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"homepage"</span>: <span class="string">"http://mywebsite.com/relativepath"</span></span><br></pre></td></tr></table></figure>
+
+<p>这将使Create React App正确地推断在生成的HTML文件中使用的根路径。</p>
+<p><strong>Serving the Same Build from Different Paths</strong></p>
+<blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.9.0</code> 版本以上。</p>
+</blockquote>
+<p>如果你没有使用HTML5 <code>pushState</code> history API，或者根本不使用客户端路由，则无需指定服务应用程序的URL。 相反，你可以把它放在你的package.json中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"homepage"</span>: <span class="string">"."</span>,</span><br></pre></td></tr></table></figure>
+
+<p>这将确保所有资源路径都相对于<code>index.html</code>。 然后，你可以将你的应用程序从<code>http://mywebsite.com</code> 移动到<code>http://mywebsite.com/relativepath</code> 甚至是<code>http://mywebsite.com/relative/path</code>，而无需重新构建它。</p>
+<h3 id="Azure"><a href="#Azure" class="headerlink" title="Azure"></a>Azure</h3><p>请参阅<a href="https://medium.com/@to_pe/deploying-create-react-app-on-microsoft-azure-c0f6686a4321" target="_blank" rel="noopener">此博文</a>，了解如何将React应用程序部署到<a href="https://azure.microsoft.com/" target="_blank" rel="noopener">Microsoft Azure</a>。</p>
+<h3 id="Firebase"><a href="#Firebase" class="headerlink" title="Firebase"></a>Firebase</h3><p>如果你尚未运行<code>npm install -g firebase-tools</code>，请安装Firebase CLI。 注册一个<a href="https://console.firebase.google.com/" target="_blank" rel="noopener">Firebase帐户</a>并创建一个新项目。 运行<code>firebase login</code>并使用以前创建的Firebase帐户登录。</p>
+<p>然后从项目的根目录运行<code>firebase init</code>命令。 你需要选择<strong>Hosting：Configure and deploy Firebase Hosting sites</strong>，并选择你在上一步骤中创建的Firebase项目。 你将需要同意正在创建的<code>database.rules.json</code>，选择<code>build</code>作为公共目录，并通过回复<code>y</code>来同意<strong>Configuire as a single-page app</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D; Project Setup</span><br><span class="line"></span><br><span class="line">   First, let&#39;s associate this project directory with a Firebase project.</span><br><span class="line">   You can create multiple project aliases by running firebase use --add,</span><br><span class="line">   but for now we&#39;ll just set up a default project.</span><br><span class="line"></span><br><span class="line">   ? What Firebase project do you want to associate as default? Example app (example-app-fd690)</span><br><span class="line"></span><br><span class="line">   &#x3D;&#x3D;&#x3D; Database Setup</span><br><span class="line"></span><br><span class="line">   Firebase Realtime Database Rules allow you to define how your data should be</span><br><span class="line">   structured and when your data can be read from and written to.</span><br><span class="line"></span><br><span class="line">   ? What file should be used for Database Rules? database.rules.json</span><br><span class="line">   ✔  Database Rules for example-app-fd690 have been downloaded to database.rules.json.</span><br><span class="line">   Future modifications to database.rules.json will update Database Rules when you run</span><br><span class="line">   firebase deploy.</span><br><span class="line"></span><br><span class="line">   &#x3D;&#x3D;&#x3D; Hosting Setup</span><br><span class="line"></span><br><span class="line">   Your public directory is the folder (relative to your project directory) that</span><br><span class="line">   will contain Hosting assets to uploaded with firebase deploy. If you</span><br><span class="line">   have a build process for your assets, use your build&#39;s output directory.</span><br><span class="line"></span><br><span class="line">   ? What do you want to use as your public directory? build</span><br><span class="line">   ? Configure as a single-page app (rewrite all urls to &#x2F;index.html)? Yes</span><br><span class="line">   ✔  Wrote build&#x2F;index.html</span><br><span class="line"></span><br><span class="line">   i  Writing configuration info to firebase.json...</span><br><span class="line">   i  Writing project information to .firebaserc...</span><br><span class="line"></span><br><span class="line">   ✔  Firebase initialization complete!</span><br></pre></td></tr></table></figure>
+
+<p>现在，在使用<code>npm run build</code> 创建生产构建之后，可以通过运行<code>firebase deploy</code>进行部署。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">=== Deploying to <span class="string">'example-app-fd690'</span>...</span><br><span class="line"></span><br><span class="line">i  deploying database, hosting</span><br><span class="line">✔  database: rules ready to deploy.</span><br><span class="line">i  hosting: preparing build directory <span class="keyword">for</span> upload...</span><br><span class="line">Uploading: [==============================          ] 75%✔  hosting: build folder uploaded successfully</span><br><span class="line">✔  hosting: 8 files uploaded successfully</span><br><span class="line">i  starting release process (may take several minutes)...</span><br><span class="line"></span><br><span class="line">✔  Deploy complete!</span><br><span class="line"></span><br><span class="line">Project Console: https://console.firebase.google.com/project/example-app-fd690/overview</span><br></pre></td></tr></table></figure>
+
+<p>更多信息请看<a href="https://firebase.google.com/docs/web/setup" target="_blank" rel="noopener">添加Firebase 到你的JavaScript 项目</a>。</p>
+<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><blockquote>
+<p>注意：这个特性需要<code>react-scripts@0.2.0</code> 版本以上。</p>
+</blockquote>
+<p><strong>Step 1：Add <code>homepage</code> to <code>package.json</code></strong></p>
+<p><strong>下面的步骤很重要！</strong><br><strong>如果你跳过它，你的应用程序将无法正确部署。</strong></p>
+<p>打开你的<code>package.json</code>，添加<code>homepage</code> 域：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"homepage"</span>: <span class="string">"https://myusername.github.io/my-app"</span>,</span><br></pre></td></tr></table></figure>
+
+<p>Create React App 使用<code>homepage</code> 来确定构建的HTML文件中的根URL。</p>
+<p><strong>Step 2:<br>Install <code>gh-pages</code> and add ‘deploy’ to ‘scripts’ in <code>package.json</code></strong></p>
+<p>现在，每当运行<code>npm run build</code>时，你将看到一个备忘单，其中包含如何部署到GitHub Pages的说明。</p>
+<p>要发布在 <a href="https://myusername.github.io/my-app%EF%BC%8C%E8%AF%B7%E8%BF%90%E8%A1%8C%EF%BC%9A" target="_blank" rel="noopener">https://myusername.github.io/my-app，请运行：</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev gh-pages</span><br></pre></td></tr></table></figure>
+
+<p>在<code>package.json</code> 中添加下面脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="string">"predeploy"</span>: <span class="string">"npm run build"</span>,</span><br><span class="line">  <span class="string">"deploy"</span>: <span class="string">"gh-pages -d build"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>predeploy</code> 会在运行<code>deploy</code> 之前自动运行。</p>
+<p><strong>Step 3：Deploy the site by running <code>npm rung deploy</code></strong></p>
+<p>然后运行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure>
+
+<p><strong>Step 4: Ensure your project’s settings use <code>gh-pages</code></strong></p>
+<p>最后，确保GitHub项目设置中的GitHub Pages选项设置为使用<code>gh-pages</code>分支：</p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/GitHub-Pages.png" class="">
+
+<p><strong>Step 5: Optionally, configure the domain</strong></p>
+<p>你可以通过将CNAME文件添加到<code>public/</code>文件夹来配置具有GitHub Pages的自定义域。</p>
+<p><strong>Notes on client-side routing</strong></p>
+<p>GitHub Pages 在底层不支持使用HTML5 <code>pushState</code> history API的路由器（例如，使用<code>browserHistory</code>的React Router）。 这是因为当一个网址载入新的页面时，如<a href="http://user.github.io/todomvc/todos/42%EF%BC%8C%E5%85%B6%E4%B8%AD%60/todos/42%60%E6%98%AF%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%EF%BC%8CGitHub" target="_blank" rel="noopener">http://user.github.io/todomvc/todos/42，其中`/todos/42`是前端路由，GitHub</a> Pages服务器返回404，因为它不知道<code>/todos/42</code> 任何事。 如果要将路由器添加到GitHub Pages上托管的项目，以下是一些解决方案：</p>
+<ul>
+<li>你可以从使用HTML5 history API切换到使用哈希的路由。 如果你使用React Router，你可以切换到<code>hashHistory</code> 实现此效果，但是该URL会更长更详细（例如，<code>http://user.github.io/todomvc/#/todos/42?_k=yknaj</code>） 。 <a href="https://github.com/reactjs/react-router/blob/master/docs/guides/Histories.md#histories" target="_blank" rel="noopener">阅读</a>有关React Router中不同历史记录实现的更多信息。</li>
+<li>或者，你可以使用一个技巧来教导GitHub Pages通过使用特殊的重定向参数重定向到你的<code>index.html</code>页面来处理404.html。 在部署项目之前，你需要将一个包含重定向代码的<code>404.html</code>文件添加到<code>build</code>文件夹中，并且你需要添加将redirect参数处理的代码到<code>index.html</code>。 你可以<a href="https://github.com/rafrex/spa-github-pages" target="_blank" rel="noopener">在本指南中</a>找到此技术的详细说明。</li>
+</ul>
+<h3 id="Heroku"><a href="#Heroku" class="headerlink" title="Heroku"></a>Heroku</h3><p>使用<a href="https://github.com/mars/create-react-app-buildpack" target="_blank" rel="noopener">Heroku Buildpack for Create React App</a>。<br>你可以在<a href="https://blog.heroku.com/deploying-react-with-zero-configuration" target="_blank" rel="noopener">Deploying React with Zero Configuration</a> 找到介绍。</p>
+<p><strong>Resolving Heroku Deployment Errors</strong></p>
+<p>有时<code>npm run build</code> 在本地工作，但在部署期间通过Heroku失败。 以下是最常见的情况。</p>
+<p><strong>“Module not found:Error:Cannot resolve ‘file’ or ‘directory’”</strong></p>
+<p>如果你得到这样的东西：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">remote: Failed to create a production build. Reason:</span><br><span class="line">remote: Module not found: Error: Cannot resolve &#39;file&#39; or &#39;directory&#39;</span><br><span class="line">MyDirectory in &#x2F;tmp&#x2F;build_1234&#x2F;src</span><br></pre></td></tr></table></figure>
+
+<p>这意味着你需要确保<code>import</code>的文件或目录的文字大小符合你在文件系统或GitHub上看到的文件或目录。</p>
+<p>这很重要，因为Linux（Heroku使用的操作系统）区分大小写。 所以<code>MyDirectory</code>和<code>mydirectory</code>是两个不同的目录，因此，尽管项目在本地构建成，但是区别在于破坏Heroku 远程上的<code>import</code>语句。</p>
+<p><strong>“Could not find a required file.”</strong></p>
+<p>如果从包中排除或忽略必需的文件，你将看到类似于以下错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">remote: Could not find a required file.</span><br><span class="line">remote:   Name: &#96;index.html&#96;</span><br><span class="line">remote:   Searched in: &#x2F;tmp&#x2F;build_a2875fc163b209225122d68916f1d4df&#x2F;public</span><br><span class="line">remote:</span><br><span class="line">remote: npm ERR! Linux 3.13.0-105-generic</span><br><span class="line">remote: npm ERR! argv &quot;&#x2F;tmp&#x2F;build_a2875fc163b209225122d68916f1d4df&#x2F;.heroku&#x2F;node&#x2F;bin&#x2F;node&quot; &quot;&#x2F;tmp&#x2F;build_a2875fc163b209225122d68916f1d4df&#x2F;.heroku&#x2F;node&#x2F;bin&#x2F;npm&quot; &quot;run&quot; &quot;build&quot;</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，请确保该文件位于正确的大小写，并且在本地<code>.gitignore</code>或<code>~/.gitignore_global</code>上不被忽略。</p>
+<h3 id="Modulus"><a href="#Modulus" class="headerlink" title="Modulus"></a>Modulus</h3><p>请参阅<a href="http://blog.modulus.io/deploying-react-apps-on-modulus" target="_blank" rel="noopener">Modulus博客文章</a>，了解如何将你的react应用部署到Modulus。</p>
+<h3 id="Netlify"><a href="#Netlify" class="headerlink" title="Netlify"></a>Netlify</h3><p><strong>To do a manual deploy to Netlify’s CDN</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install netlify-cli</span><br><span class="line">netlify deploy</span><br></pre></td></tr></table></figure>
+
+<p>选择<code>build</code> 作为部署路径。</p>
+<p><strong>To setup continuous delivery:</strong></p>
+<p>使用此设置，当你push a git或open a pull request 时，Netlify将构建和部署：</p>
+<ol>
+<li><a href="https://app.netlify.com/signup" target="_blank" rel="noopener">启动一个新的netlify项目</a></li>
+<li>选择你的Git托管服务并选择你的仓库</li>
+<li>单击<code>Build your site</code></li>
+</ol>
+<p><strong>Support for client-side routing:</strong></p>
+<p>要支持<code>pushState</code>，请确保使用以下重写规则创建一个<code>public/_redirects</code>文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F; * &#x2F;index.html 200</span><br></pre></td></tr></table></figure>
+
+<p>构建项目时，Create React App会将<code>public</code>文件夹内容放入构建输出。</p>
+<h3 id="Now"><a href="#Now" class="headerlink" title="Now"></a>Now</h3><p><a href="https://zeit.co/now" target="_blank" rel="noopener">now</a>提供零配置的单命令部署。</p>
+<ol>
+<li>now可以通过推荐的<a href="https://zeit.co/download" target="_blank" rel="noopener">桌面工具</a>或通过node 的<code>npm install -g now</code>。</li>
+<li>通过运行<code>npm install --save serve</code>来安装<code>serve</code>。</li>
+<li>将此行添加到<code>package.json</code>中的<code>scripts</code>中：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;now-start&quot;: &quot;serve build&#x2F;&quot;,</span><br></pre></td></tr></table></figure></li>
+<li>在从你的项目目录中运行<code>now</code>。 你的输出中将会显示一个<code>now.sh</code>URL，如下所示：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; Ready! https:&#x2F;&#x2F;your-project-dirname-tpspyhtdtk.now.sh (copied to clipbord)</span><br></pre></td></tr></table></figure>
+构建完成后，将该URL粘贴到浏览器中，你将看到已部署的应用程序。</li>
+</ol>
+<p><a href="https://zeit.co/blog/now-static" target="_blank" rel="noopener">本文</a>提供了详细信息。</p>
+<h3 id="S3-and-CloudFront"><a href="#S3-and-CloudFront" class="headerlink" title="S3 and CloudFront"></a>S3 and CloudFront</h3><p>请参阅<a href="https://medium.com/@omgwtfmarc/deploying-create-react-app-to-s3-or-cloudfront-48dae4ce0af" target="_blank" rel="noopener">此博文</a>，介绍如何将你的React应用程序部署到Amazon Web Services <a href="https://aws.amazon.com/s3" target="_blank" rel="noopener">S3</a>和<a href="https://aws.amazon.com/cloudfront/" target="_blank" rel="noopener">CloudFront</a>。</p>
+<h3 id="Surge"><a href="#Surge" class="headerlink" title="Surge"></a>Surge</h3><p>如果你尚未运行<code>npm install -g surge</code>，请安装Surge CLI。 运行<code>surge</code>命令并登录或创建一个新帐户。</p>
+<p>当询问项目路径时，请确保指定<code>build</code>文件夹，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">project path: <span class="regexp">/path/</span>to/project/build</span><br></pre></td></tr></table></figure>
+
+<p>请注意，为了支持使用HTML5 <code>pushState</code> API的路由器，你可能需要将构建文件夹中的<code>index.html</code>重新命名为<code>200.html</code>，然后再部署到Surge。 这样<a href="https://surge.sh/help/adding-a-200-page-for-client-side-routing" target="_blank" rel="noopener">可以确保每个URL都回退该文件</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/Create-React-App/" rel="tag"># Create React App</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="如何开发由Create-React-App 引导的应用（二）">
+                <i class="fa fa-chevron-left"></i> 如何开发由Create-React-App 引导的应用（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="prev" title="如何开发由Create-React-App 引导的应用（四）">
+                如何开发由Create-React-App 引导的应用（四） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">1.</span> <span class="nav-text">系列文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Integrating-with-an-API-Backend"><span class="nav-number">2.</span> <span class="nav-text">Integrating with an API Backend</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">2.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ruby-on-Rails"><span class="nav-number">2.2.</span> <span class="nav-text">Ruby on Rails</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxying-API-Requests-in-Development"><span class="nav-number">3.</span> <span class="nav-text">Proxying API Requests in Development</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-HTTPS-in-Development"><span class="nav-number">4.</span> <span class="nav-text">Using HTTPS in Development</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generating-Dynamic-lt-meta-gt-Tags-on-the-Server"><span class="nav-number">5.</span> <span class="nav-text">Generating Dynamic &lt;meta&gt; Tags on the Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pre-Rendering-into-Static-HTML-Files"><span class="nav-number">6.</span> <span class="nav-text">Pre-Rendering into Static HTML Files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Injecting-Data-from-the-Server-into-the-Page"><span class="nav-number">7.</span> <span class="nav-text">Injecting Data from the Server into the Page</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-Test"><span class="nav-number">8.</span> <span class="nav-text">Running Test</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filename-Coventions"><span class="nav-number">8.1.</span> <span class="nav-text">Filename Coventions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Command-Line-Interface"><span class="nav-number">8.2.</span> <span class="nav-text">Command Line Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Version-Control-Integration"><span class="nav-number">8.3.</span> <span class="nav-text">Version Control Integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-Tests"><span class="nav-number">8.4.</span> <span class="nav-text">Writing Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing-Components"><span class="nav-number">8.5.</span> <span class="nav-text">Testing Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Third-Party-Assertino-Libraries"><span class="nav-number">8.6.</span> <span class="nav-text">Using Third Party Assertino Libraries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Initializing-Test-Environment"><span class="nav-number">8.7.</span> <span class="nav-text">Initializing Test Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Focusing-and-Excluding-Tests"><span class="nav-number">8.8.</span> <span class="nav-text">Focusing and Excluding Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coverage-Reporting"><span class="nav-number">8.9.</span> <span class="nav-text">Coverage Reporting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-Integration"><span class="nav-number">8.10.</span> <span class="nav-text">Continuous Integration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#On-CI-servers"><span class="nav-number">8.11.</span> <span class="nav-text">On CI servers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#On-your-own-environment"><span class="nav-number">8.12.</span> <span class="nav-text">On your own environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Disabling-jsdom"><span class="nav-number">8.13.</span> <span class="nav-text">Disabling jsdom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Snapshot-Testing"><span class="nav-number">8.14.</span> <span class="nav-text">Snapshot Testing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Editor-Integration"><span class="nav-number">8.15.</span> <span class="nav-text">Editor Integration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Developing-Components-in-Isolation"><span class="nav-number">9.</span> <span class="nav-text">Developing Components in Isolation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Making-a-Progressive-Web-App"><span class="nav-number">10.</span> <span class="nav-text">Making a Progressive Web App</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment"><span class="nav-number">11.</span> <span class="nav-text">Deployment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Server"><span class="nav-number">11.1.</span> <span class="nav-text">Static Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-Solutions"><span class="nav-number">11.2.</span> <span class="nav-text">Other Solutions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serving-Apps-with-Client-Side-Routing"><span class="nav-number">11.3.</span> <span class="nav-text">Serving Apps with Client-Side Routing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Building-for-Relative-Paths"><span class="nav-number">11.4.</span> <span class="nav-text">Building for Relative Paths</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure"><span class="nav-number">11.5.</span> <span class="nav-text">Azure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Firebase"><span class="nav-number">11.6.</span> <span class="nav-text">Firebase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Pages"><span class="nav-number">11.7.</span> <span class="nav-text">Github Pages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heroku"><span class="nav-number">11.8.</span> <span class="nav-text">Heroku</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modulus"><span class="nav-number">11.9.</span> <span class="nav-text">Modulus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netlify"><span class="nav-number">11.10.</span> <span class="nav-text">Netlify</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Now"><span class="nav-number">11.11.</span> <span class="nav-text">Now</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3-and-CloudFront"><span class="nav-number">11.12.</span> <span class="nav-text">S3 and CloudFront</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Surge"><span class="nav-number">11.13.</span> <span class="nav-text">Surge</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/04/28/如何开发由Create-React-App-引导的应用（三）/';
+
+      var disqus_title = "如何开发由Create-React-App 引导的应用（三）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

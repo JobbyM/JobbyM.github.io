@@ -1,0 +1,1108 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React 系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：[React 系列]  What Is React Native  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;20&#x2F;what-is-react-native作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React 什么是React Native（本文） Components，Props and State">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[React 系列] What Is React Native">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：[React 系列]  What Is React Native  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;20&#x2F;what-is-react-native作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React 什么是React Native（本文） Components，Props and State">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/1-react-summary.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/2-ios-android.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/2.5-crazy.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/3-cloak-and-dust.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/4-reactdom-domo.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/5-renderers.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/6-other-folks-at-web.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/7-summon.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/8-react-native-summary.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/9-sketch.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/expo-ios.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/expo-android.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/code_0.jpg">
+<meta property="article:published_time" content="2018-08-08T00:51:32.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.313Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React 系列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/1-react-summary.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/08/React-系列-What-Is-React-Native/"/>
+
+
+
+
+
+  <title> [React 系列] What Is React Native | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [React 系列] What Is React Native
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-08T00:51:32+00:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/08/React-系列-What-Is-React-Native/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/" class="leancloud_visitors" data-flag-title="[React 系列] What Is React Native">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：[React 系列]  What Is React Native</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">https://learnreact.design/2017/06/20/what-is-react-native</a><br>作者：@<a href="https://twitter.com/lintonye" target="_blank" rel="noopener">Linton Ye</a></p>
+<p>博客系列：用简单的英语和涂鸦解释的React 术语</p>
+<ul>
+<li><a href="https://learnreact.design/2017/06/08/what-is-react/" target="_blank" rel="noopener">什么是React</a></li>
+<li><a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">什么是React Native（本文）</a></li>
+<li><a href="https://learnreact.design/2017/08/16/components-props-and-state" target="_blank" rel="noopener">Components，Props and State</a></li>
+<li><a href="https://learnreact.design/2018/01/15/props-and-state-re-explained" target="_blank" rel="noopener">重新阐释Props 和State</a></li>
+<li><a href="https://learnreact.design/2018/02/14/react-native-vs-cordova-phone-gap-ionic-etc" target="_blank" rel="noopener">React Native 同Cordova、PhoneGap、Ionic 等对比</a></li>
+</ul>
+<p>在<a href="https://learnreact.design/2017/06/08/what-is-react/" target="_blank" rel="noopener">上一篇文章</a>中，我们研究了React 是什么以及它的特殊之处。今天让我们来研究React Native：它的用途是什么，它来自哪里，它与React的不同之处以及它为什么了不起。</p>
+<h2 id="学习目标（Learning-Goals）"><a href="#学习目标（Learning-Goals）" class="headerlink" title="学习目标（Learning Goals）"></a>学习目标（Learning Goals）</h2><p>当你看完这篇文章后，希望你能够轻松回答这些问题：</p>
+<ul>
+<li>什么是React Native？ 为什么它的名字包括“Native”？</li>
+<li>为什么React Native 很酷？</li>
+<li>我们可以用React Native 构建什么？React 怎么样？</li>
+<li>ReactDOM 来自哪里？它有什么作用？</li>
+<li>React Renderer 有什么作用？</li>
+<li>React Sketch.app 如何工作？</li>
+<li>ReactVR 如何工作？</li>
+<li>什么是ReactJS？React.js？</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="超越Web（Beyond-The-Web）"><a href="#超越Web（Beyond-The-Web）" class="headerlink" title="超越Web（Beyond The Web）"></a>超越Web（Beyond The Web）</h2><p>到现在为止，你可能已经掌握了这张照片：</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/1-react-summary.png" class="">
+
+<p>你知道，React是一个在Web上构建用户界面的工具。使用React，你可以通过描述你想要的内容来构建UI，而不是如何更新UI（响应式UI），在可重用组件中组织代码，以及创建高性能UI而无需担心DOM 慢速（虚拟DOM）。越来越多的Web 开发人员选择React，因为它允许他们专注于更大的方向而不是低级细节。我们称这种构建UI方式为React 范式。范式基本上是你如何思考问题以及如何描述问题及其解决方案。</p>
+<p>这对web 应用来说非常棒。那么其他平台呢，比如iOS和Android？如果你可以将相同的React 范例应用于移动应用程序的开发，那不是很好吗？</p>
+<p>在某种程度上，移动平台的工作方式与Web 相同。有一个模型（一个树）。有些东西可以根据模型（艺术家）创建视觉元素。毫不奇怪，构建移动UI 的传统方式是直接操作树模型并告诉它如何更新事物（直接与树交谈）。这与在Web浏览器中直接使用DOM具有类似的缺点。React 完全有助于此。</p>
+<p>除了相似之外，移动平台与Web 不同，移动平台之间也彼此不同。过去，开发人员必须学习平台的特定语言和工具链才能为其构建应用程序。</p>
+<p>这就像在异国情调的工作室工作，工作人员会说各种不同的语言。你必须学习与这些模型进行通信的所有新语言。这听起来不容易，是吗？</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/2-ios-android.png" class="">
+
+<p>因此，如果你想为iOS 和Android 构建本地应用程序，则必须创建两个完全独立的代码库。必须实现两次相同的业务逻辑。创建应用程序既困难又昂贵，从长远来看，维护它更是如此。</p>
+<p>这就是React Native 创建的原因。让我们看看它如何让事情变得更容易。</p>
+<h2 id="React-Native"><a href="#React-Native" class="headerlink" title="React Native"></a>React Native</h2><h3 id="渲染器和新的React（Renderers-And-The-New-React）"><a href="#渲染器和新的React（Renderers-And-The-New-React）" class="headerlink" title="渲染器和新的React（Renderers And The New React）"></a>渲染器和新的React（Renderers And The New React）</h3><p>对于Web 应用程序，React 负责启用React 范式（管理响应式UI，组件和虚拟DOM），以及在浏览器中实际更新DOM（与Domo 交谈）。当DOM 是唯一需要交互的东西时，React可以轻松处理这两项任务。</p>
+<p>但是，对于移动应用程序，当需要在不同平台上管理各种树模型时，事情变得具有挑战性。如果我们继续给React 增加更多的责任，它将开始让我们可怜的超级英雄疯狂。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/2.5-crazy.png" class="">
+
+<p>为了解决这个问题，React 的创建者将原来的React 拆分为两部分。第一部分是新的React，重点是启用React 范式。第二部分称为ReactDOM，其唯一的工作是在浏览器中与DOM 交互。因为ReactDOM 更新了确定浏览器上呈现内容的DOM，所以我们说ReactDOM是一个渲染器。</p>
+<p>回到我们的故事，想象一下，我们的超级英雄脱下他的斗篷，撒上一些魔法尘埃。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/3-cloak-and-dust.png" class="">
+
+<p>他的斗篷成为他的帮手。摆脱了与Domo 打交道的负担，React现在可以专注于他所做的最好的事情。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/4-reactdom-domo.png" class="">
+
+<p>这种角色分离是一个高效的想法。它可以轻松编写适应新平台的新渲染器，同时保持共享核心。在iOS和Android渲染器的支持下，你现在可以使用 <strong>单一语言和相同的React 范式</strong> 为两个平台构建应用程序。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/5-renderers.png" class="">
+<p>React 专注于他的事情。渲染器做连接。</p>
+<h3 id="一个完整的平台（A-Complete-Platform）"><a href="#一个完整的平台（A-Complete-Platform）" class="headerlink" title="一个完整的平台（A Complete Platform）"></a>一个完整的平台（A Complete Platform）</h3><p>React 的官方定义是：用于构建用户界面的JavaScript 库。它的意义是双重的：首先它是UI 的一个很好的工具，其次它不包括任何其他东西。</p>
+<p>实际上，<strong>单独使用React就无法构建完整的应用程序</strong>。例如，你需要用于样式的CSS，用于预处理和打包代码的webpack，用于保存数据的Firebase 以及许多其他内容。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/6-other-folks-at-web.png" class="">
+
+<p>工作室“Web Browser”实际上比你看到的要繁忙得多。</p>
+<p>这在Web 开发环境中很好，因为作为一个JavaScript 库，React 自然适用于其他部分，这些部分既可以是JavaScript 库，也可以与JavaScript库配合使用。毕竟，JavaScript 是Web 语言。</p>
+<p>但是，对于使用各种语言和技术的移动平台而言，情况有所不同。在JavaScript 中包含一整套工具变得非常重要，这些工具可以像React 一样使用。因此，React Native 诞生了。</p>
+<p>与Web 的React相比，React Native 包含更多内容：</p>
+<ul>
+<li>新的React 作为它的核心（我们的没有斗篷的超级英雄），</li>
+<li>适用于iOS 和Android 的渲染器，</li>
+<li>将代码转换并打包到可安装应用程序中的工具，</li>
+<li>本地UI 部件（状态栏，ListView等）和动画，</li>
+<li>用于样式和布局UI（flexbox）的工具包，</li>
+<li>构成大多数应用程序（如网络）的基本部分，</li>
+<li>提供原生功能的部件，如剪贴板，加速感应器和存储。</li>
+<li>…</li>
+</ul>
+<p>我们说React Native 本身就是一个完整的平台，因为它包含了构建完整应用程序所需的一切。相比之下，最初的React只负责Web UI，你需要自己包含其他部分来创建Web应用程序。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/7-summon.png" class="">
+
+<p>React Native 的组成</p>
+<h3 id="本地UI（Native-UI）"><a href="#本地UI（Native-UI）" class="headerlink" title="本地UI（Native UI）"></a>本地UI（Native UI）</h3><p>你有没有想过为什么React Native 被标记为Native？这实际上是它的品牌特征：使用React Native 构建的UI 包含 <strong>本地UI小部件</strong>，这些小部件表现良好且外观/感觉一致，而不是WebView 中包含的一些模拟实现。使用React Native 构建的应用程序通常与使用Swift和Java等本机语言编写的应用程序无法区分。</p>
+<p>滚动加速，动画，键盘行为和阴影这些小东西实际上在你的应用程序的用户体验中起着重要作用。如果这些与手机上的其他应用程序不一致，用户很快就会感到困惑。</p>
+<p>我原本打算在这里解释一下“本地”的真正意义以及为什么React Native 表现更好。但经过几次头脑风暴会议之后，我的笔记很快就变成了整页。让我把它作为自己的之后帖子。</p>
+<p>现在，我希望你能记住，原生用户界面是让React Native 大放异彩的好处之一。</p>
+<p>所以在这里，React Native 是一个完整的平台，允许你在JavaScript 中使用React 范式构建真正的本地应用程序。</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/8-react-native-summary.png" class="">
+
+<h2 id="React-Sketch-app-ReactVR-React-XYZ…"><a href="#React-Sketch-app-ReactVR-React-XYZ…" class="headerlink" title="React Sketch.app, ReactVR, React XYZ…"></a>React Sketch.app, ReactVR, React XYZ…</h2><p>最近Airbnb发布了一个名为<a href="https://airbnb.design/painting-with-code/" target="_blank" rel="noopener">React Sketch.app</a>的漂亮工具，它将React 代码转换为Sketch 中的图像层。你能猜出它是如何工作的吗？</p>
+<p>它本质上是React Native，在Sketch中,它使用一个渲染器与树模型对话！</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/9-sketch.png" class="">
+
+<p>因为React Sketch.app 是基于React Native，它是一个完整的包，我们可以做一些有趣的事情，比如从真实的API 中获取数据并在Sketch中呈现它。</p>
+<p>与此同时，React Native 的许多其他变体被创建用于支持构建<a href="https://github.com/Microsoft/react-native-windows" target="_blank" rel="noopener">Windows</a>，<a href="https://github.com/ptmt/react-native-macos" target="_blank" rel="noopener">macOS</a>，<a href="https://github.com/facebook/react-vr" target="_blank" rel="noopener">VR</a>等应用程序。</p>
+<p>这意味着，只要你掌握了React 的精髓，就可以使用相同的思维模式使用JavaScript 为数以千计的平台（还在增长）构建应用程序。正如React Native的创作者所说，<strong>“学习一次，随处写作（learn once, write anywhere）”</strong>。</p>
+<h2 id="动手时间！（Hands-on-Time！）"><a href="#动手时间！（Hands-on-Time！）" class="headerlink" title="动手时间！（Hands-on Time！）"></a>动手时间！（Hands-on Time！）</h2><p>到目前为止说了这么多！你想在手机上试试吗？</p>
+<p>我也很兴奋！拿起住你的手机跟着我吧！</p>
+<p>1.在手机上，下载Expo应用程序。你可以从这里下载：<a href="https://itunes.apple.com/app/apple-store/id982107779?pt=17102800&ct=www&mt=8" target="_blank" rel="noopener">iOS</a>，<a href="https://play.google.com/store/apps/details?id=host.exp.exponent" target="_blank" rel="noopener">Android</a>，或在App Store中搜索“Expo”。该应用程序的图标看起来像</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/expo-ios.jpg" class="">（或
+<p>Android上的<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/expo-android.png" class="">）。<br>2.在你的计算机上，打开此页面：https：//snack.expo.io/<br>3.在手机上，启动Expo应用程序并点按“扫描QR码”<br>4.扫描计算机上显示的QR码。如果一切正常，你应该看到绿色的“设备已连接”消息。<br>5.如果QR 码不会自动消失，请单击页面右上角的小X将其关闭。你应该看到一个代码编辑器。<br>6.删除编辑器中的所有内容，粘贴<a href="https://gist.githubusercontent.com/lintonye/5cb3c11349591bf475b91573682fe688/raw/4ea0d4562ce45c1ba3867a1759359e1f86bb590a/domohat.jsx" target="_blank" rel="noopener">此代码</a>。<br>7.你在手机上看到了什么？<br>8.如果需要，你可以在编辑器中更改代码，并立即在手机上查看结果！</p>
+<p>我将会详细解释这个环境。现在，请记住它就像React Native 的Codepen（我曾经在上一篇文章中向你展示过Domo的帽子示例的工具）。</p>
+<p>如果将<a href="https://gist.github.com/lintonye/5cb3c11349591bf475b91573682fe688" target="_blank" rel="noopener">React Native 版本</a>的代码与<a href="https://codepen.io/focuser/pen/gROrXx" target="_blank" rel="noopener">React（Web）版本</a>进行比较，你会发现它们看起来非常相似。它们都是这样的：</p>
+<img src="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/code_0.jpg" class="">
+
+<p>记住“Learn once, write anywhere”!</p>
+<h2 id="ReactJS和React-js怎么样？（What-About-ReactJS-And-React-js-）"><a href="#ReactJS和React-js怎么样？（What-About-ReactJS-And-React-js-）" class="headerlink" title="ReactJS和React.js怎么样？（What About ReactJS And React.js?）"></a>ReactJS和React.js怎么样？（What About ReactJS And React.js?）</h2><p>你可能已经听过很多ReactJS（或React.js）–我也使用过它。事实上它从来都不是官方名称.从<a href="https://web.archive.org/web/20130529213355/https://facebook.github.io/react/" target="_blank" rel="noopener">第一天起</a>，官方名称一直是“React”。</p>
+<p>因为JavaScript 库往往被命名为“XyzJS”或“Xyz.js” 而React 是一个JavaScript 库，所以人们可能会自愿将“JS”或“.js”附加到其名称中。由于React 最初是一个Web 库，很多人使用ReactJS或React.js来引用Web 上的React，包括React 和ReactDOM。</p>
+<p>遵循事实上的惯例，当我说ReactJS 时，我的意思也是Web 上的React。</p>
+<h2 id="结论（Conclusion）"><a href="#结论（Conclusion）" class="headerlink" title="结论（Conclusion）"></a>结论（Conclusion）</h2><p>到目前为止，我们已经完成了很多事情。 我们已经了解了React 的一些历史以及React Native 如何组合在一起。作为一个完整的平台，React Native 包含了使用JavaScript 和React 范例中构建本地应用程序所需的一切。React Native 现在支持许多平台，包括iOS，Android，Windows，macOS，Sketch.app甚至VR。 “Learn once, write anywhere”！</p>
+<p>在下一篇文章中，我们将了解本地应用程序的真正含义以及为什么React Native是构建本机应用程序的最佳方式之一。</p>
+<h2 id="我鼓励你回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"><a href="#我鼓励你回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！" class="headerlink" title="我鼓励你回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"></a>我鼓励你回到<a href="https://learnreact.design/2017/06/20/what-is-react-native#learning-goals" target="_blank" rel="noopener">学习目标</a>，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！</h2><h2 id="想进一步了解React？立即注册并获得独家更新！"><a href="#想进一步了解React？立即注册并获得独家更新！" class="headerlink" title="想进一步了解React？立即注册并获得独家更新！"></a><strong>想进一步了解React？立即<a href="http://learnreact.design/" target="_blank" rel="noopener">注册</a>并获得独家更新！</strong></h2><h2 id="后台（Backstage）"><a href="#后台（Backstage）" class="headerlink" title="后台（Backstage）"></a>后台（Backstage）</h2><h3 id="插图（Illustration）"><a href="#插图（Illustration）" class="headerlink" title="插图（Illustration）"></a>插图（Illustration）</h3><p>我很幸运能与<a href="https://beebeeye.github.io/" target="_blank" rel="noopener">Beebee Ye</a>合作，他是一位优秀的插画家和讲故事的人。他的插图使这些文章非常独特，阅读有趣。</p>
+<h3 id="修订（Revisions）"><a href="#修订（Revisions）" class="headerlink" title="修订（Revisions）"></a>修订（Revisions）</h3><p>像之前一样，这篇文章经历了很多编辑。这里有什么特别之处，就是我几乎完全改写了听到的所有事情，我把这些比喻都搞得太过分了。</p>
+<p>我非常感谢你的建设性建议，这些建议促使我改写它，<a href="https://twitter.com/Yitong_Zhang" target="_blank" rel="noopener">Yitong Zhang</a>，Brittany Smart，<a href="https://disqus.com/by/lostpixel/" target="_blank" rel="noopener">Grant Robinson</a>，Jason Fuller和Victoria Pugh。 万分感谢！</p>
+<p>如果你很好奇，请查看之前充满幻想故事的<a href="https://learnreact.design/2017-06-20-what-is-react-native-metaphor/" target="_blank" rel="noopener">版本</a>。</p>
+<h2 id="脚注（Footnotes）"><a href="#脚注（Footnotes）" class="headerlink" title="脚注（Footnotes）"></a>脚注（Footnotes）</h2><p>1.实际上，它会让React的维护者疯狂。<br>2.好吧，斗篷是我能想到的唯一可以从超级英雄中分离出来而没有任何伤害的东西。忍受我！<br>3.还记得声明式和命令式编程吗？ 它们都是范式。<strong>React 范式</strong> 是关于如何将UI分解为组件，如何传递数据等等，我们将在后面详细研究。<br>4.如果你正在寻找React Native和React Web之间的深入技术比较，请查看此<a href="https://medium.com/@alexmngn/from-reactjs-to-react-native-what-are-the-main-differences-between-both-d6e8e88ebf24" target="_blank" rel="noopener">文章</a>。<br>5.React Renderers 的想法非常强大。这里有一个很酷的渲染器<a href="https://github.com/chentsulin/awesome-react-renderer" target="_blank" rel="noopener">列表</a>，可以使用React 构建许多不同的东西。<br>6.在NPM（JavaScript 库的中央存储库）中，你可以找到<a href="https://www.npmjs.com/package/reactjs" target="_blank" rel="noopener">reactjs</a> 和<a href="https://www.npmjs.com/package/react" target="_blank" rel="noopener">react</a>。 你能说出哪一个是真正的React吗？</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React-%E7%B3%BB%E5%88%97/" rel="tag"># React 系列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/07/React-%E7%B3%BB%E5%88%97-What-Is-React/" rel="next" title="[React 系列] What Is React">
+                <i class="fa fa-chevron-left"></i> [React 系列] What Is React
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/" rel="prev" title="[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比">
+                [React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习目标（Learning-Goals）"><span class="nav-number">1.</span> <span class="nav-text">学习目标（Learning Goals）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超越Web（Beyond-The-Web）"><span class="nav-number">2.</span> <span class="nav-text">超越Web（Beyond The Web）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native"><span class="nav-number">3.</span> <span class="nav-text">React Native</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染器和新的React（Renderers-And-The-New-React）"><span class="nav-number">3.1.</span> <span class="nav-text">渲染器和新的React（Renderers And The New React）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个完整的平台（A-Complete-Platform）"><span class="nav-number">3.2.</span> <span class="nav-text">一个完整的平台（A Complete Platform）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地UI（Native-UI）"><span class="nav-number">3.3.</span> <span class="nav-text">本地UI（Native UI）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Sketch-app-ReactVR-React-XYZ…"><span class="nav-number">4.</span> <span class="nav-text">React Sketch.app, ReactVR, React XYZ…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动手时间！（Hands-on-Time！）"><span class="nav-number">5.</span> <span class="nav-text">动手时间！（Hands-on Time！）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactJS和React-js怎么样？（What-About-ReactJS-And-React-js-）"><span class="nav-number">6.</span> <span class="nav-text">ReactJS和React.js怎么样？（What About ReactJS And React.js?）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论（Conclusion）"><span class="nav-number">7.</span> <span class="nav-text">结论（Conclusion）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我鼓励你回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！"><span class="nav-number">8.</span> <span class="nav-text">我鼓励你回到学习目标，看看你是否能回答所有问题。如果你有任何问题或意见，请与我联系！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想进一步了解React？立即注册并获得独家更新！"><span class="nav-number">9.</span> <span class="nav-text">想进一步了解React？立即注册并获得独家更新！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台（Backstage）"><span class="nav-number">10.</span> <span class="nav-text">后台（Backstage）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插图（Illustration）"><span class="nav-number">10.1.</span> <span class="nav-text">插图（Illustration）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修订（Revisions）"><span class="nav-number">10.2.</span> <span class="nav-text">修订（Revisions）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚注（Footnotes）"><span class="nav-number">11.</span> <span class="nav-text">脚注（Footnotes）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/08/React-系列-What-Is-React-Native/';
+
+      var disqus_title = "[React 系列] What Is React Native";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

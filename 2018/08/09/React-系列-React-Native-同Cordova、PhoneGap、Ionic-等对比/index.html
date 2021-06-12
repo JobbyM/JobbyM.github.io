@@ -1,0 +1,1060 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React 系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;20&#x2F;what-is-react-native作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React 什么是React Native Components，P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比  关于本文：原文：https:&#x2F;&#x2F;learnreact.design&#x2F;2017&#x2F;06&#x2F;20&#x2F;what-is-react-native作者：@Linton Ye 博客系列：用简单的英语和涂鸦解释的React 术语  什么是React 什么是React Native Components，P">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/matrix.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/relative-native.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/steak.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/webview.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/rn.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/phonecall.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/redpill-bluepill.png">
+<meta property="article:published_time" content="2018-08-09T01:27:50.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.313Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React 系列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/matrix.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/09/React-系列-React-Native-同Cordova、PhoneGap、Ionic-等对比/"/>
+
+
+
+
+
+  <title> [React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                [React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-09T01:27:50+00:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/09/React-系列-React-Native-同Cordova、PhoneGap、Ionic-等对比/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/" class="leancloud_visitors" data-flag-title="[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">https://learnreact.design/2017/06/20/what-is-react-native</a><br>作者：@<a href="https://twitter.com/lintonye" target="_blank" rel="noopener">Linton Ye</a></p>
+<p>博客系列：用简单的英语和涂鸦解释的React 术语</p>
+<ul>
+<li><a href="https://learnreact.design/2017/06/08/what-is-react/" target="_blank" rel="noopener">什么是React</a></li>
+<li><a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">什么是React Native</a></li>
+<li><a href="https://learnreact.design/2017/08/16/components-props-and-state" target="_blank" rel="noopener">Components，Props and State</a></li>
+<li><a href="https://learnreact.design/2018/01/15/props-and-state-re-explained" target="_blank" rel="noopener">重新阐释Props 和State</a></li>
+<li><a href="https://learnreact.design/2018/02/14/react-native-vs-cordova-phone-gap-ionic-etc" target="_blank" rel="noopener">React Native 同Cordova、PhoneGap、Ionic 等对比（本文）</a></li>
+</ul>
+<p>在<a href="https://learnreact.design/2017/06/20/what-is-react-native" target="_blank" rel="noopener">上一篇文章</a>中，我们知道React Native 很棒，因为它允许我们使用本地UI 构建应用程序。React Native 应用程序的用户体验比使用WebView UI 要好得多。 但“本地（native）”究竟意味着什么？ 什么是WebView UI？ 为什么本地UI 比WebView UI 更好？ React Native与其他移动框架（如PhoneGap，Cordova和Ionic）比较怎样？</p>
+<p>让我们现在深入研究这些问题。</p>
+<h2 id="学习目标（Learning-Goals）"><a href="#学习目标（Learning-Goals）" class="headerlink" title="学习目标（Learning Goals）"></a>学习目标（Learning Goals）</h2><p>当你看完这篇文章后，希望你能够轻松回答这些问题：</p>
+<ul>
+<li>什么是本地应用？</li>
+<li>什么是WebView UI？</li>
+<li>更本地框架有哪些好处和缺点？较少的本地框架怎么样？</li>
+<li>React Native 与Cordova 比较如何？</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="什么是“本地性”应用程序，反之呢？（What-is-a-“native”-app-anyways-）"><a href="#什么是“本地性”应用程序，反之呢？（What-is-a-“native”-app-anyways-）" class="headerlink" title="什么是“本地性”应用程序，反之呢？（What is a “native” app, anyways?）"></a>什么是“本地性”应用程序，反之呢？（What is a “native” app, anyways?）</h2><p>要了解这种“原生（nativeness）”实际意味着什么，我来告诉你：</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/matrix.png" class="">
+
+<p>我是黑客帝国的忠实粉丝。我们所知道的现实实际上是一种模拟。有人提到，即使锡安，人类曾经认为的最后一个城市，也是一个模拟。多层模拟现实的想法一直让我着迷–一个虚拟世界在另一个虚拟世界中作为模拟运行在第三世界里面。</p>
+<p>这很像我们的计算机（或电话）中的软件结构。</p>
+<p>软件是如何操作大量晶体管和电路的指令的安排，统称为硬件。直接在硬件上运行的原始指令对我们人类来说是难以理解的，特别是考虑到当今计算机的复杂性和规模。</p>
+<p>为了使软件易于理解和可操作，计算机科学家将其分为多个层，这些层由运行在另一个框架之上的框架组成。在所有这些框架中，框架越接近硬件，我们就说它更“本地”。</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/relative-native.png" class="">
+
+<p>因此，应用程序的“本地性”实际上是一个相对术语。严格地说，我们不能说应用程序本身是否是本地的。我们只能说，与其他应用相比，这款应用更具本地性。例如，你可以使用C++，Java（或Kotlin）或Cordova 构建Android 应用程序。C++ 应用程序是最本地的，Cordova 应用程序是最不本地的。Java/Kotlin应用程序介于两者之间。</p>
+<h2 id="一个更本地的应用程序有什么好处？（What’s-good-about-a-more-native-app-）"><a href="#一个更本地的应用程序有什么好处？（What’s-good-about-a-more-native-app-）" class="headerlink" title="一个更本地的应用程序有什么好处？（What’s good about a more native app?）"></a>一个更本地的应用程序有什么好处？（What’s good about a more native app?）</h2><p>好处要么是更多本地的要么是较少本地的。更接近物理层意味着更多的自由，而更多的模拟让你更舒适。</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/steak.png" class="">
+
+<p>更本地的框架中的程序通常可以更多地访问硬件功能，并且可以更自由地使用它们。它通常运行效率更高，因为不同语言之间的模拟和转换开销较低。但是基础现实中的生活可能很苛刻–代码通常更难以编写和理解。</p>
+<p>另一方面，我们人类通常更容易在较少的本地框架中编写代码。编码语言更容易理解，更简洁（需要更少的输入）。它的词汇量更接近我们的自然语言。它需要较少了解硬件的构成以及它在引擎下的工作方式。作为一个额外的好处，较少本地框架中的程序通常更具可移植性–程序可以在完全不同的硬件平台上运行而无需修改，因为它的词汇和底层概念不包含任何特定于原始硬件的内容。然而，所有这些便利的代价是你通常会牺牲一些效率和自由。</p>
+<h2 id="移动框架阵营（Mobile-framework-camps）"><a href="#移动框架阵营（Mobile-framework-camps）" class="headerlink" title="移动框架阵营（Mobile framework camps）"></a>移动框架阵营（Mobile framework camps）</h2><p>在React Native 之前，移动框架通常属于两个阵营中的一个。</p>
+<p>第一个是本地阵营，例如Android 的Java/Kotlin 和iOS 的Objective-C/Swift。在本地阵营中，应用程序速度快，可以访问丰富的硬件功能。用户界面是针对目标平台（Android 或iOS）的定制，因此非常流畅且使用愉快。然而，所有这些优点仅限于一个平台。要构建应用程序，必须学习两种不同的框架，这使得学习曲线陡峭两倍。这尤其会让数百万网络开发人员落伍。</p>
+<p>然后是另一个移动框架阵营，例如Cordova/PhoneGap 和Ionic。这些框架允许Web 开发人员使用其现有的HTML，CSS 和JavaScript 技能构建移动应用程序。这些应用可以在Android 和iOS（以及更多）上运行。但是，它们更加缓慢，并且对硬件功能的访问受限。最重要的是，这些应用程序的用户界面很糟糕！由于这些框架使用一个名为WebView 的关键组件来呈现UI，因此我们将它们称为WebView 框架。</p>
+<p>WebView 框架构建在本地框架之上。我们可以看到前者是在后者内部运行的模拟世界。这就是为什么他们有上述的好处和限制。</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/webview.png" class="">
+
+<p>为什么我们不能从中获益并避免两者的陷阱？这就是React Native 要做的事情。</p>
+<p>React Native 代表了移动框架的第三阵营。它的UI 层比WebView 框架更本地，而其余部分则处于相同的模拟级别，以实现其易用性。</p>
+<h3 id="React-Native-UI-比WebView-UI-更本地（React-Native-UI-is-more-native-than-WebView-UI）"><a href="#React-Native-UI-比WebView-UI-更本地（React-Native-UI-is-more-native-than-WebView-UI）" class="headerlink" title="React Native UI 比WebView UI 更本地（React Native UI is more native than WebView UI）"></a>React Native UI 比WebView UI 更本地（React Native UI is more native than WebView UI）</h3><p>Cordova 这样的框架可以使用Web 技术构建移动UI。他们是如何做到的呢？他们在每个应用程序中嵌入了一个名为WebView 的Web 浏览器！你在UI 中看到的所有内容，按钮，菜单和动画都在浏览器的网页中运行。在模拟方面，Cordova 应用程序的UI 是在Web 浏览器中运行的模拟世界，Web 浏览器是在本地框架内运行的模拟世界。</p>
+<p>相比之下，React Native 的UI 是比WebView 框架更本地的一层–它直接在本地框架内运行。</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/rn.png" class="">
+
+<p>此结构决定了React Native UI 的优点。 React Native 直接使用本地UI 小部件，而WebView 框架尝试使用HTML/CSS 中的Web UI 模仿本机UI 的外观。真实的东西或假的东西，你更喜欢哪一个？</p>
+<p>根据经验，很容易识别使用WebView 框架构建的应用程序。那些小东西，比如滚动加速，键盘行为，导航和UI 的平滑度。如果他们没有完全本地化的行为，事情就会增加并使用户沮丧。</p>
+<h3 id="React-Native-使用JavaScript-来简化操作（React-Native-uses-JavaScript-to-make-things-easier）"><a href="#React-Native-使用JavaScript-来简化操作（React-Native-uses-JavaScript-to-make-things-easier）" class="headerlink" title="React Native 使用JavaScript 来简化操作（React Native uses JavaScript to make things easier）"></a>React Native 使用JavaScript 来简化操作（React Native uses JavaScript to make things easier）</h3><p>另一方面，React Native 仍然允许我们用JavaScript 编写应用程序，并使用类似于HTML 和CSS 的语法来构建UI。这无疑降低了网页设计师和开发人员的入门门槛。</p>
+<p>必要时，React Native 提供了一种渗透到本地框架的方法，以实现我们希望在应用程序中实现的任何本地功能。这有点像在黑客帝国中拨打电话。</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/phonecall.png" class="">
+
+<h2 id="那么WebView-框架一文不值吗？（So-are-WebView-frameworks-worthless-）"><a href="#那么WebView-框架一文不值吗？（So-are-WebView-frameworks-worthless-）" class="headerlink" title="那么WebView 框架一文不值吗？（So are WebView frameworks worthless?）"></a>那么WebView 框架一文不值吗？（So are WebView frameworks worthless?）</h2><p>不，绝对不是。例如，如果你已经拥有一个Web 应用程序，并希望尽快将其发布到应用程序商店。你愿意牺牲用户体验来尽快发布。</p>
+<p>另一种情况是，如果应用程序中显示的内容主要是内容没有太多的交互性，那么将它放在WebView 中并不是太糟糕。</p>
+<p>但是，如果你的应用程序的用户体验很重要，如果应用程序中存在某些交互性，例如接受用户输入，拖放，滑动屏幕等，请务必考虑React Native。因为最重要是使用WebView UI 模仿本地UI。</p>
+<h2 id="总结（Conclusion）"><a href="#总结（Conclusion）" class="headerlink" title="总结（Conclusion）"></a>总结（Conclusion）</h2><p>我们已经看过“本地（native）”的真正含义，WebView UI 是什么以及为何React Native UI 更好，React Native 与其他WebView框架（如Cordova / PhoneGap和Ionic）的比较。</p>
+<p>你将使用哪个框架来构建你的下一个应用程序？</p>
+<img src="/2018/08/09/React-%E7%B3%BB%E5%88%97-React-Native-%E5%90%8CCordova%E3%80%81PhoneGap%E3%80%81Ionic-%E7%AD%89%E5%AF%B9%E6%AF%94/redpill-bluepill.png" class="">
+
+<hr>
+<h2 id="脚注（Footnotes）"><a href="#脚注（Footnotes）" class="headerlink" title="脚注（Footnotes）"></a>脚注（Footnotes）</h2><hr>
+<p>1.在黑客帝国2：重装上阵（Matrix Reloaded）结束时，即使在锡安，Neo也显示出控制和击落哨兵的能力。虽然在黑客帝国3：矩阵革命（The Matrix Revolution）没有明确解释这一点，但当时很多粉丝都认为即使是锡安也是模拟的。<br>2.毕竟，正如伊隆马斯克所说，我们活在真实世界的概率只有十亿分之一。<br>3.让我们在这篇文章中松散地使用术语“框架（framework）”来指代具有某种结构的软件。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React-%E7%B3%BB%E5%88%97/" rel="tag"># React 系列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/React-%E7%B3%BB%E5%88%97-What-Is-React-Native/" rel="next" title="[React 系列] What Is React Native">
+                <i class="fa fa-chevron-left"></i> [React 系列] What Is React Native
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/15/hybrid-app-%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3/" rel="prev" title="hybrid app 的相关文档">
+                hybrid app 的相关文档 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习目标（Learning-Goals）"><span class="nav-number">1.</span> <span class="nav-text">学习目标（Learning Goals）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是“本地性”应用程序，反之呢？（What-is-a-“native”-app-anyways-）"><span class="nav-number">2.</span> <span class="nav-text">什么是“本地性”应用程序，反之呢？（What is a “native” app, anyways?）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个更本地的应用程序有什么好处？（What’s-good-about-a-more-native-app-）"><span class="nav-number">3.</span> <span class="nav-text">一个更本地的应用程序有什么好处？（What’s good about a more native app?）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动框架阵营（Mobile-framework-camps）"><span class="nav-number">4.</span> <span class="nav-text">移动框架阵营（Mobile framework camps）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Native-UI-比WebView-UI-更本地（React-Native-UI-is-more-native-than-WebView-UI）"><span class="nav-number">4.1.</span> <span class="nav-text">React Native UI 比WebView UI 更本地（React Native UI is more native than WebView UI）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Native-使用JavaScript-来简化操作（React-Native-uses-JavaScript-to-make-things-easier）"><span class="nav-number">4.2.</span> <span class="nav-text">React Native 使用JavaScript 来简化操作（React Native uses JavaScript to make things easier）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那么WebView-框架一文不值吗？（So-are-WebView-frameworks-worthless-）"><span class="nav-number">5.</span> <span class="nav-text">那么WebView 框架一文不值吗？（So are WebView frameworks worthless?）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结（Conclusion）"><span class="nav-number">6.</span> <span class="nav-text">总结（Conclusion）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚注（Footnotes）"><span class="nav-number">7.</span> <span class="nav-text">脚注（Footnotes）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/09/React-系列-React-Native-同Cordova、PhoneGap、Ionic-等对比/';
+
+      var disqus_title = "[React 系列] React Native 同Cordova、PhoneGap、Ionic 等对比";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

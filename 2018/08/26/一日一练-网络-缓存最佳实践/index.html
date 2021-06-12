@@ -1,0 +1,1078 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,一日一练,网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：一日一练-网络 缓存最佳实践  关于本文：原文：https:&#x2F;&#x2F;jakearchibald.com&#x2F;2016&#x2F;caching-best-practices&#x2F;作者：@Jake Archibald 正确地获得缓存会带来巨大的性能优势，节省带宽并降低服务器成本，但许多站点都会降低缓存，导致竞争条件导致相互依赖的资源不同步。 绝大多数最佳实践缓存属于以下两种模式之一：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-网络 缓存最佳实践">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：一日一练-网络 缓存最佳实践  关于本文：原文：https:&#x2F;&#x2F;jakearchibald.com&#x2F;2016&#x2F;caching-best-practices&#x2F;作者：@Jake Archibald 正确地获得缓存会带来巨大的性能优势，节省带宽并降低服务器成本，但许多站点都会降低缓存，导致竞争条件导致相互依赖的资源不同步。 绝大多数最佳实践缓存属于以下两种模式之一：">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_0.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_1.png">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_2.png">
+<meta property="article:published_time" content="2018-08-26T02:13:30.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.605Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/26/一日一练-网络-缓存最佳实践/"/>
+
+
+
+
+
+  <title> 一日一练-网络 缓存最佳实践 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-网络 缓存最佳实践
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-26T02:13:30+00:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/26/一日一练-网络-缓存最佳实践/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="leancloud_visitors" data-flag-title="一日一练-网络 缓存最佳实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：一日一练-网络 缓存最佳实践</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://jakearchibald.com/2016/caching-best-practices/" target="_blank" rel="noopener">https://jakearchibald.com/2016/caching-best-practices/</a><br>作者：@<a href="https://github.com/jakearchibald/" target="_blank" rel="noopener">Jake Archibald</a></p>
+<p>正确地获得缓存会带来巨大的性能优势，节省带宽并降低服务器成本，但许多站点都会降低缓存，导致竞争条件导致相互依赖的资源不同步。</p>
+<p>绝大多数最佳实践缓存属于以下两种模式之一：</p>
+<a id="more"></a>
+
+<h2 id="模式-1：不可变的内容-长的max-age（Pattern-1：Immutable-content-long-max-age）"><a href="#模式-1：不可变的内容-长的max-age（Pattern-1：Immutable-content-long-max-age）" class="headerlink" title="模式 1：不可变的内容 + 长的max-age（Pattern 1：Immutable content + long max-age）"></a>模式 1：不可变的内容 + 长的max-age（Pattern 1：Immutable content + long max-age）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: max-age&#x3D;31536000</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此网址的内容永远不会更改，因此……</li>
+<li>浏览器/CDN 可以将此资源缓存一年而不会出现问题</li>
+<li>可以在不咨询服务器的情况下使用小于max-age 秒的缓存内容<img src="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_0.png" class="">
+
+</li>
+</ul>
+<p>在此模式中，你永远不会更改特定URL 的内容，你只会更改URL 匹配不同的内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/script-f93bca2c.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/styles-a837cb1e.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/cats-0e9a2ef4.jpg"</span> <span class="attr">alt</span>=<span class="string">"…"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>每个URL 都包含随其内容一起更改的部分。它可以是版本号，修改日期或内容的哈希值 – 这是我在此博客上所使用的。</p>
+<p>大多数服务器端框架都有工具来简化（我使用<a href="https://docs.djangoproject.com/en/1.9/ref/contrib/staticfiles/#manifeststaticfilesstorage" target="_blank" rel="noopener"><code>Django</code> 的<code>ManifestStaticFilesStorage</code></a>），还有一些较小的Node.js 库可以实现相同的功能，例如<a href="https://github.com/sindresorhus/gulp-rev" target="_blank" rel="noopener">gulp-rev</a>。</p>
+<p>但是，此模式不适用于文章等内容。他们的网址无法进行版本控制，其内容必须能够更改。 说真的，鉴于我所犯的基本拼写和语法错误，我需要能够快速频繁地更新内容。</p>
+<h2 id="模式-2：可变的内容，需要服务端重新验证（Pattern-2-Mutable-content-Always-server-revalidated）"><a href="#模式-2：可变的内容，需要服务端重新验证（Pattern-2-Mutable-content-Always-server-revalidated）" class="headerlink" title="模式 2：可变的内容，需要服务端重新验证（Pattern 2: Mutable content, Always server-revalidated）"></a>模式 2：可变的内容，需要服务端重新验证（Pattern 2: Mutable content, Always server-revalidated）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此URL 的内容可能会更改，因此……</li>
+<li>没有服务器的认可，任何本地缓存的版本都不受信任<img src="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_1.png" class="">
+
+</li>
+</ul>
+<p>注意：<code>no-cache</code>并不意味着“不缓存（don’t cache）”，这意味着它必须在使用缓存资源之前使用服务器检查（或“重新验证（revalidate）”，当它调用它）。<code>no-store</code> 告诉浏览器根本不要缓存它。<code>must-revalidate</code> 并不意味着“必须重新验证（must revalidate）”，这意味着如果本地资源比提供的<code>max-age</code> 小，则可以使用本地资源，否则必须重新验证。是啊。我知道。</p>
+<p>在此模式中，你可以向响应添加<code>ETag</code>（你选择的版本ID）或<code>Last-Modified</code> 日期头（date header）。下次客户端获取资源时，它分别通过<code>If-None-Match</code> 和<code>If-Modified-Since</code> 回显它已经拥有的内容的值，允许服务器说“只使用你已经获得的内容，它取决于日期”，或它拼写它，“HTTP 304”。</p>
+<p>如果无法发送<code>ETag/Last-Modified</code>，则服务器始终发送完整内容。</p>
+<p>这种模式总是涉及网络请求，因此它不如可以完全绕过网络的模式 1 好。</p>
+<p>被模式 1 所需的基础设施拖延并不罕见，但同样地被网络请求模式 2 所需要推迟，而是在中间寻找一些东西：一个小的<code>max-age</code> 和可变内容。这是一个比较坏的妥协。</p>
+<h2 id="可变内容的max-age-通常是错误的选择（max-age-on-mutable-content-is-often-the-wrong-choice）"><a href="#可变内容的max-age-通常是错误的选择（max-age-on-mutable-content-is-often-the-wrong-choice）" class="headerlink" title="可变内容的max-age 通常是错误的选择（max-age on mutable content is often  the wrong choice）"></a>可变内容的max-age 通常是错误的选择（max-age on mutable content is often  the wrong choice）</h2><p>……不幸的是，这种情况并不罕见，例如它发生在Github 页面上。</p>
+<p>设想：</p>
+<ul>
+<li><code>/article/</code></li>
+<li><code>/styles.css</code></li>
+<li><code>/script.js</code></li>
+</ul>
+<p>……使用如下服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: must-revalidate, max-age&#x3D;600</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>网址URL 的内容会发生变化</li>
+<li>如果浏览器的缓存版本不到10 分钟，在不咨询服务器的情况下使用它</li>
+<li>否则，使用<code>If-Modified-Since</code> 或<code>If-None-Match</code>（如果可用）进行网络请求<img src="/2018/08/26/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-%E7%BD%91%E7%BB%9C-%E7%BC%93%E5%AD%98%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/cache_2.png" class="">
+
+</li>
+</ul>
+<p>这种模式似乎可以在测试中可用，但在实际中会出现暴露问题，而且很难追踪。在上面的示例中，服务器实际上已经更新了HTML，CSS 和JS，但页面最终使用了来自缓存的旧HTML 和JS，以及来自服务器的更新的CSS。版本不匹配导致了问题。</p>
+<p>通常，当我们对HTML 进行重大更改时，我们可能还会更改CSS 以反映新结构，并更新JS 以迎合样式和内容的更改。这些资源是相互依赖的，但缓存头（caching header）无法表达这些。用户可能最终获得一、两个资源的新版本，但其他的资源是旧版本。</p>
+<p><code>max-age</code> 关联响应时间的，所以如果所有上述资源都作为同一导航的一部分被请求，那么它们将被设置为在大致相同的时间到期，但是那里仍然有很小的竞争。如果你有一些不包含JS的页面，或包含不同的CSS，你的到期日期可能会不同步。更糟糕的是，浏览器总是从缓存中删除内容，并且它不知道HTML，CSS 和JS 是相互依赖的，所以它会地丢弃一部分。将所有这些加在一起，导致资源的不匹配。</p>
+<p>对于用户而言，这可能导致布局和或功能损坏。从微妙的故障，到完全无法使用的内容。</p>
+<p>值得庆幸的是，用户有一个逃生舱……</p>
+<h3 id="刷新有时会修复它（A-refresh-sometimes-fixes-it）"><a href="#刷新有时会修复它（A-refresh-sometimes-fixes-it）" class="headerlink" title="刷新有时会修复它（A refresh sometimes fixes it）"></a>刷新有时会修复它（A refresh sometimes fixes it）</h3><p>如果页面是作为刷新的一部分加载的，浏览器将始终使用服务器重新验证，忽略<code>max-age</code>。因此，如果用户遇到因<code>max-age</code> 而损坏的内容，则点击刷新应该可以解决所有问题。 当然，强迫用户这样做会降低信任度，因为它会让人觉得你的网站是不友好的。</p>
+<h3 id="Service-worker-可以处理这些错误（A-service-worker-can-extend-the-life-of-these-bugs）"><a href="#Service-worker-可以处理这些错误（A-service-worker-can-extend-the-life-of-these-bugs）" class="headerlink" title="Service worker 可以处理这些错误（A service worker can extend the life of these bugs）"></a>Service worker 可以处理这些错误（A service worker can extend the life of these bugs）</h3><p>假设你有以下service worker：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> version = <span class="string">'2'</span></span><br><span class="line"></span><br><span class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(<span class="string">`static-<span class="subst">$&#123;version&#125;</span>`</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">cache</span> =&gt;</span> cache.addAll([</span><br><span class="line">        <span class="string">'/styles.css'</span>,</span><br><span class="line">        <span class="string">'/script.js'</span></span><br><span class="line">      ]))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">self.addEventListener(<span class="string">'activate'</span>, event =&gt; &#123;</span><br><span class="line">  <span class="comment">// ...delete old caches...</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">self.addEventListener(<span class="string">'fetch'</span>, event =&gt; &#123;</span><br><span class="line">  event.respondWith(</span><br><span class="line">    caches.match(event.request)</span><br><span class="line">      .then(<span class="function"><span class="params">response</span> =&gt;</span> response || fetch(event.request))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这个service worker……</p>
+<ul>
+<li>预先缓存脚本和样式</li>
+<li>如果匹配则从缓存服务，否则进入网络</li>
+</ul>
+<p>如果我们改变我们的CSS/JS，我们会改变<code>version</code> 以使service worker 字节不同，从而触发更新。但是，由于<code>addAll</code> 通过HTTP 缓存请求（就像几乎所有请求一样），我们可能会遇到<code>max-age</code> 竞争条件并缓存CSS 和JS 的不兼容版本。</p>
+<p>一旦它们被缓存，我们将服务不兼容的CSS 和JS，直到我们下次更新service worker – 并且假设我们在下一次更新中没有遇到另一种竞争条件。</p>
+<p>你可以绕过server worker 中的缓存：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(<span class="string">`static-<span class="subst">$&#123;version&#125;</span>`</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">cache</span> =&gt;</span> cache.addAll([</span><br><span class="line">        <span class="keyword">new</span> Request(<span class="string">'/styles.css'</span>, &#123; <span class="attr">cache</span>: <span class="string">'no-cache'</span> &#125;),</span><br><span class="line">        <span class="keyword">new</span> Request(<span class="string">'/script.js'</span>, &#123; <span class="attr">cache</span>: <span class="string">'no-cache'</span> &#125;)</span><br><span class="line">      ]))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>不幸的是，<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=453190" target="_blank" rel="noopener">Chrome/Opera</a> 尚不支持缓存选项，而<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1120715" target="_blank" rel="noopener">最新Firefox Nightly</a> 支持，但需要你自己进行排序：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">self.addEventListener(<span class="string">'install'</span>, event =&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(<span class="string">`static-<span class="subst">$&#123;version&#125;</span>`</span>)</span><br><span class="line">      .then(<span class="function"><span class="params">cache</span> =&gt;</span> cache.addAll(</span><br><span class="line">        [</span><br><span class="line">          <span class="string">'/styles.css'</span>,</span><br><span class="line">          <span class="string">'/script.js'</span></span><br><span class="line">        ].map(<span class="function"><span class="params">url</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// cache-bust using a random query string</span></span><br><span class="line">          retur fetch(<span class="string">`<span class="subst">$&#123;url&#125;</span>?<span class="subst">$&#123;<span class="built_in">Math</span>.random()&#125;</span>`</span>).then(<span class="function"><span class="params">reponse</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// fail on 404, 500 etc</span></span><br><span class="line">            <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'Not ok'</span>)</span><br><span class="line">            <span class="keyword">return</span> cache.put(url, response)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">      ))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在上面我用随机数缓存 – 但你可以更进一步使用构建步骤来添加内容的哈希值（类似于<a href="https://github.com/GoogleChrome/sw-precache" target="_blank" rel="noopener">sw-precache</a> 所做的）。这有点在JavaScript 中重新实现模式 1，但仅限于service worker 用户而不是所有浏览器和CDN。</p>
+<h2 id="Service-worker-和HTTP-缓存配合得很好！（The-service-worker-amp-the-HTTP-cache-play-well-together-don’t-make-them-fight）"><a href="#Service-worker-和HTTP-缓存配合得很好！（The-service-worker-amp-the-HTTP-cache-play-well-together-don’t-make-them-fight）" class="headerlink" title="Service worker 和HTTP 缓存配合得很好！（The service worker &amp; the HTTP cache play well together, don’t make them fight）"></a>Service worker 和HTTP 缓存配合得很好！（The service worker &amp; the HTTP cache play well together, don’t make them fight）</h2><p>正如你所看到的，你可以解决service worker 中缓慢的缓存问题，但最好还是解决问题的根源。 正确使用缓存会使service worker 的工作变得更轻松，同时也使不支持service worker 的浏览器（Safari，IE/Edge）受益，并从CDN 中获得最大收益。</p>
+<p>正确的缓存头（caching header）意味着你也可以大规模简化service worker 更新：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const version &#x3D; &#39;23&#39;</span><br><span class="line"></span><br><span class="line">self.addEventListener(&#39;install&#39;, event &#x3D;&gt; &#123;</span><br><span class="line">  event.waitUntil(</span><br><span class="line">    caches.open(&#96;static-$&#123;version&#125;&#96;)</span><br><span class="line">      .then(cache &#x3D;&gt; cache.addAll([</span><br><span class="line">        &#39;&#x2F;&#39;,</span><br><span class="line">        &#39;&#x2F;script-f93bca2c.js&#39;,</span><br><span class="line">        &#39;&#x2F;styles-a837cb1e.css&#39;,</span><br><span class="line">        &#39;&#x2F;cats-0e9a2ef4.jpg&#39;</span><br><span class="line">      ]))</span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我将使用模式 2（服务器重新验证）缓存根页面，使用模式 1（不可变内容）缓存其余资源。每个service worker 更新都将触发对根页面的请求，但只有在其URL 已更改时才会下载其余资源。这非常棒，因为无论你是从上一个版本还是10 个版本之前更新，它都可以节省带宽并提高性能。</p>
+<p>与原生相比，这是一个巨大的优势，即使是微小的变化，也可以下载整个二进制文件，或者涉及复杂的二进制差异。在这里，我们可以用相对较少的下载更新大型Web 应用程序。</p>
+<p>service worker 最好是作为一种增强而不是解决方法，所以不要使用缓存，而是使用它！</p>
+<h2 id="小心使用，max-age-和mutable-内容可能是有益的（Used-carefully-max-age-amp-mutable-content-can-be-beneficial）"><a href="#小心使用，max-age-和mutable-内容可能是有益的（Used-carefully-max-age-amp-mutable-content-can-be-beneficial）" class="headerlink" title="小心使用，max-age 和mutable 内容可能是有益的（Used carefully, max-age &amp; mutable content can be beneficial）"></a>小心使用，max-age 和mutable 内容可能是有益的（Used carefully, max-age &amp; mutable content can be beneficial）</h2><p>可变内容的<code>max-age</code> 通常是错误的选择，但并非总是如此。例如，此页面的<code>max-age</code> 为三分钟。竞争条件不是问题，因为此页面没有任何依赖项，其遵循相同缓存模式的（我的CSS，JS 和图像URL 遵循模式 1 – 不可变内容），并且没有依赖此页面的内容遵循相同的模式。</p>
+<p>这种模式意味着，如果我很幸运能够撰写一篇热门文章，我的CDN（Cloudflare）可以消除我服务器的压力，只要我能忍受它，用户可以看到最多三分钟的文章更新我是谁</p>
+<p>不应轻易使用此模式。如果我在一篇文章中添加了一个新的部分并在另一篇文章中链接到它，我创建了一个可以竞争的依赖项。用户可以单击该链接并将其带到没有引用部分的文章副本。如果我想避免这种情况，我会更新第一篇文章，使用他们的UI 刷新Cloudflare 的缓存副本，等待三分钟，然后在另一篇文章中添加链接。是的……你必须非常小心这种模式。</p>
+<p>正确使用，缓存是一个巨大的性能增强和带宽节省。支持任何可以轻松更改的URL 的不可变内容，否则在服务器重新验证时可以安全地使用它。如果你勇敢混合<code>max-age</code> 和可变内容，并且你确定你的内容没有依赖，或者是同步的依赖。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/17/Gulp-Gulp-for-Beginners/" rel="next" title="[Gulp] Gulp for Beginners">
+                <i class="fa fa-chevron-left"></i> [Gulp] Gulp for Beginners
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/%E4%BB%8B%E7%BB%8Dnpx%EF%BC%9Anpm-%E5%8C%85%E8%BF%90%E8%A1%8C%E5%99%A8/" rel="prev" title="介绍npx：npm 包运行器">
+                介绍npx：npm 包运行器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模式-1：不可变的内容-长的max-age（Pattern-1：Immutable-content-long-max-age）"><span class="nav-number">1.</span> <span class="nav-text">模式 1：不可变的内容 + 长的max-age（Pattern 1：Immutable content + long max-age）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式-2：可变的内容，需要服务端重新验证（Pattern-2-Mutable-content-Always-server-revalidated）"><span class="nav-number">2.</span> <span class="nav-text">模式 2：可变的内容，需要服务端重新验证（Pattern 2: Mutable content, Always server-revalidated）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变内容的max-age-通常是错误的选择（max-age-on-mutable-content-is-often-the-wrong-choice）"><span class="nav-number">3.</span> <span class="nav-text">可变内容的max-age 通常是错误的选择（max-age on mutable content is often  the wrong choice）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#刷新有时会修复它（A-refresh-sometimes-fixes-it）"><span class="nav-number">3.1.</span> <span class="nav-text">刷新有时会修复它（A refresh sometimes fixes it）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-worker-可以处理这些错误（A-service-worker-can-extend-the-life-of-these-bugs）"><span class="nav-number">3.2.</span> <span class="nav-text">Service worker 可以处理这些错误（A service worker can extend the life of these bugs）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-worker-和HTTP-缓存配合得很好！（The-service-worker-amp-the-HTTP-cache-play-well-together-don’t-make-them-fight）"><span class="nav-number">4.</span> <span class="nav-text">Service worker 和HTTP 缓存配合得很好！（The service worker &amp; the HTTP cache play well together, don’t make them fight）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小心使用，max-age-和mutable-内容可能是有益的（Used-carefully-max-age-amp-mutable-content-can-be-beneficial）"><span class="nav-number">5.</span> <span class="nav-text">小心使用，max-age 和mutable 内容可能是有益的（Used carefully, max-age &amp; mutable content can be beneficial）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/26/一日一练-网络-缓存最佳实践/';
+
+      var disqus_title = "一日一练-网络 缓存最佳实践";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

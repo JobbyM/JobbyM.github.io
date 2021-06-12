@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,CSS,一日一练,伪元素," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="子曰：一日一练-CSS 使用伪元素创建图片叠加效果  关于本文：原文：https:&#x2F;&#x2F;designshack.net&#x2F;author&#x2F;joshuajohnson&#x2F;作者：@JOSHUA JOHNSON 今天我们将看看我们是否可以在HTML 插入单个图像，使其看起来像只使用CSS 的图片叠加。 关键词：伪元素。 在这里可以看到我们如何开始这个项目，并使用一些awesome DRY 编码来解决产生的一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一日一练-CSS 使用伪元素创建图片叠加效果">
+<meta property="og:url" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="子曰：一日一练-CSS 使用伪元素创建图片叠加效果  关于本文：原文：https:&#x2F;&#x2F;designshack.net&#x2F;author&#x2F;joshuajohnson&#x2F;作者：@JOSHUA JOHNSON 今天我们将看看我们是否可以在HTML 插入单个图像，使其看起来像只使用CSS 的图片叠加。 关键词：伪元素。 在这里可以看到我们如何开始这个项目，并使用一些awesome DRY 编码来解决产生的一些">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-2.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-3.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-4.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-5.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-6.jpg">
+<meta property="article:published_time" content="2018-08-01T02:31:13.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.509Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="一日一练">
+<meta property="article:tag" content="伪元素">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2018/08/01/一日一练-CSS-使用伪元素创建图片叠加效果/"/>
+
+
+
+
+
+  <title> 一日一练-CSS 使用伪元素创建图片叠加效果 | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                一日一练-CSS 使用伪元素创建图片叠加效果
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-01T02:31:13+00:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/01/一日一练-CSS-使用伪元素创建图片叠加效果/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/" class="leancloud_visitors" data-flag-title="一日一练-CSS 使用伪元素创建图片叠加效果">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>子曰：一日一练-CSS 使用伪元素创建图片叠加效果</p>
+</blockquote>
+<p>关于本文：<br>原文：<a href="https://designshack.net/author/joshuajohnson/" target="_blank" rel="noopener">https://designshack.net/author/joshuajohnson/</a><br>作者：@<a href="https://designshack.net/author/joshuajohnson/" target="_blank" rel="noopener">JOSHUA JOHNSON</a></p>
+<p>今天我们将看看我们是否可以在HTML 插入单个图像，使其看起来像只使用CSS 的图片叠加。 关键词：伪元素。</p>
+<p>在这里可以看到我们如何开始这个项目，并使用一些awesome DRY 编码来解决产生的一些混乱的代码。</p>
+<a id="more"></a>
+
+<h2 id="挑战（The-Challenge）"><a href="#挑战（The-Challenge）" class="headerlink" title="挑战（The Challenge）"></a>挑战（The Challenge）</h2><p>我在新的下载网站<a href="http://pixelsdaily.com/" target="_blank" rel="noopener">Pixels Daily</a>上发现一个惊艳的内容，一个名为<a href="http://pixelsdaily.com/resources/photoshop/psds/stacks/" target="_blank" rel="noopener">Stacks</a>的小免费PSD，它可以让你快速轻松地在Photoshop中构建一堆宝丽来风格（Polaroid-esque）的图像。</p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-1.jpg" class="">
+
+<p>这是一个非常有吸引力的效果。我一看到它，就立刻想用CSS 实现。因为有多个层叠在一起，我们不希望我们的标记因为每个图库项目的三个图像而混乱。那么我们如何使用最少的HTML 标记的同时实现这种错觉呢？</p>
+<p>答案就是伪元素。这是一个完美展示<code>:before</code>和<code>:after</code> 魔力的用例。</p>
+<h2 id="HTML-元素（The-HTML）"><a href="#HTML-元素（The-HTML）" class="headerlink" title="HTML 元素（The HTML）"></a>HTML 元素（The HTML）</h2><p>我们仅需要一个带有图像的<code>div</code> 的HTML 创建我们的第一个堆栈。其余的样式都将通过CSS 来实现。 确保将“stackone”类添加到<code>div</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'stackone'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://lorempixum.com/200/200/city/7"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基础样式（Basic-Styles）"><a href="#基础样式（Basic-Styles）" class="headerlink" title="基础样式（Basic Styles）"></a>基础样式（Basic Styles）</h2><p>一个基本的<code>margin/padding</code> 重置，使我们的浏览器保持一致。由于我们图像上的边框为白色，因此需要为背景添加某种色彩。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* &#123;<span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span>;&#125;</span><br><span class="line"><span class="selector-tag">body</span> &#123;<span class="attribute">background</span>: <span class="number">#ccd3d7</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图片样式（Top-Image-Styles）"><a href="#图片样式（Top-Image-Styles）" class="headerlink" title="图片样式（Top Image Styles）"></a>图片样式（Top Image Styles）</h2><p>为图片添加样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>逐步分析上述代码，这四行代码决定了尺寸和位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">float: left;</span><br><span class="line">height: 200px; width: 200px;</span><br><span class="line">margin: 50px;</span><br><span class="line">position: relative;</span><br></pre></td></tr></table></figure>
+<p>因为我们正在实现画廊效果，所以我们将图像浮动到左边并设置了相当<code>50px</code> 边距以便将其隔开。高度和宽度设置为图像尺寸（200px×200px）。</p>
+<p>这段代码中定位上下文设置为<code>relative</code>。因为我知道我们稍后将对伪元素使用绝对定位，希望与这个项目“相对”而不是整个页面。</p>
+<p><strong>修饰（Icing）</strong><br>其余的代码纯粹是为了美观。我添加了一个相当厚的白色边框和一个盒子阴影。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">border: 6px solid #fff;</span><br><span class="line">-webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);</span><br><span class="line">-moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);</span><br><span class="line">box-shadow: 2px 2px 5px rgba(0,0,0,0.3);</span><br></pre></td></tr></table></figure>
+
+<p><strong>进度检查（Progress Check）</strong><br>此时，我们的图像看起来很棒。只需几行代码，我们就可以实现一个即时相机风格效果。</p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-2.jpg" class="">
+
+<h2 id="第一个伪元素（The-First-Pseudo-Element）"><a href="#第一个伪元素（The-First-Pseudo-Element）" class="headerlink" title="第一个伪元素（The First Pseudo Element）"></a>第一个伪元素（The First Pseudo Element）</h2><p>现在是时候添加我们的第一个堆栈了。基本上我们想要做的就是让它看起来像我们当前的另一个图像。我们可以使用<code>:before</code> 伪元素和我们上面使用的大部分相同代码。</p>
+<p>使用以下语法：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里，我们针对包含顶部图像的类，然后使用没有内容的<code>:before</code> 伪元素实现。这有效地为文档流添加了另一个项目供我们使用。现在让我们像之前的图像一样设计样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eff4de</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里要注意的关键是我们并没有真正使用图像。我们可以加载另一个图像，但考虑到我们正在制作三个堆叠，这将是一个坏主意。对于图库中的每个图像，我们不想加载三个！ 幸运的是，由于伪元素的大部分表面区域将被遮挡，我们可以简单地使用纯色实现效果。</p>
+<p><strong>定位（Positioning）</strong><br>在这一点上，事情看起来并不那么好。事实上，我们真的搞砸了我们的图片样式！</p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-3.jpg" class="">
+
+<p>可以看到伪元素干扰了图像。要解决这个问题，我们需要添加一些定位上下文，然后使用<code>z-index</code> 将其推送到后面。在这里拆分了不同的样式块，这样就可以清楚地看到每个块发生了什么。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eff4de</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">10px</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line"></span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过使用绝对定位，我们可以在给定原始图像的起始位置的情况下将图像推入到位。使用<code>z-index</code>将图像推送到背景，处理之前的干扰。最后，我们使用一个转换效果来实现你在原始Stacks PSD中看到的凌乱旋转。</p>
+<p><strong>进度检查（Progress Check）</strong><br>这时一切看起来都很棒！我们的第二张照片（好吧，假照片）很好地位于我们的第一张照片下面并且有足够的旋转角度来将它们分开。现在还有另一个照片需要实现。</p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-4.jpg" class="">
+
+<h2 id="第二个伪元素（The-Second-Pseduo-Element）"><a href="#第二个伪元素（The-Second-Pseduo-Element）" class="headerlink" title="第二个伪元素（The Second Pseduo Element）"></a>第二个伪元素（The Second Pseduo Element）</h2><p>你可能猜到，要向堆栈中添加第三张照片，我们需要使用<code>:after</code> 伪元素。这与我们刚刚做的完全一样，所以没有必要详细介绍它。主要差异是不同的背景颜色，位置和旋转角度。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#768590</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(-<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(-<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(-<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">4deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>进度检查（Progress Check）</strong><br>看到了吗？我们已经完成了第一个图像堆栈！考虑到它实际上只使用单个图像，这是一个非常时髦的效果。</p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-5.jpg" class="">
+
+<h2 id="有缺陷的工作流程（A-Flawed-Workflow）"><a href="#有缺陷的工作流程（A-Flawed-Workflow）" class="headerlink" title="有缺陷的工作流程（A Flawed Workflow）"></a>有缺陷的工作流程（A Flawed Workflow）</h2><p>鉴于原始PSD 有几个不同的图像堆栈可供选择，我想用CSS类做同样的事情。我们可以轻松地将上面的所有代码复制并粘贴到新的“stacktwo”类中，并更改伪元素的旋转/定位。 Bam：你有了一个新的图像堆栈。</p>
+<p>问题是，我用了八个不同的堆栈来做这个，结果是一个可怕的代码块。它比1997年基于表格的布局更丑陋。问题是我一遍又一遍地重复着自己。代码中有一半以上由纯冗余组成。我不想将这种可怕的做法传递给你。</p>
+<p><strong>不要重复CSS（DRY CSS）</strong><br>Andy Hunt 和Dave Thomas 在编程方面创造了“DRY”一词，代表“不要重复自己。” 需要注意的是，CSS 在技术上不是一种编程语言，它是一种样式表语言。但是，如果我们将其视为编程语言并应用DRY 编码的概念，我们会得到更好的结果。</p>
+<p>看看我们是否可以应用这些实践来使我们的代码更简洁，更可扩展。</p>
+<h2 id="再试试吧（Let’s-Try-That-Again）"><a href="#再试试吧（Let’s-Try-That-Again）" class="headerlink" title="再试试吧（Let’s Try That Again）"></a>再试试吧（Let’s Try That Again）</h2><p>按照当前方法，我们的CSS将变得笨拙。当我们使用伪元素之后，会使代码变为三倍！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.stackone &#123;...&#125;</span><br><span class="line">.stacktwo &#123;...&#125;</span><br><span class="line">.stackthree &#123;...&#125;</span><br><span class="line">.stackfour &#123;...&#125;</span><br><span class="line">.stackfive &#123;...&#125;</span><br><span class="line">.stacksix &#123;...&#125;</span><br><span class="line">.stackseven &#123;...&#125;</span><br><span class="line">.stackeight &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将共享样式提取出来，放在一个声明块中。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.stackone</span>, <span class="selector-class">.stacktwo</span>, <span class="selector-class">.stackthree</span>, <span class="selector-class">.stackfour</span>, <span class="selector-class">.stackfive</span>, <span class="selector-class">.stacksix</span>, <span class="selector-class">.stackseven</span>, <span class="selector-class">.stackeight</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将核心样式一次性应用于所有类，这比不断重复自己要好得多。作为可选的下一步，你可以选择更好的选择器。</p>
+<p>所有的类都以相同的五个字母开头：“stack”。根据此信息，可以应用属性选择符。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个选择器针对我们所有这些类！并且如果我们添加更多的堆栈类，这个选择器仍然可以完美运行。</p>
+<p>按照这个方法继续应用，会让代码变得更加简短。这里的关键是找到重复的内容，只应用一次。 开始仅应用于“堆栈”类的声明。 然后应用于堆栈类的样式以及<code>:before</code> 和<code>:after</code> 元素。之后为<code>:before</code> 和<code>:after</code> 的样式设置了一个声明块。 最后，为<code>:before</code> 元素应用不同的颜色。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span>, <span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:before</span>, <span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">6px</span> solid <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>; <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">-webkit-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">-moz-box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">2px</span> <span class="number">2px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:before</span>, <span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#768590</span>;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#eff4de</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在这里所做的实际上是将数百行代码压缩。这对于维护，加载时间和你的一般理智来说非常棒！一开始就应用DRY 原则有点棘手，但是一旦做到了，你就永远不会回头。</p>
+<p><strong>其余堆栈（Other Stacks）</strong></p>
+<img src="/2018/08/01/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E4%BD%BF%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%88%9B%E5%BB%BA%E5%9B%BE%E7%89%87%E5%8F%A0%E5%8A%A0%E6%95%88%E6%9E%9C/stackscss-6.jpg" class="">
+
+<p>从这里开始，每个堆栈将是相当独特的，因此我们必须一次编码其余的堆栈。一点Sass 或Less 会对帮助这一部分有很大的帮助，但你们都厌倦了我对预处理器的讨论，所以我没有使用预处理器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* STACK ONE */</span></span><br><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">6px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.stackone</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">6px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* STACK TWO */</span></span><br><span class="line"><span class="selector-class">.stacktwo</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.stacktwo</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">5px</span>; <span class="attribute">left</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(<span class="number">4deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">4deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* STACK THREE */</span></span><br><span class="line"><span class="selector-class">.stackthree</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-<span class="number">10deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(-<span class="number">10deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(-<span class="number">10deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(-<span class="number">10deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">10deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.stackthree</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">top</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">left</span>: -<span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">-webkit-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-moz-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-o-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">-ms-transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-<span class="number">5deg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器兼容性（Browser-Compatibility）"><a href="#浏览器兼容性（Browser-Compatibility）" class="headerlink" title="浏览器兼容性（Browser Compatibility）"></a>浏览器兼容性（Browser Compatibility）</h2><p>在测试中，这里的浏览器兼容性实际上令人印象深刻。在Safari，Firefox，Chrome，Opera 和IE9+ 中正常运行。对于IE7，你会得到一个没有花哨堆叠效果的简单图像库，我认为这是完全可以接受的，因为这是一种类似于圆角的纯粹美感。</p>
+<p>IE8 是棘手的，因为它部分支持足够的东西来真正搞砸了一切。你可以决定如何处理这个问题，但我想出的解决方案是使用一个可怕的，肮脏的黑客只针对IE8，即将<code>\9</code> 添加到任何IE8 样式。利用这种技术，我只是隐藏了<code>:before</code> 和<code>:after</code> 元素，以便IE8 获得像IE7 这样的简单图像库。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:before</span>, <span class="selector-tag">div</span><span class="selector-attr">[class*=<span class="string">'stack'</span>]</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#768590</span>;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">z-index</span>: -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Dirty IE8 hack */</span></span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0px</span>\<span class="number">9</span>; <span class="attribute">width</span>: <span class="number">0px</span>\<span class="number">9</span>;</span><br><span class="line">  <span class="attribute">border</span>: none\<span class="number">9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IE8 在选择器遇到问题，只要你坚持单冒号语法，它实际上支持<code>:before</code> 和<code>:after</code>。如果使用逗号列出类而不是使用属性值选择器，则应该能够使IE8 执行堆栈效果。</p>
+<h2 id="结论（Conclusion）"><a href="#结论（Conclusion）" class="headerlink" title="结论（Conclusion）"></a>结论（Conclusion）</h2><p>我们今天获得了很多。我们构建了一个很酷的图像堆栈错觉，学习了如何使用<code>:before</code> 和<code>:after</code>，然后讨论了使用DRY 心态时编码的最佳实践。我希望你能学到一些东西。</p>
+<p>请关注<a href="http://pixelsdaily.com/" target="_blank" rel="noopener">PixelsDaily</a>，免费下载包含本教程所有精彩的源代码，以及可在项目中使用的八个非常棒的图像堆栈。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p>1.<a href="https://designshack.net/articles/css/use-pseudo-elements-to-create-an-image-stack-illusion/" target="_blank" rel="noopener">use pseduo elements to create an image stack illusion</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83/" rel="tag"># 一日一练</a>
+          
+            <a href="/tags/%E4%BC%AA%E5%85%83%E7%B4%A0/" rel="tag"># 伪元素</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/31/git-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/" rel="next" title="git 常用命令 标签管理">
+                <i class="fa fa-chevron-left"></i> git 常用命令 标签管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/02/%E4%B8%80%E6%97%A5%E4%B8%80%E7%BB%83-CSS-%E7%90%86%E8%A7%A3%E4%BC%AA%E5%85%83%E7%B4%A0-before%E5%92%8C-after/" rel="prev" title="一日一练-CSS 理解伪元素::before和::after">
+                一日一练-CSS 理解伪元素::before和::after <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#挑战（The-Challenge）"><span class="nav-number">1.</span> <span class="nav-text">挑战（The Challenge）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-元素（The-HTML）"><span class="nav-number">2.</span> <span class="nav-text">HTML 元素（The HTML）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础样式（Basic-Styles）"><span class="nav-number">3.</span> <span class="nav-text">基础样式（Basic Styles）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片样式（Top-Image-Styles）"><span class="nav-number">4.</span> <span class="nav-text">图片样式（Top Image Styles）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个伪元素（The-First-Pseudo-Element）"><span class="nav-number">5.</span> <span class="nav-text">第一个伪元素（The First Pseudo Element）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二个伪元素（The-Second-Pseduo-Element）"><span class="nav-number">6.</span> <span class="nav-text">第二个伪元素（The Second Pseduo Element）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有缺陷的工作流程（A-Flawed-Workflow）"><span class="nav-number">7.</span> <span class="nav-text">有缺陷的工作流程（A Flawed Workflow）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再试试吧（Let’s-Try-That-Again）"><span class="nav-number">8.</span> <span class="nav-text">再试试吧（Let’s Try That Again）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器兼容性（Browser-Compatibility）"><span class="nav-number">9.</span> <span class="nav-text">浏览器兼容性（Browser Compatibility）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论（Conclusion）"><span class="nav-number">10.</span> <span class="nav-text">结论（Conclusion）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">11.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2018/08/01/一日一练-CSS-使用伪元素创建图片叠加效果/';
+
+      var disqus_title = "一日一练-CSS 使用伪元素创建图片叠加效果";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

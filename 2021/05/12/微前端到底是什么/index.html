@@ -1,0 +1,1127 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,微前端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文微前端到底是什么？ 一、简介为了解决庞大的一整块后端服务带来的变更与扩展方面的限制，出现了微服务架构（Microservices）：  微服务是面向服务架构（SOA）的一种变体，把应用程序设计成一系列松耦合的细粒度服务，并通过轻量级的通信协议组织起来。具体的，将应用构建成一组小型服务。这些服务能够独立部署、独立扩展，每个服务都具有稳固的模块边界，甚至允许使用不同的编程语言来编写不同服务，也可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微前端到底是什么?">
+<meta property="og:url" content="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="原文微前端到底是什么？ 一、简介为了解决庞大的一整块后端服务带来的变更与扩展方面的限制，出现了微服务架构（Microservices）：  微服务是面向服务架构（SOA）的一种变体，把应用程序设计成一系列松耦合的细粒度服务，并通过轻量级的通信协议组织起来。具体的，将应用构建成一组小型服务。这些服务能够独立部署、独立扩展，每个服务都具有稳固的模块边界，甚至允许使用不同的编程语言来编写不同服务，也可以">
+<meta property="og:image" content="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/0.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/1.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/2.jpg">
+<meta property="article:published_time" content="2021-05-12T02:38:05.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.697Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="微前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/0.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2021/05/12/微前端到底是什么/"/>
+
+
+
+
+
+  <title> 微前端到底是什么? | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                微前端到底是什么?
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-05-12T02:38:05+00:00">
+                2021-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/05/12/微前端到底是什么/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/" class="leancloud_visitors" data-flag-title="微前端到底是什么?">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h2><p><a href="https://zhuanlan.zhihu.com/p/96464401" target="_blank" rel="noopener">微前端到底是什么？</a></p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>为了解决庞大的一整块后端服务带来的变更与扩展方面的限制，出现了微服务架构（Microservices）：</p>
+<blockquote>
+<p>微服务是面向服务架构（SOA）的一种变体，把应用程序设计成一系列松耦合的细粒度服务，并通过轻量级的通信协议组织起来。<br>具体的，将应用构建成一组小型服务。这些服务能够独立部署、独立扩展，每个服务都具有稳固的模块边界，甚至允许使用不同的编程语言来编写不同服务，也可以由不同的团队来管理</p>
+</blockquote>
+<p>同时，越来越重的前端工程也面临同样的问题，自然地想到了将微服务思想应用（照搬）到前端，于是有了「微前端（micro-frontends）」的概念：</p>
+<p>即，一种由独立交付的多个前端应用组成整体的架构风格。具体的，<strong>将前端应用分解成一些更小、更简单的能够独立开发、测试、部署的小块，而在用户看来仍然是内聚的单个产品。</strong></p>
+<a id="more"></a>
+
+<h2 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h2><p>简单来讲，微前端的理念类似于微服务：<br>将庞大的整体拆成可控的小块，并明确它们之间的依赖关系。关键优势在于：</p>
+<ul>
+<li>代码库更小，更内聚、可维护性更高</li>
+<li>松耦合、自治的团队可扩展性更好</li>
+<li>渐进地升级、更新甚至重写部分前端功能成为了可能</li>
+</ul>
+<h3 id="简单、松耦合的代码库"><a href="#简单、松耦合的代码库" class="headerlink" title="简单、松耦合的代码库"></a>简单、松耦合的代码库</h3><p>比起一整块的前端代码库，微前端架构下的代码库倾向于更小/简单、更容易开发</p>
+<p>此外，更重要的是避免模块间不合理的隐式耦合造成的复杂度上升。通过界定清晰的应用边界来降低意外耦合的可能性，增加子应用间逻辑耦合的成本，促使开发者明确数据和事件在应用程序中的流向</p>
+<h3 id="增量升级"><a href="#增量升级" class="headerlink" title="增量升级"></a>增量升级</h3><p>理想的代码自然是模块清晰、依赖明确、易于扩展、便于维护的……然而，实践中出于各式各样的原因：</p>
+<ul>
+<li>历史项目，祖传代码</li>
+<li>交付压力，当时求快</li>
+<li>就近就熟，当时求稳……</li>
+</ul>
+<p>总存在一些不那么理想的代码：</p>
+<ul>
+<li>技术栈落后，甚至强行混用多种技术栈</li>
+<li>耦合混乱，不敢动，牵一发何止动全身</li>
+<li>重构不彻底，重构-烂尾，换个姿势重构-又烂尾……</li>
+</ul>
+<p>而要对这些代码进行彻底重构的话，<strong>最大的问题是很难有充裕的资源去大刀阔斧地一步到位</strong>，在逐步重构的同时，既要确保中间版本能够平滑过渡，同时还要持续交付新特性：</p>
+<p>所以，为了实施渐进式重构，我们需要一种增量升级的能力，先让新旧代码和谐共存，再逐步转化旧代码，直到整个重构完成</p>
+<p>这种增量升级的能力意味着我们能够对产品功能进行低风险的局部替换，包括升级依赖项、更替架构、UI 改版等。另一方面，也带来了技术选型上的灵活性，有助于新技术、新交互模式的实验性试错</p>
+<h3 id="独立部署"><a href="#独立部署" class="headerlink" title="独立部署"></a>独立部署</h3><p>独立部署的能力在微前端体系中至关重要，能够缩小变更范围，进而降低相关风险</p>
+<p>因此，每个微前端都应具备有自己的持续交付流水线（包括构建、测试并部署到生产环境），并且要能独立部署，不必过多考虑其它代码库和交付流水线的当前状态：</p>
+<img src="/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/0.jpg" class="">
+
+<p>就算旧的系统是按固定周期季度发布或手动发布的，甚至隔壁团队误发布了一个半成品或有问题的特性也无关紧要。也就是说，如果一个微前端已经准备好发布了，它就应该随时可发布，并且只由开发维护它的团队来定</p>
+<h3 id="团队自治"><a href="#团队自治" class="headerlink" title="团队自治"></a>团队自治</h3><p>除代码库及发布周期上的解耦之外，微前端还有助于形成完全独立的团队，由不同团队各自负责一块产品功能从构思到发布的整个过程，团队能够完全拥有为客户提供价值所需的一切，从而快速高效地运转</p>
+<p>为此，应该围绕业务功能纵向组建团队，而不是基于技术职能划分。最简单的，可以根据最终用户所能看到的内容来划分，比如将应用中的每个页面作为一个微前端，并交给一个团队全权负责。与基于技术职能或横向关注点（如样式、表单、校验等）组织的团队相比，这种方式能够提升团队工作的凝聚力</p>
+<img src="/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/1.jpg" class="">
+
+<h2 id="三、实现方案"><a href="#三、实现方案" class="headerlink" title="三、实现方案"></a>三、实现方案</h2><p>实现上，关键问题在于：</p>
+<ul>
+<li>多个 Bundle 如何集成？</li>
+<li>子应用之间怎样隔离影响？</li>
+<li>公共资源如何复用？</li>
+<li>子应用间怎样通信？</li>
+<li>如何测试？</li>
+</ul>
+<h3 id="多-Bundle-集成"><a href="#多-Bundle-集成" class="headerlink" title="多 Bundle 集成"></a>多 Bundle 集成</h3><p>微前端架构中一般会有个<strong>容器应用（container application）</strong>将各子应用集成起来，职责如下：</p>
+<ul>
+<li>渲染公共的页面元素，比如 header、footer</li>
+<li>解决横切关注点（cross-cutting concerns），如身份验证和导航</li>
+<li>将各个微前端整合到一个页面上，并控制微前端的渲染区域和时机</li>
+</ul>
+<p>集成方式分为 3 类：</p>
+<ul>
+<li>服务端集成：如 SSR 拼装模板</li>
+<li>构建时集成：如 Code Splitting</li>
+<li>运行时集成：如通过 iframe、JS、Web Components 等方式</li>
+</ul>
+<h4 id="服务端集成"><a href="#服务端集成" class="headerlink" title="服务端集成"></a>服务端集成</h4><p>服务端集成的关键在于如何保证各部分模板（各个微前端）能够独立发布，必要的话，甚至可以在服务端也建立一套与前端相对应的结构：</p>
+<img src="/2021/05/12/%E5%BE%AE%E5%89%8D%E7%AB%AF%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/2.jpg" class="">
+
+<p>每个子服务负责渲染并服务于对应的微前端，主服务向各个子服务发起请求</p>
+<h4 id="构建时集成"><a href="#构建时集成" class="headerlink" title="构建时集成"></a>构建时集成</h4><p>常见的构建时集成方式是将子应用发布成独立的 npm 包，共同作为主应用的依赖项，构建生成一个供部署的 JS Bundle</p>
+<p>然而，<strong>构建时集成最大的问题是会在发布阶段造成耦合</strong>，任何一个子应用有变更，都要整个重新编译，意味着对于产品局部的小改动也要发布一个新版本，因此，<strong>不推荐这种方式</strong></p>
+<h4 id="运行时集成"><a href="#运行时集成" class="headerlink" title="运行时集成"></a>运行时集成</h4><p>将集成时机从构建时推迟到运行时，就能避免发布阶段的耦合。常见的运行时集成方式有：</p>
+<ul>
+<li>iframe</li>
+<li>JS：比如前端路由</li>
+<li>Web Components</li>
+</ul>
+<p>虽然直觉上用 iframe 好像不太好（性能、通信成本等），但在这里确实是个合理选项，因为 iframe 无疑是最简单的方式，还天然支持样式隔离以及全局变量隔离</p>
+<p>但这种原生的隔离性，意味着很难把应用的各个部分联系到一起，路由控制、历史栈管理、深度链接（deep-linking）、响应式布局等都变得异常复杂，因而限制了 iframe 方案的灵活性</p>
+<p>另一种最常见的方式是前端路由，每个子应用暴露出渲染函数，主应用在启动时加载各个子应用的独立 Bundle，之后根据路由规则渲染相应的子应用。目前看来，是最灵活的方式</p>
+<p>还有一种类似的方式是Web Components，将每个子应用封装成自定义 HTML 元素（而不是前端路由方案中的渲染函数），以获得Shadow DOM带来的样式隔离等好处</p>
+<h3 id="影响隔离"><a href="#影响隔离" class="headerlink" title="影响隔离"></a>影响隔离</h3><p>子应用之间，以及子应用与主应用间的样式、作用域隔离是必须要考虑的问题，常见解决方案如下：</p>
+<p>样式隔离：开发规范（如BEM）、CSS 预处理（如SASS）、模块定义（如CSS Module）、用 JS 来写（CSS-in-JS）、以及shadow DOM特性<br>作用域隔离：各种模块定义（如ES Module、AMD、Common Module、UMD）</p>
+<h3 id="资源复用"><a href="#资源复用" class="headerlink" title="资源复用"></a>资源复用</h3><p>资源复用对于 UI 一致性和代码复用有重要意义，但并非所有的可复用资源（如组件）都必须在一开始就提出来复用，建议的做法是前期允许一定程度的冗余，各个 Bundle 在各自的代码库中创建组件，直到形成相对明确的组件 API 时再建立可供复用的公共组件</p>
+<p>另一方面，资源分为以下 3 类：</p>
+<ul>
+<li>基础资源：完全不含逻辑功能的图标、标签、按钮等</li>
+<li>UI 组件：含有一定 UI 逻辑的搜索框（如自动完成）、表格（如排序、筛选、分页）等</li>
+<li>业务组件：含有业务逻辑</li>
+</ul>
+<p>其中，<strong>不建议跨子应用复用业务组件</strong>，因为会造成高度耦合，增加变更成本</p>
+<p>对于公共资源的归属和管理，一般有两种模式：</p>
+<ul>
+<li>公共资源归属于所有人，即没有明确归属</li>
+<li>公共资源归集中管理，由专人负责</li>
+</ul>
+<p>从实践经验来看，前者很容易衍变成没有明确规范，且背离技术愿景的大杂烩，而后者会造成资源创建和使用的脱节，比较推荐的模式是开源软件的管理模式：</p>
+<p>即，所有人都能补充公共资源，但要有人（或一个团队）负责监管，以保证质量、一致性以及正确性</p>
+<h3 id="应用间通信"><a href="#应用间通信" class="headerlink" title="应用间通信"></a>应用间通信</h3><p>通过自定义事件间接通信是一种避免直接耦合的常用方式，此外，React 的单向数据流模型也能让依赖关系更加明确，对应到微前端中，从容器应用向子应用传递数据与回调函数</p>
+<p>另外，路由参数除了能用于分享、书签等场景外，也可以作为一种通信手段，并且具有诸多优势：</p>
+<ul>
+<li>其结构遵从定义明确的开放标准</li>
+<li>页面级共享，能够全局访问</li>
+<li>长度限制促使只传递必要的少量数据</li>
+<li>面向用户的，有助于依照领域建模</li>
+<li>声明式的，语义上更通用（”this is where we are”, rather than “please do this thing”）</li>
+<li>迫使子应用之间间接通信，而不直接依赖对方</li>
+</ul>
+<p>但原则上，无论采用哪种方式，都应该尽可能减少子应用间的通信，以避免大量弱依赖造成的强耦合</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>每个子应用都应该有自己的全套测试方案，特殊之处在于，除单元测试、功能测试外，还要有集成测试：</p>
+<ul>
+<li>集成测试：保证子应用间集成的正确性，比如跨子应用的交互操作</li>
+<li>功能测试：保证页面组装的正确性</li>
+<li>单元测试：保证底层业务逻辑和渲染逻辑的正确性</li>
+</ul>
+<p>自下而上形成一个金字塔结构，每一层只需验证在其下层覆盖不到的部分即可</p>
+<h2 id="四、示例"><a href="#四、示例" class="headerlink" title="四、示例"></a>四、示例</h2><ul>
+<li>在线 Demo：<a href="https://demo.microfrontends.com/" target="_blank" rel="noopener">https://demo.microfrontends.com/</a></li>
+<li>源码地址：<a href="https://github.com/micro-frontends-demo/container" target="_blank" rel="noopener">micro-frontends-demo/container</a></li>
+<li>详细介绍：<a href="https://martinfowler.com/articles/micro-frontends.html#TheExampleInDetail" target="_blank" rel="noopener">The example in detail</a></li>
+</ul>
+<h2 id="五、缺点"><a href="#五、缺点" class="headerlink" title="五、缺点"></a>五、缺点</h2><p>当然，这种架构模式并非百益而无一害，一些问题也随之而来：</p>
+<ul>
+<li>导致依赖项冗余，增加用户的流量负担</li>
+<li>团队自治程度的增加，可能会破坏协作</li>
+</ul>
+<h3 id="流量负担"><a href="#流量负担" class="headerlink" title="流量负担"></a>流量负担</h3><p>独立构建意味着公共资源的冗余，继而增加用户的流量负担</p>
+<p><strong>没有非常理想的解决办法</strong>，一种简单的方案是将公共依赖从（子应用的）构建产物中剔除，但又会引入构建时耦合：</p>
+<h3 id="操作、管理上的复杂性"><a href="#操作、管理上的复杂性" class="headerlink" title="操作、管理上的复杂性"></a>操作、管理上的复杂性</h3><p>在采用微前端之前，先要考虑几个问题：</p>
+<ul>
+<li>现有的前端开发、测试、发布流程如何扩展支持很多个应用？</li>
+<li>分散的，控制弱化的工具体系及开发实践是否可靠？</li>
+<li>针对各式各样的前端代码库，如何建立质量标准？</li>
+</ul>
+<p>总之，与之前不同的是，微前端将产生一堆小的东西，因此需要考虑是否具备采用这种方法所需的技术和组织成熟度</p>
+<h2 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h2><p>类似于微服务之于后端，前端业务在发展到一定规模之后，也需要一种用来分解复杂度的架构模式，于是出现了微服务思想在前端领域的应用，即微前端。主要目的在于：</p>
+<ul>
+<li>技术架构上进一步的扩展性（模块边界清晰、依赖明确）</li>
+<li>团队组织上的自治权</li>
+<li>开发流程上能独立开发、独立交付</li>
+</ul>
+<p>最大的意义在于解锁了多技术栈并存的能力，尤其适用于渐进式重构中架构升级过渡期：</p>
+<p>允许低成本尝试新技术栈，甚至允许选用最合适的技术栈做不同的事情（类似于微服务中允许用不同的语言编写不同服务）：</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>1.<a href="https://martinfowler.com/articles/micro-frontends.html" target="_blank" rel="noopener">Micro Frontends</a><br>2.<a href="https://medium.com/@lucamezzalira/i-dont-understand-micro-frontends-88f7304799a9" target="_blank" rel="noopener">I don’t understand micro-frontends.</a><br>3.<a href="https://css-tricks.com/micro-frontends/" target="_blank" rel="noopener">Micro Frontends</a><br>4.<a href="https://medium.com/@tomsoderlund/micro-frontends-a-microservice-approach-to-front-end-web-development-f325ebdadc16" target="_blank" rel="noopener">Micro frontends—a microservice approach to front-end web development</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="tag"># 微前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/03/09/Electron-%E4%B8%AD%E4%BD%BF%E7%94%A8-asar-%E6%9F%A5%E7%9C%8B-app-asar-%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/" rel="next" title="Electron 中使用 asar 查看 app.asar 文件内容">
+                <i class="fa fa-chevron-left"></i> Electron 中使用 asar 查看 app.asar 文件内容
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/13/%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="prev" title="如何理解前端工程化">
+                如何理解前端工程化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-number">2.</span> <span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、特点"><span class="nav-number">3.</span> <span class="nav-text">二、特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单、松耦合的代码库"><span class="nav-number">3.1.</span> <span class="nav-text">简单、松耦合的代码库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量升级"><span class="nav-number">3.2.</span> <span class="nav-text">增量升级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独立部署"><span class="nav-number">3.3.</span> <span class="nav-text">独立部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#团队自治"><span class="nav-number">3.4.</span> <span class="nav-text">团队自治</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、实现方案"><span class="nav-number">4.</span> <span class="nav-text">三、实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多-Bundle-集成"><span class="nav-number">4.1.</span> <span class="nav-text">多 Bundle 集成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端集成"><span class="nav-number">4.1.1.</span> <span class="nav-text">服务端集成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建时集成"><span class="nav-number">4.1.2.</span> <span class="nav-text">构建时集成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时集成"><span class="nav-number">4.1.3.</span> <span class="nav-text">运行时集成</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#影响隔离"><span class="nav-number">4.2.</span> <span class="nav-text">影响隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源复用"><span class="nav-number">4.3.</span> <span class="nav-text">资源复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用间通信"><span class="nav-number">4.4.</span> <span class="nav-text">应用间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">4.5.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、示例"><span class="nav-number">5.</span> <span class="nav-text">四、示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、缺点"><span class="nav-number">6.</span> <span class="nav-text">五、缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流量负担"><span class="nav-number">6.1.</span> <span class="nav-text">流量负担</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作、管理上的复杂性"><span class="nav-number">6.2.</span> <span class="nav-text">操作、管理上的复杂性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、总结"><span class="nav-number">7.</span> <span class="nav-text">六、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2021/05/12/微前端到底是什么/';
+
+      var disqus_title = "微前端到底是什么?";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

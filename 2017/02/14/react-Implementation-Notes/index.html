@@ -1,0 +1,1142 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Implementation Notes这篇React（版本v15.4.0）官方文档。  Implementation Notes这部分是stack reconciler 实现笔记集合。 这是非常技术性的，并且呈现对React 公共API 的强烈理解，以及如何划分为核心（core），渲染器（renderer）以及reconciler。如果你对React 代码库不是非常了解，首先阅读t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Implementation Notes">
+<meta property="og:url" content="https://jobbym.github.io/2017/02/14/react-Implementation-Notes/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Implementation Notes这篇React（版本v15.4.0）官方文档。  Implementation Notes这部分是stack reconciler 实现笔记集合。 这是非常技术性的，并且呈现对React 公共API 的强烈理解，以及如何划分为核心（core），渲染器（renderer）以及reconciler。如果你对React 代码库不是非常了解，首先阅读t">
+<meta property="og:image" content="https://jobbym.github.io/2017/02/14/react-Implementation-Notes/implementation-notes-tree.png">
+<meta property="article:published_time" content="2017-02-14T01:38:18.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2017/02/14/react-Implementation-Notes/implementation-notes-tree.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/02/14/react-Implementation-Notes/"/>
+
+
+
+
+
+  <title> react Implementation Notes | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/02/14/react-Implementation-Notes/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Implementation Notes
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T01:38:18+00:00">
+                2017-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/14/react-Implementation-Notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/14/react-Implementation-Notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/14/react-Implementation-Notes/" class="leancloud_visitors" data-flag-title="react Implementation Notes">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/contributing/implementation-notes.html" target="_blank" rel="noopener">Implementation Notes</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Implementation-Notes"><a href="#Implementation-Notes" class="headerlink" title="Implementation Notes"></a>Implementation Notes</h2><p>这部分是<a href="https://facebook.github.io/react/contributing/codebase-overview.html#stack-reconciler" target="_blank" rel="noopener">stack reconciler</a> 实现笔记集合。</p>
+<p>这是非常技术性的，并且呈现对React 公共API 的强烈理解，以及如何划分为核心（core），渲染器（renderer）以及reconciler。如果你对React 代码库不是非常了解，首先阅读<a href="https://facebook.github.io/react/contributing/codebase-overview.html" target="_blank" rel="noopener">the codebase overview</a>。</p>
+<p>目前stack reconciler 是所有React 生产代码中最有效的。它位于<a href="https://github.com/facebook/react/tree/master/src/renderers/shared/stack" target="_blank" rel="noopener">src/renderers/shared/stack/reconciler</a> 并且被React DOM 和React Native 使用。</p>
+<a id="more"></a>
+
+<h3 id="Video-Buiding-React-from-Scratch"><a href="#Video-Buiding-React-from-Scratch" class="headerlink" title="Video: Buiding React from Scratch"></a>Video: Buiding React from Scratch</h3><p><a href="https://twitter.com/zpao" target="_blank" rel="noopener">Paul O’Shannessy</a> 关于<a href="https://www.youtube.com/watch?v=_MAD4Oly9yg" target="_blank" rel="noopener">builing React form scratch</a> 的演讲，大大的启发了这篇文档。</p>
+<p>这篇文档和他的演讲是实际代码的简化，所以你可以更好的了解通过熟悉这两者。</p>
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>reconciler 自身没有一个公共的API。<a href="https://facebook.github.io/react/contributing/codebase-overview.html#stack-renderers" target="_blank" rel="noopener">Renderers</a> 像React DOM 和React Native使用它去有效地更新用户界面（user interface）根据用户写的React component。</p>
+<h3 id="Mounting-as-a-Recursive-Process"><a href="#Mounting-as-a-Recursive-Process" class="headerlink" title="Mounting as a Recursive Process"></a>Mounting as a Recursive Process</h3><p>让我们考虑首次加载一个component：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br></pre></td></tr></table></figure>
+<p>React DOM 将<code>&lt;App /&gt;</code> 传入reconciler。记住<code>&lt;App /&gt;</code> 是一个React element，也就是一个渲染成什么样的描述。你可以把它想象成一个普通的对象：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>)</span><br><span class="line"><span class="comment">// &#123;type: App, props: &#123;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>reconciler 将检查<code>App</code> 是一个类（class）还是一个函数（function）。</p>
+<p>如果<code>App</code> 是一个函数，reconciler 将调用<code>App(props)</code> 去得到这个已渲染的element。</p>
+<p>如果<code>App</code> 是一个类，reconciler 通过<code>new App(props)</code> 实例化一个<code>App</code>，调用<code>componentWillMount</code> 声明周期方法，然后调用<code>render()</code> 方法去获取这个已渲染的element。</p>
+<p>无论那种方式，reconciler 将会了解<code>App</code> element “渲染成（rendered to）”。</p>
+<p>这个过程是递归的（recursive），<code>App</code> 可能渲染成一个<code>&lt;Greeting /&gt;</code>，<code>Greeting</code> 可能去渲染成一个<code>&lt;Button /&gt;</code>，等等。reconciler 将会递归地“向下获取数据（drill down）”通过用户定义的component ，当它了解每一个component 渲染成什么。</p>
+<p>你可以将这一过程想象成一段伪代码。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This function takes a React element (e.g. &lt;App /&gt;)</span></span><br><span class="line"><span class="comment">// and returns a DOM or Native node representing the mounted tree.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mount</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = element.type</span><br><span class="line">  <span class="keyword">var</span> props = element.props</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We will determine the rendered element</span></span><br><span class="line">  <span class="comment">// by either running the type as function</span></span><br><span class="line">  <span class="comment">// or creating an instance and calling render()</span></span><br><span class="line">  <span class="keyword">var</span> renderedElement</span><br><span class="line">  <span class="keyword">if</span>(isClass(type))&#123;</span><br><span class="line">    <span class="comment">// Common class</span></span><br><span class="line">    <span class="keyword">var</span> publicInstance = <span class="keyword">new</span> type(props)</span><br><span class="line">    <span class="comment">// Set the props</span></span><br><span class="line">    publicInstance.props = props</span><br><span class="line">    <span class="comment">// Call the lifecycle if necessary</span></span><br><span class="line">    <span class="keyword">if</span>(publicInstance.componentWillMount)&#123;</span><br><span class="line">      publicInstance.componentWillMount()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Get the rendered element by calling render()</span></span><br><span class="line">    renderedElement = publicInstance.render()</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// Component function</span></span><br><span class="line">    renderedElement = type(props)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// This process is recursive because a component may</span></span><br><span class="line">  <span class="comment">// return an element with a type of another component</span></span><br><span class="line">  <span class="keyword">return</span> mount(renderedElement)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Note: this implementation is incomplete and recurses infinitely!</span></span><br><span class="line">  <span class="comment">// It only handles elements like &lt;App /&gt; or &lt;Button /&gt;.</span></span><br><span class="line">  <span class="comment">// It doesn't handle elments like &lt;div /&gt; or &lt;p /&gt; yet.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rootEl = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line"><span class="keyword">var</span> node = mount(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>)</span><br><span class="line">rootEl.appendChild(node)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>Note：</strong><br>这真的是伪代码。它不同于真正的是实现。它将会导致一个栈溢出（stack overflow）因为我们还没有讨论什么时候去停止这个递归（recursion）。</p>
+</blockquote>
+<p>让我们概括上述例子中的几个关键思路：</p>
+<ul>
+<li>React elements 是普通对象表示component 类型（例如：<code>App</code>）和props。</li>
+<li>用户定义的component（例如：<code>App</code>）可以是类或函数，但是它们都“渲染成（render to）”elements。</li>
+<li>“加载（mounting）”是一个递归进程（recursive process），通过给定顶级React element（例如<code>&lt;App /&gt;</code>）创建DOM 或Native 树。</li>
+</ul>
+<h3 id="Mounting-Host-Elements"><a href="#Mounting-Host-Elements" class="headerlink" title="Mounting Host Elements"></a>Mounting Host Elements</h3><p>这个过程将会是无效的，如果我们不渲染一些东西到屏幕上作为结果。</p>
+<p>除了用户定义的（“composite”）components，React element 也可以表示平台特定的（“host”）components。例如，<code>Button</code> 可能返回一个<code>&lt;div /&gt;</code> 从它的渲染方法中。</p>
+<p>如果element 的<code>type</code> 属性是一个字符串，我们处理成一个host element 。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="xml"><span class="tag">&lt;<span class="name">div</span> /&gt;</span></span>)</span><br><span class="line"><span class="comment">//  &#123;type: 'div', props: &#123;&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>没有用户定义的代码同host elements 相关联。</p>
+<p>当reconciler 遇到一个host element，它让渲染器去处理加载它。例如，React DOM 将会创建一个DOM 节点。</p>
+<p>如果host element 有子节点，reconciler 将会根据上述的相同的算法递归加载它们。它不关心孩子节点是host（像<code>&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;</code>）,还是composite（像<code>&lt;div&gt;&lt;Button /&gt;&lt;/div&gt;</code>），或者两者都是。</p>
+<p>被孩子component生成的DOM 节点，将会追加到父DOM 节点，并且递归地，完成的DOM 结构将会被组装。</p>
+<blockquote>
+<p><strong>Note：</strong><br>reconciler 自身不会绑定到DOM。加载的（有时，在源代码中称为“mount image”）最准确结果依赖渲染器，并且它亦是一个DOM 节点（React DOM），字符串（React DOM Server），或者是一个数字代表本地视图（React Native）。</p>
+</blockquote>
+<p>如果我们扩展代码去处理host element，它将看上去像这样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isClass</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// React.Component subclasses have this flag</span></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="built_in">Boolean</span>(type.prototype) &amp;&amp;</span><br><span class="line">    <span class="built_in">Boolean</span>(type.prototype.isReactComponent)</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This function only hanles elements with a composite type.</span></span><br><span class="line"><span class="comment">// For example, it handles &lt;App /&gt; and &lt;Button /&gt;, but not a &lt;div /&gt;.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountComposite</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = element.type</span><br><span class="line">  <span class="keyword">var</span> props = element.props</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> renderedElement</span><br><span class="line">  <span class="keyword">if</span>(isClass(type))&#123;</span><br><span class="line">    <span class="comment">// Component class</span></span><br><span class="line">    <span class="keyword">var</span> publicInstance = <span class="keyword">new</span> type(props)</span><br><span class="line">    <span class="comment">// Set the props</span></span><br><span class="line">    publicInstance.props = props</span><br><span class="line">    <span class="comment">// Call the lifecycle if necessay</span></span><br><span class="line">    <span class="keyword">if</span>(publicInstance.componentWillMount)&#123;</span><br><span class="line">      publicInstance.componentWillMount()</span><br><span class="line">    &#125;</span><br><span class="line">    renderedElement = publicInstance.render()</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> type === <span class="string">'function'</span>)&#123;</span><br><span class="line">    <span class="comment">// Component function</span></span><br><span class="line">    renderedElement = type(props)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// This is recursive but we'll eventually reach the bottom of recursion when</span></span><br><span class="line">  <span class="comment">// the element is host &lt;e.g. &lt;div /&gt;) rather than composite (e.g. &lt;App /&gt;);</span></span><br><span class="line">  <span class="keyword">return</span> mount(renderedElement)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This function only handles elements with a host type.</span></span><br><span class="line"><span class="comment">// For example, it handles &lt;div /&gt; and &lt;p /&gt; but not an &lt;App /&gt;.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountHost</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = element.type</span><br><span class="line">  <span class="keyword">var</span> props = element.props</span><br><span class="line">  <span class="keyword">var</span> children = props.children || []</span><br><span class="line">  <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(children))&#123;</span><br><span class="line">    children = [children]</span><br><span class="line">  &#125;</span><br><span class="line">  children = children.fiter(<span class="built_in">Boolean</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// This block of code shouldn't be in the reconciler.</span></span><br><span class="line">  <span class="comment">// Different renderers might initialize nodes differently.</span></span><br><span class="line">  <span class="comment">// For example, React Native would create iOS or Android views.</span></span><br><span class="line">  <span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(type)</span><br><span class="line">  <span class="built_in">Object</span>.keys(props).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(propName !== children)&#123;</span><br><span class="line">      node.setAttribute(propName, props[propName])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Mount the children</span></span><br><span class="line">  children.forEach(<span class="function"><span class="params">childElement</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Children may be host (e.g. &lt;div /&gt;) or composite (e.g. &lt;Button /&gt;).</span></span><br><span class="line">    <span class="comment">// We will also mount them recursively:</span></span><br><span class="line">    <span class="keyword">var</span> childNode = mount(childElement)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This line of code is alse renderer-specific.</span></span><br><span class="line">    <span class="comment">// It would be different depending on the renderer:</span></span><br><span class="line">    node.appendChild(childNode)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Return the DOM node as mount result.</span></span><br><span class="line">  <span class="comment">// This is where the recursion ends.</span></span><br><span class="line">  <span class="keyword">return</span> node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mount</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = element.type</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> type === <span class="string">'function'</span>)&#123;</span><br><span class="line">    <span class="comment">// User-defined components</span></span><br><span class="line">    <span class="keyword">return</span> mountComposite(element)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>( <span class="keyword">typeof</span> type === <span class="string">'string'</span>)&#123;</span><br><span class="line">    <span class="comment">// Platform-specific components</span></span><br><span class="line">    <span class="keyword">return</span> mountHost(element)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rootEl = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line"><span class="keyword">var</span> node = mount(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>)</span><br><span class="line">rootEl.appendChild(node)</span><br></pre></td></tr></table></figure>
+<p>这是工作的，但是它仍然同reconciler 真正实现有相当远的距离。缺少关键的成分去支持更新。</p>
+<h3 id="Introducing-Internal-Instances"><a href="#Introducing-Internal-Instances" class="headerlink" title="Introducing Internal Instances"></a>Introducing Internal Instances</h3><p>React 关键的特性是你可以重新渲染任何事情，并且它不会重新创建DOM 或者是重置state：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br><span class="line"><span class="comment">// Should reuse the existing DOM</span></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br></pre></td></tr></table></figure>
+<p>然而，我们上述的实现仅知道如何去加载初始化树。在它上面不能执行更新因为它不存储任何必须要的信息，像所有的<code>pulicInstance</code>，或哪一个DOM <code>node</code> 对于哪一个component。</p>
+<p>stack reconciler 代码库解决它通过制作<code>mount()</code> 函数方法并将其放到它的类上。这种方法有缺点，我们将在相反的方法<a href="https://facebook.github.io/react/contributing/codebase-overview.html#fiber-reconciler" target="_blank" rel="noopener">继续重新reconciler（ongoing rewrite of the reconciler）</a>。然而，现在它就是这样工作的。</p>
+<p>而不是分离<code>mountHost</code> 和<code>mountComposite</code> 函数，我们将要创建两个类：<code>DOMComponent</code> 和<code>CompositeComponent</code>。</p>
+<p>这两个类都有一个接受<code>element</code> 的构造函数，除了一个返回已加载节点的<code>mount()</code> 方法之外。我们将使用工厂正确实例化类来替代顶级<code>mount</code> 方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instantiateComponent</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = element.type</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> type === <span class="string">'function'</span>)&#123;</span><br><span class="line">    <span class="comment">// User-defined components</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CompositeComponent(element)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>( <span class="keyword">typeof</span> type === <span class="string">'string'</span>)&#123;</span><br><span class="line">    <span class="comment">// Platform-specific components</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DOMComponent(element)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，让我们考虑<code>CompositeComponent</code> 的实现：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(element)&#123;</span><br><span class="line">    <span class="keyword">this</span>.currentElement = element</span><br><span class="line">    <span class="keyword">this</span>.renderedElement = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">this</span>.publicInstance = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance()&#123;</span><br><span class="line">    <span class="comment">// For composite components, expose the class instance</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.publicInstance</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount()&#123;</span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>.currentElement</span><br><span class="line">    <span class="keyword">var</span> type = element.type</span><br><span class="line">    <span class="keyword">var</span> props = element.props</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> publicInstance</span><br><span class="line">    <span class="keyword">var</span> renderedElement</span><br><span class="line">    <span class="keyword">if</span>(isClass(type))&#123;</span><br><span class="line">      <span class="comment">// Component class</span></span><br><span class="line">      publicInstance = <span class="keyword">new</span> type(props)</span><br><span class="line">      <span class="comment">// Set the props</span></span><br><span class="line">      publicInstance.props = props</span><br><span class="line">      <span class="comment">// Call the lifecycle if necessary</span></span><br><span class="line">      <span class="keyword">if</span>(publicInstance.componentWillMount)&#123;</span><br><span class="line">        publicInstance.componentWillMount()</span><br><span class="line">      &#125;</span><br><span class="line">      renderedElement = publicInstance.render()</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> type === <span class="string">'function'</span>)&#123;</span><br><span class="line">      <span class="comment">// Component function</span></span><br><span class="line">      publicInstance = <span class="literal">null</span></span><br><span class="line">      renderedElement = type(props)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Save the public instance</span></span><br><span class="line">    <span class="keyword">this</span>.publicInstance = publicInstance</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Instantiate the child internal instance according to the element.</span></span><br><span class="line">    <span class="comment">// It would be a DOMComponent for &lt;div /&gt; or &lt;p /&gt;</span></span><br><span class="line">    <span class="comment">// and a CompositeComponent for &lt;App /&gt; or &lt;Button /&gt;:</span></span><br><span class="line">    <span class="keyword">var</span> renderedComponent = instantiateComponent(renderedElement)</span><br><span class="line">    <span class="keyword">this</span>.renderedComponent = renderedComponent</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Mount the rendered output</span></span><br><span class="line">    <span class="keyword">return</span> renderedComponent.mount()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这和我们之前的<code>mountComposite()</code> 实现并没有什么大的不同，但是，现在我们可以保存一些信息，例如<code>this.currentElement</code>，<code>this.renderedComponent</code> 以及各<code>this.publicInstance</code> ，为了更新时使用。</p>
+<p>注意<code>CompositeComponent</code> 的实例同用户提供的<code>element.type</code> 不是同一样东西。<code>CompositeComponent</code> 是我们的reconciler 实现细节，并且绝不会暴露给用户。用户提供的类是我们从<code>element.type</code> 读取的，并且<code>CompositeComponent</code> 创建它的一个实例。</p>
+<p>为了避免产生困惑，我们称<code>CompositeComponent</code> 和<code>DOMComponent</code> 的实例为“内部实例（internal instances ）”。它们存在所有我们可以将一些长期存在的数据同它们联系。只有渲染器和reconciler 意识到它们的存在。</p>
+<p>相反，我们称用户定义的类的实例为“公共实例（public instance）”。公共实例是你在<code>render()</code> 方法以及其它自定义component 方法中看到的<code>this</code>。</p>
+<p><code>mountHost()</code> 函数重构为<code>DOMComponent</code> 类上的<code>mount()</code> 方法，看上去像：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(element)&#123;</span><br><span class="line">    <span class="keyword">this</span>.currentElement = element</span><br><span class="line">    <span class="keyword">this</span>.renderedChildren = []</span><br><span class="line">    <span class="keyword">this</span>.node = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance()&#123;</span><br><span class="line">    <span class="comment">// For DOM components, only expose the DOM node.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.node</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount()&#123;</span><br><span class="line">    <span class="keyword">var</span> element = <span class="keyword">this</span>.currentElement</span><br><span class="line">    <span class="keyword">var</span> type = element.type</span><br><span class="line">    <span class="keyword">var</span> props = element.props</span><br><span class="line">    <span class="keyword">var</span> children = props.children || []</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(children))&#123;</span><br><span class="line">      children = [children]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create and save the node</span></span><br><span class="line">    <span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(type)</span><br><span class="line">    <span class="keyword">this</span>.node = node</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the attributes</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(props).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (propName !== <span class="string">'children'</span>)&#123;</span><br><span class="line">        node.setAttribute(propName, props[propName])</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create and save the contained children.</span></span><br><span class="line">    <span class="comment">// Each of them can be a DOMComponent or a CompositeComponent,</span></span><br><span class="line">    <span class="comment">// depending on whether the element type is a string or a function.</span></span><br><span class="line">    <span class="keyword">var</span> renderedChildren = children.map(instantiateComponent)</span><br><span class="line">    <span class="keyword">this</span>.renderedChildren = renderedChildren</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Collect DOM nodes they return on mount</span></span><br><span class="line">    <span class="keyword">var</span> childNodes = renderedChildren.map(<span class="function"><span class="params">child</span> =&gt;</span> childmount)</span><br><span class="line">    childNodes.forEach(<span class="function"><span class="params">childNode</span> =&gt;</span> node.appendChild(childNode))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return the DOM node as mount result</span></span><br><span class="line">    <span class="keyword">return</span> node</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>mountHost()</code> 重构后最大的不同是，现在我们保存<code>this.node</code> 和<code>this.renderedChildren</code> 到内部DOM component 实例上。未来我们将要将其应用到非破坏性（non-destructive）更新上。</p>
+<p>因此，每个内部实例，composite 或者host ，现在都指向它们孩子的内部实例。为了更好的理解它，如果一个函数<code>&lt;App&gt;</code> component 渲染一个<code>&lt;Button&gt;</code> 类component，并且<code>Button</code> 类渲染一个<code>&lt;div&gt;</code>，这个内部实例树看上去像这样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[object CompositeComponent]&#123;</span><br><span class="line">  currentElement: <span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>,</span><br><span class="line">  publicInstance: <span class="literal">null</span>,</span><br><span class="line">  renderedComponent: [object CompositeComponent]&#123;</span><br><span class="line">    currentElement: <span class="xml"><span class="tag">&lt;<span class="name">Button</span> /&gt;</span></span>,</span><br><span class="line">    publicInstance: [object Button],</span><br><span class="line">    renderedComponent: [object DOMComponent]&#123;</span><br><span class="line">      currentElement: <span class="xml"><span class="tag">&lt;<span class="name">div</span> /&gt;</span></span>,</span><br><span class="line">      node: [object HTMLDivElement],</span><br><span class="line">      renderedChildren: []</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在DOM中你将只能看到<code>&lt;div&gt;</code>。然而内部实例树包括composite 和host 内部实例。</p>
+<p>composite 内部实例需要存储：</p>
+<ul>
+<li>当前element。</li>
+<li>公共实例，如果element 类型是class。</li>
+<li>单个已经渲染的内部实例。它可以是<code>DOMComponent</code> 或者<code>CompositeComponent</code>。</li>
+</ul>
+<p>host 内部实例需要存储：</p>
+<ul>
+<li>当前element。</li>
+<li>DOM 节点。</li>
+<li>所有的孩子颞部实例。它们中的每一个可以是<code>DOMComponent</code> 或<code>CompositeComponent</code>。</li>
+</ul>
+<p>如果你很难想象在复杂应用中内部实例树的结构，<a href="https://github.com/facebook/react-devtools" target="_blank" rel="noopener">React DevTools</a> 可以给你一个非常近似的，因为它使用灰色高亮host 实例，使用紫色高亮composite 实例：</p>
+<img src="/2017/02/14/react-Implementation-Notes/implementation-notes-tree.png" class="">
+<p>为了完成重构，我们将要引入一个函数来加载一个完整的树到容器节点中，就像<code>ReactDOM.render()</code> 。它像<code>ReactDOM.render()</code> 返回一个公共实例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountTree</span>(<span class="params">element, containerNode</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Create the top-level internal instance</span></span><br><span class="line">  <span class="keyword">var</span> rootComponent = instantiateComponent(element)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Mount the top-level component into the container</span></span><br><span class="line">  <span class="keyword">var</span> node = rootComponent.mount()</span><br><span class="line">  containerNode.appendChild(node)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Return the public instance it provides</span></span><br><span class="line">  <span class="keyword">var</span> publicInstance = rootComponent.getPublicInstance()</span><br><span class="line">  <span class="keyword">return</span> publicInstance</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rootEl = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">mountTree(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Unmounting"><a href="#Unmounting" class="headerlink" title="Unmounting"></a>Unmounting</h3><p>现在我们有内部实例保存它们的孩子和DOM 节点，我们可以实现卸载（unmounting）。对于一个composite component，卸载递归地调用生命周期钩子。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">  unmount()&#123;</span><br><span class="line">    <span class="comment">// Call the lifecycle hook if necessary</span></span><br><span class="line">    <span class="keyword">var</span> publicInstance = <span class="keyword">this</span>.publicInstance</span><br><span class="line">    <span class="keyword">if</span>(publicInstance)&#123;</span><br><span class="line">      <span class="keyword">if</span>(publicInstance.componentWillUnmount)&#123;</span><br><span class="line">        publicInstance.componentWillUnmount()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Unmount the single rendered component</span></span><br><span class="line">    <span class="keyword">var</span> renderedComponent = <span class="keyword">this</span>.renderedComponent</span><br><span class="line">    renderedComponent.unmount()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于<code>DOMComponent</code>，卸载告诉每一个孩子去卸载：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  unmount()&#123;</span><br><span class="line">    <span class="comment">// Unmount all the children</span></span><br><span class="line">    <span class="keyword">var</span> renderedChildren = <span class="keyword">this</span>.renderedChildren</span><br><span class="line">    renderedChildren.forEach(<span class="function"><span class="params">child</span> =&gt;</span> child.unmount())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，卸载DOM component 也会移除事件侦听器以及清理一些缓存，但是我们将跳过这些细节。</p>
+<p>我们现在可以添加一个<code>unmountTree(containerNode)</code> 的顶级函数，它同<code>ReactDOM.unmountComponentAtNode()</code> 非常相似：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unmountTree</span>(<span class="params">containerNode</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Read the internal instance from a DOM node</span></span><br><span class="line">  <span class="comment">// (This doesn't work yet, we will need to change mountTree() to store it.)</span></span><br><span class="line">  <span class="keyword">var</span> node = containerNode.firstChild</span><br><span class="line">  <span class="keyword">var</span> rootComponent = node._internalInstance</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Unmount the tree and clear the container</span></span><br><span class="line">  rootComponent.unmount()</span><br><span class="line">  containerNode.innerHTML = <span class="string">''</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了让这能够工作，我们需要从DOM 节点中读取一个内部根实例。我们将修改<code>mountTree()</code> 方法，添加<code>_internalInstance</code> 属性到根DOM<br>节点。我们将教导<code>mountTree</code> 去销毁任何已经组成呢的树，所以它可以被多次调用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountTree</span>(<span class="params">element, containerNode</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Destory any existing tree</span></span><br><span class="line">  <span class="keyword">if</span>(containerNode.firstChild)&#123;</span><br><span class="line">    unmountTree(containerNode)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Create the top-level internal instance</span></span><br><span class="line">  <span class="keyword">var</span> rootComponent = instantiateComponent(element)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Mount the top-level component into the container</span></span><br><span class="line">  <span class="keyword">var</span> node = rootComponent.mount()</span><br><span class="line">  containerNode.appendChild(node)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Return the public instance it provides</span></span><br><span class="line">  <span class="keyword">var</span> publicInstance = rootComponent.getPublicInstance()</span><br><span class="line">  <span class="keyword">return</span> publicInstance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，运行<code>unmountTree()</code> ，或重复运行<code>mountTree()</code>，移除旧的树并且在component 运行<code>componentWillUnmount</code> 这个生命周期钩子。</p>
+<h3 id="Updating"><a href="#Updating" class="headerlink" title="Updating"></a>Updating</h3><p>在前面的章节，我们实现了卸载。然而React 将不会非常有用如果整个树中的每一个prop 都卸载然后加载。reconciler 的目标是复用已经存在实例，尽可能的保存DOM 和state。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rootEl = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line"></span><br><span class="line">mountTree(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br><span class="line"><span class="comment">// Should reuse the existing DOM</span></span><br><span class="line">mountTree(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br></pre></td></tr></table></figure>
+<p>我们将扩展我们的内部实例同一个或多个方法的联系。除了<code>mount()</code> 和<code>unmount()</code>，<code>DOMComponent</code> 和<code>CompositeComponent</code> 将会实现一个<code>receive(nextElement)</code> 新方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  receive(nextElement)&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  receive(nextElement)&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它的工作是通过由<code>nextElement</code> 提供的描述更新component（和它的任意子节点）。</p>
+<p>这部分经常被描述为“虚拟DOM比较（virtual DOM diffing）”，虽然真正发生的是，我们递归内部树，并且让每一个内部实例收到更新。</p>
+<h3 id="Updating-Composite-Components"><a href="#Updating-Composite-Components" class="headerlink" title="Updating Composite Components"></a>Updating Composite Components</h3><p>当composite component 收到一个新的element 时，我们运行<code>componentWillUpdate()</code> 生命周期钩子。</p>
+<p>然后我们重新渲染component 使用新的props，并且得到下一个已经渲染的element：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  receive(nextElement)&#123;</span><br><span class="line">    <span class="keyword">var</span> prevProps = <span class="keyword">this</span>.currentElement.props</span><br><span class="line">    <span class="keyword">var</span> publicInstance = <span class="keyword">this</span>.publicInstance</span><br><span class="line">    <span class="keyword">var</span> prevRenderedComponent = <span class="keyword">this</span>.renderedComponent</span><br><span class="line">    <span class="keyword">var</span> prevRenderedElement = prevRenderedComponent.currentElement</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update *own* element</span></span><br><span class="line">    <span class="keyword">this</span>.currentElement = nextElement</span><br><span class="line">    <span class="keyword">var</span> type = nextElement.type</span><br><span class="line">    <span class="keyword">var</span> nextProps = nextElement.props</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Figure out what the next render() output is</span></span><br><span class="line">    <span class="keyword">var</span> nextRenderedElement</span><br><span class="line">    <span class="keyword">if</span>(isClass(type))&#123;</span><br><span class="line">      <span class="comment">// Component class</span></span><br><span class="line">      <span class="comment">// Call the lifecycle if necessary</span></span><br><span class="line">      <span class="keyword">if</span>(publicInstance.componentWillUpdate)&#123;</span><br><span class="line">        publicInstance.componentWillUpdate(nextProps)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Update the props</span></span><br><span class="line">      publicInstance.props = nextProps</span><br><span class="line">      <span class="comment">// Re-render</span></span><br><span class="line">      nextRenderedElement = publicInstance.render()</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> type === <span class="string">'function'</span>)&#123;</span><br><span class="line">      <span class="comment">// Component function</span></span><br><span class="line">      nextRenderedElement = type(nextProps)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>接下来，我们可以查看已渲染element 的<code>type</code>。如果<code>type</code> 还没有改变自从上一次渲染，上面的component 可以在这个位置更新。</p>
+<p>例如，如果首次它返回<code>&lt;Button color=&quot;red&quot; /&gt;</code>，第二次返回<code>&lt;Button color=&quot;blue&quot; /&gt;</code>，我们就可以告诉响应的内部实例去<code>recevie()</code> 下一个element：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// If the rendered element type has not change,</span></span><br><span class="line"><span class="comment">// reuse the existing component instance and exit.</span></span><br><span class="line"><span class="keyword">if</span>(prevRenderedElement.type === nextRenderedElement.type)&#123;</span><br><span class="line">  prevRenderedComponent.receive(nextRenderedElement)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>然而，如果接下来已渲染的element 同上一个已渲染的element 有不同的<code>type</code>，我们不能更新这个内部实例。例如，上一次渲染成<code>&lt;button /&gt;</code> 的component 渲染成<code>&lt;input /&gt;</code> 发生时：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// If we reached this point, we need to unmount the previously</span></span><br><span class="line">    <span class="comment">// mounted component, mount the new one, and swap their nodes.</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Find the old node because it will need to be replaced</span></span><br><span class="line">    <span class="keyword">var</span> prevNode = prevRenderedComponent.getHostNode()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Unmount the old child and mount a new child</span></span><br><span class="line">    prevRenderedComponent.unmount()</span><br><span class="line">    <span class="keyword">var</span> nextRenderedComponent = instantiateComponent(nextRenderedElement)</span><br><span class="line">    <span class="keyword">var</span> nextNode = nextRenderedComponent.mount()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Replace the reference to the child</span></span><br><span class="line">    <span class="keyword">this</span>.renderedComponent = nextRenderedComponent</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Replace the old node with the new one</span></span><br><span class="line">    <span class="comment">// Note: this is renderer-specific code and</span></span><br><span class="line">    <span class="comment">// ideally should live outside of CompositeComponent</span></span><br><span class="line">    prevNode.parentNode.replaceChild(nextNode, prevNode)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结，当composite component 收到一个新的element，它可以要么代理这个更新到它自己已经渲染的内部实例上，要么卸载它并且在它的位置重新加载一个新的。</p>
+<p>还有另外一种情况下，当component 将要重新加载而不是接受一个新的element，那就是当element 的<code>key</code> 发生改变了。在文档中我们不讨论<code>key</code> 控制的情况，因为它对于一个已经复杂的说明书变得更加复杂。</p>
+<p>注意我们需要添加一个名叫<code>getHostNode()</code> 的方法到内部实例上的契约，以至于可以定位平台特定的节点，在更新时用于替代它。它的实现对于两个类是直接的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  getHostNode()&#123;</span><br><span class="line">    <span class="comment">// Ask the rendered component to provide it.</span></span><br><span class="line">    <span class="comment">// This will recursively drill down any any composites.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.renderedComponent.getHostNode()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  getHostNode()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.node</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Updating-Host-Components"><a href="#Updating-Host-Components" class="headerlink" title="Updating Host Components"></a>Updating Host Components</h3><p>Host compononent 实现，像<code>DOMComponent</code>，更新是不同的。当它们收到一个element，它们需要更新底层平台特定的视图。如果React  DOM ，这意味着需要更新DOM 特性（attributes）：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  receive(nextElement)&#123;</span><br><span class="line">    <span class="keyword">var</span> node = <span class="keyword">this</span>.node</span><br><span class="line">    <span class="keyword">var</span> prevElement = <span class="keyword">this</span>.currentElement</span><br><span class="line">    <span class="keyword">var</span> prevProps = prevElement.props</span><br><span class="line">    <span class="keyword">var</span> nextProps = nextElement.props</span><br><span class="line">    <span class="keyword">this</span>.currentElement = nextElement</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Remove old attribute</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(prevProps).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(propName !== <span class="string">'children'</span> &amp;&amp; !nextProps.hasOwnProperty(propName))&#123;</span><br><span class="line">        node.removeAttribute(propName)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// Set next attribute</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(nextProps).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(propName !== <span class="string">'children'</span>)&#123;</span><br><span class="line">        node.setAttribute(propName, nextProps[propName])</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>然后，host component 需要更新它们的孩子。不像composite components，它们可能包含多于一个子节点。</p>
+<p>在这个简单例子中，我们使用内部实例数组并且遍历它，要么更新要么替换这个内部实例取决于收到的<code>type</code> 是否匹配它们之前的<code>type</code>。真正的reconciler 也需要element 的<code>key</code> 以及轨迹移动处理插入和删除，但是我们将忽略这个逻辑。</p>
+<p>我们收集孩子节点上的DOM 操作到一个列表，所以我们可以一起执行它们：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// These are arrays of React elements:</span></span><br><span class="line"><span class="keyword">var</span> prevChildren = prevProps.children || []</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(prevChildren))&#123;</span><br><span class="line">  prevChildren = [prevChildren]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> nextChildren = nextProps.children || []</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">Array</span>.isArray(nextChildren))&#123;</span><br><span class="line">  nextChildren = [nextChildren]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// These are arrays of internal instances:</span></span><br><span class="line"><span class="keyword">var</span> prevRenderedChildren = <span class="keyword">this</span>.renderedChildren</span><br><span class="line"><span class="keyword">var</span> nextRenderedChildren = []</span><br><span class="line"></span><br><span class="line"><span class="comment">// As we iterate over children, we will add operations to the array.</span></span><br><span class="line"><span class="keyword">var</span> operationQueue = []</span><br><span class="line"></span><br><span class="line"><span class="comment">// Note: the section below is extremely simplified!</span></span><br><span class="line"><span class="comment">// It doesn't handle reorders, children with holes, or keys.</span></span><br><span class="line"><span class="comment">// It only exists illustrate the overall flow, note teh specifices.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nextChildren.length; i ++)&#123;</span><br><span class="line">  <span class="comment">// Try to get an existing internal instance for this child</span></span><br><span class="line">  <span class="keyword">var</span> prevChild = prevRenderedChildren[i]</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If there is no internal instance under this index,</span></span><br><span class="line">  <span class="comment">// a child has been appended to the end. Create a new</span></span><br><span class="line">  <span class="comment">// internal instance, mount it, and use its node.</span></span><br><span class="line">  <span class="keyword">if</span>(!prevChild)&#123;</span><br><span class="line">    <span class="keyword">var</span> nextChild = instantiateComponent(nextChildren[i])</span><br><span class="line">    <span class="keyword">var</span> node = nextChild.mount()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Record that we need to append a node</span></span><br><span class="line">    operationQueue.push(&#123;<span class="attr">type</span>: <span class="string">'ADD'</span>, node&#125;)</span><br><span class="line">    nextRenderedChildren.push(nextChild)</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We can only update the instance if its element's type matches.</span></span><br><span class="line">  <span class="comment">// For example, &lt;Button size="small" /&gt; can be updated to</span></span><br><span class="line">  <span class="comment">// &lt;Button size="large" /&gt; but not to an &lt;App /&gt;</span></span><br><span class="line">  <span class="keyword">var</span> canUpdate = prevChildren[i].type === nextChildren[i].type</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If we can't update an existing instance, we have to unmount it</span></span><br><span class="line">  <span class="comment">// and mount a new one instead of it.</span></span><br><span class="line">  <span class="keyword">if</span>(!canUpdate)&#123;</span><br><span class="line">    <span class="keyword">var</span> prevNode = prevChild.node</span><br><span class="line">    prevNode.unmount()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> nextChild = instantiateComponent(nextChildren[i])</span><br><span class="line">    <span class="keyword">var</span> nextNode = nextChild.mount()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Record that we need to swap the nodes</span></span><br><span class="line">    operationQueue.push(&#123;<span class="attr">type</span>: <span class="string">'REPLACE'</span>, prevNode, nextNode&#125;)</span><br><span class="line">    nextRenderedChildren.push(nextChild)</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If we can update an existing internal instance</span></span><br><span class="line">  <span class="comment">// just let it receive the next element and handle its own update.</span></span><br><span class="line">  prevChild.receive(nextChildren[i])</span><br><span class="line">  nextRenderedChildren.push(prevChild)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Finally, unmount any children that don't exist:</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> j = nextChildren.length; j &lt; prevChildren.length; j ++)&#123;</span><br><span class="line">  <span class="keyword">var</span> prevChild = prevRenderedChildren[j]</span><br><span class="line">  <span class="keyword">var</span> node = prevChild.node</span><br><span class="line">  prevChild.unmount()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Record that we need to remove the node</span></span><br><span class="line">  operationQueue.push(&#123;<span class="attr">type</span>: <span class="string">'REMOVE'</span>, type node&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Point the list of rendered children to the updated version.</span></span><br><span class="line"><span class="keyword">this</span>.renderedChildren = nextRenderedChildren</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>作为最后一步，我们执行DOM 操作。再一次，真正的reconciler 代码是更复杂的，因为它也处理移动：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Process the operation queue.</span></span><br><span class="line">    <span class="keyword">while</span>(operationQueue.length &gt; <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="keyword">var</span> operation = operationQueue.shift()</span><br><span class="line">      <span class="keyword">switch</span>(operation.type)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'ADD'</span>:</span><br><span class="line">          <span class="keyword">this</span>.node.appendChild(operation.node)</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">'REPLACE'</span>:</span><br><span class="line">          <span class="keyword">this</span>.node.replaceChild(operation.nextNode, operation.prevNode)</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">'REMOVE'</span>:</span><br><span class="line">          <span class="keyword">this</span>.node.removeChild(operation.node)</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后这就是更新host components。</p>
+<h3 id="Top-Level-Updates"><a href="#Top-Level-Updates" class="headerlink" title="Top-Level Updates"></a>Top-Level Updates</h3><p>现在<code>CompositeComponent</code> 和<code>DOMComponent</code> 实现了<code>receive(nextElement)</code> 方法，当element 的<code>type</code> 同上一次是一样，我们可以使用它改变顶级<code>mountTree()</code> 函数：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountTree</span>(<span class="params">element, containerNode</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Check for an exsiting tree</span></span><br><span class="line">  <span class="keyword">if</span>(containerNode.firstChild)&#123;</span><br><span class="line">    <span class="keyword">var</span> prevNode = containerNode.firstChild</span><br><span class="line">    <span class="keyword">var</span> preRootComponent = prevNode._internalInstance</span><br><span class="line">    <span class="keyword">var</span> prevElement = prevRootComponent.currentElement</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If we can, reuse the  existing root component</span></span><br><span class="line">    <span class="keyword">if</span>(prevElement.type === element.type)&#123;</span><br><span class="line">      prevRootComponent.receive(element)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Otherwise, unmount the existing tree</span></span><br><span class="line">    unmountTree(containerNode)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在使用相同的类型调用<code>mountTree()</code> 两次，不会有破坏：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rootEl = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line"></span><br><span class="line">mountTree(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br><span class="line"><span class="comment">// Reuse the existing DOM</span></span><br><span class="line">mountTree(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, rootEl)</span><br></pre></td></tr></table></figure>
+<p>这就是React 内部怎样工作的基础。</p>
+<h3 id="What-We-Left-Out"><a href="#What-We-Left-Out" class="headerlink" title="What We Left Out"></a>What We Left Out</h3><p>这篇文档同真实的代码库相比是简单的。这有几个重要的方面我们没有演讲：</p>
+<ul>
+<li>component 可以渲染<code>null</code>，并且reconciler 可以控制数组中的“空槽位（empty slots）”，并且渲染输出。</li>
+<li>reconciler 也可以从element 中读取<code>key</code>，并且通过它确认哪一个内部实例对应数组中的哪一个element。在实际React 实现中大量复杂都是和它相关。</li>
+<li>除了composite 和host 内部实例类，还有“text” 和“empty”components 类。它们表示文档节点以及渲染为<code>null</code> 的“空槽位（empty slots）”。</li>
+<li>渲染器使用<a href="https://facebook.github.io/react/contributing/codebase-overview.html#dynamic-injection" target="_blank" rel="noopener">injection</a> 去传递host 内部实例类到reconciler。例如，React DOM 告诉reconciler 使用<code>ReactDOMComponent</code> 作为host 内部实例实现。</li>
+<li>更新孩子列表的逻辑被提取成mixin 称为<code>ReactMultiChild</code>，它在React DOM 和React Native 中的host 内部实例类实现。</li>
+<li>在composite component 中，reconciler 也实现支持<code>setState()</code>。在事件句柄中的多个更新被绑定到一次更新中。</li>
+<li>reconciler 也会处理绑定和解绑定（attaching and detaching）res 到composite component 和host 节点上。</li>
+<li>当DOM 准备好后生命周期钩子被调用，像<code>componentDidMount()</code> 和<code>componentDidUpdate()</code>，被收集到“回调队列（callback queues）”并且在一次性执行它们。</li>
+<li>React 将关于当前更新的信息放到一个内部对象上称为“（事务）tansaction”。事务对于在生命周期钩子期间，当前DOM 嵌套的警告，其它“全局（global）”配置更新队列上的轨迹是有用的。事务也确保更新之后，React“清理干净任何事情（clean everything up）”。例如，React DOM提供的事务类重新存储每次更新之后的输入选择。</li>
+</ul>
+<h3 id="Jumping-into-the-Code"><a href="#Jumping-into-the-Code" class="headerlink" title="Jumping into the Code"></a>Jumping into the Code</h3><ul>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/dom/client/ReactMount.js" target="_blank" rel="noopener">ReactMount</a> 就像这篇说明中<code>mountTree()</code> 和<code>unmountTree()</code> 代码位于的地方。它处理顶级component 的加载和卸载。<a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/native/ReactNativeMount.js" target="_blank" rel="noopener">ReactNativeMount</a> 是React Native 类似物。</li>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/dom/shared/ReactDOMComponent.js" target="_blank" rel="noopener">ReactDOMComponent</a> 等同于这篇说明中的<code>DOMComponent</code>。它实现了React DOM 渲染器的host component 类。<a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/native/ReactNativeBaseComponent.js" target="_blank" rel="noopener">ReactNativeBaseComponent</a> 是React Native 的类似物。</li>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/shared/stack/reconciler/ReactCompositeComponent.js" target="_blank" rel="noopener">ReactCompositeComponent</a> 等同于这篇说明中的<code>CompositeComponent</code>。它处理称为用户定义的components  和保存它们的state。</li>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/shared/stack/reconciler/instantiateReactComponent.js" target="_blank" rel="noopener">instantiateReactComponent</a> 包含选择正确的内部实例类去构造一个element。它等同于这篇说明中的<code>instantiateComponent()</code>。</li>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/shared/stack/reconciler/ReactReconciler.js" target="_blank" rel="noopener">ReactReconciler</a> 是<code>mountComponent</code>，<code>receiveComponent()</code>和<code>unmountComponent()</code>方法的包裹器。它称为在内部实例上的底层实现，但是也包裹被所有内部实例实现共享的代码。</li>
+<li><a href="https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/shared/stack/reconciler/ReactChildReconciler.js" target="_blank" rel="noopener">ReactChildReconciler</a> 根据它们element 的<code>key</code> 实现加载、更新和卸载子节点的逻辑。</li>
+<li><a href="">ReactMutliChild</a> 实现处理孩子节点的插入、删除以及渲染器独立的移动队列中的操作。</li>
+<li><code>mount()</code>，<code>receive()</code>和<code>unmount()</code> 真正被称为<code>mountComponent()</code>，<code>receiveComponent()</code> 和<code>unmountComponent()</code> 在React 代码库中由于历史遗留原因，但是它们接受elements。</li>
+<li>内部实例上的属性以下划线（underscore）开始，例如，<code>_currentElement</code>。它们被认为为只读的公共域贯穿更改代码库。</li>
+</ul>
+<h3 id="Future-Directions"><a href="#Future-Directions" class="headerlink" title="Future Directions"></a>Future Directions</h3><p>stack reconciler 有一些固有的限制性，例如同步和不能中断工作或分块。这有一个进行中的工作，使用<a href="https://github.com/acdlite/react-fiber-architecture" target="_blank" rel="noopener">完全不同的体系</a>的<a href="https://facebook.github.io/react/contributing/codebase-overview.html#fiber-reconciler" target="_blank" rel="noopener">new Fiber reconcier</a>。未来，我们打算用它替换statck reconciler，但是目前它距离这个特性相等还很远。</p>
+<h3 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h3><p>阅读<a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="noopener">下一节</a> 了解在React 开发中的指导规则。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/contributing/implementation-notes.html" target="_blank" rel="noopener">Implementation Notes</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/13/react-Codebase-Overview/" rel="next" title="react Codebase Overview">
+                <i class="fa fa-chevron-left"></i> react Codebase Overview
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/15/react-Design-Principles/" rel="prev" title="react Design Principles">
+                react Design Principles <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Notes"><span class="nav-number">1.</span> <span class="nav-text">Implementation Notes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Video-Buiding-React-from-Scratch"><span class="nav-number">1.1.</span> <span class="nav-text">Video: Buiding React from Scratch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview"><span class="nav-number">1.2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mounting-as-a-Recursive-Process"><span class="nav-number">1.3.</span> <span class="nav-text">Mounting as a Recursive Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mounting-Host-Elements"><span class="nav-number">1.4.</span> <span class="nav-text">Mounting Host Elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introducing-Internal-Instances"><span class="nav-number">1.5.</span> <span class="nav-text">Introducing Internal Instances</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unmounting"><span class="nav-number">1.6.</span> <span class="nav-text">Unmounting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Updating"><span class="nav-number">1.7.</span> <span class="nav-text">Updating</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Updating-Composite-Components"><span class="nav-number">1.8.</span> <span class="nav-text">Updating Composite Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Updating-Host-Components"><span class="nav-number">1.9.</span> <span class="nav-text">Updating Host Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-Level-Updates"><span class="nav-number">1.10.</span> <span class="nav-text">Top-Level Updates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-We-Left-Out"><span class="nav-number">1.11.</span> <span class="nav-text">What We Left Out</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jumping-into-the-Code"><span class="nav-number">1.12.</span> <span class="nav-text">Jumping into the Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Directions"><span class="nav-number">1.13.</span> <span class="nav-text">Future Directions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Steps"><span class="nav-number">1.14.</span> <span class="nav-text">Next Steps</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/02/14/react-Implementation-Notes/';
+
+      var disqus_title = "react Implementation Notes";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

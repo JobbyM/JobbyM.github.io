@@ -1,0 +1,1076 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Higher-Order Components这篇React（版本v15.4.0）官方文档。  Higer-Order Components高阶component（HOC）在React 中是一个复用component 逻辑的高级技术。HOC 自身不是React API 的一部分。它们是从React 组合性质中出现的模式。 从概念上来说，高阶component 是一个接受一个compo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Higher-Order Components">
+<meta property="og:url" content="https://jobbym.github.io/2017/02/16/react-Higher-Order-Components/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Higher-Order Components这篇React（版本v15.4.0）官方文档。  Higer-Order Components高阶component（HOC）在React 中是一个复用component 逻辑的高级技术。HOC 自身不是React API 的一部分。它们是从React 组合性质中出现的模式。 从概念上来说，高阶component 是一个接受一个compo">
+<meta property="article:published_time" content="2017-02-16T02:13:06.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.337Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/02/16/react-Higher-Order-Components/"/>
+
+
+
+
+
+  <title> react Higher-Order Components | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/02/16/react-Higher-Order-Components/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Higher-Order Components
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T02:13:06+00:00">
+                2017-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/16/react-Higher-Order-Components/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/16/react-Higher-Order-Components/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/16/react-Higher-Order-Components/" class="leancloud_visitors" data-flag-title="react Higher-Order Components">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/higher-order-components.html" target="_blank" rel="noopener">Higher-Order Components</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Higer-Order-Components"><a href="#Higer-Order-Components" class="headerlink" title="Higer-Order Components"></a>Higer-Order Components</h2><p>高阶component（HOC）在React 中是一个复用component 逻辑的高级技术。HOC 自身不是React API 的一部分。它们是从React 组合性质中出现的模式。</p>
+<p>从概念上来说，<strong>高阶component 是一个接受一个component 并返回一个新component的函数</strong>。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EnhancedComponent = higerOrderComponent(WrappedComponent);</span><br></pre></td></tr></table></figure>
+
+<p>鉴于component 转换props 为UI，高阶component 转化一个component 为另一个component。</p>
+<p>HOC 在React 第三方库中是常见的，就像Redux 的<a href="">connect</a> 和Relay 的<a href="">createContainer</a>。</p>
+<p>在文档中，我们将讨论高阶component 为什么有用，以及你自己如何去写。</p>
+<a id="more"></a>
+
+<h2 id="Use-HOCs-For-Cross-Cutting-Concerns"><a href="#Use-HOCs-For-Cross-Cutting-Concerns" class="headerlink" title="Use HOCs For Cross-Cutting Concerns"></a>Use HOCs For Cross-Cutting Concerns</h2><blockquote>
+<p><strong>Note：</strong><br>我们已经推荐mixins作为一种处理cross-cutting concern。我们已经意识到mixins 操作的麻烦比它们创造的价值多。<a href="https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html" target="_blank" rel="noopener">阅读更多</a>关于为什么我们离开mixinx 以及你如何转变你现有的components。</p>
+</blockquote>
+<p>components 是React 中主要的复用代码单位。然而，你会发现有些模式并不适合传统的components。</p>
+<p>比如说你有一个<code>CommentList</code> component 订阅外部数据源来渲染一个评论列表：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentList</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.setState = &#123;</span><br><span class="line">      <span class="comment">// "DataSource" is some global data source</span></span><br><span class="line">      comments: DataSource.getComments()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount()&#123;</span><br><span class="line">    <span class="comment">// Subscribe the changes</span></span><br><span class="line">    DataSource.addChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillUnmount()&#123;</span><br><span class="line">    <span class="comment">// Clean up listener</span></span><br><span class="line">    DataSource.removeChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange()&#123;</span><br><span class="line">    <span class="comment">// Update component state whenever the data source changes</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      comments: DataSource.getComments()</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.state.comments.map(<span class="function">(<span class="params">comment</span>) =&gt;</span> (</span><br><span class="line">          &lt;Comment comment=&#123;comment&#125; key=&#123;comment.id&#125; /&gt;</span><br><span class="line">        ))&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>后来，你写了一个订阅单个博客文章的component，它遵循类似的模式：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlogPost</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.setState = &#123;</span><br><span class="line">      blogPost: DataSource.getBlogPost(props.id)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount()&#123;</span><br><span class="line">    DataSource.addChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillUnmount()&#123;</span><br><span class="line">    DataSource.removeChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange()&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      blogPost: DataSource.getBlogPost(<span class="keyword">this</span>.props.id)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">BlogPost</span> <span class="attr">blogPost</span>=<span class="string">&#123;this.state.blogPost&#125;</span> /&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CommentList</code> 和<code>BlogPost</code> 不完全相同–它们调用<code>DataSource</code> 的不同方法，并且它们渲染不同的输出。但是它们大量的实现是相同的：</p>
+<ul>
+<li>加载时，在<code>DataSource</code> 上添加一个改变监听器。</li>
+<li>在监听器内部，只要数据源改变就调用<code>setState</code>。</li>
+<li>卸载时，移除这个改变监听器。</li>
+</ul>
+<p>你可以设想在一个大的应用中，订阅<code>DataSource</code> 以及调用<code>setState</code> 相同的模式将会一次又一次发生。我们想要抽象一个允许我们定义这个逻辑在一个地方并且在多个component 中共享它们。这就是高阶component 擅长的地方。</p>
+<p>我们可以写一个函数来创建components，像<code>CommentList</code> 和<code>BlogPost</code>，订阅<code>DataSource</code>。这个函数接受一个将订阅的数据作为prop 的子component，将其作为其中的一个参数。让我们来调用这个<code>withSubscription</code> 函数：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CommentListWithSubscription = withSubscription(</span><br><span class="line">  CommentList,</span><br><span class="line">  (DataSource) =&gt; DataSource.getComments()</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> BlogPostWithSubscription = withSubscription(</span><br><span class="line">  BlogPost,</span><br><span class="line">  (DataSource, props) =&gt; DataSource.getBlogPost(props.id)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>第一个参数是被包裹的component。第二个参数检索我们感兴趣的数据，通过给定的<code>DataSource</code> 和当前的props。</p>
+<p>当<code>CommentListWithSubscription</code> 和<code>BlogPostWithSubscription</code> 被渲染时，<code>CommentList</code> 和<code>BlogPost</code> 将会被传入检索自 <code>DataSource</code> 的最新的数据<code>data</code> prop：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This function takes a componet...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">withSubscription</span>(<span class="params">WrappedComponent, selectData</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// ...and  returns another component...</span></span><br><span class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">      <span class="keyword">super</span>(props)</span><br><span class="line">      <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)</span><br><span class="line">      <span class="keyword">this</span>.state = &#123;</span><br><span class="line">        data: selectData(DataSource, props)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentDidMount()&#123;</span><br><span class="line">      <span class="comment">// ... that takes care of the subscription...</span></span><br><span class="line">      DataSource.addChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    componentWillUnmount()&#123;</span><br><span class="line">      DataSource.removeChangeListener(<span class="keyword">this</span>.handleChange)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    handleChange()&#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        data: selectData(DataSource, <span class="keyword">this</span>.props)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">      <span class="comment">// ... and renders the wrapped component with the fresh data!</span></span><br><span class="line">      <span class="comment">// Notice that we pass through any additional props</span></span><br><span class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> <span class="attr">data</span>=<span class="string">&#123;this.state.data&#125;</span> &#123;<span class="attr">...this.props</span>&#125;/&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意HOC 不会修改输入component，也不会使用继承去复制它的行为。 相反地，HOC 组合原始component，通过将它包裹在一个容器component中。HOC 是一个没有副作用的纯函数。</p>
+<p>这就是它！这个包裹的component 接受这个容器的所有的props，通过一个新的prop，<code>data</code>，它被用作渲染输出。HOC 不管这个数据怎样或为什么被使用，以及这个包裹的component 也不关心这个数据从那里来。</p>
+<p>因为<code>withSubscription</code> 是一个普通的函数，你可以添加许多或一些你喜欢的参数。例如，你可以希望是<code>data</code> 的名称可以配置，以便进一步将HCO 从包裹的component 中独立出来。或者你可以价接受一个配置的<code>shouldComponentUpdate</code> 参数，或者一个配置数据源的参数。这些都是可能的，因为HOC 已经完全控制如何定义component。</p>
+<p>像components，<code>withSubsription</code> 和包裹的component 的联系是全部基于props 的。这使得交换一个HOC 同另一个不同的很简单，只要它们提供相同的props 给包裹的component。这可能是有用的，例如如果改变数据获取库。</p>
+<h2 id="Don’t-Mutable-the-Original-Component-Use-Composition"><a href="#Don’t-Mutable-the-Original-Component-Use-Composition" class="headerlink" title="Don’t Mutable the Original Component. Use Composition."></a>Don’t Mutable the Original Component. Use Composition.</h2><p>抵制在HOC 中修改component 的原型（或变异）的诱惑。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProps</span>(<span class="params">InputComponent</span>)</span>&#123;</span><br><span class="line">  InputComponent.proptype.componentWillReceiveProps(nextProps)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Current props:'</span>, <span class="keyword">this</span>.props);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Next props:'</span>, nextProps);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// The fact that we're returning the original input is a hint that it has</span></span><br><span class="line">  <span class="comment">// been mutated.</span></span><br><span class="line">  <span class="keyword">return</span> InputComponent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// EnhancedComponent will log whenever props are received</span></span><br><span class="line"><span class="keyword">const</span> EnhancedComponent = logProps(InputComponent);</span><br></pre></td></tr></table></figure>
+<p>这有几个问题。一个是这个输入component 不能从这个赠其nagcomponent 中分离复用。更严峻的是，如果你应用另一个HOC 到<code>EnhancedComponent</code> 上也会改变<code>componentWillReceiveProps</code>，第一个HOC 的功能将被重写！HOC 也不能通过function component 工作，他还没有生命周期方法。</p>
+<p>更改HOC 是一个有漏洞的抽象–消费者必须知道它们怎样实现来避免和气球HOC 产生冲突。</p>
+<p>HOC 应该使用组合，通过包裹输入component 在一个容器component 中，而不是改变：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logProps</span>(<span class="params">WrappedComponent</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">exntends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    componentWillReceiveProps(nextProps)&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Current props:'</span>, <span class="keyword">this</span>.props);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Next props:'</span>, nextProps);</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">      <span class="comment">// Wraps the input component in a container, without mutating it.</span></span><br><span class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">WrappedComponent</span> &#123;<span class="attr">...this.props</span>&#125; /&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HOC 同改变版本有相同的功能从而避免潜在的崩溃。它同类和函数component 的工作原理相同。并且因为它是纯函数，它可以通过其它HOC 甚至是自己组合。</p>
+<p>你可能已经注意到HOC 同<strong>容器 components</strong> 的模式相似。容器component 是在高层和底层concerns之间分离责任的策略的一部分。容器管理事情像订阅和state，并且传递props 到component 控制系那个渲染UI 的事情。HOC 使用容器作为它们实现的部分。你可以认为HOC 作为参数化容器component 定义。</p>
+<h2 id="Convention-Pass-Unrelated-Props-Through-to-the-Wrapped-Component"><a href="#Convention-Pass-Unrelated-Props-Through-to-the-Wrapped-Component" class="headerlink" title="Convention: Pass Unrelated Props Through to the Wrapped Component"></a>Convention: Pass Unrelated Props Through to the Wrapped Component</h2><p>HOC 添加特性到component。它们不应该彻底地改变它的协议。期待从HOC 返回的component 同包裹的component 有相似的接口。</p>
+<p>HOC 应该传递props 同它的具体的concern 无关。大多数HOC 包含一个渲染方法，看上去像下面这样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  <span class="comment">// Fiter out extra props that are specific to this HOC and shouldn't be</span></span><br><span class="line">  <span class="comment">// passed through</span></span><br><span class="line">  <span class="keyword">const</span> &#123; extraProp, ...passThroughProps&#125; = <span class="keyword">this</span>.props</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Inject props into the wrapped component. These are usually state values or</span></span><br><span class="line">  <span class="comment">// instance methods</span></span><br><span class="line">  <span class="keyword">const</span> injectedProp = someStateOrInstanceMethod</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Pass props to wrapped component</span></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;WrappedComponent</span><br><span class="line">      injectedProp=&#123;injectedProp&#125;</span><br><span class="line">      &#123;...passThroughProps&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个规则帮助确认HOC 尽可能灵活和可重用。</p>
+<h2 id="Convention-Maximizing-Composability"><a href="#Convention-Maximizing-Composability" class="headerlink" title="Convention: Maximizing Composability"></a>Convention: Maximizing Composability</h2><p>不是所有的HOC 看上去一样。有时它们值接受一个参数，包裹的component：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> NavbarWithRouter = withRouter(Navbar)</span><br></pre></td></tr></table></figure>
+<p>通常，HOC 接受二外的参数。在这个来自Relay的例子，一个配置对象被用来配置component 的数据依赖：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CommentWithRelay = Relay.createContainer(Comment, config)</span><br></pre></td></tr></table></figure>
+<p>对HOC 最常见的签名看上去像这样：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React Redux's `connect`</span></span><br><span class="line"><span class="keyword">const</span> ConnectedComment = connect(commentSelector, commentActions)(Comment)</span><br></pre></td></tr></table></figure>
+<p>什么？如果你把它分开，更容易看出正在发生什么。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// connect is a function that returns another function</span></span><br><span class="line"><span class="keyword">const</span> enhance = connect(commentListSelector, commentListAction)</span><br><span class="line"><span class="comment">// The returned function is an HOC, which returns a component that is connected</span></span><br><span class="line"><span class="comment">// to the Redux store</span></span><br><span class="line"><span class="keyword">const</span> ConnectedComment = enhance(CommentList)</span><br></pre></td></tr></table></figure>
+<p>换句话说，<code>connect</code> 是一个高阶函数，它返回一个高阶component！</p>
+<p>这种形式可能看上去是困惑的或不必要的，但是它有一个有用的属性。单参数HOC 喜欢通过<code>connect</code> 函数有这个签名<code>Component =&gt; Component</code> 的返回。函数的输出类型同它的输入类型相同对组合在一起非常简单的。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Instead of doing this...</span></span><br><span class="line"><span class="keyword">const</span> EnhancedComponent = connect(commentSelector)(withRouter(WrappedComponent))</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... you can use a function composition utility</span></span><br><span class="line"><span class="comment">// compose(f, g, h) is the same as (...args) =&gt; f(g(h(...args)))</span></span><br><span class="line"><span class="keyword">const</span> enhance = compose(</span><br><span class="line">  <span class="comment">// These are both single-argument HOCs</span></span><br><span class="line">  connect(commentSelector),</span><br><span class="line">  withRouter</span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span> EnhancedComponent = enhance(WrappedComponent)</span><br></pre></td></tr></table></figure>
+<p>（这个相同的属性也允许<code>connect</code> 和其它的增强样式HOC 被用作装饰器，一个实验性的JavaScript 提案。）</p>
+<p><code>compose</code> 工具函数被许多第三方库提供，包括loadsh（像<a href="https://lodash.com/docs/#flowRight" target="_blank" rel="noopener"><code>lodash.flowRight</code></a>，<a href="http://redux.js.org/docs/api/compose.html" target="_blank" rel="noopener">Redux</a>和<a href="http://ramdajs.com/docs/#compose" target="_blank" rel="noopener">Rambda</a>。</p>
+<h2 id="Convention-Wrap-the-Display-Name-for-Easy-Debugging"><a href="#Convention-Wrap-the-Display-Name-for-Easy-Debugging" class="headerlink" title="Convention: Wrap the Display Name for Easy Debugging"></a>Convention: Wrap the Display Name for Easy Debugging</h2><p>被HOC 创建的容器component 在<a href="https://github.com/facebook/react-devtools" target="_blank" rel="noopener">React Developer Tools</a> 展示同任何其他component 一样。为了便于调试，选择一个显示名称，该名称显示（communicate） 是HOC 的结果。</p>
+<p>最常用的技术是包裹这个包裹component 的显示名称。所以如果你的高阶component 被命名为<code>withSubscription</code>，并且这个包裹的component 的显示名称是<code>CommentList</code>，使用<code>WitSubscription(CommentList)</code> 这个显示名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">withSubscription</span>(<span class="params">WrappedComponent</span>)</span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WithSubscription</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line">  WithSubscription.displayName = <span class="string">`WithSubscription(<span class="subst">$&#123;getDisplayName(WrappedComponent)&#125;</span>)`</span></span><br><span class="line">  <span class="keyword">return</span> WithSubscription</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDisplayName</span>(<span class="params">WrappedComponent</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> WrappedComponent.displayName || WrappedComponent.name || <span class="string">'Component'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Caveats"><a href="#Caveats" class="headerlink" title="Caveats"></a>Caveats</h2><p>高阶component 有一些警告，它们不是立即明显的，如果你是一个React 新手。</p>
+<h3 id="Don’t-Use-HOCs-Inside-the-render-Method"><a href="#Don’t-Use-HOCs-Inside-the-render-Method" class="headerlink" title="Don’t Use HOCs Inside the render Method"></a>Don’t Use HOCs Inside the render Method</h3><p>React 的diffing algorithm（称为reconciliation）使用component 相等性决定它是否更新已经存在的子树，或者摈弃它，并且加载一个新的。如果从<code>render</code> 返回的component 全等于（===）之前渲染的component，React 递归更新子树通过比较它同新的。如果它们不相等，之前的子树被完全卸载。</p>
+<p>通常，你应该不需要考虑这个。但是它对HOC 是重要的，因为它意味着你不能应用HOC 到一个component 在一个component 的渲染方法内：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">render()&#123;</span><br><span class="line">  <span class="comment">// A new version of EnhancedComponent is created on every render</span></span><br><span class="line">  <span class="comment">// EnhancedComponent1 !== EnhancedComponent2</span></span><br><span class="line">  <span class="keyword">const</span> EnhancedComponent = enhance(MyComponent)</span><br><span class="line">  <span class="comment">// That cause the entire substree to unmount/remount each time!</span></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">EnhancedComponent</span> /&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这的问题不仅关于性能–重新加载component 导致component 的state 和它的孩子都丢失了。</p>
+<p>相反，在component 定义外应用HOC 以至于component 仅被创建一次的结果。那么，它的相等性将是跨渲染器相等。这通常是你想要的，无论如何。</p>
+<p>在这些需要你动态应用HOC 的特殊例子中，你也可以在component 的生命周期方法或它的构造器中使用。</p>
+<h3 id="Static-Method-Must-Be-Copied-Over"><a href="#Static-Method-Must-Be-Copied-Over" class="headerlink" title="Static Method Must Be Copied Over"></a>Static Method Must Be Copied Over</h3><p>有时，在React component 上定义一个静态方法是有用的。例如，Relay 容器暴露一个静态方法<code>getFragment</code> 有利于GraphQL fragments 的组合。</p>
+<p>当你应用HOC 到component 上时，虽然，原始的component 被一个容器component 包裹。那意味着新的component 没有原始的component 的任何静态方法。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define a static method</span></span><br><span class="line">WrappedComponent.staticMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line"><span class="comment">// Now apply an HOC</span></span><br><span class="line"><span class="keyword">const</span> EnhancedComponent = enhance(WrappedComponent)</span><br><span class="line"></span><br><span class="line"><span class="comment">// The enhanced component has no static method</span></span><br><span class="line"><span class="keyword">typeof</span> EnhancedComponent.staticMethod === <span class="string">'undefined'</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>为了解决它，你应该在返回这个容器之前将方法复制上去：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">enhance</span>(<span class="params">WrappedComponent</span>)</span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Enhance</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line">  <span class="comment">// Must know exactly which method(s) to copy :(</span></span><br><span class="line">  Enhance.staticMethod = WrappedComponent.staticMethod</span><br><span class="line">  <span class="keyword">return</span> Enhance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然而，这需要你准确的知道那一个方法需要被复制。你可以使用<a href="https://github.com/mridgway/hoist-non-react-statics" target="_blank" rel="noopener">hosit-non-react-statics</a> 去自动的复制所有非React 的静态方法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hoistNonReactStatic <span class="keyword">from</span> <span class="string">'hosist-non-react-statics'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">enhance</span>(<span class="params">WrappedComponent</span>)</span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Enhance</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;<span class="comment">/* ... */</span>&#125;</span><br><span class="line">  hoistNonReactStatic(Enhance, WrappedComponent)</span><br><span class="line">  <span class="keyword">return</span> Enhance</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另一个可能的方法是从component 自身分别暴露静态方法。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Instead of....</span></span><br><span class="line">MyComponent.someFunction = someFunction</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> MyComponent</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...export the method seperately...</span></span><br><span class="line"><span class="keyword">export</span> &#123; someFunction &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...and in the consuming module, import both</span></span><br><span class="line"><span class="keyword">import</span> MyComponent, &#123; someFunction &#125; <span class="keyword">from</span> <span class="string">'./MyComponent.js'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Refs-Aren’t-Passed-Through"><a href="#Refs-Aren’t-Passed-Through" class="headerlink" title="Refs Aren’t Passed Through"></a>Refs Aren’t Passed Through</h3><p>虽然对高阶component 规则是传递所有的prop 到包裹的component 上，它不可能传递refs。那是因为<code>ref</code> 不是一个真正的prop– 像<code>key</code>，它是被React 特殊控制的。如果你添加一个ref 到element，它的component 是HOC 的结果，ref 引用最外部容器的component 的实例，而不是包裹的component。</p>
+<p>如果你发现你自己面对这个问题，理想的解决方法是找到如何避免使用<code>ref</code>。偶尔，对于React 新用户，在这种情况下， 使用prop 将更好，而不是模式依赖refs，</p>
+<p>那就是说，有时当refs 是一个必要的安全舱口（escape hatch）– React 将也不会支持它们。聚焦一个输入域是一个例子，在那你可能想要component 命令式控制。在那个例子，一个解决方法是传递一个ref 回调作为一个普通的props，通过给定一个不同的名称：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Field</span>(<span class="params">&#123; inputRef, ..rest&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> &#123;<span class="attr">...rest</span>&#125; /&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Wrap Field in a higher-order component</span></span><br><span class="line"><span class="keyword">const</span> EnhancedField = enhance(Field)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Inside  a class component's render method...</span></span><br><span class="line">&lt;EnhancedFiedl</span><br><span class="line">  inputRef=&#123;(inputEl) =&gt; &#123;</span><br><span class="line">    <span class="comment">// This callback gets passed through as a regular prop</span></span><br><span class="line">    <span class="keyword">this</span>.inputEl = inputEl</span><br><span class="line">  &#125;&#125;</span><br><span class="line">/&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can call imperative methods</span></span><br><span class="line"><span class="keyword">this</span>.inputEl.foucs()</span><br></pre></td></tr></table></figure>
+<p>这不是一个完美的解决方案。我们更希望refs 保留一个库concern，恶如表示要求你手动控制它们。我们正在研究一些方法去解决这个问题，以至于HOC 不需要观察。</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/higher-order-components.html" target="_blank" rel="noopener">Higher-Order Components</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/15/react-Design-Principles/" rel="next" title="react Design Principles">
+                <i class="fa fa-chevron-left"></i> react Design Principles
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/28/%E9%98%85%E8%AF%BBRythm-js-%E4%BA%86%E8%A7%A3Web-Audio-API-%E5%AE%9E%E7%8E%B0%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="prev" title="阅读Rythm.js,了解Web Audio API 实现音频可视化">
+                阅读Rythm.js,了解Web Audio API 实现音频可视化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Higer-Order-Components"><span class="nav-number">1.</span> <span class="nav-text">Higer-Order Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-HOCs-For-Cross-Cutting-Concerns"><span class="nav-number">2.</span> <span class="nav-text">Use HOCs For Cross-Cutting Concerns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Don’t-Mutable-the-Original-Component-Use-Composition"><span class="nav-number">3.</span> <span class="nav-text">Don’t Mutable the Original Component. Use Composition.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convention-Pass-Unrelated-Props-Through-to-the-Wrapped-Component"><span class="nav-number">4.</span> <span class="nav-text">Convention: Pass Unrelated Props Through to the Wrapped Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convention-Maximizing-Composability"><span class="nav-number">5.</span> <span class="nav-text">Convention: Maximizing Composability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convention-Wrap-the-Display-Name-for-Easy-Debugging"><span class="nav-number">6.</span> <span class="nav-text">Convention: Wrap the Display Name for Easy Debugging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Caveats"><span class="nav-number">7.</span> <span class="nav-text">Caveats</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Don’t-Use-HOCs-Inside-the-render-Method"><span class="nav-number">7.1.</span> <span class="nav-text">Don’t Use HOCs Inside the render Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Method-Must-Be-Copied-Over"><span class="nav-number">7.2.</span> <span class="nav-text">Static Method Must Be Copied Over</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refs-Aren’t-Passed-Through"><span class="nav-number">7.3.</span> <span class="nav-text">Refs Aren’t Passed Through</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">8.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/02/16/react-Higher-Order-Components/';
+
+      var disqus_title = "react Higher-Order Components";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

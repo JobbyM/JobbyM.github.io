@@ -1,0 +1,1039 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译Reconciliation这篇React（版本v15.4.0）官方文档。  ReconciliationReact 提供声明式（declarative）API 所以你不必担心每次更新的变化。这使得写应用更加容易，但它可能并不明显是如何在React 中实现的。本文解释了我们在React 的比较算法（“diffing”algorithm ）如何使component 的更新变得可预见，以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react Reconciliation">
+<meta property="og:url" content="https://jobbym.github.io/2017/01/03/react-Reconciliation/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译Reconciliation这篇React（版本v15.4.0）官方文档。  ReconciliationReact 提供声明式（declarative）API 所以你不必担心每次更新的变化。这使得写应用更加容易，但它可能并不明显是如何在React 中实现的。本文解释了我们在React 的比较算法（“diffing”algorithm ）如何使component 的更新变得可预见，以">
+<meta property="article:published_time" content="2017-01-03T01:13:17.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.341Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/01/03/react-Reconciliation/"/>
+
+
+
+
+
+  <title> react Reconciliation | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/01/03/react-Reconciliation/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react Reconciliation
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-03T01:13:17+00:00">
+                2017-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/03/react-Reconciliation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/03/react-Reconciliation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/03/react-Reconciliation/" class="leancloud_visitors" data-flag-title="react Reconciliation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="noopener">Reconciliation</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Reconciliation"><a href="#Reconciliation" class="headerlink" title="Reconciliation"></a>Reconciliation</h2><p>React 提供声明式（declarative）API 所以你不必担心每次更新的变化。这使得写应用更加容易，但它可能并不明显是如何在React 中实现的。本文解释了我们在React 的比较算法（“diffing”algorithm ）如何使component 的更新变得可预见，以及足够快到高性能应用。</p>
+<a id="more"></a>
+
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>当你使用React，在某一点你可以认为<code>render()</code> 函数是创建React element 树。在下一个state 或props 更新时，<code>render()</code> 函数将会返回一个不同的React element 树。React 需要了解如何高效地更新UI 去匹配最新的树（the most recent tree）。</p>
+<p>这有一个通用的方法来处理将一棵树转换成另一个树时产生最少的操作的算法问题。然后，这个算法是复杂度为O（ n3），其中n 为树中element 的个数。</p>
+<p>如果我们在React 中使用这个方法，这是1000 个elements将需要10 亿次比较。这个花费太大了。相反，React 实现了一个基于两个假设而实现的一个启发式（heuristic）O（n）算法：</p>
+<ol>
+<li>不同类型的element 将会产生不同的树。</li>
+<li>开发人员可以使用一个<code>key</code> prop 来指示在不同的渲染中那个element 可以保持稳定。</li>
+</ol>
+<p>事实上，这些假设在几乎所有的用例中都是有效的。</p>
+<h3 id="The-Diffing-Algorithm"><a href="#The-Diffing-Algorithm" class="headerlink" title="The Diffing Algorithm"></a>The Diffing Algorithm</h3><p>当比较不同的两个树，React 首先比较两个根elements。根据根elements 的类型不同，它有不同的行为。</p>
+<h4 id="Elements-Of-Different-Types"><a href="#Elements-Of-Different-Types" class="headerlink" title="Elements Of Different Types"></a>Elements Of Different Types</h4><p>当根elements 有不同的类型，React 将会销毁就得树并从头创建新的树。从<code>&lt;a&gt;</code>到<code>&lt;img&gt;</code>或者从<code>&lt;Article&gt;</code>到<code>&lt;Comment&gt;</code>或者从<code>&lt;Button&gt;</code>到<code>&lt;div&gt;</code> – 这些都将导致全部重新构建。</p>
+<p>当销毁一个树，旧的DOM 节点也会被销毁。Component 实例（instance）会收到<code>componentWillUnmout()</code>。当构建一个新树，新的DOM 节点将会被插入DOM。Component 实例将会接受<code>componentWillMount()</code> 之后接受<code>componentDidMount()</code>。所有和旧树关联的state 都会失去。</p>
+<p>在根下的所有components 都会被unmounted，它们的state 也会被销毁。例如，当比较：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;Counter /&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;span&gt;</span></span><br><span class="line"><span class="regexp">  &lt;Counter /</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/span&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这会销毁旧的<code>Counter</code>，并重新加载（remount）一个新的。</p>
+<h4 id="DOM-Elements-Of-The-Same-Type"><a href="#DOM-Elements-Of-The-Same-Type" class="headerlink" title="DOM Elements Of The Same Type"></a>DOM Elements Of The Same Type</h4><p>当比较两个相同类型的React element时，React 检查它们的属性（attributes），保留相同的底层DOM 节点，只更新反生改变的属性（attributes）。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"before"</span> title=<span class="string">"stuff"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div className=<span class="string">"after"</span> title=<span class="string">"stuff"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>通过比较这两个elements，React 知道只需要修改底层DOM 节点的<code>className</code>。</p>
+<p>在更新<code>style</code> 时，React 也知道只需要更新发生改变的属性（properties）。例如：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&#123;&#123;<span class="attr">color</span>: <span class="string">'red'</span>, <span class="attr">fontWeight</span>: <span class="string">'bold'</span>&#125;&#125; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div style=&#123;&#123;<span class="attr">color</span>: <span class="string">'green'</span>, <span class="attr">fontWeight</span>: <span class="string">'bold'</span>&#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<p>在改变这两个elements 时，React 知道只需要修改<code>color</code> 演示，而不需要修改<code>fontWeight</code>。</p>
+<p>处理DOM 节点之后，React 开始的递归（recurse）孩子节点。</p>
+<h4 id="Component-Elements-Of-The-Same-Type"><a href="#Component-Elements-Of-The-Same-Type" class="headerlink" title="Component Elements Of The Same Type"></a>Component Elements Of The Same Type</h4><p>当一个component 更新，而实例保持不变，那么这个state 在渲染时仍然保留。React 更新底层component 的props去匹配新element，需要在底层实例上调用<code>componentWillReceiveProps()</code> 和<code>componentWillUpdate()</code> 方法。</p>
+<p>下一步，<code>render()</code> 方法被调用，比较算法递归之前的结果和现在的结果。</p>
+<h4 id="Recursing-On-Children"><a href="#Recursing-On-Children" class="headerlink" title="Recursing On Children"></a>Recursing On Children</h4><p>默认情况下，当递归一个DOM 节点的子节点时，React 只需同时遍历所有的孩子基点同时生成一个改变当它们不同时。</p>
+<p>例如，当在孩子节点的末尾添加一个element，这两棵树之间的转换效果很好：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;second&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;ul&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;first&lt;/</span>li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;third&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br></pre></td></tr></table></figure>
+<p>React 将会比较两个<code>&lt;li&gt;first&lt;/li&gt;</code>树，比较两个<code>&lt;li&gt;second&lt;/li&gt; </code> 树，然后插入<code>&lt;li&gt;third&lt;/li&gt; </code> 树。</p>
+<p>如果你简单的实现它，在一开始插入一个element将会有一个糟糕的性能。例如， 这两棵树的的转换不佳：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;Villanova&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;ul&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;Connecticut&lt;/</span>li&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li&gt;Villanova&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br></pre></td></tr></table></figure>
+<p>React 将会改变每一个子节点而没有意识到需要保留<code>&lt;li&gt;Duke&lt;/li&gt; </code>和<code>&lt;li&gt;Villanova&lt;/li&gt; </code>两个子树。这种低效是一个问题。</p>
+<h4 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h4><p>为了解决这个问题，React 支持一个<code>key</code> 属性（attributes）。当子节点有了<code>key</code>，React 使用这个<code>key</code> 去比较原来的树的子节点和之后树的子节点。例如，添加一个<code>key</code> 到我们上面那个低效的例子中可以使树的转换变高效：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li key=<span class="string">"2015"</span>&gt;Duke&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li key="2016"&gt;Villanova&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;ul&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li key="2014"&gt;Connecticut&lt;/</span>li&gt;</span><br><span class="line">  &lt;li key=<span class="string">"2015"</span>&gt;Duke&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">  &lt;li key="2016"&gt;Villanova&lt;/</span>li&gt;</span><br><span class="line">&lt;<span class="regexp">/ul&gt;</span></span><br></pre></td></tr></table></figure>
+<p>现在React 知道有<code>2014</code> key 的element 是新的，<code>2015</code>和<code>2015</code> elments 只需要移动就可以了。</p>
+<p>实际上，找到一个key 通常不难。你将要展示的这个element已经有了唯一一个ID，所以这个key 可以来自你的数据：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果不是这样，你可以添加一个新的ID 属性（property）到你的数据模型，或者是hash 一部分内容生成一个key。这个key 需要在它的兄弟节点中是唯一的就可以了，不需要是全局唯一。</p>
+<p>作为最后的手段，你可以将数组中的索引作为key。如果它们从不重新排序，它们工作也很好，但是如果重新排序，将是缓慢的。</p>
+<h3 id="Tradeoffs"><a href="#Tradeoffs" class="headerlink" title="Tradeoffs"></a>Tradeoffs</h3><p>重要的是要记住，这个reconciliation 算法是一个实现细节。React 可以重新渲染整个程序的每一步，最后的结果都是相同的。我们经常改善这个启发式为了使常用的例子更快。</p>
+<p>在当前实现中，你可以表达这样一个事实，子树已经在兄弟节点中被移除，但是你不必告诉被移到什么位置。这个算法将会重新渲染整个子树。</p>
+<p>因为React 依赖这个启发式，如果它们背后的假设没有得到满足，性能将会受到影响。</p>
+<ol>
+<li>这个算法不会尝试匹配不同component  类型的子树。如果你看到在两个component 类型之间有相同的输出，你可以使它们有相同的类型。在实践中，我们还没有发现这是一个问题。</li>
+<li>Keys 应该是稳定的、可预测的和唯一的。不稳定的keys（像<code>Math.random()</code>生成的）将会导致许多component 实例和不必重复创建的DOM 节点，这将会导致性能的下降以及失去子节点中的state。</li>
+</ol>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="noopener">Reconciliation</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/React-Without-JSX/" rel="next" title="React Without JSX">
+                <i class="fa fa-chevron-left"></i> React Without JSX
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/04/react-Context/" rel="prev" title="react Context">
+                react Context <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reconciliation"><span class="nav-number">1.</span> <span class="nav-text">Reconciliation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation"><span class="nav-number">1.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Diffing-Algorithm"><span class="nav-number">1.2.</span> <span class="nav-text">The Diffing Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Elements-Of-Different-Types"><span class="nav-number">1.2.1.</span> <span class="nav-text">Elements Of Different Types</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM-Elements-Of-The-Same-Type"><span class="nav-number">1.2.2.</span> <span class="nav-text">DOM Elements Of The Same Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Component-Elements-Of-The-Same-Type"><span class="nav-number">1.2.3.</span> <span class="nav-text">Component Elements Of The Same Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Recursing-On-Children"><span class="nav-number">1.2.4.</span> <span class="nav-text">Recursing On Children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Keys"><span class="nav-number">1.2.5.</span> <span class="nav-text">Keys</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tradeoffs"><span class="nav-number">1.3.</span> <span class="nav-text">Tradeoffs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/01/03/react-Reconciliation/';
+
+      var disqus_title = "react Reconciliation";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

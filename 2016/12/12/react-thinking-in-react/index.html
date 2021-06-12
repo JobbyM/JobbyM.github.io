@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译thingking in react这篇React（版本v15.4.0）官方文档。  Thinking in React在我们看来，React 是使用JavaScript 构建大型开始Web 应用的首选。它已经在Facebook 和Instagram 中被广泛应用了。 React 最大的方面是使你考虑如果构建你的应用。在这篇文档中，我们将带你浏览通过使用React 构建一个searc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react thinking in react">
+<meta property="og:url" content="https://jobbym.github.io/2016/12/12/react-thinking-in-react/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译thingking in react这篇React（版本v15.4.0）官方文档。  Thinking in React在我们看来，React 是使用JavaScript 构建大型开始Web 应用的首选。它已经在Facebook 和Instagram 中被广泛应用了。 React 最大的方面是使你考虑如果构建你的应用。在这篇文档中，我们将带你浏览通过使用React 构建一个searc">
+<meta property="og:image" content="https://jobbym.github.io/2016/12/12/react-thinking-in-react/start-with-a-mock.jpg">
+<meta property="og:image" content="https://jobbym.github.io/2016/12/12/react-thinking-in-react/step-1.jpg">
+<meta property="article:published_time" content="2016-12-12T01:04:56.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.341Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2016/12/12/react-thinking-in-react/start-with-a-mock.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2016/12/12/react-thinking-in-react/"/>
+
+
+
+
+
+  <title> react thinking in react | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2016/12/12/react-thinking-in-react/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                react thinking in react
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-12T01:04:56+00:00">
+                2016-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/12/react-thinking-in-react/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/12/12/react-thinking-in-react/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/12/react-thinking-in-react/" class="leancloud_visitors" data-flag-title="react thinking in react">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://facebook.github.io/react/docs/thingking-in-react.html" target="_blank" rel="noopener">thingking in react</a>这篇React（版本v15.4.0）官方文档。</p>
+</blockquote>
+<h2 id="Thinking-in-React"><a href="#Thinking-in-React" class="headerlink" title="Thinking in React"></a>Thinking in React</h2><p>在我们看来，React 是使用JavaScript 构建大型开始Web 应用的首选。它已经在Facebook 和Instagram 中被广泛应用了。</p>
+<p>React 最大的方面是使你考虑如果构建你的应用。在这篇文档中，我们将带你浏览通过使用React 构建一个searchable product data的思维过程。</p>
+<a id="more"></a>
+
+<h3 id="Start-With-A-Mock"><a href="#Start-With-A-Mock" class="headerlink" title="Start With A Mock"></a>Start With A Mock</h3><p>设想你已经根据我们的设计有一个模拟JSON API。这个Mock 看上去如下：</p>
+<img src="/2016/12/12/react-thinking-in-react/start-with-a-mock.jpg" class="">
+<p>我们的JSON API 返回的数据如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Sporting Goods"</span>, <span class="attr">price</span>: <span class="string">"$49.99"</span>, <span class="attr">stocked</span>: <span class="literal">true</span>, <span class="attr">name</span>: <span class="string">"Football"</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Sporting Goods"</span>, <span class="attr">price</span>: <span class="string">"$9.99"</span>, <span class="attr">stocked</span>: <span class="literal">true</span>, <span class="attr">name</span>: <span class="string">"Baseball"</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Sporting Goods"</span>, <span class="attr">price</span>: <span class="string">"$29.99"</span>, <span class="attr">stocked</span>: <span class="literal">false</span>, <span class="attr">name</span>: <span class="string">"Basketball"</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Electroincs"</span>, <span class="attr">price</span>: <span class="string">"$99.99"</span>, <span class="attr">stocked</span>: <span class="literal">true</span>, <span class="attr">name</span>: <span class="string">"iPod Touch"</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Electroincs"</span>, <span class="attr">price</span>: <span class="string">"$399.99"</span>, <span class="attr">stocked</span>: <span class="literal">false</span>, <span class="attr">name</span>: <span class="string">"iPhone 5"</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">category</span>: <span class="string">"Electroincs"</span>, <span class="attr">price</span>: <span class="string">"$199.99"</span>, <span class="attr">stocked</span>: <span class="literal">true</span>, <span class="attr">name</span>: <span class="string">"Nexus 7"</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-1-Break-The-UI-Into-A-Component-Hierarchy"><a href="#Step-1-Break-The-UI-Into-A-Component-Hierarchy" class="headerlink" title="Step 1: Break The UI Into A Component Hierarchy"></a>Step 1: Break The UI Into A Component Hierarchy</h3><p>第一件事在mock 中给每一个组件（子组件）画框并进行命令。如果你和一个设计师工作，他们已经做好这些了，所以去和他们讨论！Photoshop 层名字可以作为你的React 组件名字！</p>
+<p>但是你怎么知道什么是它们自己的组件？只需要使用你是否决定创建一个新的function 或者object 这个中技术。其中一个技术是<a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank" rel="noopener">single responsibility principle</a>，也就是说，理论上一个组件只做一件事。如果组件变大，它应该被拆分成几个小组件。</p>
+<p>由于你经常展示一个JSON 数据模型给用户，你会发现如果你的模型被正确构建，那么你的UI（和你的组件框架）会非常好的匹配。那是因为UI 和数据模型总是依附相同的信息架构（information architecture），也就是意味着分离你的UI 成为组件是非常容易的。只要正确地的将你的每一个数据模型对应组件就可以了。</p>
+<img src="/2016/12/12/react-thinking-in-react/step-1.jpg" class="">
+
+<p>你会发现在我们这个简单的app 中有5 个组件。我们使用斜体数据来表示每一个组件</p>
+<ol>
+<li><code>FiterableProductTable</code>（orange）：包含整个例子</li>
+<li><code>SearchBar</code>（blue）：接受所有的用户输入</li>
+<li><code>ProdutTable</code>（green）：根据用户输入来展示过滤的数据集合</li>
+<li><code>ProductCategoryRow</code>（turquoise）：展示每一个分类的标头</li>
+<li><code>ProductRow</code>（red）：每一个产品展示一行</li>
+</ol>
+<p>如果你看<code>ProductTable</code>，你会发现表格头（包含”Name” 和”Price” 标签）并不是单独一个组件。这是一个重要的表现，并且这里可以使用两种方式作为参数传入。例如，我们将它作为<code>ProductTable</code> 的一部分，因为因为它是<code>ProductTable</code> 的负责的渲染数据的一部分。无论怎样，如果它的头变复杂了（例如，如果我们添加了一个排序），最好的方式的作为一个单独的<code>ProductTableHeader</code>组件。</p>
+<p>现在我们已经确认了在模拟中的组件，让我们来安排它们称为一个层次。这是非常容易的。在模拟中，组件可以作为另一个组件的孩子进行展示：</p>
+<ul>
+<li><code>FilterableProductTable</code><ul>
+<li><code>SearchBar</code></li>
+<li><code>ProductTable</code><ul>
+<li><code>ProductCategoryRow</code></li>
+<li><code>ProductRow</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Step-2-Build-A-Static-Version-in-React"><a href="#Step-2-Build-A-Static-Version-in-React" class="headerlink" title="Step 2: Build A Static Version in React"></a>Step 2: Build A Static Version in React</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span> <span class="attr">colSpan</span>=<span class="string">"2"</span>&gt;</span>&#123;this.props.category&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="keyword">this</span>.props.product.stocked ?</span><br><span class="line">      <span class="keyword">this</span>.props.product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;<span class="attr">color</span>: <span class="string">'red'</span>&#125;&#125;&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.props.product.name&#125;</span><br><span class="line">      &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;td&gt;&#123;name&#125;&lt;/</span>td&gt;</span><br><span class="line">        &lt;td&gt;&#123;<span class="keyword">this</span>.props.product.price&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>tr&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> rows = []</span><br><span class="line">    <span class="keyword">var</span> lastCategory = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">product</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(product.category !== lastCategory)&#123;</span><br><span class="line">        rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductCategoryRow</span> <span class="attr">category</span>=<span class="string">&#123;product.category&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.category&#125;</span> /&gt;</span></span>)</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductRow</span> <span class="attr">product</span>=<span class="string">&#123;product&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.name&#125;</span> /&gt;</span></span>)</span><br><span class="line">      lastCategory = product.category</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;<span class="regexp">/th&gt;</span></span><br><span class="line"><span class="regexp">            &lt;th&gt;Price&lt;/</span>th&gt;</span><br><span class="line">          &lt;<span class="regexp">/tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;<span class="regexp">/tbody&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>table&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input type=<span class="string">"text"</span> placeholder=<span class="string">"Search..."</span> /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input type=<span class="string">"checkbox"</span> /&gt;</span><br><span class="line">          &#123;<span class="string">' '</span>&#125;</span><br><span class="line">          Only show products <span class="keyword">in</span> stock</span><br><span class="line">        &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>form&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;SearchBar /&gt;</span><br><span class="line">        &lt;ProductTable products=&#123;<span class="keyword">this</span>.props.products&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">var PRODUCTS = [</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$99.99", stocked: true, name: "iPod Touch"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$399.99", stocked: false, name: "iPhone 5"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$199.99", stocked: true, name: "Nexus 7"&#125;</span></span><br><span class="line"><span class="regexp">]</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  &lt;FilterableProductTable products=&#123;PRODUCTS&#125;/</span>&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>现在你有了自己的组件系统，是时候实现你的app 了。最简单的方式的是个构建一个没有交互的只是将数据渲染成UI。最好解耦这些过程，因为构建一个静态版本需要许多代码不需要思考，人后添加交互需要更多思考和少量的代码。我们会看到为什么。</p>
+<p>为了构建一个静态的app 去渲染你的数据模型（data model），你想要构建组件并复用其他的组件同使用props 去传递数据。props 是从父组件传递给子组件数据的一种方式。如果你了解state 的概念，在构建静态版本时，一点也不需要使用state（don’t use state at all）。State 被留作交互时，数据随着时间而变动。因为是静态版本，所以你不需要state。</p>
+<p>在构建时你可以自上而下（top-down）或自下而上（down-top）。也就是，你可以从位于高层级的组件（例如，<code>FilterableProductTable</code>）或者是低层级的组件（<code>ProductRow</code>）开始。在简单的例子中，通常是自上而下（top-down），而在大型项目中，通常是从下而上（down-top）这样便于编写测试用例。</p>
+<p>在此最后，你有了许多可复用的组件来渲染你的数据模型。因为是静态版本的应用，所以这些组件中仅有<code>render()</code> 方法。在顶层组件（<code>FilterableProductTable</code>）将会接受你的数据模型作为prop。如果你改变你的基础数据模型（underlying data model）并且又调用了<code>ReactDOM .render()</code>，这个UI 将会被更新。这是很容易看淡你的UI 是如何更新，并在哪里做出改变，因为没有什么复杂的事情。React 是<strong>单向数据流one-way data flow</strong>（也叫做单向绑定one-way bind）来保持一切模块化和快速。</p>
+<p>如果你在执行这一步的时候需要帮助，可以简单浏览<a href="https://facebook.github.io/react/docs/" target="_blank" rel="noopener">React doc</a>。</p>
+<h4 id="A-Brief-Interlude-Props-vs-State"><a href="#A-Brief-Interlude-Props-vs-State" class="headerlink" title="A Brief Interlude: Props vs State"></a>A Brief Interlude: Props vs State</h4><p>在React 中有props 和state 这两种模型数据。了解它们的不同是非常重要的；如果你像了解它们的不同，可以浏览<a href="https://facebook.github.io/react/docs/state-and-lifecycle.html" target="_blank" rel="noopener">the offical React docs</a></p>
+<h3 id="Step-3-Identify-The-Minimal（but-complete）Representation-Of-UI-State"><a href="#Step-3-Identify-The-Minimal（but-complete）Representation-Of-UI-State" class="headerlink" title="Step 3: Identify The Minimal（but complete）Representation Of UI State"></a>Step 3: Identify The Minimal（but complete）Representation Of UI State</h3><p>为了能够使的UI 进行交互，你需要能够触发你的基础数据模型的改变。</p>
+<p>为了正确的构建你的app，你需要考虑你的app 需要的最小的稳定的state 的集合。这个的关键是DRY：Don’t Repeat Yourself。找出你的应用需要的绝对最小的state，你需要依赖它计算出其它所有的数据。例如，如果你正在构建TODO list，你需要有一个TODO items 数组；不需要为计数而保留一个单独的state变量，当你想要渲染这个TODO 的数量，只需要使用TODO items 数组的长度就可以了。</p>
+<p>考虑我们在实例应用程序中所有的数据块。我们有：</p>
+<ul>
+<li>最初的产品列表（<code>The original list of products</code>）</li>
+<li>用户键入的搜索文本（<code>The search text the user has entered</code>）</li>
+<li>checkbox 的值（<code>The value of the checkbox</code>）</li>
+<li>产品过滤列表（<code>The filtered list of products</code>）</li>
+</ul>
+<p>让我们通过每一个数组块来找到state。简单地问每一个数据块的三个问题：</p>
+<ol>
+<li>它是父组件通过props 传递的吗？如果是，它很可能不是state。</li>
+<li>它随着时间不改变吗？如果是，它很可能不是state。</li>
+<li>在组件中，你能够基于其他的state 或props 来计算出它吗？如果是，它不是state。</li>
+</ol>
+<p><code>The original list of products</code>是通过props 进行传递的，所以它不是state 。<code>The search text and the checkbox</code> 似乎是state 因为它们随着时间而改变，并且不能通过其它数据来计算获取。最后，<code>The filtered list of products</code> 不是state，因为它可以通过结合<code>the original list of products</code> 和 <code>the searche text and value of the checkbox</code> 计算出来。</p>
+<p>所以最终，我们的state 是：</p>
+<ul>
+<li>用户键入的搜索文本（<code>The search text the user has entered</code>）</li>
+<li>checkbox 的值（<code>The value of the checkbox</code>）</li>
+</ul>
+<h3 id="Step-4-Identify-Where-Your-State-Should-Live"><a href="#Step-4-Identify-Where-Your-State-Should-Live" class="headerlink" title="Step 4: Identify Where Your State Should Live"></a>Step 4: Identify Where Your State Should Live</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span> <span class="attr">colSpan</span>=<span class="string">"2"</span>&gt;</span>&#123;this.props.category&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="keyword">this</span>.props.product.stocked ?</span><br><span class="line">      <span class="keyword">this</span>.props.product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;<span class="attr">color</span>: <span class="string">'red'</span>&#125;&#125;&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.props.product.name&#125;</span><br><span class="line">      &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;td&gt;&#123;name&#125;&lt;/</span>td&gt;</span><br><span class="line">        &lt;td&gt;&#123;<span class="keyword">this</span>.props.product.price&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>tr&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> rows = []</span><br><span class="line">    <span class="keyword">var</span> lastCategory = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach(<span class="function">(<span class="params">product</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(product.name.indexOf(<span class="keyword">this</span>.props.filterText) === <span class="number">-1</span> || (!product.stocked &amp;&amp; <span class="keyword">this</span>.props.inStockOnly))&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(product.category !== lastCategory)&#123;</span><br><span class="line">        rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductCategoryRow</span> <span class="attr">category</span>=<span class="string">&#123;product.category&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.category&#125;</span> /&gt;</span></span>)</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductRow</span> <span class="attr">product</span>=<span class="string">&#123;product&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.name&#125;</span> /&gt;</span></span>)</span><br><span class="line">      lastCategory = product.category</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;<span class="regexp">/th&gt;</span></span><br><span class="line"><span class="regexp">            &lt;th&gt;Price&lt;/</span>th&gt;</span><br><span class="line">          &lt;<span class="regexp">/tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;<span class="regexp">/tbody&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>table&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input type=<span class="string">"text"</span> placeholder=<span class="string">"Search..."</span> value=&#123;<span class="keyword">this</span>.props.filterText&#125; /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input type=<span class="string">"checkbox"</span> checked=&#123;<span class="keyword">this</span>.props.inStockOnly&#125;/&gt;</span><br><span class="line">          &#123;<span class="string">' '</span>&#125;</span><br><span class="line">          Only show products <span class="keyword">in</span> stock</span><br><span class="line">        &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>form&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      filterText: <span class="string">''</span>,</span><br><span class="line">      inStockOnly: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;SearchBar</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;ProductTable</span><br><span class="line">          products=&#123;<span class="keyword">this</span>.props.products&#125;</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">var PRODUCTS = [</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$99.99", stocked: true, name: "iPod Touch"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$399.99", stocked: false, name: "iPhone 5"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$199.99", stocked: true, name: "Nexus 7"&#125;</span></span><br><span class="line"><span class="regexp">]</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  &lt;FilterableProductTable products=&#123;PRODUCTS&#125;/</span>&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>OK，现在我们已经确认了app state 的最小集合。Next，我们需要确认一个组件改变或拥有这个state。</p>
+<p>记住：React 在组件层级中是单向的向下的数据流。它可能并不立即清楚那一个组件应该拥有什么state。这个通常对新手去了解是充满挑战的，所以根据接下来的步骤来搞清楚它：</p>
+<p>对于你应用中的每一个state ：</p>
+<ul>
+<li>确认每一个组件基于那个state 来进行渲染</li>
+<li>找到一个共同的所有者组件（一个单独的组件在所有的需要state的层级中）</li>
+<li>要么是这个共同的拥有者，要么是在这个公共拥有者之上的组件拥有这个state</li>
+<li>如果你不能找到拥有这个state 的组件，可以简单的创建一个组件来拥有这个state 并将其添加到需要这个state 的所有组件的层级之上</li>
+</ul>
+<p>让我们在我们的应用中应用这个策略：</p>
+<ul>
+<li><code>ProductTable</code> 需要这个state 去过滤产品列表（product list），并且<code>SearchBar</code> 需要去展示搜索文字（search text）和选中状态（checked）state</li>
+<li>这个通用的拥有组件是<code>FilterableProductTable</code></li>
+<li>在概念上来说是有道理的，这个filter text 和checked value 位于<code>FilterableProductTable</code> 组件中</li>
+</ul>
+<p>Cool，所以我们决定我们的state 位于<code>FilterableProductTable </code>。首先在<code>FilterableProductTable </code> 的<code>construct</code> 中添加实例属性<code>this.state = {filterText: &#39;&#39;,inStockOnly: false}</code> 中去初始化应用的state。然后，将<code>filterText</code>和<code>inStockOnly</code>作为prop 传递给<code>SearchBar</code>和<code>ProductTable</code>。最后，使用这些props 过滤<code>ProductTable</code> 中的row 以及在<code>SearchBar</code> 中设置form fields 的值。</p>
+<p>你可以看你的应用的行为：设置<code>filterText</code> 为<code>ball</code> 并刷新你的应用，你会看到table 中数据正确更新了。</p>
+<h3 id="Step-5-Add-Inverse-Data-Flow"><a href="#Step-5-Add-Inverse-Data-Flow" class="headerlink" title="Step 5: Add Inverse Data Flow"></a>Step 5: Add Inverse Data Flow</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductCategoryRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span> <span class="attr">colSpan</span>=<span class="string">"2"</span>&gt;</span>&#123;this.props.category&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductRow</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="keyword">this</span>.props.product.stocked ?</span><br><span class="line">      <span class="keyword">this</span>.props.product.name :</span><br><span class="line">      &lt;span style=&#123;&#123;<span class="attr">color</span>: <span class="string">'red'</span>&#125;&#125;&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.props.product.name&#125;</span><br><span class="line">      &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;td&gt;&#123;name&#125;&lt;/</span>td&gt;</span><br><span class="line">        &lt;td&gt;&#123;<span class="keyword">this</span>.props.product.price&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>tr&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">var</span> rows = []</span><br><span class="line">    <span class="keyword">var</span> lastCategory = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">this</span>.props.products.forEach(<span class="function">(<span class="params">product</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(product.name.indexOf(<span class="keyword">this</span>.props.filterText) === <span class="number">-1</span> || (!product.stocked &amp;&amp; <span class="keyword">this</span>.props.inStockOnly))&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(product.category !== lastCategory)&#123;</span><br><span class="line">        rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductCategoryRow</span> <span class="attr">category</span>=<span class="string">&#123;product.category&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.category&#125;</span> /&gt;</span></span>)</span><br><span class="line">      &#125;</span><br><span class="line">      rows.push(<span class="xml"><span class="tag">&lt;<span class="name">ProductRow</span> <span class="attr">product</span>=<span class="string">&#123;product&#125;</span> <span class="attr">key</span>=<span class="string">&#123;product.name&#125;</span> /&gt;</span></span>)</span><br><span class="line">      lastCategory = product.category</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;table&gt;</span><br><span class="line">        &lt;thead&gt;</span><br><span class="line">          &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;Name&lt;<span class="regexp">/th&gt;</span></span><br><span class="line"><span class="regexp">            &lt;th&gt;Price&lt;/</span>th&gt;</span><br><span class="line">          &lt;<span class="regexp">/tr&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>thead&gt;</span><br><span class="line">        &lt;tbody&gt;&#123;rows&#125;&lt;<span class="regexp">/tbody&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>table&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SearchBar</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleChange()&#123;</span><br><span class="line">    <span class="keyword">this</span>.props.onUserInput(<span class="keyword">this</span>.filterTextInput.value,<span class="keyword">this</span>.inStockOnlyInput.checked)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;form&gt;</span><br><span class="line">        &lt;input</span><br><span class="line">          type=<span class="string">"text"</span></span><br><span class="line">          placeholder=<span class="string">"Search..."</span></span><br><span class="line">          value=&#123;<span class="keyword">this</span>.props.filterText&#125;</span><br><span class="line">          ref=&#123;(input) =&gt; <span class="keyword">this</span>.filterTextInput = input&#125;</span><br><span class="line">          onChange=&#123;<span class="keyword">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;input</span><br><span class="line">            type=<span class="string">"checkbox"</span></span><br><span class="line">            checked=&#123;<span class="keyword">this</span>.props.inStockOnly&#125;</span><br><span class="line">            ref=&#123;(input) =&gt; <span class="keyword">this</span>.inStockOnlyInput = input&#125;</span><br><span class="line">            onChange=&#123;<span class="keyword">this</span>.handleChange&#125;/&gt;</span><br><span class="line">          &#123;<span class="string">' '</span>&#125;</span><br><span class="line">          Only show products <span class="keyword">in</span> stock</span><br><span class="line">        &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>form&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FilterableProductTable</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">    <span class="keyword">super</span>(props)</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      filterText: <span class="string">''</span>,</span><br><span class="line">      inStockOnly: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.handleUserInput = <span class="keyword">this</span>.handleUserInput.bind(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  handleUserInput(filterText, inStockOnly)&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      filterText: filterText,</span><br><span class="line">      inStockOnly: inStockOnly</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render()&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;SearchBar</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">          onUserInput=&#123;<span class="keyword">this</span>.handleUserInput&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">        &lt;ProductTable</span><br><span class="line">          products=&#123;<span class="keyword">this</span>.props.products&#125;</span><br><span class="line">          filterText=&#123;<span class="keyword">this</span>.state.filterText&#125;</span><br><span class="line">          inStockOnly=&#123;<span class="keyword">this</span>.state.inStockOnly&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">var PRODUCTS = [</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$99.99", stocked: true, name: "iPod Touch"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$399.99", stocked: false, name: "iPhone 5"&#125;,</span></span><br><span class="line"><span class="regexp">  &#123;category: "Electroincs", price: "$199.99", stocked: true, name: "Nexus 7"&#125;</span></span><br><span class="line"><span class="regexp">]</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  &lt;FilterableProductTable products=&#123;PRODUCTS&#125;/</span>&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>到现在为止，我们已经建立了一个应用程序，进行正确渲染将props 和state 作为功能在层级中向下流动。现在，是时候添加支持数据从另一个方法流动：在层级中最深出的form 组件去更新位于<code>FilterableProductTable</code> 中的state。</p>
+<p>Reack 为了使数据流明确，使它能够容易的了解你的程序是如何工作的，但是它需要更多的数据相比传统的双线数据绑定（two-way data binding）</p>
+<p>如果在这个例子版本中进行键入信息或操作多选框，你会发现React 忽略了你的输入。这是趋势，通过设置<code>input</code> 的<code>value</code> 等于在<code>FiterableProductTable</code> 中的<code>state</code>。</p>
+<p>让我们考虑一下接下来会发生什么。我们要确认无论我们如何改变form，我们更新state 去响应用户的输入。因为组件仅能更新它们自己的state，<code>FilterableProductTable</code> 去传入一个回调函数到<code>SearchBar</code> 其启动无论什么时候state 应该被更新。我们使用<code>onChange</code> 事件去通知它。并且在<code>FilterableProductTable</code> 中的回调函数中嗲用<code>setState()</code> ，去更新应用。</p>
+<p>虽然听上去听复杂，实际上只是几行代码。明确你的数据如果在应用中流转。</p>
+<h3 id="And-That’s-It"><a href="#And-That’s-It" class="headerlink" title="And That’s It"></a>And That’s It</h3><p>希望，他能够给你一个思路，在React 中如何思考构建组件和应用。虽然它可能比你之前使用更多的代码，记住代码可读性远超过它的编写，它是非常容易阅读这个模块化，明确的代码。当你开始构建大量的组件库，你会欣赏这个明确的、模块化的，同时使用代码复用，你的代码行数将开始收缩。:)</p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ol>
+<li><a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="noopener">thinking in react</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/09/react-composition-vs-inheritance/" rel="next" title="react composition vs inheritance">
+                <i class="fa fa-chevron-left"></i> react composition vs inheritance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/13/react-Hello-World/" rel="prev" title="react Hello World">
+                react Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thinking-in-React"><span class="nav-number">1.</span> <span class="nav-text">Thinking in React</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Start-With-A-Mock"><span class="nav-number">1.1.</span> <span class="nav-text">Start With A Mock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-Break-The-UI-Into-A-Component-Hierarchy"><span class="nav-number">1.2.</span> <span class="nav-text">Step 1: Break The UI Into A Component Hierarchy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Build-A-Static-Version-in-React"><span class="nav-number">1.3.</span> <span class="nav-text">Step 2: Build A Static Version in React</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-Brief-Interlude-Props-vs-State"><span class="nav-number">1.3.1.</span> <span class="nav-text">A Brief Interlude: Props vs State</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-3-Identify-The-Minimal（but-complete）Representation-Of-UI-State"><span class="nav-number">1.4.</span> <span class="nav-text">Step 3: Identify The Minimal（but complete）Representation Of UI State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-4-Identify-Where-Your-State-Should-Live"><span class="nav-number">1.5.</span> <span class="nav-text">Step 4: Identify Where Your State Should Live</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-5-Add-Inverse-Data-Flow"><span class="nav-number">1.6.</span> <span class="nav-text">Step 5: Add Inverse Data Flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#And-That’s-It"><span class="nav-number">1.7.</span> <span class="nav-text">And That’s It</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">2.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2016/12/12/react-thinking-in-react/';
+
+      var disqus_title = "react thinking in react";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>

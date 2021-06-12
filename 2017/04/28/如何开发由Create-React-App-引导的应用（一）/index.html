@@ -1,0 +1,1089 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="0XkvKqrv3bnxIlLO2jlrmH4wAhHXsL4pHgwDG--jlJg" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,翻译,Create React App," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="此文章是翻译How to develop apps bootstrapped with Create React App 官方文档  系列文章 如何开发由Create-React-App 引导的应用 如何开发由Create-React-App 引导的应用（二） 如何开发由Create-React-App 引导的应用（三） 如何开发由Create-React-App 引导的应用（四）    Upd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何开发由Create-React-App 引导的应用（一）">
+<meta property="og:url" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="JobbyM&#39;s Blog">
+<meta property="og:description" content="此文章是翻译How to develop apps bootstrapped with Create React App 官方文档  系列文章 如何开发由Create-React-App 引导的应用 如何开发由Create-React-App 引导的应用（二） 如何开发由Create-React-App 引导的应用（三） 如何开发由Create-React-App 引导的应用（四）    Upd">
+<meta property="og:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/Use-global-ESLint-installation.png">
+<meta property="article:published_time" content="2017-04-28T02:03:43.000Z">
+<meta property="article:modified_time" content="2021-06-12T03:17:57.689Z">
+<meta property="article:author" content="JobbyM">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="Create React App">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/Use-global-ESLint-installation.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'JQFAQAQAP5',
+      apiKey: 'fbb18262d0b784c1d03f095a83eadbcf',
+      indexName: 'dev_jobbymsblog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jobbym.github.io/2017/04/28/如何开发由Create-React-App-引导的应用（一）/"/>
+
+
+
+
+
+  <title> 如何开发由Create-React-App 引导的应用（一） | JobbyM's Blog </title>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90413023-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0d65459e5802dba7e9a8409f873c59a4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">JobbyM's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">first do it, then do it right, then do it better.</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jobbym.github.io/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="JobbyM">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/assets/images/avatar/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="JobbyM's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="JobbyM's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何开发由Create-React-App 引导的应用（一）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-28T02:03:43+00:00">
+                2017-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/28/如何开发由Create-React-App-引导的应用（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="leancloud_visitors" data-flag-title="如何开发由Create-React-App 引导的应用（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文章是翻译<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md" target="_blank" rel="noopener">How to develop apps bootstrapped with Create React App</a> 官方文档</p>
+</blockquote>
+<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ol>
+<li><a href="/2017/03/30/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8/" title="如何开发由Create-React-App 引导的应用">如何开发由Create-React-App 引导的应用</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（二）">如何开发由Create-React-App 引导的应用（二）</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%89%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（三）">如何开发由Create-React-App 引导的应用（三）</a></li>
+<li><a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E5%9B%9B%EF%BC%89/" title="如何开发由Create-React-App 引导的应用（四）">如何开发由Create-React-App 引导的应用（四）</a>
+
+</li>
+</ol>
+<h2 id="Updating-to-New-Release"><a href="#Updating-to-New-Release" class="headerlink" title="Updating to New Release"></a>Updating to New Release</h2><p>Creat React App 分成两个包：</p>
+<ul>
+<li><code>create-react-app</code> 是用于创建新项目的全局命令行工具。</li>
+<li><code>react-scripts</code> 是在新建项目中的开发依赖。</li>
+</ul>
+<p>几乎不需要更新<code>create-react-app</code> 自身：它将所有的设置委托给了<code>react-scripts</code> 。</p>
+<p>当你运行<code>create-react-app</code> 时，它总是使用<code>react-scripts</code> 的最新版本来创建项目，以便你自动获得所有的新特性和改进。</p>
+<p>要将现有项目更新为<code>react-scripts</code> 的最新版本，<a href="https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md" target="_blank" rel="noopener">打开更新日志</a>，找到你当前正在用的版本（可以在<code>package.json</code>中找到），按照最新版本的迁移说明来操作。</p>
+<p>在大多数情况下，更改<code>packages.json</code> 中<code>react-scripts</code> 的版本号，然后运行<code>npm install</code> 应该就可以了，但是对于潜在的重大变化，请参考<a href="https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md" target="_blank" rel="noopener">更新日志</a>。</p>
+<p>我们致力于保持最小的重大变化，从而可以无痛的升级<code>react-scripts</code>。</p>
+<a id="more"></a>
+
+<h2 id="Sending-Feedback"><a href="#Sending-Feedback" class="headerlink" title="Sending Feedback"></a>Sending Feedback</h2><p>我们总是关注<a href="https://github.com/facebookincubator/create-react-app/issues" target="_blank" rel="noopener">您的反馈</a>。</p>
+<h2 id="Folder-Structure"><a href="#Folder-Structure" class="headerlink" title="Folder Structure"></a>Folder Structure</h2><p>创建完成后，你的项目应该看上去像这样：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">my-app/</span><br><span class="line">  README.md</span><br><span class="line">  node_modules/</span><br><span class="line">  package.json</span><br><span class="line">  public/</span><br><span class="line">    index.html</span><br><span class="line">    favicon.ico</span><br><span class="line">  src/</span><br><span class="line">    App.css</span><br><span class="line">    App.js</span><br><span class="line">    App.test.js</span><br><span class="line">    index.css</span><br><span class="line">    index.js</span><br><span class="line">    logo.svg</span><br></pre></td></tr></table></figure>
+
+<p>对于要构建的项目，这些文件必须存在：</p>
+<ul>
+<li><code>public/index.html</code> 是页面模版；</li>
+<li><code>src/index.js</code> 是JavaScript 入门点。</li>
+</ul>
+<p>你可以删除或重命名其它的文件。</p>
+<p>你可以在<code>src</code> 中创建子目录。为了更快的重构，只有位于<code>src</code> 中的文件会被Webpack 处理。<br>你需要<em>将任何JS 和CSS 放到<code>src</code> 中</em>，否则Webpack 将不会处理。</p>
+<p><code>public/index.html</code> 只能使用<code>public</code> 中的文件。<br>阅读使用JavaScript 和HTML 资源的说明。</p>
+<p>但是，你可以创建更多的顶级目录。<br>它们不会被包含在生产版本中，因此你可以将它们用于文档说明等。</p>
+<h2 id="Available-Scripts"><a href="#Available-Scripts" class="headerlink" title="Available Scripts"></a>Available Scripts</h2><p>在项目目录中，你可以运行：</p>
+<p><strong>npm start</strong></p>
+<p>在开发模式下运行应用。<br>打开 <a href="http://localhost:3000/" target="_blank" rel="noopener">http://localhost:3000</a> 在浏览器中查看。</p>
+<p>如果你进行了修改，页面将重新加载。<br>你还可以在控制台中看到lint error。</p>
+<p><strong>npm test</strong></p>
+<p>在交互观察者模式下，启动test runner。<br>更多信息请参考<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests" target="_blank" rel="noopener">running tests</a> 章节。</p>
+<p><strong>npm run build</strong></p>
+<p>构建生产版本应用到build 文件夹。<br>它在生产模式下正确地绑定了React，并且优化了构建以获得最佳性能。</p>
+<p>构建是minified 并且文件名包含哈希值。<br>你的应用已经准备好部署了！</p>
+<p>更多信息请参考<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment" target="_blank" rel="noopener">deployment</a> 章节。</p>
+<p><strong>npm run eject</strong></p>
+<p><strong>注意：这是一个单向操作。一旦你<code>eject</code>，你不能返回！</strong></p>
+<p>如果你对构建工具和配置选项不满意，你可以运行<code>eject</code>。此命令将从项目中删除单个构建依赖。</p>
+<p>相反，它会将所有配置文件和转变的依赖（Webpack、Babel、ESLint 等）复制到你的项目中，所以你可以完全控制它们。除了<code>eject</code> 外所有的命令仍将其作用，但它们将指向复制的脚本，以便你调整它们。在这一点，完全看你自己。</p>
+<p>你不必使用<code>eject</code>。The curated feature set 适用于中小型部署。但是我们明白，当你准备使用这个工具时，如果你不能自定义它，则它将没有用。</p>
+<h2 id="Supported-Language-Features-and-Polyfills"><a href="#Supported-Language-Features-and-Polyfills" class="headerlink" title="Supported Language Features and Polyfills"></a>Supported Language Features and Polyfills</h2><p>这个项目支持最新JavaScript 标准的超集。<br>除了<a href="https://github.com/lukehoban/es6features" target="_blank" rel="noopener">ES6</a> 语法，它还支持：</p>
+<ul>
+<li><a href="https://github.com/rwaldron/exponentiation-operator" target="_blank" rel="noopener">Exponentiation Operator</a>（ES2016）</li>
+<li><a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">Async/await</a>（ES2017）</li>
+<li><a href="https://github.com/sebmarkbage/ecmascript-rest-spread" target="_blank" rel="noopener">Object Rest/Spread Properites</a>（stage 3 proposal）</li>
+<li><a href="https://github.com/tc39/proposal-class-public-fields" target="_blank" rel="noopener">Class Field and Static Properties</a>（stage 3 proposal）</li>
+<li><a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="noopener">JSX</a> 和 <a href="https://flowtype.org/" target="_blank" rel="noopener">Flow</a> 语法</li>
+</ul>
+<p>学习更多关于<a href="https://babeljs.io/docs/plugins/#presets-stage-x-experimental-presets-" target="_blank" rel="noopener">不同提案阶段</a>。</p>
+<p>虽然我们建议你谨慎使用这些实验性提案，但Facebook 在产品代码中大量使用这些功能，因此，如果将来这些提案发生变化，我吗将提供<a href="https://medium.com/@cpojer/effective-javascript-codemods-5a6686bb46fb" target="_blank" rel="noopener">codemods</a>。</p>
+<p>注意<strong>这个项目只包括几个ES6<a href="https://en.wikipedia.org/wiki/Polyfill" target="_blank" rel="noopener">polyfills</a>：</strong></p>
+<ul>
+<li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a> 通过<a href="https://github.com/sindresorhus/object-assign" target="_blank" rel="noopener">object-assign</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">Promise</a> 通过<a href="https://github.com/then/promise" target="_blank" rel="noopener">promise</a></li>
+<li><a href="https://developer.mozilla.org/en/docs/Web/API/Fetch_API" target="_blank" rel="noopener">fetch()</a> 通过<a href="https://github.com/github/fetch" target="_blank" rel="noopener">whatwg-fetch</a></li>
+</ul>
+<p>如果你使用任何需要<strong>运行时支持</strong>的ES6+ 特性（像<code>Array.from()</code> 或<code>Symbol</code>）,确保你手动添加了合适的polyfill，或者你的目标浏览器已经支持它们了。</p>
+<h2 id="Syntax-Highlighting-in-the-Editor"><a href="#Syntax-Highlighting-in-the-Editor" class="headerlink" title="Syntax Highlighting in the Editor"></a>Syntax Highlighting in the Editor</h2><p>要在你喜欢的文本编辑器中配置语法高亮，前往<a href="https://babeljs.io/docs/editors" target="_blank" rel="noopener">相关的Babel 文档说明页</a>，然后按照说明操作。包含大部分流行的编辑器。</p>
+<h2 id="Displaying-Lint-Output-in-the-Editor"><a href="#Displaying-Lint-Output-in-the-Editor" class="headerlink" title="Displaying Lint Output in the Editor"></a>Displaying Lint Output in the Editor</h2><blockquote>
+<p>注意：这个特性需呀<code>react-scripts@0.2.0</code> 或更高。</p>
+</blockquote>
+<p>一些编辑器，包括Sublime Text、Atom 和Visual Studio Code 提供了ESLint 插件。</p>
+<p>对于linting 它们不是必须要的。你会在终端以及浏览器控制台中看到linter 输出。但是，如果你喜欢在编辑器中显示lint 结果，则需要执行一些额外的操作。</p>
+<p>首先，你需要为你的编辑器安装ESLint 插件。</p>
+<blockquote>
+<p>Atom 用户使用 <code>linter-eslint</code> 笔记<br>如果你正在使用Atom <code>linter-eslint</code> 插件，确保 <strong>Use global ESLint installation</strong> 选项已经选中：</p>
+<img src="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/Use-global-ESLint-installation.png" class="">
+<p>Visual Studio Code 用户<br>VS Code ESLint 插件会自动侦测Create React App 的配置文件。所以你不需要在根目录下创建<code>eslintrc.json</code> 文件，除非你想要添加你自己的规则。在这种情况下，你应该包含CRA 的配置，通过添加下面这行：</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line"> <span class="string">"extends"</span>: <span class="string">"react-app"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将下面这块代码添加到你的项目中的<code>package.json</code> 文件中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="comment">//...</span></span><br><span class="line"> <span class="string">"eslintConfig"</span>: &#123;</span><br><span class="line">    <span class="string">"extends"</span>: <span class="string">"react-app"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后，你需要全局安装一些包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@4.0.0 eslint-plugin-flowtype@2.21.0</span><br></pre></td></tr></table></figure>
+
+<p>我们认识到这是次优的，由于我们隐藏ESLint 依赖的方式，它目前是必须的。ESLint 团队已经在为此<a href="https://github.com/eslint/eslint/issues/3458" target="_blank" rel="noopener">提供解决方案</a>，因此在几个月内可以会变得不必要。</p>
+<h2 id="Debugging-in-the-Editor"><a href="#Debugging-in-the-Editor" class="headerlink" title="Debugging in the Editor"></a>Debugging in the Editor</h2><p><strong>这个特性目前只有<a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a>编辑器支持。</strong></p>
+<p>Visual Studio Code 支持实时编辑和调试，使用Create React App 开箱即用。这能够使你作为一个开发者不需要离开编辑器就可以进行编写和调试你的React 代码，最重要的是它可以让您拥有持续的开发工作流程，其中上下文切换是最小的，因为你不必在不同工具之间进行切换。</p>
+<p>你需要确保<a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VS Code</a> 是最新版本，并且VS Code 的<a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome" target="_blank" rel="noopener">Chrome Debugger Extension</a> 已经安装了。</p>
+<p>然后将下面代码添加到你的<code>launch.json</code> 文件，并将其放到你的应用根目录下的<code>.vscode</code> 文件夹中。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="attr">"configurations"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Chrome"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"chrome"</span>,</span><br><span class="line">    <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"http://localhost:3000"</span>,</span><br><span class="line">    <span class="attr">"webRoot"</span>: <span class="string">"$&#123;workspaceRoot&#125;/src"</span>,</span><br><span class="line">    <span class="attr">"userDataDir"</span>: <span class="string">"$&#123;workspaceRoot&#125;/.vscode/chrome"</span>,</span><br><span class="line">    <span class="attr">"sourceMapPathOverrides"</span>: &#123;</span><br><span class="line">      <span class="attr">"webpack:///src/*"</span>: <span class="string">"$&#123;webRoot&#125;/*"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行<code>npm start</code> 启动你的应用，按<code>F5</code> 或点击绿色debug 图标在VS Code 中调试。现在你可以写代码、设置断点、修改代码以及调试你最新修改的代码–所有都在你的编辑器中实现。</p>
+<h2 id="Changing-the-Page-title"><a href="#Changing-the-Page-title" class="headerlink" title="Changing the Page title"></a>Changing the Page <strong>title</strong></h2><p>你可以在生成项目的<code>public</code> 文件夹下知道源HTML 文件。你可以编辑<code>&lt;title&gt;</code> 标签，把“React App” 标题改为其他任何东西。</p>
+<p>请注意，通常你不会经常在<code>public</code> 目录下编辑文件。例如，可以在不更改HTML 情况下，<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-a-stylesheet" target="_blank" rel="noopener">添加CSS 文件</a>。</p>
+<p>如果你需要根据内容来动态更新页面的标题，你可以使用浏览器的<a href="">document.title</a> API。对于要从React 组件更改标题的更复杂的场景，可以使用<a href="https://github.com/nfl/react-helmet">React Helmet</a> 这个第三方库。</p>
+<p>在生产环境中，你为自己的应用使用自定义服务器，要将标题在发送到浏览器之前修改，你可以遵循<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server" target="_blank" rel="noopener">本章</a> 建议。或者，你可以预构建每一个页面为静态HTML 文件，然后加载JavaScript 包，将在<a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#pre-rendering-into-static-html-files" target="_blank" rel="noopener">这里</a>介绍。</p>
+<h2 id="Installing-a-Dependency"><a href="#Installing-a-Dependency" class="headerlink" title="Installing a Dependency"></a>Installing a Dependency</h2><p>生成的项目中包括React 和ReactDOM 依赖。它也包括Create React App 使用的一组脚本作为开发依赖。你也可以使用<code>npm</code>安装其它的依赖（例如，React Router）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save &lt;library-name&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          
+            <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/Create-React-App/" rel="tag"># Create React App</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/27/12%E6%AD%A530%E5%88%86%E9%92%9F-%E5%AE%8C%E6%88%90%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9A%84CURD%E5%BA%94%E7%94%A8/" rel="next" title="12步30分钟 完成用户管理的CURD应用">
+                <i class="fa fa-chevron-left"></i> 12步30分钟 完成用户管理的CURD应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/28/%E5%A6%82%E4%BD%95%E5%BC%80%E5%8F%91%E7%94%B1Create-React-App-%E5%BC%95%E5%AF%BC%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="如何开发由Create-React-App 引导的应用（二）">
+                如何开发由Create-React-App 引导的应用（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/images/avatar/avatar.png"
+               alt="JobbyM" />
+          <p class="site-author-name" itemprop="name">JobbyM</p>
+          <p class="site-description motion-element" itemprop="description">first do it, then do it right, then do it better.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">213</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JobbyM" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1602073390" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/blog/" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.w3cplus.com/" title="w3cplus" target="_blank">w3cplus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭的个人博客" target="_blank">张鑫旭的个人博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">1.</span> <span class="nav-text">系列文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Updating-to-New-Release"><span class="nav-number">2.</span> <span class="nav-text">Updating to New Release</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sending-Feedback"><span class="nav-number">3.</span> <span class="nav-text">Sending Feedback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Folder-Structure"><span class="nav-number">4.</span> <span class="nav-text">Folder Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Available-Scripts"><span class="nav-number">5.</span> <span class="nav-text">Available Scripts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Supported-Language-Features-and-Polyfills"><span class="nav-number">6.</span> <span class="nav-text">Supported Language Features and Polyfills</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Syntax-Highlighting-in-the-Editor"><span class="nav-number">7.</span> <span class="nav-text">Syntax Highlighting in the Editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Displaying-Lint-Output-in-the-Editor"><span class="nav-number">8.</span> <span class="nav-text">Displaying Lint Output in the Editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-in-the-Editor"><span class="nav-number">9.</span> <span class="nav-text">Debugging in the Editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Changing-the-Page-title"><span class="nav-number">10.</span> <span class="nav-text">Changing the Page title</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installing-a-Dependency"><span class="nav-number">11.</span> <span class="nav-text">Installing a Dependency</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JobbyM</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jobbym';
+      var disqus_identifier = '2017/04/28/如何开发由Create-React-App-引导的应用（一）/';
+
+      var disqus_title = "如何开发由Create-React-App 引导的应用（一）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("R431uCJPKQArpJEfNMiheJSs-gzGzoHsz", "OdMJBqrCyjEnpEgAhtt0AA3W");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+</body>
+</html>
