@@ -10,6 +10,7 @@ categories: 技术
 
 > 转自的 w3cshool.cn [JavaScript 设计模式](https://www.w3cschool.cn/zobyhd/3lt2rcqm.html)，有删节。 
 
+
 在本节中，我们将探讨一些经典和现代的设计模式的 JavaScript 实现。
 
 开发人员通常想知道在他们的工作流程中是否有一个（或一组）理想的模式。这个问题没有一个真正的单一答案：我们要完成的每个脚本和 Web 应用都可能会有它自己的独特需求，我们需要思考模式对实现来说在哪些方面能够提供真正的价值。
@@ -583,10 +584,221 @@ console.log(sunner.getName()) // -> winner
 
 
 ## JavaScript 观察者模式
+观察者模式是这样一种设计模式。一个被称作被观察者的对象，维护一组被称为观察者的对象，这些对象依赖于被观察者，被观察者自动将自身的状态的任何变化通知给它们。
+
+当一个被观察者需要将一些变化通知给观察者的时候，它将采用广播的方式，这条广播可能包含特定于这条通知的一些数据。
+
+当特定的观察者不再需要接受来自于它所注册的被观察者的通知的时候，被观察者可以将其从所维护的组中删除。 在这里提及一下设计模式现有的定义很有必要。这个定义是与所使用的语言无关的。通过这个定义，最终我们可以更深层次地了解到设计模式如何使用以及其优势。在四人帮的《设计模式:可重用的面向对象软件的元素》这本书中，是这样定义观察者模式的:
+
+一个或者更多的观察者对一个被观察者的状态感兴趣，将自身的这种兴趣通过附着自身的方式注册在被观察者身上。当被观察者发生变化，而这种便可也是观察者所关心的，就会产生一个通知，这个通知将会被送出去，最后将会调用每个观察者的更新方法。当观察者不在对被观察者的状态感兴趣的时候，它们只需要简单的将自身剥离即可。
+
+我们现在可以通过实现一个观察者模式来进一步扩展我们刚才所学到的东西。这个实现包含一下组件:
+* 被观察者：维护一组观察者，提供用于增加和移除观察者的方法。
+* 观察者：提供一个更新接口，用于当被观察者状态变化时，得到通知。
+* 具体的被观察者：状态变化时广播通知给观察者，保持具体的观察者的信息。
+* 具体观察者：保持一个指向具体被观察者的引用，实现一个更新接口，用于观察，一边保证自身状态总是和被观察者状态一致的。
+
+{% post_link 一日一练-JS-了解设计模式-观察者模式 一日一练-JS 了解设计模式-观察者模式 %}
+
+观察者模式在应用设计中，解耦一系列不同的场景上非常有用，如果你没有用过它，我推荐你尝试一下今天提到的之前写到的某个实现。这个模式是一个易于学习的模式，同时也是一个威力巨大的模式。
+
 
 ## JavaScript 中介者模式
 
+### 中介者模式
+字典中中介者的定义是，一个中立方，在谈判和冲突解决过程中起辅助作用。在我们的世界，一个中介者是一个行为设计模式，使我们可以导出统一的接口，这样系统不同部分就可以彼此通信。
+
+如果系统组件之间存在大量的直接关系，就可能是时候，使用一个中心的控制点，来让不同的组件通过它来通信。中介者通过将组件之间显式的直接的引用替换成通过中心点来交互的方式，来做到松耦合。这样可以帮助我们解耦，和改善组件的重用性。
+
+在现实世界中，类似的系统就是，飞行控制系统。一个航站塔（中介者）处理哪个飞机可以起飞，哪个可以着陆，因为所有的通信（监听的通知或者广播的通知）都是飞机和控制塔之间进行的，而不是飞机和飞机之间进行的。一个中央集权的控制中心是这个系统成功的关键，也正是中介者在软件设计领域中所扮演的角色。
+
+从实现角度来讲，中介者模式是观察者模式中的共享被观察者对象。在这个系统中的对象之间直接的发布/订阅关系被牺牲掉了，取而代之的是维护一个通信的中心节点。
+
+也可以认为是一种补充-用于应用级别的通知，例如不同子系统之间的通信，子系统本身很复杂，可能需要使用发布/订阅模式来做内部组件之间的解耦。
+
+另外一个类似的例子是 DOM 的事件冒泡机制，以及事件代理机制。如果系统中所有的订阅者都是对文档订阅，而不是对独立的节点订阅，那么文档就充当一个中介者的角色。DOM 的这种做法，不是将事件绑定到独立节点上，而是用一个更高级别的对象负责通知订阅者关于交互事件的信息。
+
+### 基础的实现
+中间人模式的一种简单的实现可以在下面找到,publish() 和 subscribe() 方法都被暴露出来使用:
+```js
+var mediator = (function () {
+
+  // Storage for topics that can be broadcast or listened to
+  var topics = {}
+
+  // Subscribe to a topic, supply a callback to be executed
+  // when that topic is broadcast to
+  var subscribe = function (topic, fn) {
+
+    if (!topics[topic]) {
+      topics[topic] = []
+    }
+
+    topics[topic].push( { context: this, callback: fn })
+
+    return this
+  }
+
+  // Publish/broadcast an event to the rest of the application
+  var publish = function (topic) {
+
+    var args 
+    
+    if (!topics[topic]) {
+      return false
+    }
+
+    args = Array.prototype.slice.call( arguments, 1)
+    for (var i = 0, l = topics[topic].length ; i < l; i++) {
+      var subscription = topics[topic][i]
+      subscription.callback.apply( subscription.context, args)      
+    }
+
+    return this
+  }
+
+  return {
+    publish: publish,
+    subscribe: subscribe,
+    installTo: function(obj) {
+      obj.subscribe = subscribe
+      obj.publish = publish
+    }
+  }
+}());
+```
+
+### 高级的实现
+
+### 优点和缺点
+中间人模式最大的好处就是，它节约了对象或者组件之间的通信信道，这些对象或者组件存在于从多对多到多对一的系统之中。由于解耦合水平的因素，添加新的发布或者订阅者是相对容易的。
+
+也许使用这个模式最大的缺点是它可以引入一个单点故障。在模块之间放置一个中间人也可能会造成性能损失，因为它们经常是间接地的进行通信的。由于松耦合的特性，仅仅盯着广播很难去确认系统是如何做出反应的。
+
+这就是说，提醒我们自己解耦合的系统拥有许多其它的好处，是很有用的——如果我们的模块互相之间直接的进行通信，对于模块的改变（例如：另一个模块抛出了异常）可以很容易的对我们系统的其它部分产生多米诺连锁效应。这个问题在解耦合的系统中很少需要被考虑到。
+
+在一天结束的时候，紧耦合会导致各种头痛，这仅仅只是另外一种可选的解决方案，但是如果得到正确实现的话也能够工作得很好。
+
+### 中间人VS观察者
+开发人员往往不知道中间人模式和观察者模式之间的区别。不可否认，这两种模式之间有一点点重叠，但让我们回过头来重新寻求 GoF 的一种解释：
+
+“在观察者模式中，没有封装约束的单一对象”。取而代之，观察者和主题必须合作来维护约束。通信的模式决定于观察者和主题相互关联的方式：一个单独的主题经常有许多的观察者，而有时候一个主题的观察者是另外一个观察者的主题。“
+
+中间人和观察者都提倡松耦合，然而，中间人默认使用让对象严格通过中间人进行通信的方式实现松耦合。观察者模式则创建了观察者对象，这些观察者对象会发布触发对象认购的感兴趣的事件。
+
+### 中间人VS门面
+不久我们的描述就将涵盖门面模式，但作为参考之用，一些开发者也想知道中间人和门面模式之间有哪些相似之处。它们都对模块的功能进行抽象，但有一些细微的差别。
+
+中间人模式让模块之间集中进行通信，它会被这些模块明确的引用。门面模式却只是为模块或者系统定义一个更加简单的接口，但不添加任何额外的功能。系统中其他的模块并不直接意识到门面的概念，而可以被认为是单向的。
+
 ## JavaScript 原型模式
+### 原型模式
+GoF 将原型模式引用为通过克隆的方式基于一个现有对象的模板创建对象的模式。
+
+我们能够将原型模式认作是基于原型的继承中,我们创建作为其它对象原型的对象.原型对象自身被当做构造器创建的每一个对象的蓝本高效的使用着.如果构造器函数使用的原型包含例如叫做name的属性,那么每一个通过同一个构造器创建的对象都将拥有这个相同的属性。
+
+在现存的(非 Javascript  的)语法中重新看一看对这个模式的定义,我们也许可以再一次发现对类的引用.真实的情况是那种原型继承避免了完全使用类.理论上既不是一个"定义的“对象，也不是一个核心对象。我们可以简单的创建现存函数型对象的拷贝。
+
+使用原型模式的好处之一就是,我们在 JavaScript 提供的原生能力之上工作的,而不是 JavaScript 试图模仿的其它语言的特性.而对于其它的模式来说,情况并非如此。
+
+这一模式不仅仅是实现继承的一种简单方式,它顺便还能够带来一点性能上的提升:当定义对象的一个方法时,它们都是使用引用创建的(因此所有的子对象都指向同一个函数),而不是创建属于它们的单独的拷贝。
+
+对于那些有趣的,真正原型的集成,像 ECMAScript 5 标准中所定义的那样,需要使用 Object.create (如我们在本节的前面部分所见到的).为了提醒我们自己,Object.create 创建了一个拥有特定原型的对象,并且也包含选项式的特定属性.(例如,`Object.create(prototype,optionalDescriptorObject)`)。
+
+我们可以在下面的示例中看到对这个的展示:
+```js
+var myCar = {
+  name: "Ford Escort",
+
+  drive: function () {
+    console.log("Weeee. I'm driving!")
+  },
+
+  panic: function () {
+    console.log("Wait. How do you stop this thing?")
+  }
+}
+
+// Use Object.create to instantiate a new car
+var yourCar = Object.create(myCar)
+
+// Now we can see that one is a prototype of the other
+console.log( yourCar.name )
+
+// yourCar.name = 'Jeep'
+console.log( yourCar)
+```
+
+Object.create 也允许我们简单的继承先进的概念,比如对象能够直接继承自其它对象,这种不同的继承.我们早先也看到 Object.create 允许我们使用供应的第二个参数来初始化对象属性。例如：
+```js
+var  vehicle = {
+  getModel: function () {
+    console.log("The model of this vehicle is.." + this.model)
+  }
+}
+
+var car = Object.create(vehicle, {
+  "model": {
+    value: "Ford",
+    // writable: false, configurable: false by default
+    enumerable: true
+  }
+})
+
+console.log(car)
+```
+
+这里的属性可以被 Object.create 的第二个参数来初始化,使用一种类似于我们前面看到的 Object.defineProperties 和 Object.defineProperties 方法所使用语法的对象字面值。
+
+在枚举对象的属性,和(如 Crockford 所提醒的那样)在一个 hasOwnProperty() 检查中封装循环的内容时,原型关系会造成麻烦,这一事实是值得我们关注的。
+
+如果我们希望在不直接使用 Object.create 的前提下实现原型模式,我们可以像下面这样,按照上面的示例,模拟这一模式:
+```js
+var vehiclePrototype = {
+
+  init: function ( carModel ) {
+    this.model = carModel;
+  },
+
+  getModel: function () {
+    console.log( "The model of this vehicle is.." + this.model);
+  }
+};
+
+function vehicle( model ) {
+
+  function F() {};
+  F.prototype = vehiclePrototype;
+
+  var f = new F();
+
+  f.init( model );
+  return f;
+
+}
+
+var car = vehicle( "Ford Escort" );
+car.getModel();
+```
+
+注意：这种可选的方式不允许用户使用相同的方式定义只读的属性(因为如果不小心的话 vehicle 原型可能会被改变)。
+
+原型模式的最后一种可选实现可以像下面这样:
+```js
+var beget = (function () {
+
+    function F() {}
+
+    return function ( proto ) {
+        F.prototype = proto;
+        return new F();
+    };
+})();
+```
+
+一个人可以从 vehicle 函数引用这个方法,注意,这里的那个 vehicle 正是在模拟着构造器,因为原型模式在将一个对象链接到一个原型之外没有任何初始化的概念。
+
+
 
 ## JavaScript 命令模式
 
