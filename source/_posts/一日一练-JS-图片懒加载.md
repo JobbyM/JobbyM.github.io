@@ -209,6 +209,39 @@ var clientHeight = window.innerHeight;//这个和前面获取可视区高度的�
     }
 ```
 
+## 六.更更加方便快捷的实现方式
+### 1.了解一个 API
+这种实现方式我们只需要了解一个 API 就行了：
+```js
+IntersectionObserver 
+```
+
+IntersectionObserver 接口，提供了一种异步观察目标元素与其祖先元素或顶级文档视窗( viewport )交叉状态的方法，祖先元素与视窗( viewport )被称为根( root )
+
+使用 IntersectionObserver API 主要需要三个步骤：
+1. 创建观察者
+
+2. 定义回调事件
+
+3. 定义要观察的目标对象
+
+### 2.实现方式
+```js
+let observer = new IntersectionObserver(
+    (entries, observer) => {
+        entries.forEach(entry => {
+            // 替换属性
+            if (entry.isIntersecting) {
+                entry.target.src = entry.target.dataset.src
+                observer.unobserve(entry.target)
+            }
+        })
+    },
+    { rootMargin: "0px 0px -20px 0px" }
+)
+
+document.querySelectorAll('img').forEach(img => { observer.observe(img) })
+```
 
 ## 总结
 懒加载其实就两个重点，一个是元素到各个边距的距离，二个就是判断元素是否在可视区域内。
