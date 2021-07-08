@@ -3642,7 +3642,38 @@ Promise.race([p1, p2, p3]).then(function (value) {
 
 ## 关于作者
 
+[azu](https://github.com/azu/) (Twitter : @[azu_re](https://twitter.com/azu_re) )
+
+关注浏览器、JavaScript相关的最新技术。
+
+擅长将目的作为手段，本书也是因此而成。
+
+管理着个人主页 [Web Scratch](http://efcl.info/) 和 [JSer.info](http://jser.info/) 。
+
 ## 关于译者
+* liubin [https://github.com/liubin](https://github.com/liubin)
+
+    * 除去 kakau 和 honnkyou 的其余部分的翻译、整体校对，以及源代码，工具部分的翻译
+
+* kaku [https://github.com/kaku87](https://github.com/kaku87)
+
+    * 1.1. Promise是什么、1.2. Promise 简介、1.3. 编写Promise代码
+
+* honnkyou [https://github.com/honnkyou](https://github.com/kaku87)
+
+    * 3.1. 基本测试
 
 ### 给原著者留言、后记
+[后记.pdf](https://gumroad.com/l/javascript-promise) 里面记录了笔者为什么要写这么一本书，编写的过程，以及如何进行测试。
 
+[下载后记（日文版） JavaScript Promise迷你书后记（日文版）](https://gumroad.com/l/javascript-promise)
+
+你可以在 Gumroad 以免费的价格或者自己设定一个任意的价格来下载本书的后记。
+
+在下载的时候，会有一个给作者留言的地方， 希望各位读者能写下一点什么之后下载。
+
+如果本书有任何问题的话，也可以通过 GitHub 或者 Gitter 来提交。
+
+* [Issues · azu/promises-book](https://github.com/azu/promises-book/issues?state=open)
+
+* [azu/promises-book - Gitter](https://gitter.im/azu/promises-book)
