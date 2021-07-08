@@ -3625,6 +3625,20 @@ Promise.race([p1, p2, p3]).then(function (value) {
     指使用 then 或者 catch 方法将 promise 对象连接起来的行为。 此用语只是在本书中的说法，而不是在 ES6 Promises 中定义的官方用语。
 
 ## 参考网站
+* [w3ctag/promises-guide](https://github.com/w3ctag/promises-guide)
+    Promises 指南 - 这里有很多关于概念方面的说明
+
+* [domenic/promises-unwrapping](https://github.com/domenic/promises-unwrapping)
+    ES6 Promises 规范的repo - 可以通过查看issue来了解各种关于规范的来龙去脉和信息
+
+* [ECMAScript Language Specification ECMA-262 6th Edition – DRAFT](http://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects)
+    ES6 Promises 的规范 - 如果想参考关于 ES6 Promises 的规范，则应该先看这里
+
+* [JavaScript Promises: There and back again - HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es6/promises/?redirect_from_locale=ja)
+    关于 Promises 的文章 - 这里的示例代码和参考（reference）的完成度都很高
+
+* [Node.js Promise再次降临！ - ぼちぼち日記](http://d.hatena.ne.jp/jovi0608/20140319/1395199285)
+    关于Node.js和Promise的文章 - thenable部分参考了本文
 
 ## 关于作者
 
