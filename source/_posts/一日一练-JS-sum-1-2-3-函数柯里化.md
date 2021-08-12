@@ -64,7 +64,7 @@ function sum () {
     _adder.toString = function () {
         let sum = _args.reduce(function (a, b) {
             return a + b
-        })
+        }, 0)
         return sum
     }
     return _adder
