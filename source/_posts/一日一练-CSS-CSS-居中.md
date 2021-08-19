@@ -538,7 +538,7 @@ body, html {
   display: grid;
 }
 span { /* thing to center */
-  marign: auto;
+  margin: auto;
 }
 ```
 ## 总结
