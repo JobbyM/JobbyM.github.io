@@ -53,6 +53,12 @@ body {
 }
 ```
 
+```css
+.center {
+    overflow: hidden;
+}
+```
+
 ### 原理
 float 不会完全脱离文档流，会占用原空间
 > MDN 官方解释：该元素从网页的正常流动（文档流）中移除，尽管仍然保持部分的流动性（与绝对定位相反）。
@@ -61,7 +67,9 @@ float 不会完全脱离文档流，会占用原空间
 为什么 center 要放到 left 和 right 之后？
 
 ### 答
-浏览器加载页面的顺序是从上到下，left 已经左浮动，right 右浮动。渲染 center 时，浏览器忽略掉已经脱离文档流的 left 和 right， center 元素会从头占领正行，但发现 left 海占用着 300px， 右边 right 右占用了 300px， 所以 center 的宽度在 left 和 right 之间，达到宽度自适应。
+浏览器加载页面的顺序是从上到下，left 已经左浮动，right 右浮动。渲染 center 时，浏览器忽略掉已经脱离文档流的 left 和 right， center 元素会从头占领整行。
+
+此时可以使 center 成为 BFC，例如设置 `overflow: hidden;` 这样，使得 center 的宽度在 left 和 center 之间。
 
 ## 二、绝对定位法
 ```css
@@ -114,6 +122,12 @@ left 、 right 绝对定位脱离文档流。center 不设置宽度，只设置�
 ### 原理
 `flex:1` 实际上是三个属性的简写 , `flex:1;` 等同于 `flex:1 1 auto;`。
 简单的说，分别代表：剩余空间 容器缩小时压缩比例 最小宽度。具体细节参考：[MDN — 弹性盒子](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Flexbox)
+`flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]`
+
+1. `flex-grow` 属性定义项目的放大比例，默认为 0，即如果存在剩余空间，也不放大。
+2. `flex-shrink` 属性定义了项目的缩小比例，默认为 1，即如果空间不足，该项目将缩小。
+3. `flex-basis` 属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为 auto，即项目的本来大小。
+
 由此得知，center 设置 `flex：1;` ，即为 `flex:1 1 auto;` (自动占满容器剩余宽度 默认压缩比例 默认最小宽度)
 left 和 right 设置  `flex-shrink: 0;`, flex-shrink 就是 flex 简写中的第二个属性, 等同 `flex:0 0 auto;` (没有设置自动占满容器剩余宽度 0不压缩 最小宽度默认auto)
 
