@@ -123,7 +123,7 @@ var cloneTarget = deepClone(target)
 这个存储空间，需要可以存储 `key-value` 形式的数据，且 `key` 可以是一个引用类型，我们可以选择 `Map` 这种数据结构：
 * 检查 `map` 中有无克隆过的对象
 * 有 -- 直接返回
-* 没有 -- 将当前对象作为 `key`, 克隆对象作为
+* 没有 -- 将当前对象作为 `key`, 克隆对象作为 `value` 进行存储
 * 继续克隆
 ```js
 function deepClone(target, map = new Map()) {
