@@ -2,6 +2,10 @@
 title: 一日一练-JS async 和 defer 区别
 date: 2021-11-04 17:05:36
 tags:
+  - 技术
+  - 一日一练
+  - JS
+categories: 技术
 ---
 
 
